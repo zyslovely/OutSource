@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.CourseScorePercentMapper">
+	<resultMap type="CourseScorePercent" id="CourseScorePercentMap ">
+		<result property="id" column="id" />
+		<result property="courseId" column="courseId" />
+		<result property="percentType" column="percentType" />
+		<result property="percent" column="percent" />
+		<result property="teacherId" column="teacherId" />
+	</resultMap>
+	<insert id="addCourseScorePercent" parameterType="CourseScorePercent"> INSERT INTO
+		TB_Course_ScorePercent (id,courseId,percentType,percent,teacherId
+		)VALUES( #{id},#{courseId},#{percentType},#{percent},#{teacherId})
+	</insert>
+</mapper>

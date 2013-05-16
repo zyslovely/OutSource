@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper">
+	<resultMap type="CourseScorePercentProperty" id="CourseScorePercentPropertyMap ">
+		<result property="id" column="id" />
+		<result property="courseId" column="courseId" />
+		<result property="percentType" column="percentType" />
+		<result property="propertyId" column="propertyId" />
+	</resultMap>
+	<insert id="addCourseScorePercentProperty" parameterType="CourseScorePercentProperty"> INSERT
+		INTO TB_Course_ScorePercent_Property
+		(id,courseId,percentType,propertyId )VALUES(
+		#{id},#{courseId},#{percentType},#{propertyId})</insert>
+</mapper>

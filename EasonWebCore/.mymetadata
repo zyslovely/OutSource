@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="EasonWebCore"
+  id="myeclipse.1368721207872"
+  context-root="/EasonWebCore"
+  j2ee-spec="5.0"
+  archive="EasonWebCore.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

@@ -1,7 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="conf"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EasonWebCore"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/activation.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/common-annotations.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-beanutils-1.7.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-fileupload-1.2.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-lang-2.3.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/dom4j-1.6.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/dwr.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/freemarker.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/httpclient-4.2.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/httpcore-4.2.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/httpmime-4.2.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/javabase64-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/JavaPNS_2.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/jaxen-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/jce-jdk13-120.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/json-lib-2.1-jdk15.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/Json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/jta.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/mybatis-3.0.5.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/mybatis-generator-core-1.3.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/mybatis-spring-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.aop-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.asm-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.aspects-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.beans-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.context-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.context.support-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.core-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.expression-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.instrument-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.instrument.tomcat-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.jdbc-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.jms-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.orm-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.oxm-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.spring-library-3.0.5.RELEASE.libd"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.test-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.transaction-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.web-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.web.portlet-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.web.servlet-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/org.springframework.web.struts-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/qiniu.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/quartz-all-1.6.0.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-acl-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-aspects-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-cas-client-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-config-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-core-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-ldap-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-openid-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-taglibs-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/spring-security-web-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/Thumbnailator-0.3.8.jar"/>
+	<classpathentry kind="lib" path="/EasonWebCore/lib/weibo4j.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

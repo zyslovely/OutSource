@@ -1,0 +1,1 @@
+package com.ruoogle.teach.mapper; import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent; public interface CoursePercentTypeGroupStudentMapper { public int addCoursePercentTypeGroupStudent(CoursePercentTypeGroupStudent coursePercentTypeGroupStudent); }

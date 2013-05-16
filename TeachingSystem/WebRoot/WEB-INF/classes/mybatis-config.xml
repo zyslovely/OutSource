@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Class" type="com.ruoogle.teach.meta.Class" />
+		<typeAlias alias="Course" type="com.ruoogle.teach.meta.Course" />
+		<typeAlias alias="CoursePercentType" type="com.ruoogle.teach.meta.CoursePercentType" />
+		<typeAlias alias="CoursePercentTypeGroup"
+			type="com.ruoogle.teach.meta.CoursePercentTypeGroup" />
+		<typeAlias alias="CoursePercentTypeGroupStudent"
+			type="com.ruoogle.teach.meta.CoursePercentTypeGroupStudent" />
+		<typeAlias alias="CoursePercentTypeGroupStudentScore"
+			type="com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore" />
+		<typeAlias alias="CoursePercentTypeStage"
+			type="com.ruoogle.teach.meta.CoursePercentTypeStage" />
+		<typeAlias alias="CourseProperty" type="com.ruoogle.teach.meta.CourseProperty" />
+		<typeAlias alias="CourseScorePercent" type="com.ruoogle.teach.meta.CourseScorePercent" />
+		<typeAlias alias="CourseScorePercentProperty"
+			type="com.ruoogle.teach.meta.CourseScorePercentProperty" />
+		<typeAlias alias="CourseStudentPropertyScore"
+			type="com.ruoogle.teach.meta.CourseStudentPropertyScore" />
+		<typeAlias alias="CourseStudentPropertySemesterScore"
+			type="com.ruoogle.teach.meta.CourseStudentPropertySemesterScore" />
+		<typeAlias alias="CourseStudentScore" type="com.ruoogle.teach.meta.CourseStudentScore" />
+		<typeAlias alias="CourseStudentTotalScore"
+			type="com.ruoogle.teach.meta.CourseStudentTotalScore" />
+
+	</typeAliases>
+	<mappers>
+		<mapper resource="com/ruoogle/teach/mapper/xml/ClassMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CourseMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentScoreMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeStageMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePropertyMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CourseScorePercentMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CourseScorePercentPropertyMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CourseStudentPropertyScoreMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CourseStudentPropertySemesterScoreMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CourseStudentScoreMapper.xml" />
+		<mapper
+			resource="com/ruoogle/teach/mapper/xml/CourseStudentTotalScoreMapper.xml" />
+	</mappers>
+</configuration>

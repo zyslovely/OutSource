@@ -1,0 +1,1 @@
+package com.ruoogle.teach.mapper; import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore; public interface CoursePercentTypeGroupStudentScoreMapper { public int addCoursePercentTypeGroupStudentScore(CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore); }

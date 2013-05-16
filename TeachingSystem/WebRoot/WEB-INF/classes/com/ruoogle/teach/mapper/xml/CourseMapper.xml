@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.CourseMapper">
+	<resultMap type="Course" id="CourseMap ">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="type" column="type" />
+		<result property="semester" column="semester" />
+		<result property="classId" column="classId" />
+		<result property="teacherId" column="teacherId" />
+	</resultMap>
+	<insert id="addCourse" parameterType="Course"> INSERT INTO TB_Course
+		(id,name,type,semester,classId,teacherId )VALUES(
+		#{id},#{name},#{type},#{semester},#{classId},#{teacherId})</insert>
+</mapper>
