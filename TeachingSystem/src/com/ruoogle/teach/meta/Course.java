@@ -10,6 +10,7 @@ public class Course implements Serializable {
 	private int semester;
 	private long classId;
 	private long teacherId;
+	private int status;
 
 	public long getId() {
 		return id;
@@ -57,6 +58,14 @@ public class Course implements Serializable {
 
 	public void setTeacherId(long teacherId) {
 		this.teacherId = teacherId;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

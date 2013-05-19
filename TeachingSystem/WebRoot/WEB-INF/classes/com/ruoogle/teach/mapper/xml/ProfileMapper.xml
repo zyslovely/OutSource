@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.ProfileMapper">
+	<resultMap type="Profile" id="profileMap">
+		<id property="userId" column="userId" />
+		<result property="userName" column="userName" />
+		<result property="password" column="password" />
+		<result property="createTime" column="createTime" />
+		<result property="level" column="level" />
+	</resultMap>
+
+	<insert id="addProfile" parameterType="Profile">
+		INSERT INTO
+		TB_Profile(
+		userName,
+		password,
+		CreateTime,
+		level
+		)VALUES(
+		#{UserName},
+		#{Password},
+		#{CreateTime},
+		#{level}
+		)
+	</insert>
+
+	<select id="getProfile" parameterType="long" resultMap="profileMap">
+		SELECT *
+		from TB_Profile
+		WHERE UserId=#{UserId};
+	</select>
+
+	<select id="getProfileByUserName" resultMap="profileMap">
+		SELECT *
+		from
+		TB_Profile
+		WHERE userName=#{username} ;
+	</select>
+
+
+</mapper>

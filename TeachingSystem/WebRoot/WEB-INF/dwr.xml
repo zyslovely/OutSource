@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC
+ "-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN"
+ "http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+
+<dwr>
+	<allow>
+		<create javascript="TeachSysBean" creator="spring">
+			<param name="beanName" value="dwrTeachSysBean" />
+		</create>
+
+		<create javascript="PubTeachSysBean" creator="spring">
+			<param name="beanName" value="dwrPubTeachSysBean" />
+		</create>
+	</allow>
+</dwr>

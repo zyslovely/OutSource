@@ -7,8 +7,12 @@
 		<result property="semester" column="semester" />
 		<result property="classId" column="classId" />
 		<result property="teacherId" column="teacherId" />
+		<result property="status" column="status" />
 	</resultMap>
-	<insert id="addCourse" parameterType="Course"> INSERT INTO TB_Course
-		(id,name,type,semester,classId,teacherId )VALUES(
-		#{id},#{name},#{type},#{semester},#{classId},#{teacherId})</insert>
+	<insert id="addCourse" parameterType="Course">
+		INSERT INTO TB_Course
+		(id,name,type,semester,classId,teacherId,status
+		)VALUES(
+		#{id},#{name},#{type},#{semester},#{classId},#{teacherId},#{status})
+		</insert>
 </mapper>

@@ -13,9 +13,9 @@
 	default-autowire="byName">
 	<context:annotation-config />
 
-	<context:component-scan base-package="com.phone">
+	<context:component-scan base-package="com.ruoogle.teach">
 		<context:exclude-filter type="regex"
-			expression="com\.phone\.web\..*" />
+			expression="com\.ruoogle\.teach\.controller\..*" />
 	</context:component-scan>
 
 	<!-- 导入属性配置文件 -->
@@ -126,6 +126,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
 			value="com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper" />
+	</bean>
+	<bean id="profileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.ProfileMapper" />
 	</bean>
 
 </beans>

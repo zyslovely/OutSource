@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="Profile" type="com.ruoogle.teach.meta.Profile" />
 		<typeAlias alias="Class" type="com.ruoogle.teach.meta.Class" />
 		<typeAlias alias="Course" type="com.ruoogle.teach.meta.Course" />
 		<typeAlias alias="CoursePercentType" type="com.ruoogle.teach.meta.CoursePercentType" />
@@ -49,5 +50,6 @@
 		<mapper resource="com/ruoogle/teach/mapper/xml/CourseStudentScoreMapper.xml" />
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CourseStudentTotalScoreMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/ProfileMapper.xml" />
 	</mappers>
 </configuration>

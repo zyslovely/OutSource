@@ -1,0 +1,50 @@
+html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+
+section,article,aside,header,footer,nav,dialog,figure {
+	display: block;
+}
+
+ul,ol {
+	list-style: none outside none;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+a {
+	text-decoration: none;
+	color: #2E75BC;
+}
+
+body,button,input,select,textarea {
+	color: #333333;
+	font: 12px/ 1.5 arial, 宋体;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+}
+
+.l {
+	float: left;
+}
+
+.r {
+	float: right;
+}
+
+input {
+	border-color: #C1C1C1 #D8D8D8 #D8D8D8;
+	border-style: solid;
+	border-width: 1px;
+	color: #666666;
+	height: 25px;
+	line-height: 25px;
+	s
+}

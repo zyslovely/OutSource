@@ -20,7 +20,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
-
+import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.meta.Profile;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -29,11 +30,13 @@ import org.springframework.web.bind.ServletRequestUtils;
  */
 public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
-	private static final String[] noAuthURIConfig = { "/**/phonePub.do*", "/**/login.do*" };
+	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do*" };
 
-	private static final String[] noAdminURIConfig = { "/**/phone.do*", "/**/*.dwr" };
+	private static final String[] noAdminURIConfig = { "/**/webTeach.do*", "/**/webAdminTeach.do*", "/**/*.dwr" };
 
 	private static final PathMatcher urlMatcher = new AntPathMatcher();
+
+	private static final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-teachcore-dao.xml");
 
 	public static ConcurrentHashMap<Long, MyUser> userMap = new ConcurrentHashMap<Long, MyUser>();
 
@@ -64,30 +67,27 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		}
 		if (this.noNeedAuthConfig(uri, httpRequest)) {
 			String actionName = ServletRequestUtils.getStringParameter(httpRequest, "action", "null");
-			if (actionName != null && actionName.equals("login")) {
-//				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
-//				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
-//				long shopId = ServletRequestUtils.getLongParameter(httpRequest, "shopId", 0L);
-//				ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-phonecore-dao.xml");
-//				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
-//				Profile profile = profileMapper.getProfileByUserName(userName, shopId);
-//				if (profile != null && profile.getPassword().equals(passWord)) {
-//					MyUser myUser = new MyUser();
-//					myUser.setUserId(profile.getUserId());
-//					myUser.setSessionStr(httpRequest.getSession().getId());
-//					myUser.setShopId(profile.getShopId());
-//					myUser.setLevel(profile.getLevel());
-//					userMap.put(myUser.getUserId(), myUser);
-//
-//					httpRequest.getSession().setAttribute("login", true);
-//					httpRequest.getSession().setAttribute("userId", myUser.getUserId());
-//					arg2.doFilter(request, response);
-//					return;
-//				} else {
-//					logger.error("账号密码失败");
-//					httpResponse.sendRedirect("/");
-//					return;
-//				}
+			if (actionName != null && actionName.equals("doLogin")) {
+				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
+				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
+				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
+				Profile profile = profileMapper.getProfileByUserName(userName);
+				if (profile != null && profile.getPassword().equals(passWord)) {
+					MyUser myUser = new MyUser();
+					myUser.setUserId(profile.getUserId());
+					myUser.setSessionStr(httpRequest.getSession().getId());
+					myUser.setLevel(profile.getLevel());
+					userMap.put(myUser.getUserId(), myUser);
+
+					httpRequest.getSession().setAttribute("login", true);
+					httpRequest.getSession().setAttribute("userId", myUser.getUserId());
+					arg2.doFilter(request, response);
+					return;
+				} else {
+					logger.error("账号密码失败");
+					httpResponse.sendRedirect("/");
+					return;
+				}
 			}
 		}
 
