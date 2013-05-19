@@ -81,13 +81,6 @@ CREATE TABLE TB_Course_PercentType (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分类型表'
 
 
-
-
-
-
-
-
-
 CREATE TABLE TB_Course_PercentType_Group (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
@@ -132,5 +125,3 @@ CREATE TABLE TB_Class (
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '班级名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='班级'
-
-
