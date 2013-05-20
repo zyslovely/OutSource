@@ -6,6 +6,7 @@ public class Class implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
 	private String name;
+	private int startYear;
 
 	public long getId() {
 		return id;
@@ -21,6 +22,14 @@ public class Class implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getStartYear() {
+		return startYear;
+	}
+
+	public void setStartYear(int startYear) {
+		this.startYear = startYear;
 	}
 
 }

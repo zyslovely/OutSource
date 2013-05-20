@@ -7,8 +7,18 @@
 		<result property="score" column="score" />
 		<result property="semester" column="semester" />
 	</resultMap>
-	<insert id="addCourseStudentTotalScore" parameterType="CourseStudentTotalScore"> INSERT
+	<insert id="addCourseStudentTotalScore" parameterType="CourseStudentTotalScore">
+		INSERT
 		INTO TB_Course_Student_TotalScore
-		(id,courseId,studentId,score,semester )VALUES(
-		#{id},#{courseId},#{studentId},#{score},#{semester})</insert>
+		(
+		id,courseId,studentId,score,semester
+		)VALUES(
+		#{id},#{courseId},#{studentId},#{score},#{semester}
+		)
+		</insert>
+	<select id="getCourseStudentTotalScores" resultMap="CourseStudentTotalScore">
+		SELECT *
+		from TB_Course_Student_TotalScore
+		WHERE courseId=#{courseId};
+	</select>
 </mapper>

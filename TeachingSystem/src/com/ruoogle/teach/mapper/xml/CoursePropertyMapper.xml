@@ -6,4 +6,10 @@
 	</resultMap>
 	<insert id="addCourseProperty" parameterType="CourseProperty"> INSERT INTO
 		TB_Course_Property (id,name )VALUES( #{id},#{name})</insert>
+
+	<select id="getCourseScorePercentPropertyByCourseId" resultMap="CourseProperty">
+		SELECT *
+		from TB_Course_Property;
+	</select>
+
 </mapper>

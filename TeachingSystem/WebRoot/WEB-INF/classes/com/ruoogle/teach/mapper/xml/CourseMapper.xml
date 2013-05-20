@@ -3,16 +3,31 @@
 	<resultMap type="Course" id="CourseMap ">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
-		<result property="type" column="type" />
 		<result property="semester" column="semester" />
 		<result property="classId" column="classId" />
 		<result property="teacherId" column="teacherId" />
 		<result property="status" column="status" />
 	</resultMap>
+
 	<insert id="addCourse" parameterType="Course">
 		INSERT INTO TB_Course
-		(id,name,type,semester,classId,teacherId,status
+		(
+		id,name,semester,classId,teacherId,status
 		)VALUES(
-		#{id},#{name},#{type},#{semester},#{classId},#{teacherId},#{status})
-		</insert>
+		#{id},#{name},#{semester},#{classId},#{teacherId},#{status}
+		)
+	</insert>
+
+	<select id="getCourseById" resultMap="Course">
+		SELECT *
+		from TB_Course
+		WHERE courseId=#{courseId};
+	</select>
+
+	<update id="finishedCourse" flushCache="true" statementType="PREPARED">
+		update TB_Course set
+		status =
+		#{status}
+		where id = #{courseId};
+	</update>
 </mapper>

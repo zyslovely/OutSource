@@ -1,0 +1,20 @@
+package com.ruoogle.teach.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.ruoogle.teach.meta.CourseStudent;
+
+public interface CourseStudentMapper {
+	public int addCourseStudent(CourseStudent courseStudent);
+
+	/**
+	 * 通过课程获取学生列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudent> getCourseStudentsByCourseId(@Param(value = "courseId") long courseId);
+}

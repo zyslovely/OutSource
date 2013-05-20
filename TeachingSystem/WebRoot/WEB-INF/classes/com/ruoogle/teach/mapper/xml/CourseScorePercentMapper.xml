@@ -7,8 +7,27 @@
 		<result property="percent" column="percent" />
 		<result property="teacherId" column="teacherId" />
 	</resultMap>
-	<insert id="addCourseScorePercent" parameterType="CourseScorePercent"> INSERT INTO
-		TB_Course_ScorePercent (id,courseId,percentType,percent,teacherId
-		)VALUES( #{id},#{courseId},#{percentType},#{percent},#{teacherId})
+	<insert id="addCourseScorePercent" parameterType="CourseScorePercent">
+		INSERT INTO
+		TB_Course_ScorePercent
+		(
+		id,courseId,percentType,percent,teacherId
+		)VALUES
+		(
+		#{id},#{courseId},#{percentType},#{percent},#{teacherId}
+		)
 	</insert>
+
+	<select id="getCourseScorePercentByTeacher" resultMap="CourseScorePercent">
+		SELECT *
+		from TB_Course_ScorePercent
+		WHERE teacherId=#{teacherId} and
+		percentType=#{percentType} and courseId=#{courseId};
+	</select>
+
+	<select id="getCourseScorePercentListByCourseId" resultMap="CourseScorePercent">
+		SELECT *
+		from TB_Course_ScorePercent
+		WHERE courseId=#{courseId};
+	</select>
 </mapper>

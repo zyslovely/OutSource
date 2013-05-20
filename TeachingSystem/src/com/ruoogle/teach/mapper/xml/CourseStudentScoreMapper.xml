@@ -13,4 +13,19 @@
 		(id,courseId,studentId,percentType,percent,score )VALUES(
 		#{id},#{courseId},#{studentId},#{percentType},#{percent},#{score})
 	</insert>
+
+	<select id="getCourseStudentScoreByStudentId" resultMap="CourseStudentScoreMap">
+		SELECT *
+		from TB_Course_Student_Score
+		WHERE studentId=#{studentId} and
+		percentType=#{percentType} and courseId=#{courseId};
+	</select>
+
+	<select id="getCourseStudentScoresByCourseIdStudentId"
+		resultMap="CourseStudentScoreMap">
+		SELECT *
+		from TB_Course_Student_Score
+		WHERE
+		studentId=#{studentId} and courseId=#{courseId};
+	</select>
 </mapper>

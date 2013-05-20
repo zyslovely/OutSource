@@ -18,6 +18,7 @@ public class Profile implements Serializable {
 	private String password;
 	private int level;
 	private long createTime;
+	private long classId;
 
 	public enum ProfileLevel {
 		/**
@@ -102,6 +103,14 @@ public class Profile implements Serializable {
 
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+
+	public long getClassId() {
+		return classId;
+	}
+
+	public void setClassId(long classId) {
+		this.classId = classId;
 	}
 
 }

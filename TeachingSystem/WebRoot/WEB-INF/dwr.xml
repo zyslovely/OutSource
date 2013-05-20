@@ -5,12 +5,19 @@
 
 <dwr>
 	<allow>
-		<create javascript="TeachSysBean" creator="spring">
-			<param name="beanName" value="dwrTeachSysBean" />
+		<create javascript="TeachSysAdminBean" creator="spring">
+			<param name="beanName" value="dwrTeachSysAdminBean" />
 		</create>
 
 		<create javascript="PubTeachSysBean" creator="spring">
 			<param name="beanName" value="dwrPubTeachSysBean" />
 		</create>
+		<create javascript="PubTeachSysTeacherBean" creator="spring">
+			<param name="beanName" value="dwrPubTeachSysTeacherBean" />
+		</create>
+		<convert converter="bean" match="com.ruoogle.teach.meta.CourseScorePercent" />
+		<convert converter="bean"
+			match="com.ruoogle.teach.meta.CourseScorePercentProperty" />
+
 	</allow>
 </dwr>

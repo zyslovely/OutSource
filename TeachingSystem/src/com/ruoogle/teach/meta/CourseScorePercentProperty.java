@@ -8,6 +8,7 @@ public class CourseScorePercentProperty implements Serializable {
 	private long courseId;
 	private long percentType;
 	private long propertyId;
+	private double percent;
 
 	public long getId() {
 		return id;
@@ -39,6 +40,14 @@ public class CourseScorePercentProperty implements Serializable {
 
 	public void setPropertyId(long propertyId) {
 		this.propertyId = propertyId;
+	}
+
+	public double getPercent() {
+		return percent;
+	}
+
+	public void setPercent(double percent) {
+		this.percent = percent;
 	}
 
 }

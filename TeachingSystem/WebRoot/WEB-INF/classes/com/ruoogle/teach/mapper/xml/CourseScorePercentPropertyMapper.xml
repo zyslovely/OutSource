@@ -5,9 +5,24 @@
 		<result property="courseId" column="courseId" />
 		<result property="percentType" column="percentType" />
 		<result property="propertyId" column="propertyId" />
+		<result property="percent" column="percent" />
 	</resultMap>
-	<insert id="addCourseScorePercentProperty" parameterType="CourseScorePercentProperty"> INSERT
+	<insert id="addCourseScorePercentProperty" parameterType="CourseScorePercentProperty">
+		INSERT
 		INTO TB_Course_ScorePercent_Property
-		(id,courseId,percentType,propertyId )VALUES(
-		#{id},#{courseId},#{percentType},#{propertyId})</insert>
+		(
+		id,courseId,percentType,propertyId
+		)VALUES(
+		#{id},#{courseId},#{percentType},#{propertyId}
+		)
+	</insert>
+
+	<select id="getCourseScorePercentPropertyByCourseId" resultMap="CourseScorePercentProperty">
+		SELECT *
+		from
+		TB_Course_ScorePercent_Property
+		WHERE courseId=#{courseId};
+	</select>
+	
+	
 </mapper>

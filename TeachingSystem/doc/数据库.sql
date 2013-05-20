@@ -1,7 +1,6 @@
 CREATE TABLE TB_Course (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '课程名称',
-  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '类型',
   `semester` int(11) NOT NULL DEFAULT '0' COMMENT '学期',
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
   `teacherId` bigint(20) NOT NULL DEFAULT '0' COMMENT '老师id',
@@ -9,6 +8,14 @@ CREATE TABLE TB_Course (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表'
 
+CREATE TABLE TB_Course_Student {
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
+  `semester` int(11) NOT NULL DEFAULT '0' COMMENT '学期',
+  `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
+  `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
+  PRIMARY KEY (`id`)
+} ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生课程表'
 
 CREATE TABLE TB_Course_Student_TotalScore (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -60,6 +67,7 @@ CREATE TABLE TB_Course_ScorePercent_Property (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `percentType` bigint(20) NOT NULL DEFAULT '0' COMMENT '评分细则类型',
+  `percent` double NOT NULL DEFAULT '0' COMMENT '评分细则比例',
   `propertyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '属性id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生属性课程关联表'
@@ -68,11 +76,20 @@ CREATE TABLE TB_Course_ScorePercent_Property (
 CREATE TABLE TB_Course_ScorePercent (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
-  `percentType` tinyint(4) NOT NULL DEFAULT '0' COMMENT '评分细则类型id',
+  `percentType` bigint(20) NOT NULL DEFAULT '0' COMMENT '评分细则类型id',
   `percent` double NOT NULL DEFAULT '0' COMMENT '评分细则比例',
   `teacherId` bigint(20) NOT NULL DEFAULT '0' COMMENT '评分老师id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程百分比表'
+
+
+
+CREATE TABLE TB_Course_PercentType_Demo (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(127) NOT NULL DEFAULT '' COMMENT '课程类型名称',
+  `demoJson` varchar(255) NOT NULL DEFAULT '' COMMENT '课程类型json',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分demo表'
 
 CREATE TABLE TB_Course_PercentType (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -124,6 +141,7 @@ CREATE TABLE TB_Course_PercentType_Stage (
 CREATE TABLE TB_Class (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '班级名称',
+  `startYear` int(11) NOT NULL DEFAULT '0' COMMENT '入学年份',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='班级'
 
@@ -132,6 +150,7 @@ CREATE TABLE `TB_Profile` (
   `UserName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `Password` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `classId` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '班级id',
   `level` int(11) NOT NULL DEFAULT '0' COMMENT '用户登录等级',
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户信息表'    

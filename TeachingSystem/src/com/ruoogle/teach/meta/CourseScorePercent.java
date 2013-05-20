@@ -6,7 +6,7 @@ public class CourseScorePercent implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
 	private long courseId;
-	private int percentType;
+	private long percentType;
 	private double percent;
 	private long teacherId;
 
@@ -26,11 +26,11 @@ public class CourseScorePercent implements Serializable {
 		this.courseId = courseId;
 	}
 
-	public int getPercentType() {
+	public long getPercentType() {
 		return percentType;
 	}
 
-	public void setPercentType(int percentType) {
+	public void setPercentType(long percentType) {
 		this.percentType = percentType;
 	}
 
