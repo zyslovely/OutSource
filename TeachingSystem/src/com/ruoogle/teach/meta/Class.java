@@ -7,6 +7,15 @@ public class Class implements Serializable {
 	private long id;
 	private String name;
 	private int startYear;
+	private long specialtyId;
+
+	public long getSpecialtyId() {
+		return specialtyId;
+	}
+
+	public void setSpecialtyId(long specialtyId) {
+		this.specialtyId = specialtyId;
+	}
 
 	public long getId() {
 		return id;

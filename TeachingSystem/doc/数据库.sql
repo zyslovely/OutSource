@@ -141,8 +141,16 @@ CREATE TABLE TB_Course_PercentType_Stage (
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='阶段达标测试分数表'
 
 
+CREATE TABLE TB_Specialty (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `specialty` varchar(127) NOT NULL DEFAULT '' COMMENT '专业',
+  `shortSpecialty` varchar(127) NOT NULL DEFAULT '' COMMENT '缩写专业',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='专业' 
+
 CREATE TABLE TB_Class (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `specialtyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '专业id',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '班级名称',
   `startYear` int(11) NOT NULL DEFAULT '0' COMMENT '入学年份',
   PRIMARY KEY (`id`)
@@ -153,7 +161,7 @@ CREATE TABLE `TB_Profile` (
   `UserName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `Password` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `classId` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '班级id',
+  `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
   `level` int(11) NOT NULL DEFAULT '0' COMMENT '用户登录等级',
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户信息表'    

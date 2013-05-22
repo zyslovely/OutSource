@@ -99,5 +99,5 @@ public interface CourseService {
 	 * @param fromStudentId
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId);
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId, long percentType);
 }

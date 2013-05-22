@@ -52,6 +52,9 @@
 				<prop key="**/webTeach.do">webTeachSysController</prop>
 				<prop key="**/webAdminTeach.do">webTeachSysAdminController</prop>
 				<prop key="**/webTeachPub.do">webTeachSysPubController</prop>
+				<prop key="**/webExcel.do">webExcelController</prop>
+				<prop key="**/webUpload.do">webUploadController</prop>
+
 			</props>
 		</property>
 	</bean>

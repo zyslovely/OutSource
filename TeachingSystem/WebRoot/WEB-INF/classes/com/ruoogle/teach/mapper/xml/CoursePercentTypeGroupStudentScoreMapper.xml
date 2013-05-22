@@ -23,4 +23,35 @@
 		courseId=#{courseId} and groupId=#{groupId};
 	</select>
 
+	<select id="getCoursePercentTypeGroupStudentScoreByToStudent"
+		resultMap="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		toStudentId=#{toStudentId} and
+		courseId=#{courseId} and
+		groupId=#{groupId};
+	</select>
+
+	<update id="updateCoursePercentTypeGroupStudentScore"
+		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_PercentType_Group_Student_Score
+		set
+		score=#{score}
+		WHERE
+		id =
+		#{id};
+	</update>
+
+	<select id="getCoursePercentTypeGroupStudentScoreByCourseGroup"
+		resultMap="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		courseId=#{courseId} and
+		groupId=#{groupId};
+	</select>
+
 </mapper>

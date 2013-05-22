@@ -131,5 +131,14 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.ruoogle.teach.mapper.ProfileMapper" />
 	</bean>
+	<bean id="courseStudentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.CourseStudentMapper" />
+	</bean>
+	<bean id="coursePercentTypeDemoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface"
+			value="com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper" />
+	</bean>
 
 </beans>

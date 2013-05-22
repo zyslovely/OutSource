@@ -47,8 +47,8 @@ public class DwrTeachSysAdminBean {
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year) {
-		return classService.addClassRoom(name, year);
+	public boolean addClassRoom(String name, int year, long specialtyId) {
+		return classService.addClassRoom(name, year, specialtyId);
 	}
 
 	/**

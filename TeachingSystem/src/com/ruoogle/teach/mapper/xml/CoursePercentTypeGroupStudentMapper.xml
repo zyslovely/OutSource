@@ -24,6 +24,13 @@
 		courseId=#{courseId};
 	</select>
 
+	<select id="getCoursePercentTypeGroupStudentByIds" resultType="int">
+		SELECT count(*)
+		from TB_Course_PercentType_Group_Student where
+		courseId=#{courseId}
+		group by groupId;
+	</select>
+
 	<update id="updateCoursePercentTypeGroupStudentMapper"
 		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
 		statementType="PREPARED">
@@ -36,4 +43,15 @@
 		id =
 		#{id};
 	</update>
+
+	<select id="getCoursePercentTypeGroupStudentCountByIds"
+		resultType="int">
+		SELECT count(*)
+		from TB_Course_PercentType_Group_Student
+		where
+		courseId=#{courseId}
+		and groupId = #{groupId};
+	</select>
+
+
 </mapper>

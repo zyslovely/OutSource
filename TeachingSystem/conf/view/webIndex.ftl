@@ -47,7 +47,10 @@ textarea, input, select{
     <h1 style="text-align: center; font-size: 60px;">登陆管理系统</h1>
     <#include "login.ftl">
 </div>
-
+    <form onsubmit="return uploadExcel();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addScore/" id="uploadFrame">
+         <input type="file" class="t file l " size="37" name="file" value="浏览">
+         <input type="submit" value="上传成绩">
+    </form>
 
 </body>
 </html>

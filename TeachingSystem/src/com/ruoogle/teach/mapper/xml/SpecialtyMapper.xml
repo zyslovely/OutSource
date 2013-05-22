@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.SpecialtyMapper">
+	<resultMap type="Specialty" id="specialtyMap ">
+		<result property="id" column="id" />
+		<result property="specialty" column="specialty" />
+		<result property="shortSpecialty" column="shortSpecialty" />
+	</resultMap>
+	<insert id="addSpecialty" parameterType="Specialty"> INSERT INTO
+		TB_Specialty (id,specialty,shortSpecialty )VALUES(
+		#{id},#{specialty},#{shortSpecialty})</insert>
+
+	<select id="getpecialtyById" resultMap="Specialty">
+		SELECT *
+		from TB_Specialty
+		WHERE
+		id=#{id};
+	</select>
+</mapper>

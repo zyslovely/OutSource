@@ -7,6 +7,7 @@
 		<result property="password" column="password" />
 		<result property="createTime" column="createTime" />
 		<result property="level" column="level" />
+
 	</resultMap>
 
 	<insert id="addProfile" parameterType="Profile">

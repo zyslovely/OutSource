@@ -28,6 +28,16 @@ public interface CoursePercentTypeGroupStudentMapper {
 	public int getCoursePercentTypeGroupCountByIds(@Param(value = "courseId") long courseId);
 
 	/**
+	 * 得到
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param groupId
+	 * @return
+	 */
+	public int getCoursePercentTypeGroupStudentCountByIds(@Param(value = "courseId") long courseId, @Param(value = "groupId") long groupId);
+
+	/**
 	 * 更新
 	 * 
 	 * @auther zyslovely@gmail.com

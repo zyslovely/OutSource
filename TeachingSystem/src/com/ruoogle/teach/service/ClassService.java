@@ -17,7 +17,7 @@ public interface ClassService {
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year);
+	public boolean addClassRoom(String name, int year, long specialtyId);
 
 	/**
 	 * 

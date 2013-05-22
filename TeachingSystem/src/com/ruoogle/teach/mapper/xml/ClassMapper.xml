@@ -3,7 +3,20 @@
 	<resultMap type="Class" id="classMap ">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
+		<result property="specialtyId" column="specialtyId" />
 	</resultMap>
-	<insert id="addClass" parameterType="Class"> INSERT INTO TB_Class
-		(id,name )VALUES( #{id},#{name})</insert>
+	<insert id="addClass" parameterType="Class">
+		INSERT INTO TB_Class
+		(id,name,specialtyId)
+		VALUES(
+		#{id},#{name},#{specialtyId}
+		)
+		</insert>
+
+	<select id="getClassById" resultMap="Class">
+		SELECT *
+		from TB_Class
+		WHERE
+		id=#{id};
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.ruoogle.teach.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -362,7 +363,7 @@ public class CourseServiceImpl implements CourseService {
 	 * long, double, long)
 	 */
 	@Override
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId) {
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId, long percentType) {
 
 		CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore = coursePercentTypeGroupStudentScoreMapper
 				.getCoursePercentTypeGroupStudentScore(courseId, groupId, fromStudentId, toStudentId);
@@ -373,14 +374,54 @@ public class CourseServiceImpl implements CourseService {
 			coursePercentTypeGroupStudentScore.setGroupId(groupId);
 			coursePercentTypeGroupStudentScore.setScore(score);
 			coursePercentTypeGroupStudentScore.setCourseId(courseId);
-			return coursePercentTypeGroupStudentScoreMapper.addCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore) > 0;
+			coursePercentTypeGroupStudentScoreMapper.addCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
 		} else {
-
+			coursePercentTypeGroupStudentScore.setScore(score);
+			coursePercentTypeGroupStudentScoreMapper.updateCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
+		}
+		if (this.checkIfGroupScoreFinished(toStudentId, courseId, groupId)) {
+			// 计算分数，然后添加到学生成绩中
+			List<CoursePercentTypeGroupStudentScore> list = coursePercentTypeGroupStudentScoreMapper
+					.getCoursePercentTypeGroupStudentScoreByCourseGroup(courseId, groupId);
+			Map<Long, Double> scoreMap = new HashMap<Long, Double>();
+			for (CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore2 : list) {
+				Double scoreD = scoreMap.get(coursePercentTypeGroupStudentScore2.getToStudentId());
+				if (scoreD == null) {
+					scoreD = coursePercentTypeGroupStudentScore2.getScore();
+				} else {
+					scoreD += coursePercentTypeGroupStudentScore2.getScore();
+				}
+				scoreMap.put(coursePercentTypeGroupStudentScore2.getToStudentId(), scoreD);
+			}
+			CourseScorePercent courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, percentType);
+			for (long studentId : scoreMap.keySet()) {
+				double ascore = scoreMap.get(studentId);
+				CourseStudentScore courseStudentScore = new CourseStudentScore();
+				courseStudentScore.setStudentId(studentId);
+				courseStudentScore.setScore(ascore);
+				courseStudentScore.setCourseId(courseId);
+				courseStudentScore.setPercent(courseScorePercent.getPercent());
+				courseStudentScore.setPercentType(courseScorePercent.getPercentType());
+				courseStudentScoreMapper.addCourseStudentScore(courseStudentScore);
+			}
 		}
 		return false;
 	}
 
-	private checkIfGroupScoreFinished() {
+	/**
+	 * 判断分组积分是否结束
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @return
+	 */
+	private boolean checkIfGroupScoreFinished(long toStudentId, long courseId, long groupId) {
 
+		List<CoursePercentTypeGroupStudentScore> list = coursePercentTypeGroupStudentScoreMapper.getCoursePercentTypeGroupStudentScoreByToStudent(
+				courseId, groupId, toStudentId);
+		int count = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupStudentCountByIds(courseId, groupId);
+		if (ListUtils.isEmptyList(list) || list.size() < count) {
+			return false;
+		}
+		return true;
 	}
 }

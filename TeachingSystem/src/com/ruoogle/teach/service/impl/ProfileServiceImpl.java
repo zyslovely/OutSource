@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.service.ProfileService;
@@ -13,6 +15,7 @@ import com.ruoogle.teach.service.ProfileService;
  * @version CreateTime：2013-5-20 上午01:01:56
  * @see Class Description
  */
+@Service("profileService")
 public class ProfileServiceImpl implements ProfileService {
 
 	@Resource
