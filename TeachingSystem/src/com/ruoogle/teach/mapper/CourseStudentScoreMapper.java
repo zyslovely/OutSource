@@ -37,4 +37,13 @@ public interface CourseStudentScoreMapper {
 	 */
 	public List<CourseStudentScore> getCourseStudentScoresByCourseIdStudentId(@Param(value = "courseId") long courseId,
 			@Param(value = "studentId") long studentId);
+
+	/**
+	 * 更新分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseStudentScore
+	 * @return
+	 */
+	public int updateCourseStudentScore(CourseStudentScore courseStudentScore);
 }

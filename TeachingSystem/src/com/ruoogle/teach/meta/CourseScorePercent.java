@@ -9,6 +9,9 @@ public class CourseScorePercent implements Serializable {
 	private long percentType;
 	private double percent;
 	private long teacherId;
+	private int objectCount;
+
+	public static final long PercentType_Stage = 1;
 
 	public long getId() {
 		return id;
@@ -48,6 +51,14 @@ public class CourseScorePercent implements Serializable {
 
 	public void setTeacherId(long teacherId) {
 		this.teacherId = teacherId;
+	}
+
+	public int getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(int objectCount) {
+		this.objectCount = objectCount;
 	}
 
 }

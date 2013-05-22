@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import com.eason.web.util.HashMapMaker;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.CourseMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeGroupMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeStageMapper;
 import com.ruoogle.teach.mapper.CoursePropertyMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper;
@@ -20,12 +24,17 @@ import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentType;
+import com.ruoogle.teach.meta.CoursePercentTypeGroup;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore;
+import com.ruoogle.teach.meta.CoursePercentTypeStage;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentTotalScore;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.service.CourseService;
 
 /**
@@ -54,6 +63,14 @@ public class CourseServiceImpl implements CourseService {
 	private CourseStudentMapper courseStudentMapper;
 	@Resource
 	private CoursePropertyMapper coursePropertyMapper;
+	@Resource
+	private CoursePercentTypeStageMapper coursePercentTypeStageMapper;
+	@Resource
+	private CoursePercentTypeGroupStudentScoreMapper coursePercentTypeGroupStudentScoreMapper;
+	@Resource
+	private CoursePercentTypeGroupStudentMapper coursePercentTypeGroupStudentMapper;
+	@Resource
+	private CoursePercentTypeGroupMapper coursePercentTypeGroupMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -124,35 +141,36 @@ public class CourseServiceImpl implements CourseService {
 			logger.error("当前老师有没有权限输入分数");
 			return false;
 		}
-
-		CourseStudentScore courseStudentScore = new CourseStudentScore();
-		courseStudentScore.setCourseId(courseId);
-		courseStudentScore.setStudentId(studentId);
-		courseStudentScore.setPercentType(percentType);
-		courseStudentScore.setScore(score);
-		if (courseStudentScoreMapper.addCourseStudentScore(courseStudentScore) <= 0) {
-			return false;
+		CourseStudentScore courseStudentScore = courseStudentScoreMapper.getCourseStudentScoreByStudentId(studentId, percentType, courseId);
+		if (courseStudentScore == null) {
+			courseStudentScore = new CourseStudentScore();
+			courseStudentScore.setCourseId(courseId);
+			courseStudentScore.setStudentId(studentId);
+			courseStudentScore.setPercentType(percentType);
+			courseStudentScore.setScore(score);
+			if (courseStudentScoreMapper.addCourseStudentScore(courseStudentScore) <= 0) {
+				return false;
+			}
+		} else {
+			courseStudentScore.setScore(score);
+			courseStudentScoreMapper.updateCourseStudentScore(courseStudentScore);
 		}
+
 		if (this.checkIsAllScoreOut(courseId, studentId)) {
 			this.insertCourseStudentProperty(courseId, studentId);
 			this.insertCourseStudentTotalScore(courseId, studentId);
-		}
-		if (this.checkIsAllScoreInsertFinished(courseId)) {
-			courseMapper.finishedCourse(courseId, Course.FINISHED);
 		}
 
 		return false;
 	}
 
-	/**
-	 * 判断这个学生的分数是不是都出来了
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param courseId
-	 * @param studentId
-	 * @return
+	 * @see com.ruoogle.teach.service.CourseService#checkIsAllScoreOut(long,
+	 * long)
 	 */
-	private boolean checkIsAllScoreOut(long courseId, long studentId) {
+	public boolean checkIsAllScoreOut(long courseId, long studentId) {
 		List<CourseScorePercent> list = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
 		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
 		if (ListUtils.isEmptyList(list) || ListUtils.isEmptyList(courseStudentScores) || list.size() != courseStudentScores.size()) {
@@ -161,12 +179,12 @@ public class CourseServiceImpl implements CourseService {
 		return true;
 	}
 
-	/**
-	 * 这门课程成绩是否都录入完成
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param courseId
-	 * @return
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#checkIsAllScoreInsertFinished
+	 * (long)
 	 */
 	public boolean checkIsAllScoreInsertFinished(long courseId) {
 		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
@@ -232,6 +250,137 @@ public class CourseServiceImpl implements CourseService {
 		courseStudentTotalScore.setScore(score);
 		courseStudentTotalScore.setStudentId(studentId);
 		return courseStudentTotalScoreMapper.addCourseStudentTotalScore(courseStudentTotalScore) > 0;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#insertCourseStageScore(long,
+	 * int, double, long, long)
+	 */
+	@Override
+	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId, long teacherId) {
+		List<CourseScorePercent> list = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+		if (ListUtils.isEmptyList(list)) {
+			return false;
+		}
+		boolean succ = false;
+		long percentType = -1;
+		for (CourseScorePercent courseScorePercent : list) {
+			if (courseScorePercent.getPercentType() == CourseScorePercent.PercentType_Stage && teacherId == courseScorePercent.getTeacherId()) {
+				succ = true;
+				percentType = courseScorePercent.getPercentType();
+			}
+		}
+		if (!succ) {
+			return false;
+		}
+		CoursePercentTypeStage coursePercentTypeStage = coursePercentTypeStageMapper.getCoursePercentTypeStage(courseId, studentId, stage,
+				percentType);
+		if (coursePercentTypeStage == null) {
+			coursePercentTypeStage = new CoursePercentTypeStage();
+			coursePercentTypeStage.setCourseId(courseId);
+			coursePercentTypeStage.setStageIndex(stage);
+			coursePercentTypeStage.setScore(score);
+			coursePercentTypeStage.setPercentType(percentType);
+			coursePercentTypeStage.setStudentId(studentId);
+			coursePercentTypeStageMapper.addCoursePercentTypeStage(coursePercentTypeStage);
+		} else {
+			coursePercentTypeStage.setScore(score);
+			coursePercentTypeStageMapper.updateCoursePercentTypeStage(coursePercentTypeStage);
+		}
+		if (this.checkIsAllStageFinished(courseId, studentId)) {
+			double stageTotalScore = 0;
+			List<CoursePercentTypeStage> coucoursePercentTypeStages = coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId,
+					studentId);
+			for (CoursePercentTypeStage stage1 : coucoursePercentTypeStages) {
+				stageTotalScore += stage1.getScore();
+			}
+			this.insertCourseScore(courseId, studentId, percentType, stageTotalScore / coucoursePercentTypeStages.size(), teacherId);
+		}
+		return true;
+	}
+
+	/**
+	 * 是否该课程的所有stage已经结束
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	private boolean checkIsAllStageFinished(long courseId, long studentId) {
+		List<CoursePercentTypeStage> list = coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId, studentId);
+		if (ListUtils.isEmptyList(list)) {
+			return false;
+		}
+		CourseScorePercent courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, list.get(0).getPercentType());
+		if (courseScorePercent == null || courseScorePercent.getObjectCount() != list.size()) {
+			return false;
+		}
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#addCourseGroup(long, long,
+	 * long, long)
+	 */
+	@Override
+	public boolean addCourseGroup(long courseId, long studentId, long groupId, long teacherId, GroupLevel level) {
+
+		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupStudentByIds(
+				studentId, courseId);
+		if ((coursePercentTypeGroupStudent != null && groupId < 0) || (coursePercentTypeGroupStudent == null && groupId > 0)) {
+			return false;
+		}
+		if (groupId < 0) {
+			CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper.getCoursePercentTypeGroup(courseId);
+			int count = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupCountByIds(courseId);
+			if (coursePercentTypeGroup == null || (count + 1 >= coursePercentTypeGroup.getCount())) {
+				return false;
+			}
+			coursePercentTypeGroupStudent = new CoursePercentTypeGroupStudent();
+			coursePercentTypeGroupStudent.setCourseId(courseId);
+			coursePercentTypeGroupStudent.setGroupId(groupId);
+			coursePercentTypeGroupStudent.setLevel(level.getValue());
+			coursePercentTypeGroupStudent.setStudentId(studentId);
+			return coursePercentTypeGroupStudentMapper.addCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent) > 0;
+		} else {
+			coursePercentTypeGroupStudent.setGroupId(groupId);
+			coursePercentTypeGroupStudent.setLevel(level.getValue());
+			return coursePercentTypeGroupStudentMapper.updateCoursePercentTypeGroupStudentMapper(coursePercentTypeGroupStudent) > 0;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#addGroupScore(long, long,
+	 * long, double, long)
+	 */
+	@Override
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId) {
+
+		CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore = coursePercentTypeGroupStudentScoreMapper
+				.getCoursePercentTypeGroupStudentScore(courseId, groupId, fromStudentId, toStudentId);
+		if (coursePercentTypeGroupStudentScore == null) {
+			coursePercentTypeGroupStudentScore = new CoursePercentTypeGroupStudentScore();
+			coursePercentTypeGroupStudentScore.setFromStudentId(fromStudentId);
+			coursePercentTypeGroupStudentScore.setToStudentId(toStudentId);
+			coursePercentTypeGroupStudentScore.setGroupId(groupId);
+			coursePercentTypeGroupStudentScore.setScore(score);
+			coursePercentTypeGroupStudentScore.setCourseId(courseId);
+			return coursePercentTypeGroupStudentScoreMapper.addCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore) > 0;
+		} else {
+
+		}
+		return false;
+	}
+
+	private checkIfGroupScoreFinished() {
 
 	}
 }

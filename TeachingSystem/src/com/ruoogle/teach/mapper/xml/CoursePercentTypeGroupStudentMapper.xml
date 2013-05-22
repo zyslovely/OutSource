@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentMapper">
-	<resultMap type="CoursePercentTypeGroupStudent" id="CoursePercentTypeGroupStudentMap ">
+	<resultMap type="CoursePercentTypeGroupStudent" id="coursePercentTypeGroupStudentMap ">
 		<result property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="groupId" column="groupId" />
@@ -9,6 +9,31 @@
 	</resultMap>
 	<insert id="addCoursePercentTypeGroupStudent" parameterType="CoursePercentTypeGroupStudent">
 		INSERT INTO TB_Course_PercentType_Group_Student
-		(id,courseId,groupId,studentId,level )VALUES(
-		#{id},#{courseId},#{groupId},#{studentId},#{level})</insert>
+		(
+		id,courseId,groupId,studentId,level
+		)VALUES(
+		#{id},#{courseId},#{groupId},#{studentId},#{level}
+		)
+	</insert>
+
+	<select id="getCoursePercentTypeGroupStudentByIds" resultMap="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student
+		WHERE
+		studentId=#{studentId} and
+		courseId=#{courseId};
+	</select>
+
+	<update id="updateCoursePercentTypeGroupStudentMapper"
+		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_PercentType_Group_Student
+		set
+		groupId=#{groupId},
+		level=#{level}
+		WHERE
+		id =
+		#{id};
+	</update>
 </mapper>

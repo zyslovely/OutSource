@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper">
-	<resultMap type="CoursePercentTypeGroupStudentScore" id="CoursePercentTypeGroupStudentScoreMap ">
+	<resultMap type="CoursePercentTypeGroupStudentScore" id="coursePercentTypeGroupStudentScoreMap ">
 		<result property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="groupId" column="groupId" />
@@ -10,8 +10,17 @@
 		<result property="score" column="score" />
 	</resultMap>
 	<insert id="addCoursePercentTypeGroupStudentScore"
-		parameterType="CoursePercentTypeGroupStudentScore"> INSERT INTO TB_Course_PercentType_Group_Student_Score
+		parameterType="CoursePercentTypeGroupStudentScore">
+		INSERT INTO TB_Course_PercentType_Group_Student_Score
 		(id,courseId,groupId,fromStudentId,toStudentId,score )VALUES(
 		#{id},#{courseId},#{groupId},#{fromStudentId},#{toStudentId},#{score})
 	</insert>
+	<select id="getCoursePercentTypeGroupStudentScore" resultMap="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		fromStudentId=#{fromStudentId} and toStudentId=#{toStudentId} and
+		courseId=#{courseId} and groupId=#{groupId};
+	</select>
+
 </mapper>

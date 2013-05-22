@@ -28,4 +28,14 @@ public interface CourseScorePercentMapper {
 	 * @return
 	 */
 	public List<CourseScorePercent> getCourseScorePercentListByCourseId(@Param(value = "courseId") long courseId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param percentType
+	 * @return
+	 */
+	public CourseScorePercent getCourseScorePercentBypercentType(@Param(value = "courseId") long courseId,
+			@Param(value = "percentType") long percentType);
 }

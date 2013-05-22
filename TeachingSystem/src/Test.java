@@ -32,14 +32,14 @@ public class Test {
 		metaNameList.add("semester");
 		metaNameList.add("classId");
 		metaNameList.add("studentId");
-		
+
 		List<String> metaTypeList = new ArrayList<String>();
 		metaTypeList.add("long");
 		metaTypeList.add("long");
 		metaTypeList.add("int");
 		metaTypeList.add("long");
 		metaTypeList.add("long");
-		
+
 		String code = "package " + metaJavaPackage + "; import java.io.Serializable; public class " + functionName + " implements Serializable {"
 				+ " private static final long serialVersionUID = 6L;";
 		int index = 0;
@@ -69,7 +69,7 @@ public class Test {
 				+ "Mapper\"> <resultMap type=\""
 				+ functionName
 				+ "\" id=\""
-				+ functionName + "Map \"> ";
+				+ firstLowerCaseName + "Map \"> ";
 		for (String str : metaNameList) {
 			code = code + " <result property=\"" + str + "\" column=\"" + str + "\" /> ";
 		}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.ruoogle.teach.mapper.CourseStudentPropertySemesterScoreMapper">
-	<resultMap type="CourseStudentPropertySemesterScore" id="CourseStudentPropertySemesterScoreMap ">
+	<resultMap type="CourseStudentPropertySemesterScore" id="courseStudentPropertySemesterScoreMap ">
 		<result property="id" column="id" />
 		<result property="semester" column="semester" />
 		<result property="propertyId" column="propertyId" />

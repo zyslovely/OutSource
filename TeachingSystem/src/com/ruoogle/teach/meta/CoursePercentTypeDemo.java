@@ -42,6 +42,7 @@ public class CoursePercentTypeDemo implements Serializable {
 			JSONObject jsonObject2 = new JSONObject();
 			jsonObject2.put("name", coursePercentType.getName());
 			jsonObject2.put("desc", coursePercentType.getDesc());
+			jsonObject2.put("objectCount", coursePercentType.getObjectCount());
 			jsonArray.add(jsonObject2);
 		}
 		return jsonArray.toString();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseStudentScoreMapper">
-	<resultMap type="CourseStudentScore" id="CourseStudentScoreMap ">
+	<resultMap type="CourseStudentScore" id="courseStudentScoreMap ">
 		<result property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="studentId" column="studentId" />
@@ -28,4 +28,16 @@
 		WHERE
 		studentId=#{studentId} and courseId=#{courseId};
 	</select>
+
+	<update id="updateCourseStudentScore" parameterType="CourseStudentScore"
+		flushCache="true" statementType="PREPARED">
+		UPDATE
+		TB_Course_Student_Score
+		set
+		score=#{score}
+		WHERE
+		id =
+		#{id};
+	</update>
+
 </mapper>

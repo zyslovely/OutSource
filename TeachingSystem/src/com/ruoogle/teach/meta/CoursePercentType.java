@@ -7,6 +7,15 @@ public class CoursePercentType implements Serializable {
 	private long id;
 	private String name;
 	private String desc;
+	private int objectCount;
+
+	public int getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(int objectCount) {
+		this.objectCount = objectCount;
+	}
 
 	public long getId() {
 		return id;

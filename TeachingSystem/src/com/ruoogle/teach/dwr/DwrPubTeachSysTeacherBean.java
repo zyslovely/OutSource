@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.CourseService;
 
@@ -52,5 +53,34 @@ public class DwrPubTeachSysTeacherBean {
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		return courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
 
+	}
+
+	/**
+	 * 插入阶段课程分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param stage
+	 * @param score
+	 * @param studentId
+	 * @return
+	 */
+	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId) {
+		WebContext ctx = WebContextFactory.get();
+		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		return courseService.insertCourseStageScore(courseId, stage, score, studentId, teacherId);
+	}
+
+	/**
+	 * 添加分组
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param studentId
+	 */
+	public boolean addCourseGroup(long courseId, long studentId, long groupId, int leader) {
+		WebContext ctx = WebContextFactory.get();
+		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		return courseService.addCourseGroup(courseId, studentId, groupId, teacherId, GroupLevel.genGroupLevel(leader));
 	}
 }
