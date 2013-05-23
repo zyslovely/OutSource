@@ -30,9 +30,9 @@ public class DwrTeachSysStudentBean {
 	 * @param score
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score) {
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long percentType) {
 		WebContext ctx = WebContextFactory.get();
 		Long fromStudentId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId);
+		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId,percentType);
 	}
 }

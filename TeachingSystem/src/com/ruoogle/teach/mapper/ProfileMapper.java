@@ -1,5 +1,7 @@
 package com.ruoogle.teach.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ruoogle.teach.meta.Profile;
@@ -34,4 +36,20 @@ public interface ProfileMapper {
 	 */
 	public Profile getProfileByUserName(@Param(value = "username") String userName);
 
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId);
+
+	/**
+	 * 得到最大的
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public Profile getMaxProfileByNumber(@Param(value = "classId") long classId);
 }

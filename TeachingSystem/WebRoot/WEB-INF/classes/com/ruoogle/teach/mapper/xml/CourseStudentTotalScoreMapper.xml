@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper">
 	<resultMap type="CourseStudentTotalScore" id="courseStudentTotalScoreMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="studentId" column="studentId" />
 		<result property="score" column="score" />
@@ -11,14 +11,19 @@
 		INSERT
 		INTO TB_Course_Student_TotalScore
 		(
-		id,courseId,studentId,score,semester
+		courseId,studentId,score,semester
 		)VALUES(
-		#{id},#{courseId},#{studentId},#{score},#{semester}
+		#{courseId},#{studentId},#{score},#{semester}
 		)
-		</insert>
-	<select id="getCourseStudentTotalScores" resultMap="CourseStudentTotalScore">
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+	<select id="getCourseStudentTotalScores" resultType="CourseStudentTotalScore">
 		SELECT *
-		from TB_Course_Student_TotalScore
+		from
+		TB_Course_Student_TotalScore
 		WHERE courseId=#{courseId};
 	</select>
 </mapper>

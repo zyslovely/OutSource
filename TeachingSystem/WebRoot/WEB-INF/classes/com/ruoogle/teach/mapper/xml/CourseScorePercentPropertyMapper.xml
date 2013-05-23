@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper">
 	<resultMap type="CourseScorePercentProperty" id="courseScorePercentPropertyMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="percentType" column="percentType" />
 		<result property="propertyId" column="propertyId" />
@@ -11,18 +11,22 @@
 		INSERT
 		INTO TB_Course_ScorePercent_Property
 		(
-		id,courseId,percentType,propertyId
+		courseId,percentType,propertyId
 		)VALUES(
-		#{id},#{courseId},#{percentType},#{propertyId}
+		#{courseId},#{percentType},#{propertyId}
 		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
 
-	<select id="getCourseScorePercentPropertyByCourseId" resultMap="CourseScorePercentProperty">
+	<select id="getCourseScorePercentPropertyByCourseId" resultType="CourseScorePercentProperty">
 		SELECT *
 		from
 		TB_Course_ScorePercent_Property
 		WHERE courseId=#{courseId};
 	</select>
-	
-	
+
+
 </mapper>

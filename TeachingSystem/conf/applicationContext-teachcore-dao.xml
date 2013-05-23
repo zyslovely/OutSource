@@ -140,5 +140,9 @@
 		<property name="mapperInterface"
 			value="com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper" />
 	</bean>
+	<bean id="specialtyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.SpecialtyMapper" />
+	</bean>
 
 </beans>

@@ -16,9 +16,11 @@ public class Profile implements Serializable {
 	private long userId;
 	private String userName;
 	private String password;
+	private String name;
 	private int level;
 	private long createTime;
 	private long classId;
+	private long number;
 
 	public enum ProfileLevel {
 		/**
@@ -111,6 +113,22 @@ public class Profile implements Serializable {
 
 	public void setClassId(long classId) {
 		this.classId = classId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long getNumber() {
+		return number;
+	}
+
+	public void setNumber(long number) {
+		this.number = number;
 	}
 
 }

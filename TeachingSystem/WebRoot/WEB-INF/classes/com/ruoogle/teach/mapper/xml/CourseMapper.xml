@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseMapper">
 	<resultMap type="Course" id="courseMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="semester" column="semester" />
 		<result property="classId" column="classId" />
@@ -12,13 +12,17 @@
 	<insert id="addCourse" parameterType="Course">
 		INSERT INTO TB_Course
 		(
-		id,name,semester,classId,teacherId,status
+		name,semester,classId,teacherId,status
 		)VALUES(
-		#{id},#{name},#{semester},#{classId},#{teacherId},#{status}
+		#{name},#{semester},#{classId},#{teacherId},#{status}
 		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
 
-	<select id="getCourseById" resultMap="Course">
+	<select id="getCourseById" resultType="Course">
 		SELECT *
 		from TB_Course
 		WHERE courseId=#{courseId};

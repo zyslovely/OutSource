@@ -29,7 +29,7 @@
 		<typeAlias alias="CoursePercentTypeDemo"
 			type="com.ruoogle.teach.meta.CoursePercentTypeDemo" />
 		<typeAlias alias="CourseStudent" type="com.ruoogle.teach.meta.CourseStudent" />
-
+		<typeAlias alias="Specialty" type="com.ruoogle.teach.meta.Specialty" />
 
 	</typeAliases>
 	<mappers>
@@ -58,6 +58,7 @@
 		<mapper resource="com/ruoogle/teach/mapper/xml/ProfileMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/CourseStudentMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeDemoMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/SpecialtyMapper.xml" />
 
 	</mappers>
 </configuration>

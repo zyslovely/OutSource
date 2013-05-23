@@ -2,7 +2,7 @@
 <mapper
 	namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper">
 	<resultMap type="CoursePercentTypeGroupStudentScore" id="coursePercentTypeGroupStudentScoreMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="groupId" column="groupId" />
 		<result property="fromStudentId" column="fromStudentId" />
@@ -12,10 +12,14 @@
 	<insert id="addCoursePercentTypeGroupStudentScore"
 		parameterType="CoursePercentTypeGroupStudentScore">
 		INSERT INTO TB_Course_PercentType_Group_Student_Score
-		(id,courseId,groupId,fromStudentId,toStudentId,score )VALUES(
-		#{id},#{courseId},#{groupId},#{fromStudentId},#{toStudentId},#{score})
+		(courseId,groupId,fromStudentId,toStudentId,score )VALUES(
+		#{courseId},#{groupId},#{fromStudentId},#{toStudentId},#{score})
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
-	<select id="getCoursePercentTypeGroupStudentScore" resultMap="CoursePercentTypeGroupStudent">
+	<select id="getCoursePercentTypeGroupStudentScore" resultType="CoursePercentTypeGroupStudentScore">
 		SELECT *
 		from TB_Course_PercentType_Group_Student_Score
 		WHERE
@@ -24,7 +28,7 @@
 	</select>
 
 	<select id="getCoursePercentTypeGroupStudentScoreByToStudent"
-		resultMap="CoursePercentTypeGroupStudent">
+		resultType="CoursePercentTypeGroupStudentScore">
 		SELECT *
 		from TB_Course_PercentType_Group_Student_Score
 		WHERE
@@ -34,7 +38,7 @@
 	</select>
 
 	<update id="updateCoursePercentTypeGroupStudentScore"
-		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
+		parameterType="CoursePercentTypeGroupStudentScore" flushCache="true"
 		statementType="PREPARED">
 		UPDATE
 		TB_Course_PercentType_Group_Student_Score
@@ -46,7 +50,7 @@
 	</update>
 
 	<select id="getCoursePercentTypeGroupStudentScoreByCourseGroup"
-		resultMap="CoursePercentTypeGroupStudent">
+		resultType="CoursePercentTypeGroupStudentScore">
 		SELECT *
 		from TB_Course_PercentType_Group_Student_Score
 		WHERE

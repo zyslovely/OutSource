@@ -1,6 +1,7 @@
 package com.ruoogle.teach.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -49,15 +50,12 @@ public class ClassServiceImpl implements ClassService {
 		return classMapper.addClass(class1) > 0;
 	}
 
-	/**
-	 * 添加学生信息
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param classId
-	 * @param number
-	 * @return
+	 * @see com.ruoogle.teach.service.ClassService#addStudentProfile(long, int)
 	 */
-	public boolean addStudentProfile(long classId, int number) {
+	public boolean addStudentProfile(long classId, long number, String name) {
 		Profile profile = new Profile();
 		profile.setCreateTime(new Date().getTime());
 		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
@@ -66,6 +64,8 @@ public class ClassServiceImpl implements ClassService {
 		String passWord = class1.getName() + number;
 		profile.setUserName(userName);
 		profile.setPassword(passWord);
+		profile.setNumber(number);
+		profile.setName(name);
 		profile.setLevel(ProfileLevel.Student.getValue());
 		return profileMapper.addProfile(profile) > 0;
 	}
@@ -83,6 +83,16 @@ public class ClassServiceImpl implements ClassService {
 		coursePercentTypeDemo.setName(name);
 		coursePercentTypeDemo.setDemoJson(demoJson);
 		return coursePercentTypeDemoMapper.addCoursePercentTypeDemo(coursePercentTypeDemo) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getProfilesByClassId(long)
+	 */
+	@Override
+	public List<Profile> getProfilesByClassId(long classId) {
+		return profileMapper.getProfileByClassId(classId);
 	}
 
 }

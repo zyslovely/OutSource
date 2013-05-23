@@ -7,7 +7,9 @@
 		<result property="password" column="password" />
 		<result property="createTime" column="createTime" />
 		<result property="level" column="level" />
-
+		<result property="classId" column="classId" />
+		<result property="name" column="name" />
+		<result property="number" column="number" />
 	</resultMap>
 
 	<insert id="addProfile" parameterType="Profile">
@@ -16,26 +18,50 @@
 		userName,
 		password,
 		CreateTime,
-		level
+		level,
+		classId,
+		name,
+		number
 		)VALUES(
 		#{UserName},
 		#{Password},
 		#{CreateTime},
-		#{level}
+		#{level},
+		#{classId},
+		#{name},
+		#{number}
 		)
+		<selectKey keyProperty="userId" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
 
-	<select id="getProfile" parameterType="long" resultMap="profileMap">
+	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
 		from TB_Profile
 		WHERE UserId=#{UserId};
 	</select>
 
-	<select id="getProfileByUserName" resultMap="profileMap">
+	<select id="getProfileByUserName" resultType="Profile">
 		SELECT *
 		from
 		TB_Profile
 		WHERE userName=#{username} ;
+	</select>
+
+	<select id="getProfileByClassId" resultType="Profile">
+		SELECT *
+		from
+		TB_Profile
+		WHERE classId=#{classId} order by UserName asc;
+	</select>
+
+	<select id="getMaxProfileByNumber" resultType="Profile">
+		SELECT *
+		from
+		TB_Profile
+		WHERE classId=#{classId} order by number desc;
 	</select>
 
 

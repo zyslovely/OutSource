@@ -160,8 +160,10 @@ CREATE TABLE `TB_Profile` (
   `UserId` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `UserName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `Password` varchar(64) NOT NULL DEFAULT '' COMMENT '密码',
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '姓名',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
   `level` int(11) NOT NULL DEFAULT '0' COMMENT '用户登录等级',
+  `number` bigint(20) NOT NULL DEFAULT '0' COMMENT '编号',
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户信息表'    

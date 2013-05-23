@@ -2,13 +2,19 @@
 <mapper
 	namespace="com.ruoogle.teach.mapper.CourseStudentPropertySemesterScoreMapper">
 	<resultMap type="CourseStudentPropertySemesterScore" id="courseStudentPropertySemesterScoreMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="semester" column="semester" />
 		<result property="propertyId" column="propertyId" />
 		<result property="score" column="score" />
 	</resultMap>
 	<insert id="addCourseStudentPropertySemesterScore"
-		parameterType="CourseStudentPropertySemesterScore"> INSERT INTO TB_Course_Student_Property_SemesterScore
-		(id,semester,propertyId,score )VALUES(
-		#{id},#{semester},#{propertyId},#{score})</insert>
+		parameterType="CourseStudentPropertySemesterScore">
+		INSERT INTO TB_Course_Student_Property_SemesterScore
+		(semester,propertyId,score )VALUES(
+		#{semester},#{propertyId},#{score})
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
 </mapper>
