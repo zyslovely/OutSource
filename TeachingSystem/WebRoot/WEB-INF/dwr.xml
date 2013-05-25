@@ -12,8 +12,14 @@
 		<create javascript="PubTeachSysBean" creator="spring">
 			<param name="beanName" value="dwrPubTeachSysBean" />
 		</create>
-		<create javascript="PubTeachSysTeacherBean" creator="spring">
+		<create javascript="TeachSysTeacherBean" creator="spring">
 			<param name="beanName" value="dwrPubTeachSysTeacherBean" />
+		</create>
+		<create javascript="TeachSysStudentBean" creator="spring">
+			<param name="beanName" value="dwrTeachSysStudentBean" />
+		</create>
+		<create javascript="TeachSysBean" creator="spring">
+			<param name="beanName" value="dwrTeachSysBean" />
 		</create>
 		<convert converter="bean" match="com.ruoogle.teach.meta.CourseScorePercent" />
 		<convert converter="bean"

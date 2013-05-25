@@ -4,11 +4,12 @@
 		<id property="id" column="id" />
 		<result property="specialty" column="specialty" />
 		<result property="shortSpecialty" column="shortSpecialty" />
+		<result property="semesterCount" column="semesterCount" />
 	</resultMap>
 	<insert id="addSpecialty" parameterType="Specialty">
 		INSERT INTO
-		TB_Specialty (specialty,shortSpecialty )VALUES(
-		#{specialty},#{shortSpecialty})
+		TB_Specialty (specialty,shortSpecialty,semesterCount)VALUES(
+		#{specialty},#{shortSpecialty},#{semesterCount})
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
@@ -17,9 +18,16 @@
 
 	<select id="getSpecialtyById" resultType="Specialty">
 		SELECT *
-		from TB_Specialty
+		from
+		TB_Specialty
 		WHERE
 		id=#{id};
+		
+	</select>
+	<select id="getSpecialties" resultType="Specialty">
+		SELECT *
+		from
+		TB_Specialty;
 		
 	</select>
 </mapper>

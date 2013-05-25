@@ -11,13 +11,24 @@ import com.ruoogle.teach.meta.Profile;
  */
 public interface ClassService {
 	/**
+	 * 添加专业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param SpecialtyName
+	 * @param SpecialtyShortName
+	 * @param semesterCount
+	 * @return
+	 */
+	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount);
+
+	/**
 	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param name
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId);
+	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount);
 
 	/**
 	 * 
@@ -55,5 +66,17 @@ public interface ClassService {
 	 * @return
 	 */
 	public com.ruoogle.teach.meta.Class getClassById(long classId);
+
+	/**
+	 * 添加日志
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param content
+	 * @param type
+	 * @param courseId
+	 * @param userId
+	 * @return
+	 */
+	public boolean addJournal(String content, int type, long courseId, long userId);
 
 }

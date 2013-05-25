@@ -145,6 +145,7 @@ CREATE TABLE TB_Specialty (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `specialty` varchar(127) NOT NULL DEFAULT '' COMMENT '专业',
   `shortSpecialty` varchar(127) NOT NULL DEFAULT '' COMMENT '缩写专业',
+  `semesterCount` int(11) NOT NULL DEFAULT '0' COMMENT '学期数量',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='专业' 
 
@@ -153,6 +154,7 @@ CREATE TABLE TB_Class (
   `specialtyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '专业id',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '班级名称',
   `startYear` int(11) NOT NULL DEFAULT '0' COMMENT '入学年份',
+  `semesterCount` int(11) NOT NULL DEFAULT '0' COMMENT '学期数量',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='班级'
 

@@ -21,6 +21,16 @@ public interface ProfileMapper {
 	public int addProfile(Profile profile);
 
 	/**
+	 * 列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<Profile> getProfileListByLevel(@Param(value = "level") int level, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
+	/**
 	 * 获取账户
 	 * 
 	 * @param UserId

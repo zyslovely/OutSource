@@ -16,7 +16,6 @@ import com.ruoogle.teach.mapper.CourseMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper;
-import com.ruoogle.teach.mapper.CoursePercentTypeMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeStageMapper;
 import com.ruoogle.teach.mapper.CoursePropertyMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentMapper;
@@ -26,7 +25,6 @@ import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
-import com.ruoogle.teach.meta.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore;
@@ -52,9 +50,6 @@ public class CourseServiceImpl implements CourseService {
 	private static final Logger logger = Logger.getLogger(CourseServiceImpl.class);
 
 	@Resource
-	private CoursePercentTypeMapper coursePercentTypeMapper;
-
-	@Resource
 	private CourseScorePercentMapper courseScorePercentMapper;
 	@Resource
 	private CourseMapper courseMapper;
@@ -78,20 +73,6 @@ public class CourseServiceImpl implements CourseService {
 	private CoursePercentTypeGroupMapper coursePercentTypeGroupMapper;
 	@Resource
 	private ProfileMapper profileMapper;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ruoogle.teach.service.CourseService#addNewCoursePercentType(java.
-	 * lang.String, java.lang.String)
-	 */
-	public boolean addNewCoursePercentType(String name, String desc) {
-		CoursePercentType coursePercentType = new CoursePercentType();
-		coursePercentType.setName(name);
-		coursePercentType.setDesc(desc);
-		return coursePercentTypeMapper.addCoursePercentType(coursePercentType) > 0;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -145,7 +126,7 @@ public class CourseServiceImpl implements CourseService {
 			courseStudent.setCourseId(course.getId());
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
-		
+
 		return true;
 	}
 
@@ -445,5 +426,15 @@ public class CourseServiceImpl implements CourseService {
 			return false;
 		}
 		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#finishCourse(long, long)
+	 */
+	@Override
+	public boolean finishCourse(long courseId, long teacherid) {
+		return courseMapper.finishedCourse(courseId) > 0;
 	}
 }

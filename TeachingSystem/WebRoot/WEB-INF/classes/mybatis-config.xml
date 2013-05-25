@@ -5,7 +5,6 @@
 		<typeAlias alias="Profile" type="com.ruoogle.teach.meta.Profile" />
 		<typeAlias alias="Class" type="com.ruoogle.teach.meta.Class" />
 		<typeAlias alias="Course" type="com.ruoogle.teach.meta.Course" />
-		<typeAlias alias="CoursePercentType" type="com.ruoogle.teach.meta.CoursePercentType" />
 		<typeAlias alias="CoursePercentTypeGroup"
 			type="com.ruoogle.teach.meta.CoursePercentTypeGroup" />
 		<typeAlias alias="CoursePercentTypeGroupStudent"
@@ -44,7 +43,7 @@
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentMapper.xml" />
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentScoreMapper.xml" />
-		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeMapper.xml" />
+
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeStageMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePropertyMapper.xml" />

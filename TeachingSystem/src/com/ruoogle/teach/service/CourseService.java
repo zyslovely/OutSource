@@ -12,15 +12,6 @@ import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
  * @see Class Description
  */
 public interface CourseService {
-	/**
-	 * 添加评分类型
-	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param name
-	 * @param desc
-	 * @return
-	 */
-	public boolean addNewCoursePercentType(String name, String desc);
 
 	/**
 	 * 添加新的课程
@@ -100,4 +91,14 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId, long percentType);
+
+	/**
+	 * 完成课程
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param teacherid
+	 * @return
+	 */
+	public boolean finishCourse(long courseId, long teacherid);
 }

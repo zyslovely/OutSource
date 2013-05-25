@@ -24,4 +24,17 @@
 	  </selectKey>
 	</insert>
 
+	<select id="getFeedBacksByUserId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE courseId=#{courseId} and toUserId=#{toUserId};
+	</select>
+
+	<select id="getFeedbacksByOriginId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE id=#{id} or feedbackId=#{id};
+	</select>
 </mapper>

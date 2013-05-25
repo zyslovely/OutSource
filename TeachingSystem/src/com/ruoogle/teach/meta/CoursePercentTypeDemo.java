@@ -12,6 +12,139 @@ public class CoursePercentTypeDemo implements Serializable {
 	private String name;
 	private String demoJson;
 
+	private CoursePercentType percentType;
+
+	public enum CoursePercentType {
+		/**
+		 * 平时成绩
+		 */
+		Grading {
+			@Override
+			public int getValue() {
+				return 0;
+			}
+
+			public String getName() {
+				return "平时成绩";
+			}
+
+			public String getDesc() {
+				return "平时成绩的描述";
+			}
+
+			public int getObjectCount() {
+				return 0;
+			}
+		},
+		/**
+		 * 考试成绩
+		 */
+		TestResult {
+			@Override
+			public int getValue() {
+				return 1;
+			}
+
+			public String getName() {
+				return "考试成绩";
+			}
+
+			public String getDesc() {
+				return "考试成绩描述";
+			}
+
+			public int getObjectCount() {
+				return 0;
+			}
+		},
+		/**
+		 * 多次平时考试成绩
+		 */
+		AvgGrading {
+			@Override
+			public int getValue() {
+				return 2;
+			}
+
+			public String getName() {
+				return "多次平时考试成绩";
+			}
+
+			public String getDesc() {
+				return "多次平时考试成绩描述";
+			}
+
+			public int getObjectCount() {
+				return 8;
+			}
+		},
+		/**
+		 * 创意成绩
+		 */
+		CreativeResult {
+			@Override
+			public int getValue() {
+				return 3;
+			}
+
+			public String getName() {
+				return "创意成绩成绩";
+			}
+
+			public String getDesc() {
+				return "创意成绩描述";
+			}
+
+			public int getObjectCount() {
+				return 0;
+			}
+		},
+		/**
+		 * 团队互评成绩
+		 */
+		EachStudent {
+			@Override
+			public int getValue() {
+				return 4;
+			}
+
+			public String getName() {
+				return "团队互评成绩";
+			}
+
+			public String getDesc() {
+				return "团队互评描述";
+			}
+
+			public int getObjectCount() {
+				return 0;
+			}
+		};
+		public abstract int getValue();
+
+		public abstract String getName();
+
+		public abstract String getDesc();
+
+		public abstract int getObjectCount();
+
+		public static CoursePercentType genCoursePercentType(int t) {
+			for (CoursePercentType type : CoursePercentType.values()) {
+				if (type.getValue() == t)
+					return type;
+			}
+			return null;
+		}
+	}
+
+	public CoursePercentType getPercentType() {
+		return percentType;
+	}
+
+	public void setPercentType(CoursePercentType percentType) {
+		this.percentType = percentType;
+	}
+
 	public long getId() {
 		return id;
 	}

@@ -14,4 +14,11 @@
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
 	</insert>
+
+	<select id="getCoursePercentTypeDemos" resultType="CoursePercentTypeDemo">
+		SELECT *
+		from
+		TB_Course_PercentType_Demo 
+		limit #{limit} offset #{offset};
+	</select>
 </mapper>

@@ -30,8 +30,7 @@
 
 	<update id="finishedCourse" flushCache="true" statementType="PREPARED">
 		update TB_Course set
-		status =
-		#{status}
+		status = 1
 		where id = #{courseId};
 	</update>
 </mapper>

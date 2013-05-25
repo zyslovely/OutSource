@@ -67,7 +67,7 @@ public class Profile implements Serializable {
 		};
 		public abstract int getValue();
 
-		public static ProfileLevel genProfileLevle(int t) {
+		public static ProfileLevel genProfileLevel(int t) {
 			for (ProfileLevel level : ProfileLevel.values()) {
 				if (level.getValue() == t)
 					return level;

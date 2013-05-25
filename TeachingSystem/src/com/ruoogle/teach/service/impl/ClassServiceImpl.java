@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
+import com.ruoogle.teach.mapper.JournalMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.Journal;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -29,6 +31,8 @@ public class ClassServiceImpl implements ClassService {
 	private ClassMapper classMapper;
 	@Resource
 	private CoursePercentTypeDemoMapper coursePercentTypeDemoMapper;
+	@Resource
+	private JournalMapper journalMapper;
 
 	@Resource
 	private SpecialtyMapper specialtyMapper;
@@ -39,13 +43,29 @@ public class ClassServiceImpl implements ClassService {
 	 * (non-Javadoc)
 	 * 
 	 * @see
+	 * com.ruoogle.teach.service.ClassService#addSpecialty(java.lang.String,
+	 * java.lang.String, int)
+	 */
+	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
+		Specialty specialty = new Specialty();
+		specialty.setSemesterCount(semesterCount);
+		specialty.setShortSpecialty(SpecialtyName);
+		specialty.setShortSpecialty(SpecialtyShortName);
+		return specialtyMapper.addSpecialty(specialty) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 * com.ruoogle.teach.service.ClassService#addClassRoom(java.lang.String,
 	 * int)
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId) {
+	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount) {
 		com.ruoogle.teach.meta.Class class1 = new com.ruoogle.teach.meta.Class();
 		class1.setName(name);
 		class1.setStartYear(year);
+		class1.setSemesterCount(semesterCount);
 		class1.setSpecialtyId(specialtyId);
 		return classMapper.addClass(class1) > 0;
 	}
@@ -112,4 +132,17 @@ public class ClassServiceImpl implements ClassService {
 		return classMapper.getClassById(classId);
 	}
 
+	/*
+	 * 
+	 */
+	@Override
+	public boolean addJournal(String content, int type, long courseId, long userId) {
+		Journal journal = new Journal();
+		journal.setContent(content);
+		journal.setUserId(userId);
+		journal.setCourseId(courseId);
+		journal.setType(type);
+		journal.setCreateTime(new Date().getTime());
+		return journalMapper.addJournal(journal) > 0;
+	}
 }

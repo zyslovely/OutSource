@@ -48,7 +48,7 @@ public abstract class AbstractBaseController extends MultiActionController {
 		Long userId = MyUser.getMyUser(request);
 		Profile profile = profileService.getProfile(userId);
 
-		switch (ProfileLevel.genProfileLevle(profile.getLevel())) {
+		switch (ProfileLevel.genProfileLevel(profile.getLevel())) {
 		case Student:
 			mv.addObject("levelName", "学生");
 			break;

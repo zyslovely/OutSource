@@ -36,7 +36,15 @@
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
 	</insert>
-
+	<select id="getProfileListByLevel" parameterType="long"
+		resultMap="profileMap">
+		SELECT *
+		from TB_Profile
+		WHERE level=#{level}
+		limit #{limit}
+		offset
+		#{offset} order by id desc;
+	</select>
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
 		from TB_Profile

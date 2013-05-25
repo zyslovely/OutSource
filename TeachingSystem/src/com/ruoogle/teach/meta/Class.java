@@ -8,6 +8,15 @@ public class Class implements Serializable {
 	private String name;
 	private int startYear;
 	private long specialtyId;
+	private int semesterCount;
+
+	public int getSemesterCount() {
+		return semesterCount;
+	}
+
+	public void setSemesterCount(int semesterCount) {
+		this.semesterCount = semesterCount;
+	}
 
 	public long getSpecialtyId() {
 		return specialtyId;

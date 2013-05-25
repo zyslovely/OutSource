@@ -23,5 +23,5 @@ public interface CourseMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public int finishedCourse(@Param(value = "courseId") long courseId, @Param(value = "status") long status);
+	public int finishedCourse(@Param(value = "courseId") long courseId);
 }

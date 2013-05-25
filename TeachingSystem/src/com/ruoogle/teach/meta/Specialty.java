@@ -7,6 +7,7 @@ public class Specialty implements Serializable {
 	private long id;
 	private String specialty;
 	private String shortSpecialty;
+	private int semesterCount;
 
 	public long getId() {
 		return id;
@@ -30,6 +31,14 @@ public class Specialty implements Serializable {
 
 	public void setShortSpecialty(String shortSpecialty) {
 		this.shortSpecialty = shortSpecialty;
+	}
+
+	public int getSemesterCount() {
+		return semesterCount;
+	}
+
+	public void setSemesterCount(int semesterCount) {
+		this.semesterCount = semesterCount;
 	}
 
 }

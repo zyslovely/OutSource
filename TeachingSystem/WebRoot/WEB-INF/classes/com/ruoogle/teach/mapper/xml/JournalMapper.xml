@@ -21,4 +21,13 @@
 		</selectKey>
 	</insert>
 
+	<select id="getJournalsByUserId" resultType="Journal">
+		SELECT *
+		from
+		TB_Journal
+		WHERE
+		userId=#{userId} and courseId =#{courseId} and
+		type=#{type};
+	</select>
+
 </mapper>

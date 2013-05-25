@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ruoogle.teach.meta.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;
@@ -27,15 +27,16 @@ public class DwrTeachSysAdminBean {
 	private ProfileService profileService;
 
 	/**
-	 * 添加课程评分类型
+	 * 添加专业
 	 * 
 	 * @auther zyslovely@gmail.com
-	 * @param name
-	 * @param desc
+	 * @param SpecialtyName
+	 * @param SpecialtyShortName
+	 * @param semesterCount
 	 * @return
 	 */
-	public boolean addNewCoursePercentType(String name, String desc) {
-		return courseService.addNewCoursePercentType(name, desc);
+	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
+		return classService.addSpecialty(SpecialtyName, SpecialtyShortName, semesterCount);
 	}
 
 	/**
@@ -46,8 +47,8 @@ public class DwrTeachSysAdminBean {
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId) {
-		return classService.addClassRoom(name, year, specialtyId);
+	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount) {
+		return classService.addClassRoom(name, year, specialtyId, semesterCount);
 	}
 
 	/**
