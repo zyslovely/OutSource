@@ -1,15 +1,11 @@
 package com.ruoogle.teach.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.ruoogle.teach.dwr.DwrPubTeachSysTeacherBean;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com

@@ -8,14 +8,14 @@ CREATE TABLE TB_Course (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表'
 
-CREATE TABLE TB_Course_Student {
+CREATE TABLE TB_Course_Student (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0学生,1老师.2企业老师',
   PRIMARY KEY (`id`)
-} ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表人员'
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表人员'
 
 CREATE TABLE TB_Course_Student_TotalScore (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
