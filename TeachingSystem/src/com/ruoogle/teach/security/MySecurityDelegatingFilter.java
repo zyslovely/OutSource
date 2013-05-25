@@ -13,15 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
-import com.eason.web.util.StringUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 
@@ -78,14 +75,13 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				this.dealRequestFromWeb(request, response, arg2);
 
 			} else {
-				
+
 				this.dealRequestFromApi(httpRequest, httpResponse, arg2);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		arg2.doFilter(request, response);
 
 	}
 
@@ -112,7 +108,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					myUser.setApiToken(MyUser.genToken(profile.getUserId()));
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
-					
+
 					arg2.doFilter(request, response);
 					return;
 				} else {
@@ -132,6 +128,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				return;
 			}
 		}
+		arg2.doFilter(request, response);
 	}
 
 	/**
@@ -186,6 +183,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				return;
 			}
 		}
+		arg2.doFilter(request, response);
 	}
 
 	private boolean noNeedAuthConfig(String uri, HttpServletRequest request) {

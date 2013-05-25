@@ -43,9 +43,9 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	public ModelAndView doLogin(HttpServletRequest request, HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 		try {
-			response.sendRedirect("/teach/index/");
+			response.sendRedirect(request.getContextPath() + "/teach/index/");
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
