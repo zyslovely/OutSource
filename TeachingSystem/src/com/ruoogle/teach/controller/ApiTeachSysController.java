@@ -11,4 +11,6 @@ import org.springframework.stereotype.Controller;
 @Controller("apiTeachSysController")
 public class ApiTeachSysController extends AbstractBaseController {
 	private static final Logger logger = Logger.getLogger(ApiTeachSysController.class);
+	
+	
 }

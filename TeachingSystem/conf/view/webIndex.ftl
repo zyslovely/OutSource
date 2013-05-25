@@ -2,6 +2,7 @@
 <#escape x as x?html>
 <#assign pageName = "webIndex" />
 <#include "head.ftl">
+
 <style type="text/css">
 html,body,#gmap{height:100%; margin:0;}
 body{font-size:83%;}
@@ -41,7 +42,25 @@ textarea, input, select{
 	height:20px;
 	FONT-SIZE: 12px;}
 </style>
-	
+	<style type="text/css">
+canvas {border:1px solid #4c4c4c;}
+</style>
+<!--[if IE]><script type="text/javascript" src="/js/radar/jsradarc.js"></script><![endif]-->
+<script type="text/javascript" src="/js/radar/radar.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+	var rc = new html5jp.graph.radar("sample");
+	if( ! rc ) { return; }
+	var items = [
+		["剪刀", 5, 2, 4, 5, 3, 2, 4, 4],
+		["石头", 3, 4, 3, 4, 5, 4, 5, 1]
+	];
+	var params = {
+		aCap: ["1", "2", "3", "4", "5", "6", "7", "8"]
+	}
+	rc.draw(items, params);
+};
+</script>
 <body style="background-color: rgb(243, 243, 243);">
 <div style="width: 50%; margin: 100px auto auto;">
     <h1 style="text-align: center; font-size: 60px;">登陆管理系统</h1>
@@ -53,6 +72,7 @@ textarea, input, select{
          <input type="submit" value="上传成绩">
     </form>
 
+<div><canvas width="400" height="300" id="sample"></canvas></div>
 </body>
 </html>
 </#escape>
