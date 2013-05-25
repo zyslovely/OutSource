@@ -22,6 +22,12 @@ public class Profile implements Serializable {
 	private long classId;
 	private long number;
 
+	public static final String KProfile_userName = "username";
+	public static final String KProfile_Name = "name";
+	public static final String KProfile_passWord = "password";
+	public static final String KProfile_token = "token";
+	public static final String KProfile_level = "level";
+
 	public enum ProfileLevel {
 		/**
 		 * 学生

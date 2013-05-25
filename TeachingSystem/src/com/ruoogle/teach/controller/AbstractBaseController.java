@@ -28,7 +28,7 @@ public abstract class AbstractBaseController extends MultiActionController {
 	private MethodNameResolver methodNameResolver;
 
 	@Resource
-	private ProfileService profileService;
+	protected ProfileService profileService;
 
 	/**
 	 * 初始化
