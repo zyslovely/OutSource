@@ -7,6 +7,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ruoogle.teach.constant.BasicObjectConstant;
@@ -36,9 +37,9 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 	public ModelAndView doLogin(HttpServletRequest request, HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 		ModelAndView modelAndView = new ModelAndView("return");
-		Long userId = MyUser.getMyUserFromToken(request);
-		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
-		Profile profile = profileService.getProfile(userId);
+		String userName = ServletRequestUtils.getStringParameter(request, "username", null);
+		Profile profile = profileService.getProfileByUserName(userName);
+		MyUser myUser = MySecurityDelegatingFilter.userMap.get(profile.getUserId());
 		JSONObject returnObject = new JSONObject();
 		if (profile == null) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code, ReturnCodeConstant.UserNoFound);
@@ -53,6 +54,7 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		dataObject.put(Profile.KProfile_level, profile.getLevel());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code, ReturnCodeConstant.SUCCESS);
+		modelAndView.addObject("returnObject", returnObject.toString());
 		return modelAndView;
 	}
 }

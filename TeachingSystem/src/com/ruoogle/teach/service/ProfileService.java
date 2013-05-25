@@ -39,4 +39,6 @@ public interface ProfileService {
 	 * @return
 	 */
 	public Profile getProfile(long userId);
+
+	public Profile getProfileByUserName(String userName);
 }

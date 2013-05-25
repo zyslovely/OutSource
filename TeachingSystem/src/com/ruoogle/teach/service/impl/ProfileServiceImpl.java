@@ -64,4 +64,16 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileMapper.getProfile(userId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ProfileService#getProfileByUserName(java.lang
+	 * .String)
+	 */
+	@Override
+	public Profile getProfileByUserName(String userName) {
+		return profileMapper.getProfileByUserName(userName);
+	}
+
 }

@@ -29,14 +29,13 @@ import com.ruoogle.teach.meta.Profile;
  */
 public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
-	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do*" };
+	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do" };
 
-	private static final String[] noAdminURIConfig = { "/**/webTeach.do*", "/**/webExcel.do*", "**/webUpload.do", "/**/webAdminTeach.do*",
+	private static final String[] noAdminURIConfig = { "/**/webTeach.do", "/**/webExcel.do", "/**/webUpload.do", "/**/webAdminTeach.do",
 			"/**/*.dwr" };
 
-	private static final String[] noAdminApiURIConfig = { "**/apiTeach.do*", };
-
-	private static final String[] noAuthApiURIConfig = { "**/apiTeachPub.do*" };
+	private static final String[] noAuthApiURIConfig = { "/**/apiTeachPub.do" };
+	private static final String[] noAdminApiURIConfig = { "/**/apiTeach.do", };
 
 	private static final PathMatcher urlMatcher = new AntPathMatcher();
 
@@ -108,7 +107,6 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					myUser.setApiToken(MyUser.genToken(profile.getUserId()));
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
-
 					arg2.doFilter(request, response);
 					return;
 				} else {
