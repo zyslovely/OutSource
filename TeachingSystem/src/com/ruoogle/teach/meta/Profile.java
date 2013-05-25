@@ -42,7 +42,7 @@ public class Profile implements Serializable {
 			}
 		},
 		/**
-		 * 管理员
+		 * 企业老师
 		 */
 		CompanyLeader {
 			@Override
@@ -50,6 +50,9 @@ public class Profile implements Serializable {
 				return 2;
 			}
 		},
+		/**
+		 * 管理员
+		 */
 		Admin {
 			@Override
 			public int getValue() {

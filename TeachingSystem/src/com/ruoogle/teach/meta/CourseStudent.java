@@ -6,10 +6,13 @@ public class CourseStudent implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
 	private long courseId;
-	private int semester;
 	private long classId;
-	private long studentId;
+	private long userId;
+	private int type;
 
+	
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -26,14 +29,6 @@ public class CourseStudent implements Serializable {
 		this.courseId = courseId;
 	}
 
-	public int getSemester() {
-		return semester;
-	}
-
-	public void setSemester(int semester) {
-		this.semester = semester;
-	}
-
 	public long getClassId() {
 		return classId;
 	}
@@ -42,12 +37,20 @@ public class CourseStudent implements Serializable {
 		this.classId = classId;
 	}
 
-	public long getStudentId() {
-		return studentId;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setStudentId(long studentId) {
-		this.studentId = studentId;
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 }

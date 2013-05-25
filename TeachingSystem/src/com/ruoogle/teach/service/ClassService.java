@@ -47,4 +47,13 @@ public interface ClassService {
 	 */
 	public List<Profile> getProfilesByClassId(long classId);
 
+	/**
+	 * 得到班级
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public com.ruoogle.teach.meta.Class getClassById(long classId);
+
 }

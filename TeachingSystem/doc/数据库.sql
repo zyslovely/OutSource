@@ -11,11 +11,11 @@ CREATE TABLE TB_Course (
 CREATE TABLE TB_Course_Student {
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
-  `semester` int(11) NOT NULL DEFAULT '0' COMMENT '学期',
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
-  `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0学生,1老师.2企业老师',
   PRIMARY KEY (`id`)
-} ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生课程表'
+} ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表人员'
 
 CREATE TABLE TB_Course_Student_TotalScore (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -167,3 +167,43 @@ CREATE TABLE `TB_Profile` (
   `number` bigint(20) NOT NULL DEFAULT '0' COMMENT '编号',
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户信息表'    
+
+
+CREATE TABLE `TB_FeedBack` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `FromUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `ToUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
+  `feedbackId` bigint(20) NOT NULL DEFAULT '0' COMMENT '反馈id',
+  `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0未读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='反馈表'  
+
+CREATE TABLE `TB_Interactive` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
+  `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
+  `forwardId` bigint(20) NOT NULL DEFAULT '0' COMMENT '转发id',
+  `photoUrl` varchar(127) NOT NULL DEFAULT '' COMMENT '内容',
+  `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0公开,1隐藏',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='互动表'    
+
+CREATE TABLE `TB_Journal` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
+  `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
+  `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0学习日志,1实习日志 ',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='日志表'    
+
+
+
+
+

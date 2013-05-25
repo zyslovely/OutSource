@@ -144,5 +144,17 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface" value="com.ruoogle.teach.mapper.SpecialtyMapper" />
 	</bean>
+	<bean id="feedBackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.FeedBackMapper" />
+	</bean>
+	<bean id="interactiveMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.InteractiveMapper" />
+	</bean>
+	<bean id="journalMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.JournalMapper" />
+	</bean>
 
 </beans>

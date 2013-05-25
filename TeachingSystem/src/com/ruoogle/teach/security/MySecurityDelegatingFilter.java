@@ -14,12 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.http.HttpRequest;
 import org.apache.log4j.Logger;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
+import com.eason.web.util.StringUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 
@@ -32,7 +34,12 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
 	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do*" };
 
-	private static final String[] noAdminURIConfig = { "/**/webTeach.do*", "/**/webAdminTeach.do*", "/**/*.dwr" };
+	private static final String[] noAdminURIConfig = { "/**/webTeach.do*", "/**/webExcel.do*", "**/webUpload.do", "/**/webAdminTeach.do*",
+			"/**/*.dwr" };
+
+	private static final String[] noAdminApiURIConfig = { "**/apiTeach.do*", };
+
+	private static final String[] noAuthApiURIConfig = { "**/apiTeachPub.do*" };
 
 	private static final PathMatcher urlMatcher = new AntPathMatcher();
 
@@ -65,11 +72,89 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		if (this.noNeedAuthConfig(uri, httpRequest) && this.noNeedAdminConfig(uri, httpRequest)) {
 			throw new ServletException();
 		}
+		try {
+			if (this.isRequestFromWeb(uri, httpRequest)) {
+
+				this.dealRequestFromWeb(request, response, arg2);
+
+			} else {
+				
+				this.dealRequestFromApi(httpRequest, httpResponse, arg2);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		arg2.doFilter(request, response);
+
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void dealRequestFromApi(ServletRequest request, ServletResponse response, FilterChain arg2) throws Exception {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		String uri = httpRequest.getRequestURI();
 		if (this.noNeedAuthConfig(uri, httpRequest)) {
 			String actionName = ServletRequestUtils.getStringParameter(httpRequest, "action", "null");
 			if (actionName != null && actionName.equals("doLogin")) {
 				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
 				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
+				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
+				Profile profile = profileMapper.getProfileByUserName(userName);
+				if (profile != null && profile.getPassword().equals(passWord)) {
+					MyUser myUser = new MyUser();
+					myUser.setUserId(profile.getUserId());
+					myUser.setApiToken(MyUser.genToken(profile.getUserId()));
+					myUser.setLevel(profile.getLevel());
+					userMap.put(myUser.getUserId(), myUser);
+					
+					arg2.doFilter(request, response);
+					return;
+				} else {
+					logger.error("账号密码失败");
+					httpResponse.sendRedirect("/");
+					return;
+				}
+			}
+		}
+		// 如果需要认证
+		if (this.noNeedAdminConfig(uri, httpRequest) && !this.noNeedAuthConfig(uri, httpRequest)) {
+			String token = ServletRequestUtils.getStringParameter(httpRequest, "token", null);
+			Long userId = ServletRequestUtils.getLongParameter(httpRequest, "userid", -1L);
+			if (!MyUser.checkToken(token, userId)) {
+				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
+				httpResponse.sendRedirect("/");
+				return;
+			}
+		}
+	}
+
+	/**
+	 * 处理来自web的请求
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @param arg2
+	 * @throws Exception
+	 */
+	private void dealRequestFromWeb(ServletRequest request, ServletResponse response, FilterChain arg2) throws Exception {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		String uri = httpRequest.getRequestURI();
+		if (this.noNeedAuthConfig(uri, httpRequest)) {
+			String actionName = ServletRequestUtils.getStringParameter(httpRequest, "action", "null");
+			if (actionName != null && actionName.equals("doLogin")) {
+				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
+				userName = new String(userName.getBytes("iso-8859-1"), "UTF-8");
+				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
+				passWord = new String(passWord.getBytes("iso-8859-1"), "UTF-8");
+
 				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
 				Profile profile = profileMapper.getProfileByUserName(userName);
 				if (profile != null && profile.getPassword().equals(passWord)) {
@@ -99,25 +184,17 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
 				httpResponse.sendRedirect("/");
 				return;
-				// 做一个重定向
-
 			}
 		}
-		arg2.doFilter(request, response);
-
-	}
-
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-
 	}
 
 	private boolean noNeedAuthConfig(String uri, HttpServletRequest request) {
-		if (ArrayUtils.isEmpty(noAuthURIConfig)) {
-			return false;
-		}
 		for (String ptn : noAuthURIConfig) {
+			if (urlMatcher.match(ptn, uri)) {
+				return true;
+			}
+		}
+		for (String ptn : noAuthApiURIConfig) {
 			if (urlMatcher.match(ptn, uri)) {
 				return true;
 			}
@@ -126,8 +203,33 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 	}
 
 	private boolean noNeedAdminConfig(String uri, HttpServletRequest request) {
-		if (ArrayUtils.isEmpty(noAdminURIConfig)) {
-			return false;
+
+		for (String ptn : noAdminURIConfig) {
+			if (urlMatcher.match(ptn, uri)) {
+				return true;
+			}
+		}
+		for (String ptn : noAdminApiURIConfig) {
+			if (urlMatcher.match(ptn, uri)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 是否来自web请求
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param uri
+	 * @param request
+	 * @return
+	 */
+	private boolean isRequestFromWeb(String uri, HttpServletRequest request) {
+		for (String ptn : noAuthURIConfig) {
+			if (urlMatcher.match(ptn, uri)) {
+				return true;
+			}
 		}
 		for (String ptn : noAdminURIConfig) {
 			if (urlMatcher.match(ptn, uri)) {

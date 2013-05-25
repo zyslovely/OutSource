@@ -59,13 +59,20 @@ public class ClassServiceImpl implements ClassService {
 		Profile profile = new Profile();
 		profile.setCreateTime(new Date().getTime());
 		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
+		if (class1 == null) {
+			return false;
+		}
 		Specialty specialty = specialtyMapper.getSpecialtyById(class1.getSpecialtyId());
+		if (specialty == null) {
+			return false;
+		}
 		String userName = specialty.getShortSpecialty() + class1.getName() + number;
 		String passWord = class1.getName() + number;
 		profile.setUserName(userName);
 		profile.setPassword(passWord);
 		profile.setNumber(number);
 		profile.setName(name);
+		profile.setClassId(classId);
 		profile.setLevel(ProfileLevel.Student.getValue());
 		return profileMapper.addProfile(profile) > 0;
 	}
@@ -93,6 +100,16 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<Profile> getProfilesByClassId(long classId) {
 		return profileMapper.getProfileByClassId(classId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getClassById(long)
+	 */
+	@Override
+	public com.ruoogle.teach.meta.Class getClassById(long classId) {
+		return classMapper.getClassById(classId);
 	}
 
 }

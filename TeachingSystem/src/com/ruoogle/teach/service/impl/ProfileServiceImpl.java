@@ -38,4 +38,30 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileMapper.addProfile(profile) > 0;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ProfileService#changePassword(long,
+	 * java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean changePassword(long studentId, String newPassword, String oldPassword) {
+
+		Profile profile = profileMapper.getProfile(studentId);
+		if (profile == null || !profile.getPassword().equals(oldPassword)) {
+			return false;
+		}
+		return profileMapper.updateProfilePassword(studentId, newPassword) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ProfileService#getProfile(long)
+	 */
+	@Override
+	public Profile getProfile(long userId) {
+		return profileMapper.getProfile(userId);
+	}
+
 }

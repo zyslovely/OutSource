@@ -15,7 +15,7 @@
 		</selectKey>
 	</insert>
 
-	<select id="getpecialtyById" resultType="Specialty">
+	<select id="getSpecialtyById" resultType="Specialty">
 		SELECT *
 		from TB_Specialty
 		WHERE

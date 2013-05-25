@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.meta.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
-import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;

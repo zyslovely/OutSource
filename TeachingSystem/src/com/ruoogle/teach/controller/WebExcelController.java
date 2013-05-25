@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -34,7 +33,7 @@ import com.ruoogle.teach.service.ClassService;
  */
 @Controller("webExcelController")
 public class WebExcelController extends AbstractBaseController {
-
+	private static final Logger logger = Logger.getLogger(WebExcelController.class);
 	@Resource
 	private ClassService classService;
 	@Resource
@@ -142,8 +141,8 @@ public class WebExcelController extends AbstractBaseController {
 		template.createCell("密码");
 		List<Profile> profileList = classService.getProfilesByClassId(classId);
 		if (!ListUtils.isEmptyList(profileList)) {
-			for (int i = 1; i <= profileList.size(); i++) {
-				template.createRow(i);
+			for (int i = 0; i < profileList.size(); i++) {
+				template.createRow(i + 1);
 				Profile profile = profileList.get(i);
 
 				template.createCell(profile.getName());
@@ -162,6 +161,14 @@ public class WebExcelController extends AbstractBaseController {
 		return null;
 	}
 
+	/**
+	 * 上传学生信息
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public ModelAndView upLoadStudentProfileExcel(HttpServletRequest request, HttpServletResponse response) {
 
 		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
@@ -179,6 +186,11 @@ public class WebExcelController extends AbstractBaseController {
 					HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
 					HSSFSheet sheet = workbook.getSheetAt(0);
 					int totalRow = sheet.getLastRowNum();
+					com.ruoogle.teach.meta.Class class1 = classService.getClassById(classId);
+					if (class1 == null) {
+						logger.error("WebExcelController upLoadStudentProfileExcel error where class==null where id=" + classId);
+						throw new Exception();
+					}
 					Profile maxProfile = profileMapper.getMaxProfileByNumber(classId);
 					long maxNumber = 0;
 					if (maxProfile != null) {
@@ -196,9 +208,9 @@ public class WebExcelController extends AbstractBaseController {
 						}
 						if (cell1.getRichStringCellValue().getString().trim().isEmpty()) {
 							throw new java.lang.Exception();
-							
+
 						}
-						if (cell2.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell2 == null || cell2.getRichStringCellValue().getString().trim().isEmpty()) {
 
 							classService.addStudentProfile(classId, maxNumber++, cell1.getRichStringCellValue().getString().trim());
 
@@ -214,23 +226,11 @@ public class WebExcelController extends AbstractBaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		return null;
 	}
-
-	/**
-	 * 读取文件
-	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param request
-	 * @return
-	 * @throws FileUploadException
-	 */
-	public Iterator<FileItem> getUPFiles(HttpServletRequest request) throws FileUploadException {
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		return upload.parseRequest(request).iterator();
-	}
+	
+	
 
 }

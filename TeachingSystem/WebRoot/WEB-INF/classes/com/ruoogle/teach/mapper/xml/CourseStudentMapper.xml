@@ -3,16 +3,15 @@
 	<resultMap type="CourseStudent" id="courseStudentMap ">
 		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
-		<result property="semester" column="semester" />
 		<result property="classId" column="classId" />
 		<result property="studentId" column="studentId" />
 	</resultMap>
 	<insert id="addCourseStudent" parameterType="CourseStudent">
 		INSERT INTO
 		TB_Course_Student (
-		courseId,semester,classId,studentId
+		courseId,classId,userId,type
 		)VALUES(
-		#{courseId},#{semester},#{classId},#{studentId}
+		#{courseId},#{classId},#{userId},#{type}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -24,7 +23,7 @@
 		SELECT *
 		from
 		TB_Course_Student
-		WHERE courseId=#{courseId};
+		WHERE courseId=#{courseId} and type=0;
 	</select>
 
 

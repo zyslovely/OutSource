@@ -17,15 +17,15 @@
 		TB_Profile(
 		userName,
 		password,
-		CreateTime,
+		createTime,
 		level,
 		classId,
 		name,
 		number
 		)VALUES(
-		#{UserName},
-		#{Password},
-		#{CreateTime},
+		#{userName},
+		#{password},
+		#{createTime},
 		#{level},
 		#{classId},
 		#{name},
@@ -61,8 +61,17 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} order by number desc;
+		WHERE classId=#{classId} order by number desc limit 1;
 	</select>
-
+	<update id="updateProfilePassword" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Profile
+		set
+		password=#{password}
+		WHERE
+		userId=
+		#{userId};
+	</update>
 
 </mapper>

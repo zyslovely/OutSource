@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +20,7 @@ import com.ruoogle.teach.security.MyUser;
  */
 @Controller("webTeachSysController")
 public class WebTeachSysController extends AbstractBaseController {
-
+	private static final Logger logger = Logger.getLogger(WebTeachSysController.class);
 	/**
 	 * 退出
 	 * 
@@ -53,8 +54,9 @@ public class WebTeachSysController extends AbstractBaseController {
 	 */
 	public ModelAndView teachIndex(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("teachIndex");
+		this.setUD(mv, request);
 		return mv;
 	}
 
-
+	
 }

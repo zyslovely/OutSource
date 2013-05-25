@@ -1,5 +1,6 @@
 package com.ruoogle.teach.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
  * @see Class Description
  */
 @Controller("webUploadController")
-public class WebUploadController extends AbstractBaseController{
-
+public class WebUploadController extends AbstractBaseController {
+	
+	private static final Logger logger = Logger.getLogger(WebUploadController.class);
 }

@@ -1,0 +1,1 @@
+package com.ruoogle.teach.mapper; import com.ruoogle.teach.meta.Journal; public interface JournalMapper { public int addJournal(Journal journal); }

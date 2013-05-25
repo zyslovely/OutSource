@@ -5,8 +5,10 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
  * @version CreateTime：2013-5-17 上午12:16:54
@@ -14,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller("webTeachSysPubController")
 public class WebTeachSysPubController extends AbstractBaseController {
+
+	private static final Logger logger = Logger.getLogger(WebTeachSysPubController.class);
+
 	/**
 	 * 首页
 	 * 

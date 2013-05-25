@@ -8,6 +8,7 @@ import org.directwebremoting.WebContextFactory;
 
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.CourseService;
+import com.ruoogle.teach.service.ProfileService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -19,6 +20,8 @@ public class DwrTeachSysStudentBean {
 	private static final Logger logger = Logger.getLogger(DwrTeachSysStudentBean.class);
 	@Resource
 	private CourseService courseService;
+	@Resource
+	ProfileService profileService;
 
 	/**
 	 * 添加分组分数
@@ -33,6 +36,23 @@ public class DwrTeachSysStudentBean {
 	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long percentType) {
 		WebContext ctx = WebContextFactory.get();
 		Long fromStudentId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId,percentType);
+		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId, percentType);
 	}
+
+	/**
+	 * 改密码
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @param newPassWord
+	 * @param oldPassWord
+	 * @return
+	 */
+	public boolean changePassWord(String newPassWord, String oldPassWord) {
+		WebContext ctx = WebContextFactory.get();
+		Long studentId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		return profileService.changePassword(studentId, newPassWord, oldPassWord);
+	}
+	
+	
 }

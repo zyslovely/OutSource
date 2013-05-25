@@ -54,6 +54,8 @@
 				<prop key="**/webTeachPub.do">webTeachSysPubController</prop>
 				<prop key="**/webExcel.do">webExcelController</prop>
 				<prop key="**/webUpload.do">webUploadController</prop>
+				<prop key="**/apiTeach.do">apiTeachSysController</prop>
+				<prop key="**/apiTeachPub.do">apiTeachSysPubController</prop>
 
 			</props>
 		</property>

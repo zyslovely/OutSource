@@ -52,4 +52,14 @@ public interface ProfileMapper {
 	 * @return
 	 */
 	public Profile getMaxProfileByNumber(@Param(value = "classId") long classId);
+
+	/**
+	 * 改密码
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @param password
+	 * @return
+	 */
+	public int updateProfilePassword(@Param(value = "userId") long userId, @Param(value = "password") String password);
 }

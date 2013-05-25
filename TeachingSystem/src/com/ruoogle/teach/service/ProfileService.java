@@ -1,5 +1,7 @@
 package com.ruoogle.teach.service;
 
+import com.ruoogle.teach.meta.Profile;
+
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
  * @version CreateTime：2013-5-20 上午01:01:42
@@ -17,4 +19,24 @@ public interface ProfileService {
 	 * @return
 	 */
 	public boolean addProfile(String name, String userName, String passWord, int level);
+
+	/**
+	 * 改密码
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @param newPassword
+	 * @param oldPassword
+	 * @return
+	 */
+	public boolean changePassword(long studentId, String newPassword, String oldPassword);
+
+	/**
+	 * 获得用户信息
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public Profile getProfile(long userId);
 }

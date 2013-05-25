@@ -1,5 +1,6 @@
 package com.ruoogle.teach.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper;
 import com.ruoogle.teach.mapper.CourseStudentMapper;
 import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
+import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
@@ -35,7 +37,9 @@ import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentTotalScore;
+import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.CourseService;
 
 /**
@@ -72,6 +76,8 @@ public class CourseServiceImpl implements CourseService {
 	private CoursePercentTypeGroupStudentMapper coursePercentTypeGroupStudentMapper;
 	@Resource
 	private CoursePercentTypeGroupMapper coursePercentTypeGroupMapper;
+	@Resource
+	private ProfileMapper profileMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -106,9 +112,14 @@ public class CourseServiceImpl implements CourseService {
 		if (courseMapper.addCourse(course) <= 0) {
 			return false;
 		}
-
+		List<Long> teacherIds = new ArrayList<Long>();
+		teacherIds.add(teacherId);
 		for (CourseScorePercent courseScorePercent : CourseScorePercents) {
 			courseScorePercent.setCourseId(course.getId());
+			if (courseScorePercent.getTeacherId() != 0) {
+				// 添加老师
+				teacherIds.add(courseScorePercent.getTeacherId());
+			}
 			courseScorePercentMapper.addCourseScorePercent(courseScorePercent);
 		}
 
@@ -119,11 +130,22 @@ public class CourseServiceImpl implements CourseService {
 		for (Long studentId : studentIds) {
 			CourseStudent courseStudent = new CourseStudent();
 			courseStudent.setClassId(classId);
-			courseStudent.setSemester(year);
-			courseStudent.setStudentId(studentId);
+			courseStudent.setUserId(studentId);
+			courseStudent.setType(ProfileLevel.Student.getValue());
 			courseStudent.setCourseId(course.getId());
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
+		// 添加老师和企业老师用户
+		for (Long userId : teacherIds) {
+			Profile profile = profileMapper.getProfile(userId);
+			CourseStudent courseStudent = new CourseStudent();
+			courseStudent.setClassId(classId);
+			courseStudent.setUserId(profile.getUserId());
+			courseStudent.setType(profile.getLevel());
+			courseStudent.setCourseId(course.getId());
+			courseStudentMapper.addCourseStudent(courseStudent);
+		}
+		
 		return true;
 	}
 
