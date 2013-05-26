@@ -47,6 +47,16 @@ $("#dot_2").hover(function(){
 	_nowIndex=1;
 	changeImage();
 });
+
+$("#password").focus(function(){
+	$("#username_div").css("background-image","url('/img/webIndex/input_bg.png')");
+	$("#password_div").css("background-image","url('/img/webIndex/input_bg_focus.png')");
+});
+
+$("#username").focus(function(){
+	$("#password_div").css("background-image","url('/img/webIndex/input_bg.png')");
+	$("#username_div").css("background-image","url('/img/webIndex/input_bg_focus.png')");
+});
 function changeImageInterval(){
 	if(_nowIndex==0){
 		_nowIndex=1;
