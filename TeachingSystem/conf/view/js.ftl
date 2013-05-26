@@ -9,8 +9,11 @@
 	<#switch pageName>
     	<#case "webIndex">
     	
+   	       <script type="text/javascript" src="/js/webIndex.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "teachIndex">
+    	
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
     	<#break>
-    	
     </#switch>
 </#if>

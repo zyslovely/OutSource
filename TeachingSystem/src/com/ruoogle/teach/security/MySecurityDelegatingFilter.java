@@ -31,8 +31,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
 	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do" };
 
-	private static final String[] noAdminURIConfig = { "/**/webTeach.do", "/**/webExcel.do", "/**/webUpload.do", "/**/webAdminTeach.do",
-			"/**/*.dwr" };
+	private static final String[] noAdminURIConfig = { "/**/webTeach.do", "/**/webExcel.do", "/**/webUpload.do", "/**/webAdminTeach.do", "/**/*.dwr" };
 
 	private static final String[] noAuthApiURIConfig = { "/**/apiTeachPub.do" };
 	private static final String[] noAdminApiURIConfig = { "/**/apiTeach.do", };
@@ -149,7 +148,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				userName = new String(userName.getBytes("iso-8859-1"), "UTF-8");
 				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
 				passWord = new String(passWord.getBytes("iso-8859-1"), "UTF-8");
-
+				int rememberMe = ServletRequestUtils.getIntParameter(httpRequest, "remember", 0);
 				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
 				Profile profile = profileMapper.getProfileByUserName(userName);
 				if (profile != null && profile.getPassword().equals(passWord)) {

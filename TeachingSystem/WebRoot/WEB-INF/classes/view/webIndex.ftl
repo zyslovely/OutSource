@@ -3,116 +3,48 @@
 <#assign pageName = "webIndex" />
 <#include "head.ftl">
 
-
-<script type="text/javascript" src="/js/radar/amcharts.js"></script>
-
- <script type="text/javascript">
-            var chart;
-
-            var chartData = [{
-                direction: "N",
-                value: 8
-            }, {
-                direction: "NE",
-                value: 9
-            }, {
-                direction: "E",
-                value: 4.5
-            }, {
-                direction: "SE",
-                value: 3.5
-            }, {
-                direction: "S",
-                value: 9.2
-            }, {
-                direction: "SW",
-                value: 8.4
-            }, {
-                direction: "W",
-                value: 11.1
-            }, {
-                direction: "NW",
-                value: 10
-            }];
-
-
-            AmCharts.ready(function () {
-                // RADAR CHART
-                chart = new AmCharts.AmRadarChart();
-                chart.dataProvider = chartData;
-                chart.categoryField = "direction";
-                chart.startDuration = 1;
-
-                // TITLE
-                chart.addTitle("Prevailing winds", 15);
-
-                // VALUE AXIS
-                var valueAxis = new AmCharts.ValueAxis();
-                valueAxis.gridType = "circles";
-                valueAxis.fillAlpha = 0.05;
-                valueAxis.fillColor = "#000000"
-                valueAxis.axisAlpha = 0.2;
-                valueAxis.gridAlpha = 0;
-                valueAxis.fontWeight = "bold"
-                valueAxis.minimum = 0;
-                chart.addValueAxis(valueAxis);
-
-                // GRAPH
-                var graph = new AmCharts.AmGraph();
-                graph.lineColor = "#FFCC00"
-                graph.fillAlphas = 0.4;
-                graph.bullet = "round"
-                graph.valueField = "value"
-                graph.balloonText = "[[category]]: [[value]] m/s"
-                chart.addGraph(graph);
-
-                // GUIDES
-                // blue fill
-                var guide = new AmCharts.Guide();
-                guide.angle = 225;
-                guide.tickLength = 0;
-                guide.toAngle = 315;
-                guide.value = 0;
-                guide.toValue = 14;
-                guide.fillColor = "#0066CC";
-                guide.fillAlpha = 0.6
-                valueAxis.addGuide(guide);
-
-                // red fill
-                var guide = new AmCharts.Guide();
-                guide.angle = 45;
-                guide.tickLength = 0;
-                guide.toAngle = 135;
-                guide.value = 0;
-                guide.toValue = 14;
-                guide.fillColor = "#CC3333";
-                guide.fillAlpha = 0.6;
-                valueAxis.addGuide(guide);
-
-                // WRITE                
-                chart.write("chartdiv");
-            });
- </script>
-
-<body style="background-color: rgb(243, 243, 243);">
-
-<div id="chartdiv" style="width:200px; height:200px;"></div>
-
-<div style="width: 50%; margin: 100px auto auto;">
-    <h1 style="text-align: center; font-size: 60px;">登陆管理系统</h1>
-    <#include "login.ftl">
-</div>
-
-    <form onsubmit="return uploadExcel();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addStudent/?classId=10000" id="uploadFrame">
-        
-         <input type="file" class="t file l " size="37" name="file" value="浏览">
-         <input type="submit" value="上传成绩">
-    </form>
-
-
+<body style="min-width:1500px;min-height:900px">
+   <div style="height:90px;width:100%;">
+       <div style="margin-left:15%;margin-top:23px;">
+           <img src="/img/webIndex/logo.png"/>
+       </div>
+   </div>
+   <div style="min-height:810px;min-width:100%;background:url('/img/webIndex/bg.png') repeat scroll center top transparent;">
+       <div style="padding-top: 40px; padding-left: 15%;">
+          <p style="font-size: 20px; color: rgb(95, 95, 95);">数字媒体技术应用专业学业评价系统</p>
+       </div>
+       <div style="margin-left: 15%; margin-top: 46px;">
+          <div style="float:left;width: 667px; height: 432px; background: url('/img/webIndex/pic_bg.png') no-repeat scroll center top transparent; ">
+              <img src="/img/webIndex/pic1.png" style="height: 421px; width: 657px; margin-left: 5px; margin-top: 5px;"/>
+              <div style="margin-left: 5px; background: url('/img/webIndex/pic_mask.png') no-repeat scroll center top transparent; width: 657px; height: 50px; position: relative; top: -55px; border-radius: 5px 5px 5px 5px;">
+                   <span style="position: absolute; color: white; margin: 10px 0px 0px 40px; font-size: 18px;">教学楼</span>
+                   <span style="background: url('/img/webIndex/pic_mask_dot_select.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 88%;"></span>
+                   <span style="background: url('/img/webIndex/pic_mask_dot.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 92%;"></span>
+              </div>
+          </div>
+          <div style="float:left;margin-left:40px;width: 358px; height: 425px;margin-left:20px;background: url('/img/webIndex/login_bg.png') no-repeat scroll center top transparent; ">
+              <p style="width: 100%; text-align: center; margin-top: 27px; color: rgb(95, 95, 95); font-size: 27px;">登录</p>
+              <span style="height: 2px; background: url('/img/webIndex/line.png') repeat-x scroll center top transparent; position: absolute; margin-top: 14px; margin-left: 8px; width: 344px;"></span>
+              <div style="background: url('/img/webIndex/input_bg_focus.png') no-repeat scroll center top transparent;  width: 312px; margin-left: 22px; margin-top: 50px;padding-top:15px\9; ">
+                  <input id="username" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;"/>
+              </div>
+              <div style="background: url('/img/webIndex/input_bg_focus.png') no-repeat scroll center top transparent;  width: 312px; margin-left: 22px; margin-top: 15px;padding-top:15px\9; " >
+                  <input id="password" name="password" type="password" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;"/>
+              </div>
+              <div style="margin-top: 20px; margin-left: 35px; height: 35px;">
+                  <p style="width:150px;float:left;">
+                     <img src="/img/webIndex/radio_button_select.png" style="width: 18px; height: 18px;cursor: pointer;" id="remember_me" data-remember="1" name="remember" value="1"/>
+                     <span style="margin-left: 10px; position: absolute;">记住我<span>
+                  </p>
+                  <span style="float: right; margin-right: 50px;"><a href="">忘记密码?</a></span>
+              </div>
+              <div style="background: url('/img/webIndex/login_button_normal.png') no-repeat scroll center top transparent; width: 299px; margin-top: 10px; margin-left: 27px;">
+                  <input id="submit_login" type="button" style="cursor: pointer;border: 0px none; background: none repeat scroll 0% 0% transparent; font-size: 30px; width: 100%; text-align: center; height: 60px; color: #ffffff;" value="登录"/>
+              </div>
+          </div>
+       </div>
+   </div>
 </body>
 </html>
-</#escape>
-<!--		
+</#escape>		
 <#include "js.ftl">
--->
