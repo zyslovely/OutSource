@@ -9,6 +9,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
+import com.eason.web.util.CookieUtil;
+import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 
@@ -158,6 +161,9 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
 
+					if (rememberMe == 1) {
+						CookieUtil.setCookie(httpResponse, CookieUtil.PARA_LOGIN_COOKIE, httpRequest.getSession().getId(), 1000 * 60 * 60 * 24);
+					}
 					httpRequest.getSession().setAttribute("login", true);
 					httpRequest.getSession().setAttribute("userId", myUser.getUserId());
 					arg2.doFilter(request, response);
@@ -174,7 +180,8 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		if (this.noNeedAdminConfig(uri, httpRequest) && !this.noNeedAuthConfig(uri, httpRequest)) {
 			Long userId = MyUser.getMyUser(httpRequest);
 			MyUser myUser = userMap.get(userId);
-			if (myUser == null) {
+			Cookie cookie = CookieUtil.getCookie(httpRequest, CookieUtil.PARA_LOGIN_COOKIE);
+			if (myUser == null && cookie == null) {
 				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
 				httpResponse.sendRedirect("/");
 				return;

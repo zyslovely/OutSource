@@ -1,11 +1,11 @@
 <html lang="en" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
 
-<title>手机管理系统</title>
-<meta content="郑遗晟" name="author">
-<meta content="郑遗晟" name="publisher">
-<meta content="骑去哪儿网" name="copyright">
-<meta content="一个手机管理系统" name="description">
-<meta content=" 手机" name="keywords">
+<title>数字媒体技术应用专业学业评价系统</title>
+<meta content="eason zheng" name="author">
+<meta content="eason zheng" name="publisher">
+<meta content="广西银行学校" name="copyright">
+<meta content="广西银行学校 数字媒体技术应用专业学业评价系统" name="description">
+<meta content=" 学校" name="keywords">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="ja" />

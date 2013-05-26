@@ -9,7 +9,7 @@ if(${error!0}==1){
 }
 </script>
 <body style="min-width:1500px;min-height:900px">
-   <div style="height:90px;width:100%;">
+   <div style="height:80px;width:100%;">
        <div style="margin-left:15%;margin-top:23px;">
            <img src="/img/webIndex/logo.png"/>
        </div>

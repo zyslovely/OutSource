@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ruoogle.teach.security.MySecurityDelegatingFilter;
+import com.ruoogle.teach.security.MyUser;
+
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
  * @version CreateTime：2013-5-17 上午12:16:54
@@ -30,6 +33,7 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	 */
 	public ModelAndView showIndexView(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("webIndex");
+		
 		int error = ServletRequestUtils.getIntParameter(request, "error", 0);
 		mv.addObject("error", error);
 		return mv;
@@ -46,7 +50,7 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	public ModelAndView doLogin(HttpServletRequest request, HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 		try {
-			response.sendRedirect(request.getContextPath() + "/teach/index/");
+			response.sendRedirect("/teach/index/");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
