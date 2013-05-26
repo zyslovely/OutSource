@@ -1,0 +1,148 @@
+package com.ruoogle.teach.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.ruoogle.teach.mapper.ClassMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
+import com.ruoogle.teach.mapper.JournalMapper;
+import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.SpecialtyMapper;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.Journal;
+import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Specialty;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.service.ClassService;
+
+/**
+ * @author zhengyisheng E-mail:zhengyisheng@gmail.com
+ * @version CreateTime：2013-5-20 下午08:37:57
+ * @see Class Description
+ */
+@Service("classService")
+public class ClassServiceImpl implements ClassService {
+
+	@Resource
+	private ClassMapper classMapper;
+	@Resource
+	private CoursePercentTypeDemoMapper coursePercentTypeDemoMapper;
+	@Resource
+	private JournalMapper journalMapper;
+
+	@Resource
+	private SpecialtyMapper specialtyMapper;
+	@Resource
+	private ProfileMapper profileMapper;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ClassService#addSpecialty(java.lang.String,
+	 * java.lang.String, int)
+	 */
+	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
+		Specialty specialty = new Specialty();
+		specialty.setSemesterCount(semesterCount);
+		specialty.setShortSpecialty(SpecialtyName);
+		specialty.setShortSpecialty(SpecialtyShortName);
+		return specialtyMapper.addSpecialty(specialty) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ClassService#addClassRoom(java.lang.String,
+	 * int)
+	 */
+	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount) {
+		com.ruoogle.teach.meta.Class class1 = new com.ruoogle.teach.meta.Class();
+		class1.setName(name);
+		class1.setStartYear(year);
+		class1.setSemesterCount(semesterCount);
+		class1.setSpecialtyId(specialtyId);
+		return classMapper.addClass(class1) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#addStudentProfile(long, int)
+	 */
+	public boolean addStudentProfile(long classId, long number, String name) {
+		Profile profile = new Profile();
+		profile.setCreateTime(new Date().getTime());
+		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
+		if (class1 == null) {
+			return false;
+		}
+		Specialty specialty = specialtyMapper.getSpecialtyById(class1.getSpecialtyId());
+		if (specialty == null) {
+			return false;
+		}
+		String userName = specialty.getShortSpecialty() + class1.getName() + number;
+		String passWord = class1.getName() + number;
+		profile.setUserName(userName);
+		profile.setPassword(passWord);
+		profile.setNumber(number);
+		profile.setName(name);
+		profile.setClassId(classId);
+		profile.setLevel(ProfileLevel.Student.getValue());
+		return profileMapper.addProfile(profile) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ClassService#addCoursePercentTypeDemo(java.
+	 * lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean addCoursePercentTypeDemo(String name, String demoJson) {
+		CoursePercentTypeDemo coursePercentTypeDemo = new CoursePercentTypeDemo();
+		coursePercentTypeDemo.setName(name);
+		coursePercentTypeDemo.setDemoJson(demoJson);
+		return coursePercentTypeDemoMapper.addCoursePercentTypeDemo(coursePercentTypeDemo) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getProfilesByClassId(long)
+	 */
+	@Override
+	public List<Profile> getProfilesByClassId(long classId) {
+		return profileMapper.getProfileByClassId(classId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getClassById(long)
+	 */
+	@Override
+	public com.ruoogle.teach.meta.Class getClassById(long classId) {
+		return classMapper.getClassById(classId);
+	}
+
+	/*
+	 * 
+	 */
+	@Override
+	public boolean addJournal(String content, int type, long courseId, long userId) {
+		Journal journal = new Journal();
+		journal.setContent(content);
+		journal.setUserId(userId);
+		journal.setCourseId(courseId);
+		journal.setType(type);
+		journal.setCreateTime(new Date().getTime());
+		return journalMapper.addJournal(journal) > 0;
+	}
+}

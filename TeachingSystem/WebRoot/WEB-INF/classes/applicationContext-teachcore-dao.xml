@@ -13,9 +13,9 @@
 	default-autowire="byName">
 	<context:annotation-config />
 
-	<context:component-scan base-package="com.phone">
+	<context:component-scan base-package="com.ruoogle.teach">
 		<context:exclude-filter type="regex"
-			expression="com\.phone\.web\..*" />
+			expression="com\.ruoogle\.teach\.controller\..*" />
 	</context:component-scan>
 
 	<!-- 导入属性配置文件 -->
@@ -82,11 +82,8 @@
 		<property name="mapperInterface"
 			value="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper" />
 	</bean>
-	<bean id="coursePercentTypeMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface"
-			value="com.ruoogle.teach.mapper.CoursePercentTypeMapper" />
-	</bean>
+
+
 	<bean id="coursePercentTypeStageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
@@ -126,6 +123,35 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
 			value="com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper" />
+	</bean>
+	<bean id="profileMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.ProfileMapper" />
+	</bean>
+	<bean id="courseStudentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.CourseStudentMapper" />
+	</bean>
+	<bean id="coursePercentTypeDemoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface"
+			value="com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper" />
+	</bean>
+	<bean id="specialtyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.SpecialtyMapper" />
+	</bean>
+	<bean id="feedBackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.FeedBackMapper" />
+	</bean>
+	<bean id="interactiveMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.InteractiveMapper" />
+	</bean>
+	<bean id="journalMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.JournalMapper" />
 	</bean>
 
 </beans>

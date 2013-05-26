@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper">
-	<resultMap type="CoursePercentTypeGroupStudentScore" id="CoursePercentTypeGroupStudentScoreMap ">
-		<result property="id" column="id" />
+	<resultMap type="CoursePercentTypeGroupStudentScore" id="coursePercentTypeGroupStudentScoreMap ">
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="groupId" column="groupId" />
 		<result property="fromStudentId" column="fromStudentId" />
@@ -10,8 +10,52 @@
 		<result property="score" column="score" />
 	</resultMap>
 	<insert id="addCoursePercentTypeGroupStudentScore"
-		parameterType="CoursePercentTypeGroupStudentScore"> INSERT INTO TB_Course_PercentType_Group_Student_Score
-		(id,courseId,groupId,fromStudentId,toStudentId,score )VALUES(
-		#{id},#{courseId},#{groupId},#{fromStudentId},#{toStudentId},#{score})
+		parameterType="CoursePercentTypeGroupStudentScore">
+		INSERT INTO TB_Course_PercentType_Group_Student_Score
+		(courseId,groupId,fromStudentId,toStudentId,score )VALUES(
+		#{courseId},#{groupId},#{fromStudentId},#{toStudentId},#{score})
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
+	<select id="getCoursePercentTypeGroupStudentScore" resultType="CoursePercentTypeGroupStudentScore">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		fromStudentId=#{fromStudentId} and toStudentId=#{toStudentId} and
+		courseId=#{courseId} and groupId=#{groupId};
+	</select>
+
+	<select id="getCoursePercentTypeGroupStudentScoreByToStudent"
+		resultType="CoursePercentTypeGroupStudentScore">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		toStudentId=#{toStudentId} and
+		courseId=#{courseId} and
+		groupId=#{groupId};
+	</select>
+
+	<update id="updateCoursePercentTypeGroupStudentScore"
+		parameterType="CoursePercentTypeGroupStudentScore" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_PercentType_Group_Student_Score
+		set
+		score=#{score}
+		WHERE
+		id =
+		#{id};
+	</update>
+
+	<select id="getCoursePercentTypeGroupStudentScoreByCourseGroup"
+		resultType="CoursePercentTypeGroupStudentScore">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		courseId=#{courseId} and
+		groupId=#{groupId};
+	</select>
+
 </mapper>

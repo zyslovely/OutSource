@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseStudentPropertyScoreMapper">
-	<resultMap type="CourseStudentPropertyScore" id="CourseStudentPropertyScoreMap ">
-		<result property="id" column="id" />
+	<resultMap type="CourseStudentPropertyScore" id="courseStudentPropertyScoreMap ">
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="studentId" column="studentId" />
 		<result property="propertyId" column="propertyId" />
 		<result property="score" column="score" />
 		<result property="semester" column="semester" />
 	</resultMap>
-	<insert id="addCourseStudentPropertyScore" parameterType="CourseStudentPropertyScore"> INSERT
+	<insert id="addCourseStudentPropertyScore" parameterType="CourseStudentPropertyScore">
+		INSERT
 		INTO TB_Course_Student_Property_Score
-		(id,courseId,studentId,propertyId,score,semester )VALUES(
-		#{id},#{courseId},#{studentId},#{propertyId},#{score},#{semester})
+		(courseId,studentId,propertyId,score,semester )VALUES(
+		#{courseId},#{studentId},#{propertyId},#{score},#{semester})
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
 </mapper>

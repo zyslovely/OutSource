@@ -1,1 +1,54 @@
-<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> <mapper namespace="com.ruoogle.teach.mapper.CoursePercentTypeStageMapper"> <resultMap type="CoursePercentTypeStage" id="CoursePercentTypeStageMap ">  <result property="id" column="id" />  <result property="courseId" column="courseId" />  <result property="studentId" column="studentId" />  <result property="score" column="score" />  <result property="stageIndex" column="stageIndex" />  </resultMap> <insert id="addCoursePercentTypeStage" parameterType="CoursePercentTypeStage"> INSERT INTO TB_Course_PercentType_Stage (id,courseId,studentId,score,stageIndex )VALUES( #{id},#{courseId},#{studentId},#{score},#{stageIndex})</insert></mapper>
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.CoursePercentTypeStageMapper">
+	<resultMap type="CoursePercentTypeStage" id="coursePercentTypeStageMap ">
+		<id property="id" column="id" />
+		<result property="courseId" column="courseId" />
+		<result property="studentId" column="studentId" />
+		<result property="score" column="score" />
+		<result property="stageIndex" column="stageIndex" />
+		<result property="percentType" column="percentType" />
+
+	</resultMap>
+	<insert id="addCoursePercentTypeStage" parameterType="CoursePercentTypeStage">
+		INSERT INTO
+		TB_Course_PercentType_Stage
+		(
+		courseId,studentId,score,stageIndex
+		)VALUES(
+		#{courseId},#{studentId},#{score},#{stageIndex}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<update id="updateCoursePercentTypeStage" parameterType="CoursePercentTypeStage"
+		flushCache="true" statementType="PREPARED">
+		UPDATE
+		TB_Course_PercentType_Stage
+		set
+		score=#{score}
+		WHERE
+		courseId =
+		#{courseId} and studentId=#{studentId}
+		and stageIndex=#{stageIndex};
+	</update>
+
+	<select id="getCoursePercentTypeStage" resultType="CoursePercentTypeStage">
+		SELECT *
+		from
+		TB_Course_PercentType_Stage
+		WHERE courseId=#{courseId} and
+		studentId=#{studentId} and stageIndex=#{stageIndex} and
+		percentType=#{percentType} ;
+	</select>
+
+	<select id="getCoursePercentTypeStageListByStudentId" resultType="CoursePercentTypeStage">
+		SELECT *
+		from
+		TB_Course_PercentType_Stage
+		WHERE courseId=#{courseId} and
+		studentId=#{studentId} ;
+	</select>
+</mapper>

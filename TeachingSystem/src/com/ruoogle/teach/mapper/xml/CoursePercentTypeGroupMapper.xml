@@ -1,11 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupMapper">
-	<resultMap type="CoursePercentTypeGroup" id="CoursePercentTypeGroupMap ">
-		<result property="id" column="id" />
+	<resultMap type="CoursePercentTypeGroup" id="coursePercentTypeGroupMap ">
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="count" column="count" />
 	</resultMap>
-	<insert id="addCoursePercentTypeGroup" parameterType="CoursePercentTypeGroup"> INSERT
-		INTO TB_Course_PercentType_Group (id,courseId,count )VALUES(
-		#{id},#{courseId},#{count})</insert>
+	<insert id="addCoursePercentTypeGroup" parameterType="CoursePercentTypeGroup">
+		INSERT INTO
+		TB_Course_PercentType_Group
+		(
+		courseId,count
+		)VALUES(
+		#{courseId},#{count}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+	<select id="getCoursePercentTypeGroup" resultType="CoursePercentTypeGroup">
+		SELECT *
+		from
+		TB_Course_PercentType_Group
+		WHERE courseId=#{courseId};
+	</select>
+
+	<select id="getCoursePercentTypeGroupCountByIds" resultType="int">
+		SELECT count(*)
+		from
+		TB_Course_PercentType_Group
+		WHERE
+		courseId=#{courseId};
+	</select>
+
+
+
 </mapper>

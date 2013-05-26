@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CoursePropertyMapper">
-	<resultMap type="CourseProperty" id="CoursePropertyMap ">
-		<result property="id" column="id" />
+	<resultMap type="CourseProperty" id="coursePropertyMap ">
+		<id property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>
-	<insert id="addCourseProperty" parameterType="CourseProperty"> INSERT INTO
-		TB_Course_Property (id,name )VALUES( #{id},#{name})</insert>
+	<insert id="addCourseProperty" parameterType="CourseProperty">
+		INSERT INTO
+		TB_Course_Property (name )VALUES( #{name})
+
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getCourseScorePercentPropertyByCourseId" resultType="CourseProperty">
+		SELECT *
+		from TB_Course_Property;
+	</select>
+
 </mapper>

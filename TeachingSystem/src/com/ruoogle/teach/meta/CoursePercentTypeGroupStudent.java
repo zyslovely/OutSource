@@ -10,6 +10,36 @@ public class CoursePercentTypeGroupStudent implements Serializable {
 	private long studentId;
 	private int level;
 
+	public enum GroupLevel {
+		/**
+		 * 普通学生
+		 */
+		Normal {
+			@Override
+			public int getValue() {
+				return 0;
+			}
+		},
+		/**
+		 * 学生队长
+		 */
+		Leader {
+			@Override
+			public int getValue() {
+				return 1;
+			}
+		};
+		public abstract int getValue();
+
+		public static GroupLevel genGroupLevel(int t) {
+			for (GroupLevel level : GroupLevel.values()) {
+				if (level.getValue() == t)
+					return level;
+			}
+			return null;
+		}
+	}
+
 	public long getId() {
 		return id;
 	}

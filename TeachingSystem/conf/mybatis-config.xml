@@ -2,9 +2,9 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="Profile" type="com.ruoogle.teach.meta.Profile" />
 		<typeAlias alias="Class" type="com.ruoogle.teach.meta.Class" />
 		<typeAlias alias="Course" type="com.ruoogle.teach.meta.Course" />
-		<typeAlias alias="CoursePercentType" type="com.ruoogle.teach.meta.CoursePercentType" />
 		<typeAlias alias="CoursePercentTypeGroup"
 			type="com.ruoogle.teach.meta.CoursePercentTypeGroup" />
 		<typeAlias alias="CoursePercentTypeGroupStudent"
@@ -25,6 +25,14 @@
 		<typeAlias alias="CourseStudentTotalScore"
 			type="com.ruoogle.teach.meta.CourseStudentTotalScore" />
 
+		<typeAlias alias="CoursePercentTypeDemo"
+			type="com.ruoogle.teach.meta.CoursePercentTypeDemo" />
+		<typeAlias alias="CourseStudent" type="com.ruoogle.teach.meta.CourseStudent" />
+		<typeAlias alias="Specialty" type="com.ruoogle.teach.meta.Specialty" />
+		<typeAlias alias="FeedBack" type="com.ruoogle.teach.meta.FeedBack" />
+		<typeAlias alias="Interactive" type="com.ruoogle.teach.meta.Interactive" />
+		<typeAlias alias="Journal" type="com.ruoogle.teach.meta.Journal" />
+
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/ruoogle/teach/mapper/xml/ClassMapper.xml" />
@@ -35,7 +43,7 @@
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentMapper.xml" />
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeGroupStudentScoreMapper.xml" />
-		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeMapper.xml" />
+
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeStageMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePropertyMapper.xml" />
@@ -49,5 +57,15 @@
 		<mapper resource="com/ruoogle/teach/mapper/xml/CourseStudentScoreMapper.xml" />
 		<mapper
 			resource="com/ruoogle/teach/mapper/xml/CourseStudentTotalScoreMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/ProfileMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CourseStudentMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/CoursePercentTypeDemoMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/SpecialtyMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/FeedBackMapper.xml" />
+
+		<mapper resource="com/ruoogle/teach/mapper/xml/InteractiveMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/JournalMapper.xml" />
+
+
 	</mappers>
 </configuration>

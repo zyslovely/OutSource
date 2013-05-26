@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentMapper">
-	<resultMap type="CoursePercentTypeGroupStudent" id="CoursePercentTypeGroupStudentMap ">
-		<result property="id" column="id" />
+	<resultMap type="CoursePercentTypeGroupStudent" id="coursePercentTypeGroupStudentMap ">
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="groupId" column="groupId" />
 		<result property="studentId" column="studentId" />
@@ -9,6 +9,53 @@
 	</resultMap>
 	<insert id="addCoursePercentTypeGroupStudent" parameterType="CoursePercentTypeGroupStudent">
 		INSERT INTO TB_Course_PercentType_Group_Student
-		(id,courseId,groupId,studentId,level )VALUES(
-		#{id},#{courseId},#{groupId},#{studentId},#{level})</insert>
+		(
+		courseId,groupId,studentId,level
+		)VALUES(
+		#{courseId},#{groupId},#{studentId},#{level}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getCoursePercentTypeGroupStudentByIds" resultType="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student
+		WHERE
+		studentId=#{studentId} and
+		courseId=#{courseId};
+	</select>
+
+	<select id="getCoursePercentTypeGroupCountByIds" resultType="int">
+		SELECT count(*)
+		from TB_Course_PercentType_Group_Student where
+		courseId=#{courseId}
+		group by groupId;
+	</select>
+
+	<update id="updateCoursePercentTypeGroupStudentMapper"
+		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_PercentType_Group_Student
+		set
+		groupId=#{groupId},
+		level=#{level}
+		WHERE
+		id =
+		#{id};
+	</update>
+
+	<select id="getCoursePercentTypeGroupStudentCountByIds"
+		resultType="int">
+		SELECT count(*)
+		from TB_Course_PercentType_Group_Student
+		where
+		courseId=#{courseId}
+		and groupId = #{groupId};
+	</select>
+
+
 </mapper>

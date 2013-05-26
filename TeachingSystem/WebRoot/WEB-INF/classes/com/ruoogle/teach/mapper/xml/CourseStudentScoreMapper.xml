@@ -1,16 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.CourseStudentScoreMapper">
-	<resultMap type="CourseStudentScore" id="CourseStudentScoreMap ">
-		<result property="id" column="id" />
+	<resultMap type="CourseStudentScore" id="courseStudentScoreMap ">
+		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="studentId" column="studentId" />
 		<result property="percentType" column="percentType" />
 		<result property="percent" column="percent" />
 		<result property="score" column="score" />
 	</resultMap>
-	<insert id="addCourseStudentScore" parameterType="CourseStudentScore"> INSERT INTO
+	<insert id="addCourseStudentScore" parameterType="CourseStudentScore">
+		INSERT INTO
 		TB_Course_Student_Score
-		(id,courseId,studentId,percentType,percent,score )VALUES(
-		#{id},#{courseId},#{studentId},#{percentType},#{percent},#{score})
+		(courseId,studentId,percentType,percent,score )VALUES(
+		#{courseId},#{studentId},#{percentType},#{percent},#{score})
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
 	</insert>
+
+	<select id="getCourseStudentScoreByStudentId" resultType="CourseStudentScore">
+		SELECT *
+		from TB_Course_Student_Score
+		WHERE studentId=#{studentId} and
+		percentType=#{percentType} and courseId=#{courseId};
+	</select>
+
+	<select id="getCourseStudentScoresByCourseIdStudentId"
+		resultType="CourseStudentScore">
+		SELECT *
+		from TB_Course_Student_Score
+		WHERE
+		studentId=#{studentId} and courseId=#{courseId};
+	</select>
+
+	<update id="updateCourseStudentScore" parameterType="CourseStudentScore"
+		flushCache="true" statementType="PREPARED">
+		UPDATE
+		TB_Course_Student_Score
+		set
+		score=#{score}
+		WHERE
+		id =
+		#{id};
+	</update>
+
 </mapper>

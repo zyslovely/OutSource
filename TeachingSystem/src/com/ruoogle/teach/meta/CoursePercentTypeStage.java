@@ -9,6 +9,7 @@ public class CoursePercentTypeStage implements Serializable {
 	private long studentId;
 	private double score;
 	private int stageIndex;
+	private long percentType;
 
 	public long getId() {
 		return id;
@@ -48,6 +49,14 @@ public class CoursePercentTypeStage implements Serializable {
 
 	public void setStageIndex(int stageIndex) {
 		this.stageIndex = stageIndex;
+	}
+
+	public long getPercentType() {
+		return percentType;
+	}
+
+	public void setPercentType(long percentType) {
+		this.percentType = percentType;
 	}
 
 }
