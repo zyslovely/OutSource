@@ -15,14 +15,21 @@
        </div>
        <div style="margin-left: 15%; margin-top: 46px;">
           <div style="float:left;width: 667px; height: 432px; background: url('/img/webIndex/pic_bg.png') no-repeat scroll center top transparent; ">
-              <img src="/img/webIndex/pic1.png" style="height: 421px; width: 657px; margin-left: 5px; margin-top: 5px;"/>
-              <div style="margin-left: 5px; background: url('/img/webIndex/pic_mask.png') no-repeat scroll center top transparent; width: 657px; height: 50px; position: relative; top: -55px; border-radius: 5px 5px 5px 5px;">
+              <ul style="height: 421px; width: 657px; margin-left: 5px; margin-top: 5px;">
+                 <li id="img_1" style="position: absolute;"> 
+                    <img src="/img/webIndex/pic1.png" style=""/>
+                 </li>
+                 <li id="img_2" style="position: absolute;display:none;">
+                    <img src="/img/webIndex/pic2.png" style=""/>
+                 </li>
+              </ul>
+              <div style="margin-left: 5px; background: url('/img/webIndex/pic_mask.png') no-repeat scroll center top transparent; width: 657px; height: 50px; position: relative; top: -50px; border-radius: 5px 5px 5px 5px;">
                    <span style="position: absolute; color: white; margin: 10px 0px 0px 40px; font-size: 18px;">教学楼</span>
-                   <span style="background: url('/img/webIndex/pic_mask_dot_select.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 88%;"></span>
-                   <span style="background: url('/img/webIndex/pic_mask_dot.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 92%;"></span>
+                   <span id="dot_1" style="cursor: pointer;background: url('/img/webIndex/pic_mask_dot_select.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 88%;"></span>
+                   <span id="dot_2" style="cursor: pointer;background: url('/img/webIndex/pic_mask_dot.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 92%;"></span>
               </div>
           </div>
-          <div style="float:left;margin-left:40px;width: 358px; height: 425px;margin-left:20px;background: url('/img/webIndex/login_bg.png') no-repeat scroll center top transparent; ">
+          <div style="float:left;margin-left:40px;width: 358px; height: 425px;margin-left:75px;background: url('/img/webIndex/login_bg.png') no-repeat scroll center top transparent; ">
               <p style="width: 100%; text-align: center; margin-top: 27px; color: rgb(95, 95, 95); font-size: 27px;">登录</p>
               <span style="height: 2px; background: url('/img/webIndex/line.png') repeat-x scroll center top transparent; position: absolute; margin-top: 14px; margin-left: 8px; width: 344px;"></span>
               <div style="background: url('/img/webIndex/input_bg_focus.png') no-repeat scroll center top transparent;  width: 312px; margin-left: 22px; margin-top: 50px;padding-top:15px\9; ">

@@ -110,7 +110,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					return;
 				} else {
 					logger.error("账号密码失败");
-					httpResponse.sendRedirect("/");
+					httpRequest.setAttribute("statusCode", "412");
 					return;
 				}
 			}
