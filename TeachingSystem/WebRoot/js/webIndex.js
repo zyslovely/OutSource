@@ -19,7 +19,7 @@ if(_remember==1){
 });
 
 $("#submit_login").click(function(){
-	
+	doLogin();
 });
 
 function doLogin(){
@@ -54,6 +54,7 @@ $("#password").focus(function(){
 });
 
 $("#username").focus(function(){
+	$("#username").val("");
 	$("#password_div").css("background-image","url('/img/webIndex/input_bg.png')");
 	$("#username_div").css("background-image","url('/img/webIndex/input_bg_focus.png')");
 });

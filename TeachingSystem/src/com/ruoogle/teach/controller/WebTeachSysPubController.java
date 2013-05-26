@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -29,6 +30,8 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	 */
 	public ModelAndView showIndexView(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("webIndex");
+		int error = ServletRequestUtils.getIntParameter(request, "error", 0);
+		mv.addObject("error", error);
 		return mv;
 	}
 
@@ -44,7 +47,6 @@ public class WebTeachSysPubController extends AbstractBaseController {
 		logger.info(request.getSession().getId());
 		try {
 			response.sendRedirect(request.getContextPath() + "/teach/index/");
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -164,7 +164,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					return;
 				} else {
 					logger.error("账号密码失败");
-					httpResponse.sendRedirect("/");
+					httpResponse.sendRedirect("/?error=1");
 					return;
 				}
 			}
