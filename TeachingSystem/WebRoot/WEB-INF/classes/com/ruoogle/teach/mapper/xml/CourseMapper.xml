@@ -33,4 +33,18 @@
 		status = 1
 		where id = #{courseId};
 	</update>
+
+	<select id="getCourseListByIds" resultType="Course">
+		SELECT *
+		from
+		TB_Course
+		WHERE
+		id in
+		<foreach item="item" collection="list" index="index" open="("
+			separator="," close=")">
+			#{item} 
+	     </foreach>
+		;
+	</select>
+
 </mapper>

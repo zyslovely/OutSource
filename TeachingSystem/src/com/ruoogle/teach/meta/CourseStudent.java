@@ -9,10 +9,8 @@ public class CourseStudent implements Serializable {
 	private long classId;
 	private long userId;
 	private int type;
+	private int status;
 
-	
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -51,6 +49,14 @@ public class CourseStudent implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

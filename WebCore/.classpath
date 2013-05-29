@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-<<<<<<< HEAD:EasonWebCore/.classpath
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM 1.6"/>
->>>>>>> 5f262669acbe12e02093a541520e6fe1b069b01a:WebCore/.classpath
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
@@ -38,6 +30,7 @@
 	<classpathentry kind="lib" path="lib/Json-simple-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jta.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/jxl.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-3.0.5.jar"/>
@@ -65,6 +58,12 @@
 	<classpathentry kind="lib" path="lib/org.springframework.web.portlet-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/org.springframework.web.servlet-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/org.springframework.web.struts-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-examples-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-excelant-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="lib/poi-scratchpad-3.9-20121203.jar"/>
 	<classpathentry kind="lib" path="lib/qiniu.jar"/>
 	<classpathentry kind="lib" path="lib/quartz-all-1.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
@@ -79,11 +78,6 @@
 	<classpathentry kind="lib" path="lib/spring-security-web-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/Thumbnailator-0.3.8.jar"/>
 	<classpathentry kind="lib" path="lib/weibo4j.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-examples-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-excelant-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9-20121203.jar"/>
-	<classpathentry kind="lib" path="lib/poi-scratchpad-3.9-20121203.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

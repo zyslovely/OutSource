@@ -17,4 +17,22 @@ public interface CourseStudentMapper {
 	 * @return
 	 */
 	public List<CourseStudent> getCourseStudentsByCourseId(@Param(value = "courseId") long courseId);
+
+	/**
+	 * 获取
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public List<CourseStudent> getCourseStudentsByUserId(@Param(value = "userId") long userId, @Param(value = "type") int type);
+
+	/**
+	 * 更新
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudent> updateCourseStudentsStatus(@Param(value = "courseId") long courseId, @Param(value = "status") int status);
 }

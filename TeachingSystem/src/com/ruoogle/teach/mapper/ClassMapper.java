@@ -19,6 +19,7 @@ public interface ClassMapper {
 	 * @return
 	 */
 	public List<Class> getClassListBySpecialty(@Param(value = "specialtyId") long specialtyId);
-	
-	
+
+	public List<Class> getAllClass();
+
 }

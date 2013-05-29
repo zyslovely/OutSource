@@ -73,8 +73,8 @@ public class DwrTeachSysAdminBean {
 	 * @param coursePercentTypes
 	 * @return
 	 */
-	public boolean addCoursePercentTypeDemo(String name, List<CoursePercentType> coursePercentTypes) {
-		return classService.addCoursePercentTypeDemo(name, CoursePercentTypeDemo.getCoursePercentTypeList(coursePercentTypes));
+	public boolean addCoursePercentTypeDemo(String name, List<Integer> coursePercentTypeId, List<Double> percents) {
+		return classService.addCoursePercentTypeDemo(name, CoursePercentTypeDemo.getCoursePercentTypeList(coursePercentTypeId, percents));
 	}
 
 }

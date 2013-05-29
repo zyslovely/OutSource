@@ -1,6 +1,7 @@
 package com.ruoogle.teach.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -76,4 +77,8 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileMapper.getProfileByUserName(userName);
 	}
 
+	@Override
+	public List<Profile> getProfileList(int level, int limit, int offset) {
+		return profileMapper.getProfileListByLevel(level, limit, offset);
+	}
 }

@@ -4,7 +4,9 @@
 		<id property="id" column="id" />
 		<result property="courseId" column="courseId" />
 		<result property="classId" column="classId" />
-		<result property="studentId" column="studentId" />
+		<result property="userId" column="userId" />
+		<result property="type" column="type" />
+		<result property="status" column="status" />
 	</resultMap>
 	<insert id="addCourseStudent" parameterType="CourseStudent">
 		INSERT INTO
@@ -26,6 +28,23 @@
 		WHERE courseId=#{courseId} and type=0;
 	</select>
 
+	<select id="getCourseStudentsByUserId" resultType="CourseStudent">
+		SELECT *
+		from
+		TB_Course_Student
+		WHERE userId=#{userId} and type=#{type} and status=0
+		order by id
+		desc;
+	</select>
 
-
+	<update id="updateCourseStudentsStatus" parameterType="CourseStudent"
+		flushCache="true" statementType="PREPARED">
+		UPDATE
+		TB_Course_Student
+		set
+		status=#{status}
+		WHERE
+		courseId =
+		#{courseId};
+	</update>
 </mapper>

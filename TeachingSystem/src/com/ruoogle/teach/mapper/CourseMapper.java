@@ -1,5 +1,7 @@
 package com.ruoogle.teach.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.ruoogle.teach.meta.Course;
@@ -24,4 +26,14 @@ public interface CourseMapper {
 	 * @return
 	 */
 	public int finishedCourse(@Param(value = "courseId") long courseId);
+
+	/**
+	 * 根据id获取列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param ids
+	 * @return
+	 */
+	public List<Course> getCourseListByIds(@Param(value = "list") List<Long> ids);
+
 }

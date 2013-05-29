@@ -14,7 +14,7 @@
 		</selectKey>
 	</insert>
 
-	<select id="getCourseScorePercentPropertyByCourseId" resultType="CourseProperty">
+	<select id="getAllCourseProperties" resultType="CourseProperty">
 		SELECT *
 		from TB_Course_Property;
 	</select>

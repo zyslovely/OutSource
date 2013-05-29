@@ -15,5 +15,9 @@
     	
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
     	<#break>
+    	<#case "teachCreate">
+    	
+   	       <script type="text/javascript" src="/js/teachCreate.js" charset="utf-8"></script>
+    	<#break>
     </#switch>
 </#if>

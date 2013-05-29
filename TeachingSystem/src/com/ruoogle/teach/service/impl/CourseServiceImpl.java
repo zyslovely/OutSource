@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.eason.web.util.HashMapMaker;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.CourseMapper;
+import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupStudentScoreMapper;
@@ -25,6 +26,7 @@ import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore;
@@ -73,6 +75,8 @@ public class CourseServiceImpl implements CourseService {
 	private CoursePercentTypeGroupMapper coursePercentTypeGroupMapper;
 	@Resource
 	private ProfileMapper profileMapper;
+	@Resource
+	private CoursePercentTypeDemoMapper coursePercentTypeDemoMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -83,7 +87,7 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties, String courseName,
-			List<CourseScorePercent> CourseScorePercents, long classId, int year, long teacherId, List<Long> studentIds) {
+			List<CourseScorePercent> CourseScorePercents, long classId, int year, long teacherId) {
 		Course course = new Course();
 		course.setName(courseName);
 		course.setClassId(classId);
@@ -108,10 +112,11 @@ public class CourseServiceImpl implements CourseService {
 			courseScorePercentProperty.setCourseId(course.getId());
 			courseScorePercentPropertyMapper.addCourseScorePercentProperty(courseScorePercentProperty);
 		}
-		for (Long studentId : studentIds) {
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId);
+		for (Profile profile : profileList) {
 			CourseStudent courseStudent = new CourseStudent();
 			courseStudent.setClassId(classId);
-			courseStudent.setUserId(studentId);
+			courseStudent.setUserId(profile.getUserId());
 			courseStudent.setType(ProfileLevel.Student.getValue());
 			courseStudent.setCourseId(course.getId());
 			courseStudentMapper.addCourseStudent(courseStudent);
@@ -435,6 +440,49 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public boolean finishCourse(long courseId, long teacherid) {
-		return courseMapper.finishedCourse(courseId) > 0;
+		if (courseMapper.finishedCourse(courseId) > 0) {
+			courseStudentMapper.updateCourseStudentsStatus(courseId, Course.FINISHED);
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getCourseListByUserId(long)
+	 */
+	@Override
+	public List<Course> getCourseListByUserId(long userId, int type) {
+
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type);
+		if (ListUtils.isEmptyList(courseStudents)) {
+			return null;
+		}
+		List<Long> courseIds = new ArrayList<Long>(courseStudents.size());
+		for (CourseStudent courseStudent : courseStudents) {
+			courseIds.add(courseStudent.getCourseId());
+		}
+		return courseMapper.getCourseListByIds(courseIds);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getCourseById(long)
+	 */
+	@Override
+	public Course getCourseById(long courseId) {
+		return courseMapper.getCourseById(courseId);
+	}
+
+	@Override
+	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset) {
+		return coursePercentTypeDemoMapper.getCoursePercentTypeDemos(limit, offset);
+	}
+
+	@Override
+	public List<CourseProperty> getAllCourseProperties() {
+		return coursePropertyMapper.getAllCourseProperties();
 	}
 }

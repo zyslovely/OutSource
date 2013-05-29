@@ -2,6 +2,7 @@ package com.ruoogle.teach.service;
 
 import java.util.List;
 
+import com.ruoogle.teach.meta.Class;
 import com.ruoogle.teach.meta.Profile;
 
 /**
@@ -78,5 +79,12 @@ public interface ClassService {
 	 * @return
 	 */
 	public boolean addJournal(String content, int type, long courseId, long userId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @return
+	 */
+	public List<Class> getAllClass();
 
 }

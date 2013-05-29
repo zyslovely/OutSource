@@ -21,7 +21,6 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import com.eason.web.util.CookieUtil;
-import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 

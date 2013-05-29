@@ -145,4 +145,14 @@ public class ClassServiceImpl implements ClassService {
 		journal.setCreateTime(new Date().getTime());
 		return journalMapper.addJournal(journal) > 0;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getAllClass()
+	 */
+	@Override
+	public List<com.ruoogle.teach.meta.Class> getAllClass() {
+		return classMapper.getAllClass();
+	}
 }

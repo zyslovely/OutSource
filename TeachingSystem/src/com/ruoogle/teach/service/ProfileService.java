@@ -1,5 +1,7 @@
 package com.ruoogle.teach.service;
 
+import java.util.List;
+
 import com.ruoogle.teach.meta.Profile;
 
 /**
@@ -41,4 +43,13 @@ public interface ProfileService {
 	public Profile getProfile(long userId);
 
 	public Profile getProfileByUserName(String userName);
+
+	/**
+	 * 老师列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param level
+	 * @return
+	 */
+	public List<Profile> getProfileList(int level, int limit, int offset);
 }

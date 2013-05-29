@@ -41,9 +41,10 @@
 		SELECT *
 		from TB_Profile
 		WHERE level=#{level}
-		limit #{limit}
-		offset
-		#{offset} order by id desc;
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		order by userId desc;
 	</select>
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *

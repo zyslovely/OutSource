@@ -14,6 +14,7 @@ CREATE TABLE TB_Course_Student (
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0学生,1老师.2企业老师',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0未结束',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表人员'
 
@@ -58,7 +59,7 @@ CREATE TABLE TB_Course_Student_Property_Score (
 
 CREATE TABLE TB_Course_Property (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` bigint(20) NOT NULL DEFAULT '0' COMMENT '属性名称',
+  `name` varchar(127) NOT NULL DEFAULT '' COMMENT '属性名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生属性表'
 
@@ -91,14 +92,6 @@ CREATE TABLE TB_Course_PercentType_Demo (
   `demoJson` varchar(255) NOT NULL DEFAULT '' COMMENT '课程类型json',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分demo表'
-
-CREATE TABLE TB_Course_PercentType (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(127) NOT NULL DEFAULT '' COMMENT '评分细则类型名称',
-  `desc` varchar(127) NOT NULL DEFAULT '' COMMENT '评分细则类型描述',
-  `objectCount` int(11) NOT NULL DEFAULT '0' COMMENT '相关的数量',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分类型表'
 
 
 CREATE TABLE TB_Course_PercentType_Group (

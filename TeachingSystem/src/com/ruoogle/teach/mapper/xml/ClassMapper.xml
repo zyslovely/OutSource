@@ -32,4 +32,12 @@
 		WHERE
 		specialtyId=#{specialtyId};
 	</select>
+
+	<select id="getAllClass" resultType="Class">
+		SELECT *
+		from
+		TB_Class;
+	</select>
+
+
 </mapper>

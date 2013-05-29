@@ -18,7 +18,10 @@
 	<select id="getCoursePercentTypeDemos" resultType="CoursePercentTypeDemo">
 		SELECT *
 		from
-		TB_Course_PercentType_Demo 
-		limit #{limit} offset #{offset};
+		TB_Course_PercentType_Demo
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+
 	</select>
 </mapper>

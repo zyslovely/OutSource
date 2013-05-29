@@ -1,6 +1,7 @@
 package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -12,7 +13,9 @@ public class CoursePercentTypeDemo implements Serializable {
 	private String name;
 	private String demoJson;
 
-	private CoursePercentType percentType;
+	private List<CoursePercentType> coursePercentTypes;
+
+	private List<Double> percents;
 
 	public enum CoursePercentType {
 		/**
@@ -137,14 +140,6 @@ public class CoursePercentTypeDemo implements Serializable {
 		}
 	}
 
-	public CoursePercentType getPercentType() {
-		return percentType;
-	}
-
-	public void setPercentType(CoursePercentType percentType) {
-		this.percentType = percentType;
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -167,17 +162,65 @@ public class CoursePercentTypeDemo implements Serializable {
 
 	public void setDemoJson(String demoJson) {
 		this.demoJson = demoJson;
+		this.genCoursePercentTypeList(demoJson);
 	}
 
-	public static String getCoursePercentTypeList(List<CoursePercentType> coursePercentTypes) {
+	public List<CoursePercentType> getCoursePercentTypes() {
+		return coursePercentTypes;
+	}
+
+	public void setCoursePercentTypes(List<CoursePercentType> coursePercentTypes) {
+		this.coursePercentTypes = coursePercentTypes;
+	}
+
+	public List<Double> getPercents() {
+		return percents;
+	}
+
+	public void setPercents(List<Double> percents) {
+		this.percents = percents;
+	}
+
+	public static String getCoursePercentTypeList(List<Integer> coursePercentTypeId, List<Double> percents) {
 		JSONArray jsonArray = new JSONArray();
-		for (CoursePercentType coursePercentType : coursePercentTypes) {
+		int index = 0;
+		for (int typeId : coursePercentTypeId) {
 			JSONObject jsonObject2 = new JSONObject();
-			jsonObject2.put("name", coursePercentType.getName());
-			jsonObject2.put("desc", coursePercentType.getDesc());
-			jsonObject2.put("objectCount", coursePercentType.getObjectCount());
+			jsonObject2.put("typeId", typeId);
+			jsonObject2.put("percent", percents.get(index));
 			jsonArray.add(jsonObject2);
+			index++;
 		}
 		return jsonArray.toString();
+	}
+
+	/**
+	 * 生成列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param json
+	 */
+	public void genCoursePercentTypeList(String json) {
+		JSONArray jsonArray = JSONArray.fromObject(json);
+		this.coursePercentTypes = new ArrayList<CoursePercentType>();
+		this.percents = new ArrayList<Double>();
+		for (Object object : jsonArray.toArray()) {
+			JSONObject object2 = (JSONObject) object;
+			int typeId = object2.getInt("typeId");
+			CoursePercentType coursePercentType = CoursePercentType.genCoursePercentType(typeId);
+			
+			coursePercentTypes.add(coursePercentType);
+			this.percents.add(object2.getDouble("percent"));
+		}
+	}
+
+	public static void main(String[] args) {
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(1);
+		list.add(3);
+		List<Double> alist = new ArrayList<Double>();
+		alist.add(0.2);
+		alist.add(0.8);
+		CoursePercentTypeDemo.getCoursePercentTypeList(list, alist);
 	}
 }

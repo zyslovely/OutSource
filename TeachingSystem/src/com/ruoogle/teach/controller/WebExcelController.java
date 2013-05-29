@@ -23,8 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.ExcelTemplate;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
+import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
+import com.ruoogle.teach.service.CourseService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -38,6 +42,8 @@ public class WebExcelController extends AbstractBaseController {
 	private ClassService classService;
 	@Resource
 	private ProfileMapper profileMapper;
+	@Resource
+	private CourseService courseService;
 
 	/**
 	 * 下载添加分数excel表格
@@ -230,7 +236,128 @@ public class WebExcelController extends AbstractBaseController {
 		}
 		return null;
 	}
-	
-	
+
+	/**
+	 * 下载与课程相关的excel
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView downLoadCourseStudentExcel(HttpServletRequest request, HttpServletResponse response) {
+
+		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
+		if (classId < 0) {
+			logger.error("没有班级id");
+			return null;
+		}
+		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		template.createRow(0);
+
+		template.createCell("id");
+		template.createCell("姓名");
+		template.createCell("成绩");
+		List<Profile> profileList = classService.getProfilesByClassId(classId);
+		if (!ListUtils.isEmptyList(profileList)) {
+			for (int i = 0; i < profileList.size(); i++) {
+				template.createRow(i + 1);
+				Profile profile = profileList.get(i);
+
+				template.createCell(String.valueOf(profile.getUserId()));
+				template.createCell(profile.getName());
+			}
+		}
+		response.reset();
+		response.setContentType("application/x-download;charset=GBK");
+		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");
+		try {
+			template.getWorkbook().write(response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 上传excel
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView upLoadCourseStudentExcel(HttpServletRequest request, HttpServletResponse response) {
+
+		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
+		int percentType = ServletRequestUtils.getIntParameter(request, "percentType", -1);
+		int stage = ServletRequestUtils.getIntParameter(request, "stage", -1);
+		if (courseId < 0 || percentType < 0) {
+			return null;
+		}
+
+		long teacherId = MyUser.getMyUser(request);
+
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			Iterator<FileItem> it = this.getUPFiles(request);
+			while (it.hasNext()) {
+				FileItem item = it.next();
+				if (item != null && !item.isFormField() && item.getSize() > 0) {
+					InputStream inputStream = item.getInputStream();
+					HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+					HSSFSheet sheet = workbook.getSheetAt(0);
+					int totalRow = sheet.getLastRowNum();
+					Course course = courseService.getCourseById(courseId);
+					if (course == null) {
+						logger.error("WebExcelController upLoadStudentProfileExcel error where course==null where id=" + courseId);
+						throw new Exception();
+					}
+					for (int i = 0; i <= totalRow; i++) {
+						HSSFRow row = sheet.getRow(i);
+						HSSFCell cell1 = row.getCell(0);
+						HSSFCell cell3 = row.getCell(2);
+						if (cell1.getRichStringCellValue().getString().trim().isEmpty()) {
+							break;
+						}
+						long studentId = Long.valueOf(cell1.getRichStringCellValue().getString());
+						if (!cell3.getRichStringCellValue().getString().trim().isEmpty()) {
+							double score = Double.valueOf(cell3.getRichStringCellValue().getString());
+							if (CoursePercentType.AvgGrading.getValue() == percentType) {
+								if (stage < 0) {
+									logger.error("分期给分的stage为空");
+									break;
+								}
+								courseService.insertCourseStageScore(courseId, stage, score, studentId, teacherId);
+							} else {
+								courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
+							}
+						}
+
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 下载学生实习日志
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView downLoadStudentJournal(HttpServletRequest request, HttpServletResponse response) {
+		
+		return null;
+	}
 
 }

@@ -35,10 +35,10 @@ public class DwrTeachSysTeacherBean {
 	 * @param classId
 	 */
 	public boolean addNewCourse(String courseName, List<CourseScorePercent> CourseScorePercents, long classId, int year,
-			List<CourseScorePercentProperty> courseScorePercentProperties, List<Long> studentIds) {
+			List<CourseScorePercentProperty> courseScorePercentProperties) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addNewCourse(courseScorePercentProperties, courseName, CourseScorePercents, classId, year, teacherId, studentIds);
+		return courseService.addNewCourse(courseScorePercentProperties, courseName, CourseScorePercents, classId, year, teacherId);
 	}
 
 	/**
