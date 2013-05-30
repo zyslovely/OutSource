@@ -1,4 +1,4 @@
-<div style="height:122px;width:100%;background: url('/img/teachCreate/nav_bg.png') repeat-x scroll center top transparent; ">
+<div style="height:120px;width:100%;background: url('/img/teachCreate/nav_bg.png') repeat-x scroll center top transparent; ">
    <div style="margin-left: 15%; margin-top: 23px; width: 40%; float: left;">
        <img src="/img/webIndex/logo.png"/>
    </div>

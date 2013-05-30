@@ -8,7 +8,7 @@ public class CourseStudentTotalScore implements Serializable {
 	private long courseId;
 	private long studentId;
 	private double score;
-	private int semester;
+	private long semester;
 
 	public long getId() {
 		return id;
@@ -42,11 +42,11 @@ public class CourseStudentTotalScore implements Serializable {
 		this.score = score;
 	}
 
-	public int getSemester() {
+	public long getSemester() {
 		return semester;
 	}
 
-	public void setSemester(int semester) {
+	public void setSemester(long semester) {
 		this.semester = semester;
 	}
 

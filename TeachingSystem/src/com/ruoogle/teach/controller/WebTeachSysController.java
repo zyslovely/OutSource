@@ -12,9 +12,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CourseProperty;
+import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MySecurityDelegatingFilter;
 import com.ruoogle.teach.security.MyUser;
@@ -68,6 +71,10 @@ public class WebTeachSysController extends AbstractBaseController {
 	 */
 	public ModelAndView teachIndex(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("teachIndex");
+		Long userId = MyUser.getMyUser(request);
+		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel());
+		mv.addObject("courseList", courseList);
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -91,6 +98,8 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("courseProperties", courseProperties);
 		List<com.ruoogle.teach.meta.Class> classList = classService.getAllClass();
 		mv.addObject("classList", classList);
+		List<Semester> semesters = classService.getAllSemesters();
+		mv.addObject("semesters", semesters);
 		this.setUD(mv, request);
 		return mv;
 	}

@@ -11,10 +11,12 @@ import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
 import com.ruoogle.teach.mapper.JournalMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.SemesterMapper;
 import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Journal;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.ClassService;
@@ -38,6 +40,8 @@ public class ClassServiceImpl implements ClassService {
 	private SpecialtyMapper specialtyMapper;
 	@Resource
 	private ProfileMapper profileMapper;
+	@Resource
+	private SemesterMapper semesterMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -154,5 +158,15 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<com.ruoogle.teach.meta.Class> getAllClass() {
 		return classMapper.getAllClass();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getAllSemesters()
+	 */
+	@Override
+	public List<Semester> getAllSemesters() {
+		return semesterMapper.getAllSemester();
 	}
 }

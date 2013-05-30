@@ -1,10 +1,15 @@
 package com.ruoogle.teach.dwr;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.ArrayUtil;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
@@ -34,11 +39,12 @@ public class DwrTeachSysTeacherBean {
 	 * @param coursePercentTypes
 	 * @param classId
 	 */
-	public boolean addNewCourse(String courseName, List<CourseScorePercent> CourseScorePercents, long classId, int year,
-			List<CourseScorePercentProperty> courseScorePercentProperties) {
+	public boolean addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
+			CourseScorePercentProperty courseScorePercentProperties[], String desc) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addNewCourse(courseScorePercentProperties, courseName, CourseScorePercents, classId, year, teacherId);
+		return courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents), classId,
+				teacherId, semesterId, desc);
 	}
 
 	/**

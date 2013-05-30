@@ -63,7 +63,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} order by UserName asc;
+		WHERE classId=#{classId} and level=#{level} order by userId asc;
 	</select>
 
 	<select id="getMaxProfileByNumber" resultType="Profile">

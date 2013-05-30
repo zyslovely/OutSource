@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoogle.teach.meta.Class;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -86,5 +87,12 @@ public interface ClassService {
 	 * @return
 	 */
 	public List<Class> getAllClass();
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @return
+	 */
+	public List<Semester> getAllSemesters();
 
 }

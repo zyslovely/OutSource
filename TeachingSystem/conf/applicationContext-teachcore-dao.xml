@@ -154,4 +154,9 @@
 		<property name="mapperInterface" value="com.ruoogle.teach.mapper.JournalMapper" />
 	</bean>
 
+	<bean id="semesterMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.SemesterMapper" />
+	</bean>
+
 </beans>

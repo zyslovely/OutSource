@@ -22,25 +22,17 @@ public class Test {
 		String metaJavaPackage = "com.ruoogle.teach.meta";
 		String mapperJavaPackage = "com.ruoogle.teach.mapper";
 
-		String functionName = "Journal";
-		String firstLowerCaseName = "journal";
-		String tableName = "TB_Journal";
+		String functionName = "Semester";
+		String firstLowerCaseName = "semester";
+		String tableName = "TB_Semester";
 
 		List<String> metaNameList = new ArrayList<String>();
 		metaNameList.add("id");
-		metaNameList.add("userId");
-		metaNameList.add("content");
-		metaNameList.add("courseId");
-		metaNameList.add("type");
-		metaNameList.add("CreateTime");
+		metaNameList.add("name");
 
 		List<String> metaTypeList = new ArrayList<String>();
 		metaTypeList.add("long");
-		metaTypeList.add("long");
 		metaTypeList.add("String");
-		metaTypeList.add("long");
-		metaTypeList.add("int");
-		metaTypeList.add("long");
 
 		String code = "package " + metaJavaPackage + "; import java.io.Serializable; public class " + functionName + " implements Serializable {"
 				+ " private static final long serialVersionUID = 6L;";
