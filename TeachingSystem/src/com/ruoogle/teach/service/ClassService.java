@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoogle.teach.meta.Class;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
+import com.ruoogle.teach.meta.Specialty;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -58,7 +59,7 @@ public interface ClassService {
 	 * @param classId
 	 * @return
 	 */
-	public List<Profile> getProfilesByClassId(long classId);
+	public List<Profile> getProfilesByClassId(long classId, int level);
 
 	/**
 	 * 得到班级
@@ -94,5 +95,21 @@ public interface ClassService {
 	 * @return
 	 */
 	public List<Semester> getAllSemesters();
+
+	/**
+	 * 根据专业获取班级列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param specialtyId
+	 * @return
+	 */
+	public List<Class> getClassListBySpecialty(long specialtyId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @return
+	 */
+	public List<Specialty> getSpecialties();
 
 }

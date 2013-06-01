@@ -180,7 +180,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 			Long userId = MyUser.getMyUser(httpRequest);
 			MyUser myUser = userMap.get(userId);
 			Cookie cookie = CookieUtil.getCookie(httpRequest, CookieUtil.PARA_LOGIN_COOKIE);
-			if (myUser == null && cookie == null) {
+			if (myUser == null) {
 				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
 				httpResponse.sendRedirect("/");
 				return;

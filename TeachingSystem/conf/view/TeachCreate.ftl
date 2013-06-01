@@ -49,28 +49,38 @@ body{min-width:1024px;min-height:600px}
                  </tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">评分标准*</th>
                      <th>
+                        <#if coursePercentTypeDemos?exists>
                         <#list coursePercentTypeDemos as demo>
                         <ul style="display:none;" class="coursePercentTypeDemos_ul" id="coursePercentTypeDemos_${demo.id!0}">
+                            <#if demo.coursePercentTypes?exists>
                             <#list demo.coursePercentTypes as type>
                             <li style="width:100%" class="coursePercentTypes_biaozhun_li_${demo.id!0}" data_type_id="${type.getValue()!0}">
                                <p style="margin-right:10px;float:left;width:150px;">${type.getName()!""}</p>
                                <div style="">
+                                    <#if demo.percents?exists>
                                     <#list demo.percents as percent>
                                         <#if percent_index==type_index>
                                             <input type="text" value="${percent!0}" style="margin-right: 10px; width: 30px; text-align: center;" class="coursePercentTypes_biaozhun_input_${demo.id!0}"/>
                                         </#if>
                                     </#list>
+                                    </#if>
+                                    <span style="<#if type.getValue() ==4>display:none;</#if>">
                                     <span>打分老师:</span>
                                     <select class="coursePercentTypes_biaozhun_selectteacher_${demo.id!0}">
+                                        <#if teacherProfiles?exists>
                                         <#list teacherProfiles as profile>
                                             <option value="${profile.userId!0}">${profile.name!0}</option>
                                         </#list>
+                                        </#if>
                                     </select>
+                                    </span>
                                </div>
                             </li>
                             </#list>
+                            </#if>
                         </ul>
                         </#list>
+                        </#if>
                      </th>
                  </tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">相关属性标准*</th>

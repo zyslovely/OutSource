@@ -77,8 +77,26 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileMapper.getProfileByUserName(userName);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ProfileService#getProfileList(int, int,
+	 * int)
+	 */
 	@Override
 	public List<Profile> getProfileList(int level, int limit, int offset) {
 		return profileMapper.getProfileListByLevel(level, limit, offset);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ProfileService#getProfileListByClassId(int,
+	 * int, int, long)
+	 */
+	@Override
+	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId) {
+		return profileMapper.getProfileByClassId(classId, level, limit, offset);
 	}
 }

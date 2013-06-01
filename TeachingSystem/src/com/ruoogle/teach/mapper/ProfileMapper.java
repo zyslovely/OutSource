@@ -53,7 +53,8 @@ public interface ProfileMapper {
 	 * @param classId
 	 * @return
 	 */
-	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId, @Param(value = "level") int level);
+	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId, @Param(value = "level") int level,
+			@Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
 	/**
 	 * 得到最大的

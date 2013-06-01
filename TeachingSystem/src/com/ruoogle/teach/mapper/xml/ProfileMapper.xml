@@ -63,8 +63,13 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and level=#{level} order by userId asc;
+		WHERE classId=#{classId} and level=#{level}
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		order by userId asc;
 	</select>
+
 
 	<select id="getMaxProfileByNumber" resultType="Profile">
 		SELECT *

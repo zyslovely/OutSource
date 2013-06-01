@@ -50,6 +50,7 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		dataObject.put(Profile.KProfile_userName, profile.getUserName());
 		dataObject.put(Profile.KProfile_Name, profile.getName());
 		dataObject.put(Profile.KProfile_passWord, profile.getPassword());
+		dataObject.put(Profile.KProfile_userId, profile.getUserId());
 		dataObject.put(Profile.KProfile_token, myUser.getApiToken());
 		dataObject.put(Profile.KProfile_level, profile.getLevel());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, dataObject.toString());

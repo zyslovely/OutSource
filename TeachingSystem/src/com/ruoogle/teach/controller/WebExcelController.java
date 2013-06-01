@@ -26,6 +26,7 @@ import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -145,7 +146,7 @@ public class WebExcelController extends AbstractBaseController {
 		template.createCell("姓名");
 		template.createCell("用户名");
 		template.createCell("密码");
-		List<Profile> profileList = classService.getProfilesByClassId(classId);
+		List<Profile> profileList = classService.getProfilesByClassId(classId, ProfileLevel.Student.getValue());
 		if (!ListUtils.isEmptyList(profileList)) {
 			for (int i = 0; i < profileList.size(); i++) {
 				template.createRow(i + 1);
@@ -258,7 +259,7 @@ public class WebExcelController extends AbstractBaseController {
 		template.createCell("id");
 		template.createCell("姓名");
 		template.createCell("成绩");
-		List<Profile> profileList = classService.getProfilesByClassId(classId);
+		List<Profile> profileList = classService.getProfilesByClassId(classId, ProfileLevel.Student.getValue());
 		if (!ListUtils.isEmptyList(profileList)) {
 			for (int i = 0; i < profileList.size(); i++) {
 				template.createRow(i + 1);
@@ -356,7 +357,7 @@ public class WebExcelController extends AbstractBaseController {
 	 * @return
 	 */
 	public ModelAndView downLoadStudentJournal(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		return null;
 	}
 

@@ -119,13 +119,14 @@ public class CourseServiceImpl implements CourseService {
 			courseScorePercentProperty.setCourseId(course.getId());
 			courseScorePercentPropertyMapper.addCourseScorePercentProperty(courseScorePercentProperty);
 		}
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue());
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue(), 0, -1);
 		for (Profile profile : profileList) {
 			CourseStudent courseStudent = new CourseStudent();
 			courseStudent.setClassId(classId);
 			courseStudent.setUserId(profile.getUserId());
 			courseStudent.setType(ProfileLevel.Student.getValue());
 			courseStudent.setCourseId(course.getId());
+			courseStudent.setSemesterId(semesterId);
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
 		// 添加老师和企业老师用户
@@ -136,6 +137,7 @@ public class CourseServiceImpl implements CourseService {
 			courseStudent.setUserId(profile.getUserId());
 			courseStudent.setType(profile.getLevel());
 			courseStudent.setCourseId(course.getId());
+			courseStudent.setSemesterId(semesterId);
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
 
@@ -460,9 +462,9 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#getCourseListByUserId(long)
 	 */
 	@Override
-	public List<Course> getCourseListByUserId(long userId, int type) {
+	public List<Course> getCourseListByUserId(long userId, int type, long semesterId) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type);
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type, semesterId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -494,8 +496,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type) {
-		List<Course> list = this.getCourseListByUserId(userId, type);
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId) {
+		List<Course> list = this.getCourseListByUserId(userId, type, semesterId);
 		if (ListUtils.isEmptyList(list)) {
 			return null;
 		}

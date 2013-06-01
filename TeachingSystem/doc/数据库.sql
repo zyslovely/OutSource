@@ -207,3 +207,18 @@ CREATE TABLE `TB_Journal` (
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='日志表';    
 
 
+
+CREATE TABLE `TB_School_Info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
+  `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
+  `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0校园信息,1学院信息',
+  `infoType` tinyint(4) NOT NULL DEFAULT '0' COMMENT '信息类型,0常规,1可以参加的类型',
+  `imgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片url',
+  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息';    
+
+
+

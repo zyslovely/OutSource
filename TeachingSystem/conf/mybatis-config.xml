@@ -33,6 +33,7 @@
 		<typeAlias alias="Interactive" type="com.ruoogle.teach.meta.Interactive" />
 		<typeAlias alias="Journal" type="com.ruoogle.teach.meta.Journal" />
 		<typeAlias alias="Semester" type="com.ruoogle.teach.meta.Semester" />
+		<typeAlias alias="SchoolInfo" type="com.ruoogle.teach.meta.SchoolInfo" />
 
 	</typeAliases>
 	<mappers>
@@ -67,6 +68,7 @@
 		<mapper resource="com/ruoogle/teach/mapper/xml/InteractiveMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/JournalMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/SemesterMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/SchoolInfoMapper.xml" />
 
 
 	</mappers>

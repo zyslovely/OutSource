@@ -52,4 +52,6 @@ public interface ProfileService {
 	 * @return
 	 */
 	public List<Profile> getProfileList(int level, int limit, int offset);
+
+	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId);
 }

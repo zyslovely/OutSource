@@ -113,9 +113,9 @@ public interface CourseService {
 	 * @param userId
 	 * @return
 	 */
-	public List<Course> getCourseListByUserId(long userId, int type);
+	public List<Course> getCourseListByUserId(long userId, int type,long semesterId);
 
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type);
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId);
 
 	/**
 	 * 获取课程

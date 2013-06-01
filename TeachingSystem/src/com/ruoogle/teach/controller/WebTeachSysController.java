@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseVO;
@@ -73,7 +73,11 @@ public class WebTeachSysController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("teachIndex");
 		Long userId = MyUser.getMyUser(request);
 		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
-		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel());
+		long semesterId = ServletRequestUtils.getLongParameter(request, "semesterId", -1L);
+		if (semesterId < 0) {
+			
+		}
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId);
 		mv.addObject("courseList", courseList);
 		this.setUD(mv, request);
 		return mv;

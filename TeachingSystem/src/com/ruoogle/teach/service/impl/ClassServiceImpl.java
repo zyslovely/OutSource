@@ -122,8 +122,8 @@ public class ClassServiceImpl implements ClassService {
 	 * @see com.ruoogle.teach.service.ClassService#getProfilesByClassId(long)
 	 */
 	@Override
-	public List<Profile> getProfilesByClassId(long classId) {
-		return profileMapper.getProfileByClassId(classId);
+	public List<Profile> getProfilesByClassId(long classId, int level) {
+		return profileMapper.getProfileByClassId(classId, level, 0, -1);
 	}
 
 	/*
@@ -168,5 +168,25 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<Semester> getAllSemesters() {
 		return semesterMapper.getAllSemester();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getClassListBySpecialty(long)
+	 */
+	@Override
+	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+		return classMapper.getClassListBySpecialty(specialtyId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getSpecialties()
+	 */
+	@Override
+	public List<Specialty> getSpecialties() {
+		return specialtyMapper.getSpecialties();
 	}
 }
