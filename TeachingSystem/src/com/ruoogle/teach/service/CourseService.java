@@ -113,9 +113,19 @@ public interface CourseService {
 	 * @param userId
 	 * @return
 	 */
-	public List<Course> getCourseListByUserId(long userId, int type,long semesterId);
+	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset);
 
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId);
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param type
+	 * @param semesterId
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset);
 
 	/**
 	 * 获取课程

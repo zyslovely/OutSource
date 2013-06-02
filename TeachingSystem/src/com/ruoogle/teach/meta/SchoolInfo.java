@@ -2,8 +2,6 @@ package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
 
-import com.ruoogle.teach.meta.Profile.ProfileLevel;
-
 public class SchoolInfo implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;

@@ -482,9 +482,9 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#getCourseListByUserId(long)
 	 */
 	@Override
-	public List<Course> getCourseListByUserId(long userId, int type, long semesterId) {
+	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type, semesterId);
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type, semesterId, limit, offset);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -505,19 +505,38 @@ public class CourseServiceImpl implements CourseService {
 		return courseMapper.getCourseById(courseId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCoursePercentTypeDemos(int,
+	 * int)
+	 */
 	@Override
 	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset) {
 		return coursePercentTypeDemoMapper.getCoursePercentTypeDemos(limit, offset);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getAllCourseProperties()
+	 */
 	@Override
 	public List<CourseProperty> getAllCourseProperties() {
 		return coursePropertyMapper.getAllCourseProperties();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseVOListByUserId(long,
+	 * int, long, int, int)
+	 */
 	@Override
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId) {
-		List<Course> list = this.getCourseListByUserId(userId, type, semesterId);
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset) {
+		List<Course> list = this.getCourseListByUserId(userId, type, semesterId, limit, offset);
 		if (ListUtils.isEmptyList(list)) {
 			return null;
 		}

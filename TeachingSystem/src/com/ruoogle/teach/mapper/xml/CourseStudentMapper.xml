@@ -33,7 +33,11 @@
 		SELECT *
 		from
 		TB_Course_Student
-		WHERE userId=#{userId} and type=#{type} and status=0 and semesterId=#{semesterId}
+		WHERE userId=#{userId} and type=#{type}
+		and status=0 and semesterId=#{semesterId}
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
 		order by id
 		desc;
 	</select>

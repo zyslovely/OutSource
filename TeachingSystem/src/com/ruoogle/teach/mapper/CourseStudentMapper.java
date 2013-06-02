@@ -26,7 +26,7 @@ public interface CourseStudentMapper {
 	 * @return
 	 */
 	public List<CourseStudent> getCourseStudentsByUserId(@Param(value = "userId") long userId, @Param(value = "type") int type,
-			@Param(value = "semesterId") long semesterId);
+			@Param(value = "semesterId") long semesterId, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
 	/**
 	 * 更新

@@ -13,6 +13,10 @@ public class CourseVO {
 
 	private Class class1;
 
+	public static final String KCourse_title = "title";
+	public static final String KCoursec_className = "className";
+	public static final String KCoursec_courseId = "courseId";
+
 	public Course getCourse() {
 		return course;
 	}

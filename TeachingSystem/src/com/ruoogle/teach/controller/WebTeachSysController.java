@@ -75,9 +75,9 @@ public class WebTeachSysController extends AbstractBaseController {
 		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
 		long semesterId = ServletRequestUtils.getLongParameter(request, "semesterId", -1L);
 		if (semesterId < 0) {
-			
+
 		}
-		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId);
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId, 0, -1);
 		mv.addObject("courseList", courseList);
 		this.setUD(mv, request);
 		return mv;

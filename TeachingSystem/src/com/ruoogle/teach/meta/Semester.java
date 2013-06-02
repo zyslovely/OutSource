@@ -7,6 +7,9 @@ public class Semester implements Serializable {
 	private long id;
 	private String name;
 
+	public static final String KSemester_name = "name";
+	public static final String KSemester_id = "id";
+
 	public long getId() {
 		return id;
 	}
