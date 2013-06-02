@@ -22,4 +22,14 @@ public interface ClassMapper {
 
 	public List<Class> getAllClass();
 
+	/**
+	 * 更新学生数量
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @param count
+	 * @return
+	 */
+	public int updateClassStudentCount(@Param(value = "classId") long classId, @Param(value = "count") int count);
+
 }

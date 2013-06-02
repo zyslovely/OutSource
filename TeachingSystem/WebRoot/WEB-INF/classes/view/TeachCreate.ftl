@@ -106,7 +106,5 @@ body{min-width:1024px;min-height:600px}
 </body>
 </html>
 </#escape>
-<script>
-     var  _cfg_host="${cfg_host!""}"
-</script>
+
 <#include "js.ftl">

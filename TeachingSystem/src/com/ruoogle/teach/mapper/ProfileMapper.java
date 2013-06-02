@@ -45,7 +45,7 @@ public interface ProfileMapper {
 	 * @param userName
 	 * @return
 	 */
-	public Profile getProfileByUserName(@Param(value = "username") String userName);
+	public Profile getProfileByUserName(@Param(value = "userName") String userName);
 
 	/**
 	 * 

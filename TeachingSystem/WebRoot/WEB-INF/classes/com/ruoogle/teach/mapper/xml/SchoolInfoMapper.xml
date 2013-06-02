@@ -28,6 +28,9 @@
 		SELECT *
 		from
 		TB_School_Info
-		WHERE type=#{type} limit #{limit} offset #{offset} ;
+		WHERE type=#{type}
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if> ;
 	</select>
 </mapper>

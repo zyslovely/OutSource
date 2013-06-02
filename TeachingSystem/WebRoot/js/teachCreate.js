@@ -54,5 +54,6 @@ $("#teachCreate_save").click(function(){
 	
 });
 
-function submitCBBrand(){
+function submitCBBrand(flag){
+	
 };

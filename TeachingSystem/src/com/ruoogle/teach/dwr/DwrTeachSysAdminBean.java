@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
-import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;
@@ -36,6 +36,9 @@ public class DwrTeachSysAdminBean {
 	 * @return
 	 */
 	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
+		if (StringUtils.isEmpty(SpecialtyName) || StringUtils.isEmpty(SpecialtyShortName)) {
+			return false;
+		}
 		return classService.addSpecialty(SpecialtyName, SpecialtyShortName, semesterCount);
 	}
 
@@ -47,8 +50,11 @@ public class DwrTeachSysAdminBean {
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount) {
-		return classService.addClassRoom(name, year, specialtyId, semesterCount);
+	public boolean addClassRoom(String name, int year, long specialtyId) {
+		if (StringUtils.isEmpty(name)) {
+			return false;
+		}
+		return classService.addClassRoom(name, year, specialtyId);
 	}
 
 	/**
@@ -62,6 +68,9 @@ public class DwrTeachSysAdminBean {
 	 * @return
 	 */
 	public boolean addTeacherPassPort(String name, int level, String userName, String passWord) {
+		if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(passWord) || StringUtils.isEmpty(name)) {
+			return false;
+		}
 		return profileService.addProfile(name, userName, passWord, level);
 	}
 

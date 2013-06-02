@@ -9,6 +9,7 @@ public class Class implements Serializable {
 	private int startYear;
 	private long specialtyId;
 	private int semesterCount;
+	private int studentCount;
 
 	public int getSemesterCount() {
 		return semesterCount;
@@ -48,6 +49,14 @@ public class Class implements Serializable {
 
 	public void setStartYear(int startYear) {
 		this.startYear = startYear;
+	}
+
+	public int getStudentCount() {
+		return studentCount;
+	}
+
+	public void setStudentCount(int studentCount) {
+		this.studentCount = studentCount;
 	}
 
 }

@@ -149,6 +149,8 @@ CREATE TABLE TB_Class (
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '班级名称',
   `startYear` int(11) NOT NULL DEFAULT '0' COMMENT '入学年份',
   `semesterCount` int(11) NOT NULL DEFAULT '0' COMMENT '学期数量',
+  `studentCount` int(11) NOT NULL DEFAULT '0' COMMENT '学生数量',
+  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='班级';
 

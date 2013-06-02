@@ -4,6 +4,12 @@
      课程列表
      <#elseif pageName = "teachCreate">
      创建课程
+     <#elseif pageName = "newSpecialty">
+     新建专业
+     <#elseif pageName = "newClass">
+     创建班级
+     <#elseif pageName = "newCourseType">
+     添加课程类型
      </#if>
      </p>
      <#if pageName = "teachCreate">

@@ -25,6 +25,7 @@ import com.ruoogle.teach.mapper.CoursePropertyMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper;
 import com.ruoogle.teach.mapper.CourseStudentMapper;
+import com.ruoogle.teach.mapper.CourseStudentPropertyScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
@@ -38,6 +39,7 @@ import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CourseStudent;
+import com.ruoogle.teach.meta.CourseStudentPropertyScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentTotalScore;
 import com.ruoogle.teach.meta.CourseVO;
@@ -83,6 +85,8 @@ public class CourseServiceImpl implements CourseService {
 	private ProfileMapper profileMapper;
 	@Resource
 	private CoursePercentTypeDemoMapper coursePercentTypeDemoMapper;
+	@Resource
+	private CourseStudentPropertyScoreMapper courseStudentPropertyScoreMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -224,6 +228,10 @@ public class CourseServiceImpl implements CourseService {
 	 * @return
 	 */
 	private boolean insertCourseStudentProperty(long courseId, long studentId) {
+		Course course = courseMapper.getCourseById(courseId);
+		if (course == null) {
+			return false;
+		}
 		// 未完成
 		List<CourseScorePercentProperty> courseScorePercentProperties = courseScorePercentPropertyMapper
 				.getCourseScorePercentPropertyByCourseId(courseId);
@@ -237,12 +245,24 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseProperty> courseProperties = coursePropertyMapper.getAllCourseProperties();
 		for (CourseProperty courseProperty : courseProperties) {
 			double score = 0;
-			double percent = 0;
 			for (CourseScorePercentProperty courseScorePercentProperty : courseScorePercentProperties) {
+				if (courseScorePercentProperty.getPropertyId() == courseProperty.getId()) {
+					break;
+				}
 				CourseStudentScore courseStudentScore = courseStudentScoreMap.get(courseScorePercentProperty.getPercentType());
+				if (courseStudentScore == null) {
+					continue;
+				}
+
 				score += courseStudentScore.getScore() * courseStudentScore.getPercent();
-				percent += courseStudentScore.getPercent();
 			}
+			CourseStudentPropertyScore courseStudentPropertyScore = new CourseStudentPropertyScore();
+			courseStudentPropertyScore.setCourseId(courseId);
+			courseStudentPropertyScore.setPropertyId(courseProperty.getId());
+			courseStudentPropertyScore.setScore(score);
+			courseStudentPropertyScore.setSemester(course.getSemester());
+			courseStudentPropertyScore.setStudentId(studentId);
+			courseStudentPropertyScoreMapper.addCourseStudentPropertyScore(courseStudentPropertyScore);
 		}
 		return true;
 	}

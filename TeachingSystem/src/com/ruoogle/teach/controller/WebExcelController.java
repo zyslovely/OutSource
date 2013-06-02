@@ -157,6 +157,7 @@ public class WebExcelController extends AbstractBaseController {
 				template.createCell(profile.getPassword());
 			}
 		}
+		
 		response.reset();
 		response.setContentType("application/x-download;charset=GBK");
 		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");

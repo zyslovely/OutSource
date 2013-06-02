@@ -57,6 +57,9 @@
         <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='newStudent'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/student/list/" style="<#if pageName!='newStudent'>color: white;</#if>">添加学生信息</a>
         </li>
+        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/admin/schoolInfo/list/" style="<#if pageName!='newSchoolInfo'>color: white;</#if>">添加校园信息</a>
+        </li>
         </#if>
      </ul>
    </div>

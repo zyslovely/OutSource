@@ -13,11 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Specialty;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;
+import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -35,6 +39,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	private CourseService courseService;
 	@Resource
 	private ClassService classService;
+	@Resource
+	private SchoolInfoService schoolInfoService;
 
 	/**
 	 * 
@@ -66,8 +72,13 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newClass");
 		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
+		if (specialtyId < 0) {
+
+		}
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
 		mv.addObject("classList", classList);
+		List<Specialty> specialties = classService.getSpecialties();
+		mv.addObject("specialties", specialties);
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -85,7 +96,6 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -121,6 +131,26 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("admin_newTeacher");
 		List<Profile> teacherList = profileService.getProfileList(ProfileLevel.Teacher.getValue(), 0, -1);
 		mv.addObject("teacherList", teacherList);
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 添加校园信息
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showAddSchoolInfo(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("admin_newSchoolInfo");
+		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
+		if (type < 0) {
+
+		}
+		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(0, -1, SchoolInfoType.school.getValue());
+		mv.addObject("schoolInfos", schoolInfos);
 		this.setUD(mv, request);
 		return mv;
 	}

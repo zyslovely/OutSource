@@ -31,7 +31,7 @@ public interface ClassService {
 	 * @param year
 	 * @return
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount);
+	public boolean addClassRoom(String name, int year, long specialtyId);
 
 	/**
 	 * 
@@ -111,5 +111,7 @@ public interface ClassService {
 	 * @return
 	 */
 	public List<Specialty> getSpecialties();
+
+	public boolean updateClassStudentCount(long classId);
 
 }

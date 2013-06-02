@@ -56,7 +56,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE userName=#{username} ;
+		WHERE userName=#{userName} ;
 	</select>
 
 	<select id="getProfileByClassId" resultType="Profile">

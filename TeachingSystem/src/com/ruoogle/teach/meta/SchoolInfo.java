@@ -2,6 +2,8 @@ package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
 
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
+
 public class SchoolInfo implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
@@ -18,6 +20,36 @@ public class SchoolInfo implements Serializable {
 	public static final String KSchoolInfo_type = "type";
 	public static final String KSchoolInfo_infoType = "infoType";
 	public static final String KSchoolInfo_imgUrl = "imgUrl";
+
+	public enum SchoolInfoType {
+		/**
+		 * 学校
+		 */
+		school {
+			@Override
+			public int getValue() {
+				return 0;
+			}
+		},
+		/**
+		 * 学院
+		 */
+		specialty {
+			@Override
+			public int getValue() {
+				return 1;
+			}
+		};
+		public abstract int getValue();
+
+		public static SchoolInfoType genSchoolInfoType(int t) {
+			for (SchoolInfoType type : SchoolInfoType.values()) {
+				if (type.getValue() == t)
+					return type;
+			}
+			return null;
+		}
+	}
 
 	public long getId() {
 		return id;

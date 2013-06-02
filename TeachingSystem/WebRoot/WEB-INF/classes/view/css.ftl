@@ -1,11 +1,18 @@
 <#-- css文件加载ftl -->
 <#if pageName?exists>
      <link type="text/css" rel="stylesheet" href="/css/base.css"/>
+     <link type="text/css" rel="stylesheet" href="/css/flexigrid.css" media="all"/>
+     <link type="text/css" rel="stylesheet" href="/css/alert/jquery.alert.css" media="all"/>
+     <link type="text/css" rel="stylesheet" href="/selector/css/jquery.ui.selectmenu.css"/>
+     <link type="text/css" rel="stylesheet" href="/selector/css/styles.css"/>
 	<#switch pageName>
     	<#case "teachIndex">
-    	    <link type="text/css" rel="stylesheet" href="/css/flexigrid.css" media="all"/>
-    	    <link type="text/css" rel="stylesheet" href="/css/alert/jquery.alert.css" media="all"/>
-    	    <link type="text/css" rel="stylesheet" href="/chosen/chosen.css" media="all"/>
+    	   
+
+    	<#break>
+    	<#case "newClass">
+    	      
+    	    
     	<#break>
     	
     </#switch>

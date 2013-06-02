@@ -8,8 +8,12 @@
 	</resultMap>
 	<insert id="addSpecialty" parameterType="Specialty">
 		INSERT INTO
-		TB_Specialty (specialty,shortSpecialty,semesterCount)VALUES(
-		#{specialty},#{shortSpecialty},#{semesterCount})
+		TB_Specialty 
+		(
+		specialty,shortSpecialty,semesterCount
+		)VALUES(
+		#{specialty},#{shortSpecialty},#{semesterCount}
+		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
