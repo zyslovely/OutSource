@@ -6,18 +6,17 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.collections.ListUtils;
-import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.log4j.Logger;
-import org.apache.poi.util.ArrayUtil;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.security.MyUser;
+import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 
 /**
@@ -30,6 +29,8 @@ public class DwrTeachSysTeacherBean {
 	private static final Logger logger = Logger.getLogger(DwrTeachSysTeacherBean.class);
 	@Resource
 	private CourseService courseService;
+	@Resource
+	private ClassService classService;
 
 	/**
 	 * 添加新的课程
@@ -112,5 +113,24 @@ public class DwrTeachSysTeacherBean {
 	 */
 	public boolean IsAllScoreInsertFinished(long courseId) {
 		return courseService.checkIsAllScoreInsertFinished(courseId);
+	}
+
+	/**
+	 * 获取班级列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param specialtyId
+	 * @return
+	 */
+	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+		return classService.getClassListBySpecialty(specialtyId);
+	}
+
+	public List<Course> getList() {
+		List<Course> courses = new ArrayList<Course>();
+		Course course = new Course();
+		course.setClassId(1);
+		courses.add(course);
+		return courses;
 	}
 }

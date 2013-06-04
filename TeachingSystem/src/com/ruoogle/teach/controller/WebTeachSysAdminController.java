@@ -114,6 +114,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		List<Profile> studentList = profileService.getProfileListByClassId(ProfileLevel.Student.getValue(), 0, -1, classId);
 		mv.addObject("studentList", studentList);
+		List<Specialty> specialties = classService.getSpecialties();
+		mv.addObject("specialties", specialties);
 		this.setUD(mv, request);
 		return mv;
 	}

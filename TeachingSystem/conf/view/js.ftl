@@ -14,7 +14,7 @@
     <script type="text/javascript" src="/selector/js/jquery.ui.selectmenu.js" charset="utf-8"></script>
     <script type="text/javascript" src="/selector/js/scripts.js" charset="utf-8"></script>
     
-
+    
 	<#switch pageName>
     	<#case "webIndex">
     	
@@ -38,6 +38,14 @@
     	  
    	       <script type="text/javascript" src="/js/admin_newSpecialty.js" charset="utf-8"></script>
     	<#break>
+    	<#case "newStudent">
+    	  
+   	       <script type="text/javascript" src="/js/subNav.js" charset="utf-8"></script>
+   	       <script type="text/javascript" src="/js/admin_newStudent.js" charset="utf-8"></script>
+    	<#break>
+
+    	
+    	
     	
     </#switch>
 </#if>

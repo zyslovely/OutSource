@@ -36,7 +36,7 @@ body{min-width:1024px;min-height:600px}
                       </div>
               </li>
               <li style="float:left;width:200px;">
-                  <a id="newClass_Create" style="margin-left: 20px;" href="javascript:void(0);;"><img src="/img/teachCreate/button_edit.png" style="width:174px;height:59px;"/></a>
+                  <a id="newClass_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">创建班级</a>
               </li>
            </ul>
        </div>

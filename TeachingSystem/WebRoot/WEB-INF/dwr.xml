@@ -25,6 +25,8 @@
 		<convert converter="bean"
 			match="com.ruoogle.teach.meta.CourseScorePercentProperty" />
 		<convert converter="bean" match="java.util.List" />
+		<convert converter="bean" match="com.ruoogle.teach.meta.Class" />
+		<convert converter="bean" match="com.ruoogle.teach.meta.Course" />
 
 	</allow>
 </dwr>

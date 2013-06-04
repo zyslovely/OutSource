@@ -13,6 +13,7 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
+   
    <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
        <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
    </div>

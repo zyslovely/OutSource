@@ -5,6 +5,7 @@
      <link type="text/css" rel="stylesheet" href="/css/alert/jquery.alert.css" media="all"/>
      <link type="text/css" rel="stylesheet" href="/selector/css/jquery.ui.selectmenu.css"/>
      <link type="text/css" rel="stylesheet" href="/selector/css/styles.css"/>
+     <link type="text/css" rel="stylesheet" href="/css/subNav.css"/>
 	<#switch pageName>
     	<#case "teachIndex">
     	   
