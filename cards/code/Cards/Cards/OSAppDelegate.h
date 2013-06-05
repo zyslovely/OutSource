@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class OSViewController;
+@class DDMenuController;
 
 @interface OSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) OSViewController *viewController;
+@property (strong, nonatomic) DDMenuController *menuController;
 
 @end
