@@ -7,14 +7,25 @@
 		<result property="classId" column="classId" />
 		<result property="teacherId" column="teacherId" />
 		<result property="status" column="status" />
+		<result property="description" column="description" />
 	</resultMap>
 
 	<insert id="addCourse" parameterType="Course">
-		INSERT INTO TB_Course
+		INSERT INTO TB_Course 
 		(
-		name,semester,classId,teacherId,status
-		)VALUES(
-		#{name},#{semester},#{classId},#{teacherId},#{status}
+		name,
+		semester,
+		classId,
+		teacherId,
+		status,
+		description 
+		) VALUES (
+		#{name},
+		#{semester},
+		#{classId},
+		#{teacherId},
+		#{status},
+		#{description}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT

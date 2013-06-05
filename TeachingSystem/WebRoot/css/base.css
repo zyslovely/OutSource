@@ -2,8 +2,8 @@ html,body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,
 	{
 	margin: 0;
 	padding: 0;
+	color:#333333
 }
-
 
 section,article,aside,header,footer,nav,dialog,figure {
 	display: block;
@@ -15,11 +15,30 @@ ul,ol {
 
 .clearfix {
 	zoom: 1;
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
 }
 
 a {
 	text-decoration: none;
 	color: #2E75BC;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	text-decoration: none;
+	border-width: 0;
+}
+
+a img {
+	border: none;
+}
+
+*:focus {
+	outline: none;
 }
 
 body,button,input,select,textarea {

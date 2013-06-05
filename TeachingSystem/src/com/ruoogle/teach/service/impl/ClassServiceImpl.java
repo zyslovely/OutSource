@@ -7,14 +7,17 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
 import com.ruoogle.teach.mapper.JournalMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.SemesterMapper;
 import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Journal;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.ClassService;
@@ -38,6 +41,8 @@ public class ClassServiceImpl implements ClassService {
 	private SpecialtyMapper specialtyMapper;
 	@Resource
 	private ProfileMapper profileMapper;
+	@Resource
+	private SemesterMapper semesterMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -49,7 +54,7 @@ public class ClassServiceImpl implements ClassService {
 	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
 		Specialty specialty = new Specialty();
 		specialty.setSemesterCount(semesterCount);
-		specialty.setShortSpecialty(SpecialtyName);
+		specialty.setSpecialty(SpecialtyName);
 		specialty.setShortSpecialty(SpecialtyShortName);
 		return specialtyMapper.addSpecialty(specialty) > 0;
 	}
@@ -61,11 +66,15 @@ public class ClassServiceImpl implements ClassService {
 	 * com.ruoogle.teach.service.ClassService#addClassRoom(java.lang.String,
 	 * int)
 	 */
-	public boolean addClassRoom(String name, int year, long specialtyId, int semesterCount) {
+	public boolean addClassRoom(String name, int year, long specialtyId) {
+		Specialty specialty = specialtyMapper.getSpecialtyById(specialtyId);
+		if (specialty == null) {
+			return false;
+		}
 		com.ruoogle.teach.meta.Class class1 = new com.ruoogle.teach.meta.Class();
 		class1.setName(name);
 		class1.setStartYear(year);
-		class1.setSemesterCount(semesterCount);
+		class1.setSemesterCount(specialty.getSemesterCount());
 		class1.setSpecialtyId(specialtyId);
 		return classMapper.addClass(class1) > 0;
 	}
@@ -118,8 +127,8 @@ public class ClassServiceImpl implements ClassService {
 	 * @see com.ruoogle.teach.service.ClassService#getProfilesByClassId(long)
 	 */
 	@Override
-	public List<Profile> getProfilesByClassId(long classId) {
-		return profileMapper.getProfileByClassId(classId);
+	public List<Profile> getProfilesByClassId(long classId, int level) {
+		return profileMapper.getProfileByClassId(classId, level, 0, -1);
 	}
 
 	/*
@@ -154,5 +163,47 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<com.ruoogle.teach.meta.Class> getAllClass() {
 		return classMapper.getAllClass();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getAllSemesters()
+	 */
+	@Override
+	public List<Semester> getAllSemesters() {
+		return semesterMapper.getAllSemester();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getClassListBySpecialty(long)
+	 */
+	@Override
+	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+		return classMapper.getClassListBySpecialty(specialtyId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getSpecialties()
+	 */
+	@Override
+	public List<Specialty> getSpecialties() {
+		return specialtyMapper.getSpecialties();
+	}
+
+	@Override
+	public boolean updateClassStudentCount(long classId) {
+		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
+		List<Profile> profileList = profileMapper.getProfileByClassId(class1.getId(), ProfileLevel.Student.getValue(), 0, -1);
+		int count = 0;
+		if (!ListUtils.isEmptyList(profileList)) {
+			count = profileList.size();
+		}
+
+		return classMapper.updateClassStudentCount(classId, count) > 0;
 	}
 }

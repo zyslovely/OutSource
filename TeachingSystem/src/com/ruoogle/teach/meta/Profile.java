@@ -27,6 +27,7 @@ public class Profile implements Serializable {
 	public static final String KProfile_passWord = "password";
 	public static final String KProfile_token = "token";
 	public static final String KProfile_level = "level";
+	public static final String KProfile_userId = "userId";
 
 	public enum ProfileLevel {
 		/**

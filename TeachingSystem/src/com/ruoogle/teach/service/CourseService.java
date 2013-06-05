@@ -7,6 +7,7 @@ import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
+import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 
 /**
@@ -28,7 +29,7 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties, String courseName,
-			List<CourseScorePercent> CourseScorePercents, long classId, int year, long teacherId);
+			List<CourseScorePercent> CourseScorePercents, long classId, long teacherId, long semesterId, String desc);
 
 	/**
 	 * 添加学生分类分数
@@ -112,7 +113,19 @@ public interface CourseService {
 	 * @param userId
 	 * @return
 	 */
-	public List<Course> getCourseListByUserId(long userId, int type);
+	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param type
+	 * @param semesterId
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset);
 
 	/**
 	 * 获取课程

@@ -6,14 +6,17 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
 	private String name;
-	private int semester;
+	private long semester;
 	private long classId;
 	private long teacherId;
 	private int status;
+	private String description;
 
 	public static final int VALID = 0;
 
 	public static final int FINISHED = 1;
+	
+
 
 	public long getId() {
 		return id;
@@ -31,11 +34,11 @@ public class Course implements Serializable {
 		this.name = name;
 	}
 
-	public int getSemester() {
+	public long getSemester() {
 		return semester;
 	}
 
-	public void setSemester(int semester) {
+	public void setSemester(long semester) {
 		this.semester = semester;
 	}
 
@@ -61,6 +64,14 @@ public class Course implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

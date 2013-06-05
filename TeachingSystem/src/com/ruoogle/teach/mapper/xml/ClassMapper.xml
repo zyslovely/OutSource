@@ -5,13 +5,17 @@
 		<result property="name" column="name" />
 		<result property="specialtyId" column="specialtyId" />
 		<result property="semesterCount" column="semesterCount" />
+		<result property="startYear" column="startYear" />
+		<result property="studentCount" column="studentCount" />
 
 	</resultMap>
 	<insert id="addClass" parameterType="Class">
 		INSERT INTO TB_Class
-		(name,specialtyId,semesterCount)
+		(
+		name,specialtyId,semesterCount,startYear,studentCount
+		)
 		VALUES(
-		#{name},#{specialtyId,semesterCount}
+		#{name},#{specialtyId},#{semesterCount},#{startYear},#{studentCount}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -38,6 +42,15 @@
 		from
 		TB_Class;
 	</select>
-
+	<update id="updateClassStudentCount" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Class
+		set
+		studentCount=#{count}
+		WHERE
+		id=
+		#{classId};
+	</update>
 
 </mapper>

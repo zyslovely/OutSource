@@ -13,7 +13,7 @@
 			<param name="beanName" value="dwrPubTeachSysBean" />
 		</create>
 		<create javascript="TeachSysTeacherBean" creator="spring">
-			<param name="beanName" value="dwrPubTeachSysTeacherBean" />
+			<param name="beanName" value="dwrTeachSysTeacherBean" />
 		</create>
 		<create javascript="TeachSysStudentBean" creator="spring">
 			<param name="beanName" value="dwrTeachSysStudentBean" />
@@ -24,6 +24,9 @@
 		<convert converter="bean" match="com.ruoogle.teach.meta.CourseScorePercent" />
 		<convert converter="bean"
 			match="com.ruoogle.teach.meta.CourseScorePercentProperty" />
+		<convert converter="bean" match="java.util.List" />
+		<convert converter="bean" match="com.ruoogle.teach.meta.Class" />
+		<convert converter="bean" match="com.ruoogle.teach.meta.Course" />
 
 	</allow>
 </dwr>

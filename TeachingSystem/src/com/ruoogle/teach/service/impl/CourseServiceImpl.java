@@ -2,8 +2,10 @@ package com.ruoogle.teach.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.eason.web.util.HashMapMaker;
 import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CourseMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeGroupMapper;
@@ -22,6 +25,7 @@ import com.ruoogle.teach.mapper.CoursePropertyMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentMapper;
 import com.ruoogle.teach.mapper.CourseScorePercentPropertyMapper;
 import com.ruoogle.teach.mapper.CourseStudentMapper;
+import com.ruoogle.teach.mapper.CourseStudentPropertyScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
@@ -35,8 +39,10 @@ import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CourseStudent;
+import com.ruoogle.teach.meta.CourseStudentPropertyScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentTotalScore;
+import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -53,6 +59,8 @@ public class CourseServiceImpl implements CourseService {
 
 	@Resource
 	private CourseScorePercentMapper courseScorePercentMapper;
+	@Resource
+	private ClassMapper classMapper;
 	@Resource
 	private CourseMapper courseMapper;
 	@Resource
@@ -77,6 +85,8 @@ public class CourseServiceImpl implements CourseService {
 	private ProfileMapper profileMapper;
 	@Resource
 	private CoursePercentTypeDemoMapper coursePercentTypeDemoMapper;
+	@Resource
+	private CourseStudentPropertyScoreMapper courseStudentPropertyScoreMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -87,17 +97,18 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties, String courseName,
-			List<CourseScorePercent> CourseScorePercents, long classId, int year, long teacherId) {
+			List<CourseScorePercent> CourseScorePercents, long classId, long teacherId, long semesterId, String desc) {
 		Course course = new Course();
 		course.setName(courseName);
 		course.setClassId(classId);
-		course.setSemester(year);
+		course.setSemester(semesterId);
 		course.setTeacherId(teacherId);
 		course.setStatus(Course.VALID);
+		course.setDescription(desc);
 		if (courseMapper.addCourse(course) <= 0) {
 			return false;
 		}
-		List<Long> teacherIds = new ArrayList<Long>();
+		Set<Long> teacherIds = new HashSet<Long>();
 		teacherIds.add(teacherId);
 		for (CourseScorePercent courseScorePercent : CourseScorePercents) {
 			courseScorePercent.setCourseId(course.getId());
@@ -112,13 +123,14 @@ public class CourseServiceImpl implements CourseService {
 			courseScorePercentProperty.setCourseId(course.getId());
 			courseScorePercentPropertyMapper.addCourseScorePercentProperty(courseScorePercentProperty);
 		}
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId);
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue(), 0, -1);
 		for (Profile profile : profileList) {
 			CourseStudent courseStudent = new CourseStudent();
 			courseStudent.setClassId(classId);
 			courseStudent.setUserId(profile.getUserId());
 			courseStudent.setType(ProfileLevel.Student.getValue());
 			courseStudent.setCourseId(course.getId());
+			courseStudent.setSemesterId(semesterId);
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
 		// 添加老师和企业老师用户
@@ -129,6 +141,7 @@ public class CourseServiceImpl implements CourseService {
 			courseStudent.setUserId(profile.getUserId());
 			courseStudent.setType(profile.getLevel());
 			courseStudent.setCourseId(course.getId());
+			courseStudent.setSemesterId(semesterId);
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
 
@@ -215,6 +228,10 @@ public class CourseServiceImpl implements CourseService {
 	 * @return
 	 */
 	private boolean insertCourseStudentProperty(long courseId, long studentId) {
+		Course course = courseMapper.getCourseById(courseId);
+		if (course == null) {
+			return false;
+		}
 		// 未完成
 		List<CourseScorePercentProperty> courseScorePercentProperties = courseScorePercentPropertyMapper
 				.getCourseScorePercentPropertyByCourseId(courseId);
@@ -228,12 +245,24 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseProperty> courseProperties = coursePropertyMapper.getAllCourseProperties();
 		for (CourseProperty courseProperty : courseProperties) {
 			double score = 0;
-			double percent = 0;
 			for (CourseScorePercentProperty courseScorePercentProperty : courseScorePercentProperties) {
+				if (courseScorePercentProperty.getPropertyId() == courseProperty.getId()) {
+					break;
+				}
 				CourseStudentScore courseStudentScore = courseStudentScoreMap.get(courseScorePercentProperty.getPercentType());
+				if (courseStudentScore == null) {
+					continue;
+				}
+
 				score += courseStudentScore.getScore() * courseStudentScore.getPercent();
-				percent += courseStudentScore.getPercent();
 			}
+			CourseStudentPropertyScore courseStudentPropertyScore = new CourseStudentPropertyScore();
+			courseStudentPropertyScore.setCourseId(courseId);
+			courseStudentPropertyScore.setPropertyId(courseProperty.getId());
+			courseStudentPropertyScore.setScore(score);
+			courseStudentPropertyScore.setSemester(course.getSemester());
+			courseStudentPropertyScore.setStudentId(studentId);
+			courseStudentPropertyScoreMapper.addCourseStudentPropertyScore(courseStudentPropertyScore);
 		}
 		return true;
 	}
@@ -453,9 +482,9 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#getCourseListByUserId(long)
 	 */
 	@Override
-	public List<Course> getCourseListByUserId(long userId, int type) {
+	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type);
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type, semesterId, limit, offset);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -476,13 +505,52 @@ public class CourseServiceImpl implements CourseService {
 		return courseMapper.getCourseById(courseId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCoursePercentTypeDemos(int,
+	 * int)
+	 */
 	@Override
 	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset) {
 		return coursePercentTypeDemoMapper.getCoursePercentTypeDemos(limit, offset);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getAllCourseProperties()
+	 */
 	@Override
 	public List<CourseProperty> getAllCourseProperties() {
 		return coursePropertyMapper.getAllCourseProperties();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseVOListByUserId(long,
+	 * int, long, int, int)
+	 */
+	@Override
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset) {
+		List<Course> list = this.getCourseListByUserId(userId, type, semesterId, limit, offset);
+		if (ListUtils.isEmptyList(list)) {
+			return null;
+		}
+		Profile teacherProfile = profileMapper.getProfile(userId);
+		List<CourseVO> courseVOs = new ArrayList<CourseVO>();
+		for (Course course : list) {
+			CourseVO courseVO = new CourseVO();
+			courseVO.setCourse(course);
+			courseVO.setTeacher(teacherProfile);
+			com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(course.getClassId());
+			courseVO.setClass1(class1);
+			courseVOs.add(courseVO);
+		}
+
+		return courseVOs;
 	}
 }

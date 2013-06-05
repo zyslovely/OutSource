@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
+import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.CourseService;
@@ -15,6 +16,7 @@ import com.ruoogle.teach.service.ProfileService;
  * @version CreateTime：2013-5-22 上午12:13:14
  * @see Class Description
  */
+@Service("dwrTeachSysStudentBean")
 public class DwrTeachSysStudentBean {
 
 	private static final Logger logger = Logger.getLogger(DwrTeachSysStudentBean.class);

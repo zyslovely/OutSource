@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.SchoolInfoMapper">
+	<resultMap type="SchoolInfo" id="schoolInfoMap ">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="CreateTime" column="CreateTime" />
+		<result property="type" column="type" />
+		<result property="infoType" column="infoType" />
+		<result property="imgUrl" column="imgUrl" />
+
+	</resultMap>
+
+	<insert id="addSchoolInfo" parameterType="SchoolInfo">
+		INSERT INTO TB_School_Info
+		(
+		title,content,CreateTime,type,infoType,imgUrl
+		)VALUES(
+		#{title},#{content},#{CreateTime},#{type},#{infoType},#{imgUrl}
+		)
+		<selectKey keyProperty="userId" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getSchoolInfoList" resultType="SchoolInfo">
+		SELECT *
+		from
+		TB_School_Info
+		WHERE type=#{type}
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if> ;
+	</select>
+</mapper>

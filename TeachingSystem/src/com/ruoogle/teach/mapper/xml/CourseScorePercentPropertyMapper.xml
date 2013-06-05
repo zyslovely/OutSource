@@ -11,9 +11,9 @@
 		INSERT
 		INTO TB_Course_ScorePercent_Property
 		(
-		courseId,percentType,propertyId
+		courseId,percentType,propertyId,percent
 		)VALUES(
-		#{courseId},#{percentType},#{propertyId}
+		#{courseId},#{percentType},#{propertyId},#{percent}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT

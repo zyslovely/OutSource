@@ -28,7 +28,8 @@ public interface ProfileMapper {
 	 * @param offset
 	 * @return
 	 */
-	public List<Profile> getProfileListByLevel(@Param(value = "level") int level, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<Profile> getProfileListByLevel(@Param(value = "level") int level, @Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 获取账户
@@ -44,7 +45,7 @@ public interface ProfileMapper {
 	 * @param userName
 	 * @return
 	 */
-	public Profile getProfileByUserName(@Param(value = "username") String userName);
+	public Profile getProfileByUserName(@Param(value = "userName") String userName);
 
 	/**
 	 * 
@@ -52,7 +53,8 @@ public interface ProfileMapper {
 	 * @param classId
 	 * @return
 	 */
-	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId);
+	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId, @Param(value = "level") int level,
+			@Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
 	/**
 	 * 得到最大的
