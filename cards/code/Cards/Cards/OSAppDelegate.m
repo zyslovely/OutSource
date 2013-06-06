@@ -8,29 +8,37 @@
 
 #import "OSAppDelegate.h"
 
-#import "OSViewController.h"
-
+#import "OSLeftViewController.h"
+#import "OSFeedViewController.h"
+#import "DDMenuController.h"
 @implementation OSAppDelegate
 
 - (void)dealloc
 {
   [_window release];
-  [_viewController release];
-    [super dealloc];
+  [_menuController release];
+  [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-      self.viewController = [[[OSViewController alloc] initWithNibName:@"OSViewController_iPhone" bundle:nil] autorelease];
-  } else {
-      self.viewController = [[[OSViewController alloc] initWithNibName:@"OSViewController_iPad" bundle:nil] autorelease];
-  }
-  self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
-    return YES;
+  self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+  // Override point for customization after application launch.
+  OSFeedViewController *mainController = [[OSFeedViewController alloc] init];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainController];
+  [mainController release];
+  
+  _menuController = [[DDMenuController alloc] initWithRootViewController:navController];
+   
+  
+  OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
+  _menuController.leftViewController = leftController;
+
+  
+  
+  self.window.rootViewController = _menuController;
+  [self.window makeKeyAndVisible];
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -41,7 +49,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+  // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
   // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
