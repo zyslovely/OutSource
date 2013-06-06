@@ -20,15 +20,19 @@
      <div style="float: left; margin-left: 30%;">
          <a id="teachCreate_save" href="javascript:void(0);;" style="font-size: 20px;">确定保存</a>
      </div>
+     <#elseif pageName="newTeacher">
+      <div style="float: left; margin-left: 50%; margin-top: 15px; width: 200px;">
+                 <a id="newTeacher_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">添加老师账号</a>
+      </div>
      <#elseif pageName="newStudent">
 
      <div style="float: left; margin-left: 30%; margin-top: 15px;">
          <div class="w-filebtn" style="float:left;width: 200px;cursor: pointer;">
-                 <a id="newStudent_download" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="/teach/teacher/download/addStudent/">下载名单模版</a>
+                 <a id="newStudent_download" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">下载名单模版</a>
          </div>
-         <form class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="" id="">
+         <form class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addStudent/?classId=${classId!0}" >
              <div class="w-filebtn" style="width: 200px;cursor: pointer;">
-                <input type="file" name="" id="" value=""  class="file-field"/>
+                 <input type="file" name="" id="" value=""  class="file-field"/>
                  <a id="" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">上传学生名单</a>
              </div>
          </form>

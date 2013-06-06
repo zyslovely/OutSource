@@ -123,14 +123,13 @@ public class DwrTeachSysTeacherBean {
 	 * @return
 	 */
 	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+		if (specialtyId < 0) {
+			return null;
+		}
 		return classService.getClassListBySpecialty(specialtyId);
 	}
 
-	public List<Course> getList() {
-		List<Course> courses = new ArrayList<Course>();
-		Course course = new Course();
-		course.setClassId(1);
-		courses.add(course);
-		return courses;
+	public Object[] getList(long specialtyId) {
+		return  classService.getClassListBySpecialty(specialtyId).toArray();
 	}
 }

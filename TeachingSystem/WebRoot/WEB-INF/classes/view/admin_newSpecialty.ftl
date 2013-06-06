@@ -41,20 +41,20 @@ body{min-width:1024px;min-height:600px}
    <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
        <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
    </div>
-   <table style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 14px;">
-       <thead>
+   <table style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;">
+       <thead style="height:60px;">
             <tr>
-               <th><p>专业名称</p></th>
-               <th><p>专业拼音</p></th>
-               <th><p>学期数量</p></th>
+               <th style="color: rgb(123, 123, 123);width:190px;">专业名称</th>
+               <th style="color: rgb(123, 123, 123);width:190px;">专业拼音</th>
+               <th style="color: rgb(123, 123, 123);width:190px;">学期数量</th>
             </tr>
        </thead>
-       <tbody>
+       <tbody  style="font-size: 16px;">
             <#list specialties as specialty>
             <tr>
-               <th><p>${specialty.specialty!""}</p></th>
-               <th><p>${specialty.shortSpecialty!""}</p></th>
-               <th><p>${specialty.semesterCount!0}</p></th>
+               <th style="color: rgb(123, 123, 123);width:190px;">${specialty.specialty!""}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;">${specialty.shortSpecialty!""}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;">${specialty.semesterCount!0}</th>
             </tr>
             </#list>
        </tbody>
