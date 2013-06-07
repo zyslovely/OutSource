@@ -15,12 +15,12 @@ body{min-width:1024px;min-height:600px}
    <#include "subNav.ftl"/>
    <div id="normal_newTeacher" style="margin-left:15%;width:75%;height:105px;margin-top: 20px;">
        <#if teacherList?exists>
-       <table style="">
+       <table style="" cellspacing="0">
             <thead style="height: 60px;">
             <tr>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">姓名</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">姓名</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th>
             </tr>
             </thead>
             <tbody>
@@ -28,9 +28,9 @@ body{min-width:1024px;min-height:600px}
                  <#list teacherList as teacher>
                   <tr style="height:40px;font-size: 16px;border-bottom: 2px solid rgb(224, 224, 224); ">
 
-                  <th style="color: rgb(123, 123, 123);">${teacher.name!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${teacher.userName!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${teacher.password!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.name!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.userName!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.password!""}</th>
                   </tr>
                  </#list>
                  
@@ -43,7 +43,7 @@ body{min-width:1024px;min-height:600px}
             <tbody>
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">老师姓名</p></th>
-                   <th>
+                   <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
                         <input id="newTeacher_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="老师姓名"/>
                       </div>
@@ -51,7 +51,7 @@ body{min-width:1024px;min-height:600px}
                 </tr>
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">账号</p></th>
-                   <th>
+                   <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
                         <input id="newTeacher_username" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="账号"/>
                       </div>

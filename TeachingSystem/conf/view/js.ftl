@@ -24,7 +24,7 @@
     	<#case "teachIndex">
     	
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
-   	       
+   	       <script type="text/javascript" src="/js/teachIndex.js" charset="utf-8"></script>
    	       
     	<#break>
     	<#case "teachCreate">
@@ -47,6 +47,14 @@
     	<#case "newTeacher">
     	  
    	       <script type="text/javascript" src="/js/admin_newTeacher.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "newCourseType">
+    	  
+   	       <script type="text/javascript" src="/js/admin_newCourseType.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "courseInfo">
+    	  
+   	       <script type="text/javascript" src="/js/courseInfo.js" charset="utf-8"></script>
     	<#break>
 
     	

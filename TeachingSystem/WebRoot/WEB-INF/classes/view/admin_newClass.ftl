@@ -27,7 +27,7 @@ body{min-width:1024px;min-height:600px}
                              <#if specialtyId <0>
                                 <option value="0" selected="selected"></option>
                              </#if>
-                             <#if specialties?exists>
+                              <#if specialties?exists>
                               <#list specialties as specialty>
                                   <option value="${specialty.id!0}" <#if specialtyId==specialty.id>selected="selected"</#if>>${specialty.specialty!""}</option>
                               </#list>
@@ -51,20 +51,20 @@ body{min-width:1024px;min-height:600px}
        <img src="/img/newClass/class.png" style="width:195px;height:193px;"/>
    </div>
    <#if classList?exists>
-   <table style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;">
+   <table cellspacing="0" style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;">
        <thead style="height:60px;">
             <tr>
-               <th style="color: rgb(123, 123, 123);width:190px;">班级</th>
-               <th style="color: rgb(123, 123, 123);width:190px;">学期数量</th>
-               <th style="color: rgb(123, 123, 123);width:190px;">学生数量</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">班级</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学期数量</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学生数量</th>
             </tr>
        </thead>
        <tbody style="font-size: 16px;">
             <#list classList as class>
-            <tr style="">
-               <th style="color: rgb(123, 123, 123);width:190px;">${class.name!""}</th>
-               <th style="color: rgb(123, 123, 123);width:190px;">${class.semesterCount!0}</th>
-               <th style="color: rgb(123, 123, 123);width:190px;">${class.studentCount!0}</th>
+            <tr style="height:40px">
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.name!""}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
             </tr>
             </#list>
        </tbody>

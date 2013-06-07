@@ -96,6 +96,7 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
+		
 		this.setUD(mv, request);
 		return mv;
 	}

@@ -36,7 +36,7 @@
 	<select id="getCourseById" resultType="Course">
 		SELECT *
 		from TB_Course
-		WHERE courseId=#{courseId};
+		WHERE id=#{courseId};
 	</select>
 
 	<update id="finishedCourse" flushCache="true" statementType="PREPARED">

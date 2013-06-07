@@ -146,4 +146,13 @@ public interface CourseService {
 	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset);
 
 	public List<CourseProperty> getAllCourseProperties();
+
+	/**
+	 * 得到类型
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId);
 }

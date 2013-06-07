@@ -51,23 +51,23 @@ body{min-width:1024px;min-height:600px}
    </div> 
    <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;">
       <#if studentList?exists>
-       <table style="">
+       <table cellspacing="0" style="">
             <thead style="height: 60px;">
             <tr>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">专业</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">班级</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">学生姓名</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
-               <th style="font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th></tr></thead>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">专业</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">班级</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">学生姓名</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th></tr></thead>
             <tbody>
                  
                  <#list studentList as student>
                   <tr style="height:40px;font-size: 16px;border-bottom: 2px solid rgb(224, 224, 224); ">
-                  <th style="color: rgb(123, 123, 123);">${student.specialtyName!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${student.className!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${student.name!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${student.userName!""}</th>
-                  <th style="color: rgb(123, 123, 123);">${student.password!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${student.specialtyName!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${student.className!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${student.name!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${student.userName!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${student.password!""}</th>
                   </tr>
                  </#list>
                  

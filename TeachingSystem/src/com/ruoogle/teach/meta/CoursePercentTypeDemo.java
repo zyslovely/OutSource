@@ -187,7 +187,10 @@ public class CoursePercentTypeDemo implements Serializable {
 		for (int typeId : coursePercentTypeId) {
 			JSONObject jsonObject2 = new JSONObject();
 			jsonObject2.put("typeId", typeId);
-			jsonObject2.put("percent", percents.get(index));
+			if (percents.get(index) > 1) {
+				jsonObject2.put("percent", percents.get(index) / 100);
+			}
+
 			jsonArray.add(jsonObject2);
 			index++;
 		}
@@ -208,9 +211,9 @@ public class CoursePercentTypeDemo implements Serializable {
 			JSONObject object2 = (JSONObject) object;
 			int typeId = object2.getInt("typeId");
 			CoursePercentType coursePercentType = CoursePercentType.genCoursePercentType(typeId);
-			
+
 			coursePercentTypes.add(coursePercentType);
-			this.percents.add(object2.getDouble("percent"));
+			this.percents.add(object2.getDouble("percent") * 100);
 		}
 	}
 

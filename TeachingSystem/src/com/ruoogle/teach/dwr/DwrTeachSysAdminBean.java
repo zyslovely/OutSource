@@ -1,9 +1,10 @@
 package com.ruoogle.teach.dwr;
 
-import java.util.List;
+import java.util.Arrays;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -82,8 +83,12 @@ public class DwrTeachSysAdminBean {
 	 * @param coursePercentTypes
 	 * @return
 	 */
-	public boolean addCoursePercentTypeDemo(String name, List<Integer> coursePercentTypeId, List<Double> percents) {
-		return classService.addCoursePercentTypeDemo(name, CoursePercentTypeDemo.getCoursePercentTypeList(coursePercentTypeId, percents));
+	public boolean addCoursePercentTypeDemo(String name, Integer[] coursePercentTypeId, Double[] percents) {
+		if (StringUtils.isEmpty(name) || ArrayUtils.isEmpty(coursePercentTypeId) || ArrayUtils.isEmpty(percents)) {
+			return false;
+		}
+		return classService.addCoursePercentTypeDemo(name, CoursePercentTypeDemo.getCoursePercentTypeList(Arrays.asList(coursePercentTypeId), Arrays
+				.asList(percents)));
 	}
 
 }

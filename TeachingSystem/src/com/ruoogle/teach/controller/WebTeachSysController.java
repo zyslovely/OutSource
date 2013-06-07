@@ -13,11 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CourseProperty;
+import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
+import com.ruoogle.teach.meta.Specialty;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MySecurityDelegatingFilter;
 import com.ruoogle.teach.security.MyUser;
@@ -79,6 +83,9 @@ public class WebTeachSysController extends AbstractBaseController {
 		}
 		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId, 0, -1);
 		mv.addObject("courseList", courseList);
+		List<Semester> semesters = classService.getAllSemesters();
+		mv.addObject("semesters", semesters);
+		mv.addObject("semesterId", semesterId);
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -104,6 +111,28 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("classList", classList);
 		List<Semester> semesters = classService.getAllSemesters();
 		mv.addObject("semesters", semesters);
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	public ModelAndView showCourseView(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("CourseInfo");
+
+		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
+
+		Course course = courseService.getCourseById(courseId);
+		mv.addObject("course", course);
+		boolean isPercentType = false;
+		List<CourseScorePercent> courseScorePercents = courseService.getCourseScorePercentListByCourseId(courseId);
+		for (CourseScorePercent courseScorePercent : courseScorePercents) {
+			if ((int) courseScorePercent.getPercentType() == CoursePercentType.AvgGrading.getValue()) {
+				isPercentType = true;
+			}
+			courseScorePercent.setPercent(courseScorePercent.getPercent() * 100);
+		}
+		mv.addObject("isPercentType", isPercentType ? 1 : 0);
+		mv.addObject("courseScorePercents", courseScorePercents);
 		this.setUD(mv, request);
 		return mv;
 	}

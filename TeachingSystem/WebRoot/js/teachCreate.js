@@ -57,3 +57,4 @@ $("#teachCreate_save").click(function(){
 function submitCBBrand(flag){
 	
 };
+
