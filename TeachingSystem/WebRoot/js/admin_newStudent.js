@@ -31,3 +31,17 @@ $("#newStudent_download").click(function(){
     }
     location.href="/teach/teacher/download/addStudent/?classId="+_classId;
 });
+
+function newfileChange(opt){
+	
+     _val=$(opt).val();
+     if(_val==''){
+     	return;
+     }
+     $("#fileUpdate_form").ajaxSubmit(function(message) {
+     	
+     });
+     return false;
+};
+
+
