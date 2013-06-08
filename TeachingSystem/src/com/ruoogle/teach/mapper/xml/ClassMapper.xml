@@ -34,13 +34,14 @@
 		from
 		TB_Class
 		WHERE
-		specialtyId=#{specialtyId};
+		specialtyId=#{specialtyId} order by id desc;
 	</select>
 
 	<select id="getAllClass" resultType="Class">
 		SELECT *
 		from
-		TB_Class;
+		TB_Class order
+		by id desc;
 	</select>
 	<update id="updateClassStudentCount" flushCache="true"
 		statementType="PREPARED">

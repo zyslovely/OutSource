@@ -469,6 +469,7 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public boolean finishCourse(long courseId, long teacherid) {
+		
 		if (courseMapper.finishedCourse(courseId) > 0) {
 			courseStudentMapper.updateCourseStudentsStatus(courseId, Course.FINISHED);
 			return true;
@@ -552,5 +553,18 @@ public class CourseServiceImpl implements CourseService {
 		}
 
 		return courseVOs;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseScorePercentListByCourseId
+	 * (long)
+	 */
+	@Override
+	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId) {
+
+		return courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
 	}
 }

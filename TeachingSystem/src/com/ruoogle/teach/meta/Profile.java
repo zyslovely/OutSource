@@ -22,6 +22,9 @@ public class Profile implements Serializable {
 	private long classId;
 	private long number;
 
+	private String className;
+	private String specialtyName;
+
 	public static final String KProfile_userName = "username";
 	public static final String KProfile_Name = "name";
 	public static final String KProfile_passWord = "password";
@@ -139,6 +142,22 @@ public class Profile implements Serializable {
 
 	public void setNumber(long number) {
 		this.number = number;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public String getSpecialtyName() {
+		return specialtyName;
+	}
+
+	public void setSpecialtyName(String specialtyName) {
+		this.specialtyName = specialtyName;
 	}
 
 }

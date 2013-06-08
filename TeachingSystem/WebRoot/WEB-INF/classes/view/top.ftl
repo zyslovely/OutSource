@@ -32,8 +32,8 @@
    <div style="height: 49px; width: 100%; display: inline-block;">
      <ul style="margin-left:15%;width:85%;">
         <#if level!=3>
-        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/index/" style="<#if pageName!='teachIndex'>color: white</#if>;">课程列表</a>
+        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/index/" style="<#if pageName!='teachIndex' && pageName!='courseInfo'>color: white</#if>;">课程列表</a>
         </li>
         </#if>
         <#if level==1>
@@ -58,7 +58,7 @@
            <a href="/teach/admin/student/list/" style="<#if pageName!='newStudent'>color: white;</#if>">添加学生信息</a>
         </li>
         <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/admin/schoolInfo/list/" style="<#if pageName!='newSchoolInfo'>color: white;</#if>">添加校园信息</a>
+           <a href="/teach/admin/schoolInfo/list/" style="<#if pageName!='newSchoolInfo'>color: white;</#if>">添加学校学院信息</a>
         </li>
         </#if>
      </ul>

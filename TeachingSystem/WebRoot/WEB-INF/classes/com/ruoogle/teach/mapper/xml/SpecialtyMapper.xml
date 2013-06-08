@@ -31,7 +31,7 @@
 	<select id="getSpecialties" resultType="Specialty">
 		SELECT *
 		from
-		TB_Specialty;
+		TB_Specialty order by id desc;
 		
 	</select>
 </mapper>

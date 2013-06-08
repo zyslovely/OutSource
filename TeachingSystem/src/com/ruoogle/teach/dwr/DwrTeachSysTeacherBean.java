@@ -1,6 +1,5 @@
 package com.ruoogle.teach.dwr;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
-import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
@@ -123,14 +121,13 @@ public class DwrTeachSysTeacherBean {
 	 * @return
 	 */
 	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+		if (specialtyId < 0) {
+			return null;
+		}
 		return classService.getClassListBySpecialty(specialtyId);
 	}
 
-	public List<Course> getList() {
-		List<Course> courses = new ArrayList<Course>();
-		Course course = new Course();
-		course.setClassId(1);
-		courses.add(course);
-		return courses;
+	public Object[] getList(long specialtyId) {
+		return  classService.getClassListBySpecialty(specialtyId).toArray();
 	}
 }

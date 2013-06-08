@@ -2,6 +2,8 @@ package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
 
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
+
 public class CourseScorePercent implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
@@ -10,6 +12,10 @@ public class CourseScorePercent implements Serializable {
 	private double percent;
 	private long teacherId;
 	private int objectCount;
+	/**
+	 * 不存数据库
+	 */
+	private String name;
 
 	public static final long PercentType_Stage = 1;
 
@@ -34,6 +40,10 @@ public class CourseScorePercent implements Serializable {
 	}
 
 	public void setPercentType(long percentType) {
+		CoursePercentType type = CoursePercentType.genCoursePercentType((int) percentType);
+		if (type != null) {
+			this.name = type.getName();
+		}
 		this.percentType = percentType;
 	}
 
@@ -59,6 +69,14 @@ public class CourseScorePercent implements Serializable {
 
 	public void setObjectCount(int objectCount) {
 		this.objectCount = objectCount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

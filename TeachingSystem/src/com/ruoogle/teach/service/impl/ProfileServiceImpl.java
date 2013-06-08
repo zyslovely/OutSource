@@ -7,8 +7,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.service.ProfileService;
 
 /**
@@ -21,6 +25,10 @@ public class ProfileServiceImpl implements ProfileService {
 
 	@Resource
 	private ProfileMapper profileMapper;
+	@Resource
+	private ClassMapper classMapper;
+	@Resource
+	private SpecialtyMapper specialtyMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -35,6 +43,7 @@ public class ProfileServiceImpl implements ProfileService {
 		profile.setCreateTime(new Date().getTime());
 		profile.setUserName(userName);
 		profile.setPassword(passWord);
+		profile.setName(name);
 		profile.setLevel(level);
 		return profileMapper.addProfile(profile) > 0;
 	}
@@ -97,6 +106,19 @@ public class ProfileServiceImpl implements ProfileService {
 	 */
 	@Override
 	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId) {
-		return profileMapper.getProfileByClassId(classId, level, limit, offset);
+		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
+		Specialty specialty = specialtyMapper.getSpecialtyById(class1.getSpecialtyId());
+		if (class1 == null || specialty == null) {
+			return null;
+		}
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId, level, limit, offset);
+		if (ListUtils.isEmptyList(profileList)) {
+			return null;
+		}
+		for (Profile profile : profileList) {
+			profile.setClassName(class1.getName());
+			profile.setSpecialtyName(specialty.getSpecialty());
+		}
+		return profileList;
 	}
 }

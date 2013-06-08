@@ -22,6 +22,6 @@
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
-
+		order by id desc
 	</select>
 </mapper>

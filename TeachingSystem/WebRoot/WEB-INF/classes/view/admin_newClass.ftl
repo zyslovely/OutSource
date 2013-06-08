@@ -23,10 +23,15 @@ body{min-width:1024px;min-height:600px}
            <ul style=" height: 60px;width:100%;">
               <li style="float:left;width:300px;">
                  <div class="select-wrapper wide">
-                          <select class="select-receiver" id="newClass_Create_Specialty" name="receiver" >
+                          <select class="select-receiver" id="newClass_Create_Specialty" name="receiver" onChange="newSpecialtyCreateClassChange(this);return;">
+                             <#if specialtyId <0>
+                                <option value="0" selected="selected"></option>
+                             </#if>
+                              <#if specialties?exists>
                               <#list specialties as specialty>
-                                  <option value="${specialty.id!0}">${specialty.specialty!""}</option>
+                                  <option value="${specialty.id!0}" <#if specialtyId==specialty.id>selected="selected"</#if>>${specialty.specialty!""}</option>
                               </#list>
+                              </#if>
                           </select>
                       </div>
               </li>
@@ -43,26 +48,28 @@ body{min-width:1024px;min-height:600px}
        
    </div> 
    <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
-       <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
+       <img src="/img/newClass/class.png" style="width:195px;height:193px;"/>
    </div>
-   <table style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 14px;">
-       <thead>
+   <#if classList?exists>
+   <table cellspacing="0" style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;">
+       <thead style="height:60px;">
             <tr>
-               <th><p>班级</p></th>
-               <th><p>学期数量</p></th>
-               <th><p>学生数量</p></th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">班级</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学期数量</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学生数量</th>
             </tr>
        </thead>
-       <tbody>
+       <tbody style="font-size: 16px;">
             <#list classList as class>
-            <tr>
-               <th><p>${class.name!""}</p></th>
-               <th><p>${class.semesterCount!0}</p></th>
-               <th><p>${class.studentCount!0}</p></th>
+            <tr style="height:40px">
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.name!""}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
             </tr>
             </#list>
        </tbody>
    </table> 
+   </#if>
 </body>
 </html>
 </#escape>
