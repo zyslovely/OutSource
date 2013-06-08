@@ -580,7 +580,7 @@
   [self resetNavButtons];
 }
 
-- (void)setLeftViewController:(UIViewController *)leftController {
+- (void)setLeftViewController:(OSLeftViewController *)leftController {
   _left = leftController;
   _menuFlags.canShowLeft = (_left!=nil);
   [self resetNavButtons];

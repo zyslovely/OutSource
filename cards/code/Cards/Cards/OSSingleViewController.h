@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSImage.h"
 
-@interface OSSingleViewController : UIViewController
+@interface OSSingleViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 
-@property (nonatomic,retain) IBOutlet UIImageView *ibImageView;
+@property (nonatomic,retain) IBOutlet UIView *ibImageView;
 @property (nonatomic,retain) IBOutlet UIButton *ibChangeBtn;
 @property (nonatomic,retain) IBOutlet UIButton *ibBackBtn;
 @property (nonatomic,retain) IBOutlet UIButton *ibSaveBtn;
 
-
+- (id)initWithSingleView:(OSImage*)image ;
 @end

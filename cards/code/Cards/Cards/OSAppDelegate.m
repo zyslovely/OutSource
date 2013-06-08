@@ -11,12 +11,14 @@
 #import "OSLeftViewController.h"
 #import "OSFeedViewController.h"
 #import "DDMenuController.h"
+#import "OSImage.h"
 @implementation OSAppDelegate
 
 - (void)dealloc
 {
   [_window release];
   [_menuController release];
+  [_imagesArray release];
   [super dealloc];
 }
 
@@ -34,7 +36,14 @@
   OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
   _menuController.leftViewController = leftController;
 
-  
+  NSArray *osImages = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Cards.plist" ofType:nil]];
+  _imagesArray=[[NSMutableArray alloc]init];
+  for(NSDictionary *dic in osImages){
+    
+    OSImage *image=[[OSImage alloc]initWithJSONDic:dic];
+    [_imagesArray addObject:image];
+    [image release];
+  }
   
   self.window.rootViewController = _menuController;
   [self.window makeKeyAndVisible];
@@ -66,6 +75,12 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
++ (OSAppDelegate *)sharedInstance {
+  
+  return (OSAppDelegate *) [[UIApplication sharedApplication] delegate];
 }
 
 @end

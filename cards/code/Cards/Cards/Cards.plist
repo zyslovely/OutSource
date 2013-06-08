@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>thumbnail</key>
+		<string>screenshot1.png</string>
+		<key>type</key>
+		<integer>1</integer>
+		<key>size_width</key>
+		<integer>280</integer>
+		<key>size_height</key>
+		<integer>320</integer>
+		<key>images</key>
+		<array>
+			<dict>
+				<key>ori_x</key>
+				<string>140</string>
+				<key>ori_y</key>
+				<string>120</string>
+				<key>ori_width</key>
+				<string>40</string>
+				<key>ori_height</key>
+				<string>60</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>
