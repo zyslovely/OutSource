@@ -4,9 +4,15 @@ import java.util.List;
 
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
+import com.ruoogle.teach.meta.CourseStudent;
+import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+import com.ruoogle.teach.meta.CourseStudentScore;
+import com.ruoogle.teach.meta.CourseStudentScoreVO;
+import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 
@@ -94,7 +100,7 @@ public interface CourseService {
 	 * @param fromStudentId
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId, long percentType);
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId);
 
 	/**
 	 * 完成课程
@@ -155,4 +161,54 @@ public interface CourseService {
 	 * @return
 	 */
 	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId);
+
+	/**
+	 * 得到这门课的学生列表，以及分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId, long percentType);
+
+	/**
+	 * 根据stage获取课程分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param stage
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage, long courseId);
+
+	/**
+	 * 获得这个学生这个学期的属性
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @param semesterId
+	 * @return
+	 */
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(long studentId, long semesterId);
+
+	/**
+	 * 获取互评学生列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param fromStudentId
+	 * @param courseId
+	 * @return
+	 */
+	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(long fromStudentId, long courseId);
+
+	public CourseStudent getCourseStudent(long courseId, long studentId);
+
+	/**
+	 * 获取成绩列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(long courseId);
 }

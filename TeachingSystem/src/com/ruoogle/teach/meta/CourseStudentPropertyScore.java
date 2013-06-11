@@ -9,7 +9,7 @@ public class CourseStudentPropertyScore implements Serializable {
 	private long studentId;
 	private long propertyId;
 	private double score;
-	private long semester;
+	private long semesterId;
 
 	public long getId() {
 		return id;
@@ -51,12 +51,12 @@ public class CourseStudentPropertyScore implements Serializable {
 		this.score = score;
 	}
 
-	public long getSemester() {
-		return semester;
+	public long getSemesterId() {
+		return semesterId;
 	}
 
-	public void setSemester(long semester) {
-		this.semester = semester;
+	public void setSemesterId(long semesterId) {
+		this.semesterId = semesterId;
 	}
 
 }

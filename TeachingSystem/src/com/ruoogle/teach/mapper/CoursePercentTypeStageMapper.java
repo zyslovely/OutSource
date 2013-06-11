@@ -38,4 +38,15 @@ public interface CoursePercentTypeStageMapper {
 	 */
 	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByStudentId(@Param(value = "courseId") long courseId,
 			@Param(value = "studentId") long studentId);
+
+	/**
+	 * 获得stage的学生分数列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param stage
+	 * @return
+	 */
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseIdStage(@Param(value = "courseId") long courseId,
+			@Param(value = "stage") int stage);
 }

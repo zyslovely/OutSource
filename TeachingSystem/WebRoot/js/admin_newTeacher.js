@@ -1,6 +1,7 @@
 $("#newTeacher_Create").click(function(){
 	$("#create_newTeacher_Profile").css("display","inline-block");
 	$("#normal_newTeacher").css("display","none");
+	$("#newTeacher_Create").css("display","none");
 });
 
 

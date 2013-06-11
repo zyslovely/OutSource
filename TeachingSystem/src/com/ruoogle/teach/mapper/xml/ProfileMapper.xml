@@ -87,5 +87,14 @@
 		userId=
 		#{userId};
 	</update>
-
+	<select id="getProfileListByIds" resultType="Profile"
+		parameterType="list">
+		SELECT * from TB_Profile where
+		userId in
+		<foreach item="item" collection="userIds" index="index" open="("
+			separator="," close=")">
+			#{item} 
+	     </foreach>
+		;
+	</select>
 </mapper>

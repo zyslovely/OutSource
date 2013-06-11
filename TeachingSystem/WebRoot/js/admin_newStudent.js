@@ -39,7 +39,7 @@ function newfileChange(opt){
      	return;
      }
      $("#fileUpdate_form").ajaxSubmit(function(message) {
-     	
+     	location.href=location.href;
      });
      return false;
 };

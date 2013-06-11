@@ -23,11 +23,11 @@
 		SELECT *
 		from
 		TB_Course_PercentType_Group
-		WHERE courseId=#{courseId};
+		WHERE id=#{id};
 	</select>
 
-	<select id="getCoursePercentTypeGroupCountByIds" resultType="int">
-		SELECT count(*)
+	<select id="getCoursePercentTypeGroupByCourseId" resultType="CoursePercentTypeGroup">
+		SELECT *
 		from
 		TB_Course_PercentType_Group
 		WHERE

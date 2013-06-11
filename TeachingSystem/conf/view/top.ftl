@@ -4,7 +4,7 @@
    </div>
    <div style="float: right; margin-right: 10%; margin-top: 23px;height:52px;">
        <ul style="width:350px;">
-          <li style="float: left; width: 80px; text-align: center;">
+          <li style="float: left; width: 100px; text-align: center;">
              <img src="/img/teachCreate/user.png" style="width: 14px; height: 14px;"/>
              <a href="/user/profile/" style="color: white;">${visitName!""}</a>
           </li>
@@ -32,8 +32,8 @@
    <div style="height: 49px; width: 100%; display: inline-block;">
      <ul style="margin-left:15%;width:85%;">
         <#if level!=3>
-        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/index/" style="<#if pageName!='teachIndex' && pageName!='courseInfo'>color: white</#if>;">课程列表</a>
+        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'|| pageName='courseScore'|| pageName='EachStudentScore'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/index/" style="<#if pageName!='teachIndex' && pageName!='courseInfo'&& pageName!='courseScore'&& pageName!='EachStudentScore'>color: white</#if>;">课程列表</a>
         </li>
         </#if>
         <#if level==1>

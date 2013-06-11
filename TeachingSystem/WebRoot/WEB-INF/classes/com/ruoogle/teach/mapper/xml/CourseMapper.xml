@@ -11,14 +11,14 @@
 	</resultMap>
 
 	<insert id="addCourse" parameterType="Course">
-		INSERT INTO TB_Course 
+		INSERT INTO TB_Course
 		(
 		name,
 		semester,
 		classId,
 		teacherId,
 		status,
-		description 
+		description
 		) VALUES (
 		#{name},
 		#{semester},
@@ -57,5 +57,5 @@
 	     </foreach>
 		;
 	</select>
-
+	
 </mapper>

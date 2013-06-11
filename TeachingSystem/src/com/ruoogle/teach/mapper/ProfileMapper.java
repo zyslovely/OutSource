@@ -74,4 +74,13 @@ public interface ProfileMapper {
 	 * @return
 	 */
 	public int updateProfilePassword(@Param(value = "userId") long userId, @Param(value = "password") String password);
+
+	/**
+	 * 获取profile列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userIds
+	 * @return
+	 */
+	public List<Profile> getProfileListByIds(@Param(value = "userIds") List<Long> userIds);
 }

@@ -16,4 +16,26 @@ public interface CourseStudentTotalScoreMapper {
 	 * @return
 	 */
 	public List<CourseStudentTotalScore> getCourseStudentTotalScores(@Param(value = "courseId") long courseId);
+
+	/**
+	 * 得到某个学生某门课的总成绩
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	public CourseStudentTotalScore getCourseStudentTotalScoreByStudentId(@Param(value = "courseId") long courseId,
+			@Param(value = "studentId") long studentId);
+
+	/**
+	 * 更新学生成绩
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param studentId
+	 * @return
+	 */
+	public int updateCourseStudentTotalScore(@Param(value = "id") long id, @Param(value = "score") double score);
+
 }

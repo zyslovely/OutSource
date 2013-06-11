@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
@@ -38,12 +39,20 @@ public class DwrTeachSysTeacherBean {
 	 * @param coursePercentTypes
 	 * @param classId
 	 */
-	public boolean addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
+	public long addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
 			CourseScorePercentProperty courseScorePercentProperties[], String desc) {
+		if (ArrayUtils.isEmpty(courseScorePercentProperties) || ArrayUtils.isEmpty(CourseScorePercents)) {
+			return -1;
+		}
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents), classId,
-				teacherId, semesterId, desc);
+		boolean succ = courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents),
+				classId, teacherId, semesterId, desc);
+		if (succ) {
+			return semesterId;
+		}
+
+		return -1;
 	}
 
 	/**
@@ -56,6 +65,9 @@ public class DwrTeachSysTeacherBean {
 	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		if (score < 0) {
+			return false;
+		}
 		return courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
 
 	}
@@ -128,6 +140,6 @@ public class DwrTeachSysTeacherBean {
 	}
 
 	public Object[] getList(long specialtyId) {
-		return  classService.getClassListBySpecialty(specialtyId).toArray();
+		return classService.getClassListBySpecialty(specialtyId).toArray();
 	}
 }

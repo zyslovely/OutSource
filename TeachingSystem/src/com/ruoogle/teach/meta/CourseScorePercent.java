@@ -17,7 +17,6 @@ public class CourseScorePercent implements Serializable {
 	 */
 	private String name;
 
-	public static final long PercentType_Stage = 1;
 
 	public long getId() {
 		return id;

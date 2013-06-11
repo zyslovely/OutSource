@@ -22,25 +22,20 @@ public class Test {
 		String metaJavaPackage = "com.ruoogle.teach.meta";
 		String mapperJavaPackage = "com.ruoogle.teach.mapper";
 
-		String functionName = "SchoolInfo";
-		String firstLowerCaseName = "schoolInfo";
-		String tableName = "TB_School_Info";
+		String functionName = "SemesterStudent";
+		String firstLowerCaseName = "semesterStudent";
+		String tableName = "TB_Semester_Student";
 
 		List<String> metaNameList = new ArrayList<String>();
 		metaNameList.add("id");
-		metaNameList.add("title");
-		metaNameList.add("content");
-		metaNameList.add("CreateTime");
-		metaNameList.add("type");
-		metaNameList.add("infoType");
-		
+		metaNameList.add("semesterId");
+		metaNameList.add("studentId");
+		metaNameList.add("status");
 
 		List<String> metaTypeList = new ArrayList<String>();
 		metaTypeList.add("long");
-		metaTypeList.add("String");
-		metaTypeList.add("String");
 		metaTypeList.add("long");
-		metaTypeList.add("int");
+		metaTypeList.add("long");
 		metaTypeList.add("int");
 		
 

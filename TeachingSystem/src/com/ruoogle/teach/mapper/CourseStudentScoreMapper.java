@@ -46,4 +46,13 @@ public interface CourseStudentScoreMapper {
 	 * @return
 	 */
 	public int updateCourseStudentScore(CourseStudentScore courseStudentScore);
+
+	/**
+	 * 通过评分标准和课程获取对应的列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @return
+	 */
+	public List<CourseStudentScore> getCourseStudentScoreListByCourseIdPercentType(@Param(value = "courseId") long courseId,
+			@Param(value = "percentType") long percentType);
 }

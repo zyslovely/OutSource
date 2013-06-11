@@ -23,6 +23,8 @@
     	<#break>
     	<#case "teachIndex">
     	
+    	   <!--[if IE]><script type="text/javascript" src="/js/radar/radarc.js"></script><![endif]-->
+    	   <script type="text/javascript" src="/js/radar/radar.js"></script>
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/teachIndex.js" charset="utf-8"></script>
    	       
@@ -56,8 +58,16 @@
     	  
    	       <script type="text/javascript" src="/js/courseInfo.js" charset="utf-8"></script>
     	<#break>
-
     	
+    	<#case "courseScore">
+    	  
+   	       <script type="text/javascript" src="/js/courseScore.js" charset="utf-8"></script>
+    	<#break>
+
+    	<#case "EachStudentScore">
+    	  
+   	       <script type="text/javascript" src="/js/EachStudentScore.js" charset="utf-8"></script>
+    	<#break>
     	
     	
     </#switch>

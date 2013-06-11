@@ -76,6 +76,7 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		}
 		mv.addObject("specialtyId", specialtyId);
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
+		
 		mv.addObject("classList", classList);
 		List<Specialty> specialties = classService.getSpecialties();
 		mv.addObject("specialties", specialties);

@@ -23,7 +23,7 @@ public class CoursePercentTypeDemo implements Serializable {
 		 */
 		Grading {
 			@Override
-			public int getValue() {
+			public long getValue() {
 				return 0;
 			}
 
@@ -44,7 +44,7 @@ public class CoursePercentTypeDemo implements Serializable {
 		 */
 		TestResult {
 			@Override
-			public int getValue() {
+			public long getValue() {
 				return 1;
 			}
 
@@ -65,7 +65,7 @@ public class CoursePercentTypeDemo implements Serializable {
 		 */
 		AvgGrading {
 			@Override
-			public int getValue() {
+			public long getValue() {
 				return 2;
 			}
 
@@ -86,7 +86,7 @@ public class CoursePercentTypeDemo implements Serializable {
 		 */
 		CreativeResult {
 			@Override
-			public int getValue() {
+			public long getValue() {
 				return 3;
 			}
 
@@ -107,7 +107,7 @@ public class CoursePercentTypeDemo implements Serializable {
 		 */
 		EachStudent {
 			@Override
-			public int getValue() {
+			public long getValue() {
 				return 4;
 			}
 
@@ -123,7 +123,7 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 0;
 			}
 		};
-		public abstract int getValue();
+		public abstract long getValue();
 
 		public abstract String getName();
 
@@ -131,9 +131,9 @@ public class CoursePercentTypeDemo implements Serializable {
 
 		public abstract int getObjectCount();
 
-		public static CoursePercentType genCoursePercentType(int t) {
+		public static CoursePercentType genCoursePercentType(long l) {
 			for (CoursePercentType type : CoursePercentType.values()) {
-				if (type.getValue() == t)
+				if (type.getValue() == l)
 					return type;
 			}
 			return null;

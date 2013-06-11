@@ -20,7 +20,8 @@
 		</selectKey>
 	</insert>
 
-	<select id="getCoursePercentTypeGroupStudentByIds" resultType="CoursePercentTypeGroupStudent">
+	<select id="getCoursePercentTypeGroupStudentByStudentId"
+		resultType="CoursePercentTypeGroupStudent">
 		SELECT *
 		from TB_Course_PercentType_Group_Student
 		WHERE
@@ -51,6 +52,14 @@
 	<select id="getCoursePercentTypeGroupStudentCountByIds"
 		resultType="int">
 		SELECT count(*)
+		from TB_Course_PercentType_Group_Student
+		where
+		courseId=#{courseId}
+		and groupId = #{groupId};
+	</select>
+	<select id="getCoursePercentTypeGroupStudentListByGroupId"
+		resultType="CoursePercentTypeGroupStudent">
+		SELECT *
 		from TB_Course_PercentType_Group_Student
 		where
 		courseId=#{courseId}

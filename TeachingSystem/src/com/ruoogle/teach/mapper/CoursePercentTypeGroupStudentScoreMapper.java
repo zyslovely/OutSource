@@ -45,6 +45,17 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 			@Param(value = "groupId") long groupId);
 
 	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param groupId
+	 * @param fromStudentId
+	 * @return
+	 */
+	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByCourseGroupFrom(@Param(value = "courseId") long courseId,
+			@Param(value = "groupId") long groupId, @Param(value = "fromStudentId") long fromStudentId);
+
+	/**
 	 * 更新
 	 * 
 	 * @auther zyslovely@gmail.com

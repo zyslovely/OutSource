@@ -112,6 +112,13 @@ public interface ClassService {
 	 */
 	public List<Specialty> getSpecialties();
 
+	/**
+	 * 更新学生数量
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
 	public boolean updateClassStudentCount(long classId);
 
 }

@@ -6,16 +6,49 @@
 		<result property="studentId" column="studentId" />
 		<result property="propertyId" column="propertyId" />
 		<result property="score" column="score" />
-		<result property="semester" column="semester" />
+		<result property="semesterId" column="semesterId" />
 	</resultMap>
 	<insert id="addCourseStudentPropertyScore" parameterType="CourseStudentPropertyScore">
 		INSERT
 		INTO TB_Course_Student_Property_Score
-		(courseId,studentId,propertyId,score,semester )VALUES(
-		#{courseId},#{studentId},#{propertyId},#{score},#{semester})
+		(courseId,studentId,propertyId,score,semesterId )VALUES(
+		#{courseId},#{studentId},#{propertyId},#{score},#{semesterId})
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
+
 	</insert>
+
+
+	<select id="getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId"
+		resultType="CourseStudentPropertyScore">
+		SELECT *
+		from
+		TB_Course_Student_Property_Score
+		WHERE
+		courseId=#{courseId} and studentId=#{studentId} and
+		propertyId=#{propertyId};
+	</select>
+	<update id="updateCourseStudentPropertyScoreById" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_Student_Property_Score
+		set
+		score=#{score}
+		WHERE
+		id =#{id};
+	</update>
+
+	<select id="getCourseStudentPropertyScoreBySemesterId"
+		resultType="CourseStudentPropertyScore">
+		SELECT *
+		from
+		TB_Course_Student_Property_Score
+		WHERE
+		semesterId=#{semesterId} and studentId=#{studentId} ;
+	</select>
+
+
 </mapper>
+

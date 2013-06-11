@@ -1,3 +1,12 @@
+CREATE TABLE TB_Semester_Student (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `semesterId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学期',
+  `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0未结束',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学期课程';
+
+
 CREATE TABLE TB_Course (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '课程名称',
@@ -16,6 +25,7 @@ CREATE TABLE TB_Course_Student (
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0学生,1老师.2企业老师',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0未结束',
+  `semesterId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学期id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程表人员';
 
@@ -23,7 +33,7 @@ CREATE TABLE TB_Course_Student_TotalScore (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
   `semester` bigint(20) NOT NULL DEFAULT '0' COMMENT '学期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生课程总得分表';
@@ -35,15 +45,16 @@ CREATE TABLE TB_Course_Student_Score (
   `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
   `percentType` bigint(20) NOT NULL DEFAULT '0' COMMENT '评分细则类型id',
   `percent` double NOT NULL DEFAULT '0' COMMENT '评分细则比例',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分类型得分表';
 
 CREATE TABLE TB_Course_Student_Property_SemesterScore (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `semester` int(11) NOT NULL DEFAULT '0' COMMENT '学期',
+  `semesterId`  bigint(20) NOT NULL DEFAULT '0' COMMENT '学期',
   `propertyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '属性id',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
+  `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生学期属性分数表';
 
@@ -52,8 +63,8 @@ CREATE TABLE TB_Course_Student_Property_Score (
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
   `propertyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '属性id',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
-  `semester` int(11) NOT NULL DEFAULT '0' COMMENT '学期',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
+  `semesterId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程评分类型得分表';
 
@@ -119,7 +130,7 @@ CREATE TABLE TB_Course_PercentType_Group_Student_Score (
   `groupId` bigint(20) NOT NULL DEFAULT '0' COMMENT '小组id',
   `fromStudentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '从学生id',
   `toStudentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '去学生id',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程小组成员互相打分表';
 
@@ -128,7 +139,7 @@ CREATE TABLE TB_Course_PercentType_Stage (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `studentId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学生id',
-  `score` double NOT NULL DEFAULT '0' COMMENT '分数',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
   `stageIndex` int(11) NOT NULL DEFAULT '0' COMMENT '哪个阶段',
   `percentType` bigint(20) NOT NULL DEFAULT '0' COMMENT '评分细则类型id',
   PRIMARY KEY (`id`)
@@ -222,5 +233,16 @@ CREATE TABLE `TB_School_Info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息';    
 
+
+
+insert into TB_Profile (userName,password,name,level) values ('admin','admin','admin',3);
+insert into TB_Profile (userName,password,name,level) values ('teacher','teacher','teacher',1);
+insert into TB_Course_Property (name) values ('耐心毅力');
+insert into TB_Course_Property (name) values ('创新能力');
+insert into TB_Course_Property (name) values ('执行能力');
+insert into TB_Course_Property (name) values ('团队协作');
+insert into TB_Course_Property (name) values ('理解能力');
+insert into TB_Semester (name) values ('1999~2000');
+insert into TB_Semester (name) values ('2000~2001');
 
 
