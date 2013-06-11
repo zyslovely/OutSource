@@ -9,6 +9,7 @@
 #import "OSFeedViewController.h"
 #import "OSSingleViewController.h"
 #import "DDMenuController.h"
+#import "OSAppDelegate.h"
 @interface OSFeedViewController ()
 
 @end
@@ -20,7 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
       
-      self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg")];
+      self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
     }
     return self;
 }
@@ -93,7 +94,9 @@
 
 - (IBAction)btnClick:(id)sender{
   
-  OSSingleViewController *singleVCTL=[[OSSingleViewController alloc]init];
+  NSArray *images=[OSAppDelegate sharedInstance].imagesArray;
+  OSImage *image=[images objectAtIndex:0];
+  OSSingleViewController *singleVCTL=[[OSSingleViewController alloc]initWithSingleView:image];
   [self.navigationController pushViewController:singleVCTL animated:YES];
   [singleVCTL release];
 }

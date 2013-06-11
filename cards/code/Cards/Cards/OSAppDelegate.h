@@ -16,4 +16,8 @@
 
 @property (strong, nonatomic) DDMenuController *menuController;
 
+@property (nonatomic,retain) NSMutableArray *imagesArray;
+
+
++ (OSAppDelegate *)sharedInstance;
 @end

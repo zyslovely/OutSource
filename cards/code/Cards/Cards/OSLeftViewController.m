@@ -19,7 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"left_bg")];
+  self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
   [self addTableHeader];
     // Do any additional setup after loading the view from its nib.
 }
@@ -57,17 +57,17 @@
   cell.selectionStyle=UITableViewCellSelectionStyleNone;
   UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 45)];
   if(indexPath.row==0){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn1") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn1@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }else if(indexPath.row==1){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn2") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn2@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }else if(indexPath.row==2){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn3") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn3@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }else if(indexPath.row==3){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn4") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn4@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }else if(indexPath.row==4){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn5") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn5@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }else if(indexPath.row==5){
-    imageView.image=[UIIMAGE_FROMPNG(@"left_btn6") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
+    imageView.image=[UIIMAGE_FROMPNG(@"left_btn6@2x") stretchableImageWithLeftCapWidth:210 topCapHeight:0];
   }
   [cell addSubview:imageView];
   [imageView release];

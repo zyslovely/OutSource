@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PayPalMobile.h"
+#import <MessageUI/MessageUI.h>
+@interface OSAddressViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,PayPalPaymentDelegate,MFMailComposeViewControllerDelegate>
 
-@interface OSAddressViewController : UIViewController
 
+@property (nonatomic,retain) IBOutlet UITextField *ibNameField;
+@property (nonatomic,retain) IBOutlet UITextField *ibContractField;
+@property (nonatomic,retain) IBOutlet UITextField *ibCountField;
+@property (nonatomic,retain) IBOutlet UITextField *ibEmailField;
+@property (nonatomic,retain) IBOutlet UITextView *ibAddressView;
+@property (nonatomic,retain) IBOutlet UILabel *ibUnitPriceLabel;
+
+@property (nonatomic,retain) IBOutlet UIButton *ibBuyBtn;
+
+- (id)initWithUnitPrice:(double)price imagePath:(NSString*)imagePath;
 @end

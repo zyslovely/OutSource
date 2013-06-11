@@ -13,6 +13,10 @@
   #import <Foundation/Foundation.h>
 #endif
 
+#define ISPRO 1
+
+#define PayPalClientId @"AWHBmxA_vWKVqGvAKrOakIu4d2NQBa7BNWI4s9nwbtiPb_GkhBItcq6w04Dw"
+#define PayPalSecretId @"EI7_xxBqJk6dkfXbRjobt5xnNgIZ51ogq9F6PnXB2RR4Kmb1hQNoAT6pMEWp"
 
 #define SAFECHECK_RELEASE(x) if(x != nil) {[x release]; x = nil; }
 
