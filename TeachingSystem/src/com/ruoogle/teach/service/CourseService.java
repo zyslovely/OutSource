@@ -235,4 +235,14 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean addNewGroup(List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents, long courseId);
+
+	/**
+	 * 得到某个学期课程总数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param semesterId
+	 * @return
+	 */
+	public int getCourseTotalSemesterCount(long userId, long semesterId);
 }

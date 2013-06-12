@@ -973,4 +973,20 @@ public class CourseServiceImpl implements CourseService {
 		return false;
 
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseTotalSemesterCount(long,
+	 * long)
+	 */
+	public int getCourseTotalSemesterCount(long userId, long semesterId) {
+
+		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseListBySemesterStudentId(semesterId, userId);
+		if (ListUtils.isEmptyList(courseStudentList)) {
+			return 0;
+		}
+		return courseStudentList.size();
+	}
 }

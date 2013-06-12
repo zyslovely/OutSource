@@ -23,7 +23,8 @@ canvas {border:1px solid #4c4c4c;}
        <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
    </div>
    <#if courseList?exists>
-   <table style="float: left; width: 600px; margin-top: 20px; margin-left: 60px;">
+   <div style="float: left; width: 600px; margin-top: 20px; margin-left: 60px;">
+   <table style="width: 600px;">
         <thead>
              <tr style="height: 40px; font-size: 20px;">
                 <td style="width: 100px;color: rgb(123, 123, 123);">课程名称</td>
@@ -54,6 +55,8 @@ canvas {border:1px solid #4c4c4c;}
              
         </tbody>
    </table>
+   <div style="margin-top: 10px;"><div id="jpage_teachIndex"></div></div>
+   </div>
    </#if> 
    </div>
 </body>
@@ -89,4 +92,23 @@ window.onload = function() {
 	rc.draw(items, params);
 };
 </#if>
+</script>
+<script type="text/javascript">
+$("#jpage_teachIndex").paginate({
+				count 		: ${totalCount!0},
+				start 		: ${page!0},
+				display     : ${limit!0},
+				border_color			: '#BEF8B8',
+				text_color  			: '#68BA64',
+				background_color    	: '#E3F2E1',	
+				border_hover_color		: '#68BA64',
+				text_hover_color  		: 'black',
+				background_hover_color	: '#CAE6C6', 
+				images		: false,
+				mouse		: 'press',
+				border		: true,
+				onChange    : function(page){
+								location.href="/teach/index/?semesterId=${semesterId!0}&page="+page;
+							}
+			});
 </script>

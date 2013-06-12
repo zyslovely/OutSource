@@ -22,7 +22,8 @@
    	       <script type="text/javascript" src="/js/webIndex.js" charset="utf-8"></script>
     	<#break>
     	<#case "teachIndex">
-    	
+    	  
+    	   <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
     	   <!--[if IE]><script type="text/javascript" src="/js/radar/radarc.js"></script><![endif]-->
     	   <script type="text/javascript" src="/js/radar/radar.js"></script>
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
@@ -49,7 +50,7 @@
    	       
     	<#break>
     	<#case "newTeacher">
-    	  
+    	  <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/admin_newTeacher.js" charset="utf-8"></script>
     	<#break>
     	<#case "newCourseType">

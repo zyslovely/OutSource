@@ -91,7 +91,22 @@ public class WebTeachSysController extends AbstractBaseController {
 		if (semesterId < 0) {
 			return mv;
 		}
-		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId, 0, -1);
+
+		int limit = 10;
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		if (page <= 0) {
+			page = 1;
+		}
+		mv.addObject("page", page);
+		mv.addObject("limit", limit);
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId, limit, (page - 1) * limit);
+		mv.addObject("courseList", courseList);
+		int totalCount = courseService.getCourseTotalSemesterCount(userId, semesterId);
+		if (totalCount % limit == 0) {
+			mv.addObject("totalCount", totalCount / limit);
+		} else {
+			mv.addObject("totalCount", totalCount / limit + 1);
+		}
 		if (myUser.getLevel() == ProfileLevel.Student.getValue()) {
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseService
 					.getCourseStudentPropertySemesterScoresByStudentId(myUser.getUserId(), semesterId);
@@ -99,7 +114,6 @@ public class WebTeachSysController extends AbstractBaseController {
 			List<CourseProperty> coursePropertieList = courseService.getAllCourseProperties();
 			mv.addObject("coursePropertyList", coursePropertieList);
 		}
-		mv.addObject("courseList", courseList);
 
 		return mv;
 	}
@@ -117,9 +131,8 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-		List<Profile> teacherProfiles = profileService.getProfileList(ProfileLevel.Teacher.getValue(), 0, -1);
-		List<Profile> companyProfiles = profileService.getProfileList(ProfileLevel.CompanyLeader.getValue(), 0, -1);
-		teacherProfiles.addAll(companyProfiles);
+		List<Profile> teacherProfiles = profileService.getProfileListWithTeacher(0, -1);
+
 		mv.addObject("teacherProfiles", teacherProfiles);
 		List<CourseProperty> courseProperties = courseService.getAllCourseProperties();
 		mv.addObject("courseProperties", courseProperties);

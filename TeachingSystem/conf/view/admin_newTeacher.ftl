@@ -39,6 +39,7 @@ body{min-width:1024px;min-height:600px}
                  
             </tbody>
        </table>
+       <div style="margin-top: 10px;"><div id="jpage_teacher"></div></div>
        </#if>
    </div>
    <div id="create_newTeacher_Profile" style="height: 105px; width: 500px;  margin: 20px auto 0px;display:none;">
@@ -80,6 +81,7 @@ body{min-width:1024px;min-height:600px}
             </tbody>
        </table>
        <div style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; font-size: 20px; line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加老师账号</a></div>
+       
    </div>
        </div>
 </body>
@@ -87,3 +89,22 @@ body{min-width:1024px;min-height:600px}
 </#escape>
 		
 <#include "js.ftl">
+<script type="text/javascript">
+$("#jpage_teacher").paginate({
+				count 		: ${totalCount!0},
+				start 		: ${page!0},
+				display     : ${limit!0},
+				border_color			: '#BEF8B8',
+				text_color  			: '#68BA64',
+				background_color    	: '#E3F2E1',	
+				border_hover_color		: '#68BA64',
+				text_hover_color  		: 'black',
+				background_hover_color	: '#CAE6C6', 
+				images		: false,
+				mouse		: 'press',
+				border		: true,
+				onChange    : function(page){
+								location.href="/teach/admin/teacher/list/?page="+page;
+							}
+			});
+</script>

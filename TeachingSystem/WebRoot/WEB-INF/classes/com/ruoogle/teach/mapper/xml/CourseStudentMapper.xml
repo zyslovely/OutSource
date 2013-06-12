@@ -35,12 +35,12 @@
 		from
 		TB_Course_Student
 		WHERE userId=#{userId} and type=#{type}
-		and semesterId=#{semesterId}
+		and semesterId=#{semesterId} order by id
+		desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
-		order by id
-		desc;
+		;
 	</select>
 
 	<update id="updateCourseStudentsStatus" parameterType="CourseStudent"
@@ -69,6 +69,6 @@
 		from
 		TB_Course_Student
 		WHERE userId=#{studentId} and
-		courseId=#{courseId} 
+		courseId=#{courseId}
 	</select>
 </mapper>

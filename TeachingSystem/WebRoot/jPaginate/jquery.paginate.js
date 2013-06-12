@@ -46,7 +46,7 @@
 			var snextclass 		= 'jPag-snext';
 			var nextclass 		= 'jPag-next';
 		}
-		var _first		= $(document.createElement('a')).addClass('jPag-first').html('First');
+		var _first		= $(document.createElement('a')).addClass('jPag-first').html('首页');
 		
 		if(o.rotate){
 			if(o.images) var _rotleft	= $(document.createElement('span')).addClass(spreviousclass);
@@ -80,7 +80,7 @@
 			else var _rotright	= $(document.createElement('span')).addClass(snextclass).html('&raquo;');
 		}
 		
-		var _last		= $(document.createElement('a')).addClass('jPag-last').html('Last');
+		var _last		= $(document.createElement('a')).addClass('jPag-last').html('尾页');
 		var _divwrapright	= $(document.createElement('div')).addClass('jPag-control-front');
 		_divwrapright.append(_rotright).append(_last);
 		
