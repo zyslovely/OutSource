@@ -21,6 +21,7 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import com.eason.web.util.CookieUtil;
+import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 
@@ -157,6 +158,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					MyUser myUser = new MyUser();
 					myUser.setUserId(profile.getUserId());
 					myUser.setSessionStr(httpRequest.getSession().getId());
+					httpRequest.getSession().setMaxInactiveInterval(60 * 60 * 24);
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
 					logger.info("try to login session=" + httpRequest.getSession().getId());
