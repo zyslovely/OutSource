@@ -40,7 +40,7 @@
          <div class="w-filebtn" style="float:left;width: 200px;cursor: pointer;">
                  <a href="/teach/teacher/download/addScore/?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">下载模版</a>
          </div>
-         <form id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addScore?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" >
+         <form style="float: left;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addScore?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" >
              <div class="w-filebtn" style="width: 200px;cursor: pointer;">
                  <input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
                  <a id="" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">上传成绩</a>
@@ -74,7 +74,7 @@
          <div class="w-filebtn" style="float:left;width: 200px;cursor: pointer;">
                  <a id="newStudent_download" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">下载名单模版</a>
          </div>
-         <form id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addStudent/?classId=${classId!0}" >
+         <form style="float: left;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addStudent/?classId=${classId!0}" >
              <div class="w-filebtn" style="width: 200px;cursor: pointer;">
                  <input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
                  <a id="" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">上传学生名单</a>

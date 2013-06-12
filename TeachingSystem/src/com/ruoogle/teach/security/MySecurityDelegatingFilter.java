@@ -158,7 +158,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					MyUser myUser = new MyUser();
 					myUser.setUserId(profile.getUserId());
 					myUser.setSessionStr(httpRequest.getSession().getId());
-					httpRequest.getSession().setMaxInactiveInterval(60 * 60 * 24);
+					httpRequest.getSession().setMaxInactiveInterval(1000 * 60 * 60 * 24);
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
 					logger.info("try to login session=" + httpRequest.getSession().getId());

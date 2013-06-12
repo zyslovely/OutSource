@@ -8,17 +8,17 @@ if(${error!0}==1){
   alert("账号或密码错误");
 }
 </script>
-<body style="min-height:600px;background:url('/img/webIndex/bg.png') repeat scroll center top transparent">
-   <div style="height: 80px; width: 980px; margin: auto;">
+<body style="background:url('/img/webIndex/bg.png') repeat scroll center top transparent">
+   <div style="height: 65px; width: 980px; margin: auto;">
        <div style="margin-left: 5%; padding-top: 33px;">
            <img src="/img/webIndex/logo.png"/>
        </div>
    </div>
-   <section style="min-height:600px;width:1024px; margin: auto;">
+   <section style="width:1024px; margin: auto;">
        <div style="padding-top: 40px; padding-left: 5%;">
           <p style="font-size: 24px; color: rgb(95, 95, 95);">数字媒体技术应用专业学业评价系统</p>
        </div>
-       <div style="margin-left: 5%; margin-top: 46px;">
+       <div style="margin-left: 5%; margin-top: 30px;">
           <div style="float:left;width: 615px; height: 398px; background: url('/img/webIndex/pic_bg.png') no-repeat scroll center top transparent; ">
               <ul style="height: 387px; width: 605px; margin-left: 5px; margin-top: 5px;">
                  <li id="img_1" style="position: absolute;"> 
