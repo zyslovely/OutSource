@@ -31,6 +31,7 @@ import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
@@ -393,39 +394,6 @@ public class CourseServiceImpl implements CourseService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.ruoogle.teach.service.CourseService#addCourseGroup(long, long,
-	 * long, long)
-	 */
-	@Override
-	public boolean addCourseGroup(long courseId, long studentId, long groupId, long teacherId, GroupLevel level) {
-
-		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper
-				.getCoursePercentTypeGroupStudentByStudentId(studentId, courseId);
-		if ((coursePercentTypeGroupStudent != null && groupId < 0) || (coursePercentTypeGroupStudent == null && groupId > 0)) {
-			return false;
-		}
-		if (groupId < 0) {
-			CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper.getCoursePercentTypeGroup(courseId);
-			int count = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupCountByIds(courseId);
-			if (coursePercentTypeGroup == null || (count + 1 >= coursePercentTypeGroup.getCount())) {
-				return false;
-			}
-			coursePercentTypeGroupStudent = new CoursePercentTypeGroupStudent();
-			coursePercentTypeGroupStudent.setCourseId(courseId);
-			coursePercentTypeGroupStudent.setGroupId(groupId);
-			coursePercentTypeGroupStudent.setLevel(level.getValue());
-			coursePercentTypeGroupStudent.setStudentId(studentId);
-			return coursePercentTypeGroupStudentMapper.addCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent) > 0;
-		} else {
-			coursePercentTypeGroupStudent.setGroupId(groupId);
-			coursePercentTypeGroupStudent.setLevel(level.getValue());
-			return coursePercentTypeGroupStudentMapper.updateCoursePercentTypeGroupStudentMapper(coursePercentTypeGroupStudent) > 0;
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see com.ruoogle.teach.service.CourseService#addGroupScore(long, long,
 	 * long, double, long)
 	 */
@@ -500,17 +468,22 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#finishCourse(long, long)
 	 */
 	@Override
-	public boolean finishCourse(long courseId, long teacherid) {
+	public int finishCourse(long courseId, long teacherid) {
 		Course course = courseMapper.getCourseById(courseId);
 		if (course == null) {
-			return false;
+			return -1;
 		}
-
+		List<CourseScorePercent> courseScorePercentList = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		List<CourseStudentTotalScore> totalScoreList = courseStudentTotalScoreMapper.getCourseStudentTotalScores(courseId);
+		if (totalScoreList.size() < courseStudentList.size() * courseScorePercentList.size()) {
+			return 2; // 还有学生的成绩没有录入
+		}
 		if (courseMapper.finishedCourse(courseId) > 0) {
 			courseStudentMapper.updateCourseStudentsStatus(courseId, Course.FINISHED);
-			return true;
+			return 1;
 		}
-		return false;
+		return -1;
 	}
 
 	/*
@@ -890,5 +863,114 @@ public class CourseServiceImpl implements CourseService {
 			list.add(courseStudentScoreVO);
 		}
 		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseGroupStudentVOByCourseId
+	 * (long)
+	 */
+	@Override
+	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(long courseId) {
+
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		if (ListUtils.isEmptyList(courseStudents)) {
+			return null;
+		}
+		List<Long> ids = new ArrayList<Long>();
+		for (CourseStudent courseStudent : courseStudents) {
+			ids.add(courseStudent.getUserId());
+		}
+
+		List<Profile> profileList = profileMapper.getProfileListByIds(ids);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList, "getUserId", Profile.class);
+		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents = coursePercentTypeGroupStudentMapper
+				.getCoursePercentTypeGroupStudentByCourseId(courseId);
+		Map<Long, CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentMap = HashMapMaker.listToMap(coursePercentTypeGroupStudents,
+				"getStudentId", CoursePercentTypeGroupStudent.class);
+		List<CourseGroupStudentVO> courseGroupStudentVOs = new ArrayList<CourseGroupStudentVO>();
+		for (CourseStudent courseStudent : courseStudents) {
+			CourseGroupStudentVO courseGroupStudentVO = new CourseGroupStudentVO();
+			Profile profile = profileMap.get(courseStudent.getUserId());
+			if (profile != null) {
+				courseGroupStudentVO.setProfile(profile);
+			}
+			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMap.get(courseStudent.getUserId());
+			if (coursePercentTypeGroupStudent != null) {
+				courseGroupStudentVO.setCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
+			}
+			courseGroupStudentVOs.add(courseGroupStudentVO);
+		}
+		return courseGroupStudentVOs;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCoursePercentTypeGroupsByCourseId
+	 * (long)
+	 */
+	@Override
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(long courseId) {
+		return coursePercentTypeGroupMapper.getCoursePercentTypeGroupByCourseId(courseId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#deleteCoursePercentTypeGroup(
+	 * long)
+	 */
+	@Override
+	public boolean deleteCoursePercentTypeGroup(long groupId) {
+
+		if (coursePercentTypeGroupMapper.deleteCoursePercentTypeGroup(groupId) > 0) {
+			return coursePercentTypeGroupStudentMapper.deleteCoursePercentTypeGroupStudent(groupId) > 0;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#addNewGroup(java.util.List,
+	 * long)
+	 */
+	@Override
+	public boolean addNewGroup(List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents, long courseId) {
+
+		Course course = courseMapper.getCourseById(courseId);
+		if (course == null) {
+			return false;
+		}
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		if (ListUtils.isEmptyList(courseStudents)) {
+			return false;
+		}
+		CourseScorePercent courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, CoursePercentType.EachStudent
+				.getValue());
+		int nowCount = coursePercentTypeGroupMapper.getCoursePercentTypeGroupCountById(courseId);
+		if (nowCount == courseScorePercent.getObjectCount()) {
+			return false;
+		}
+
+		CoursePercentTypeGroup coursePercentTypeGroup = new CoursePercentTypeGroup();
+		coursePercentTypeGroup.setCount(coursePercentTypeGroupStudents.size());
+		coursePercentTypeGroup.setCourseId(courseId);
+		if (coursePercentTypeGroupMapper.addCoursePercentTypeGroup(coursePercentTypeGroup) > 0) {
+
+			for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudents) {
+				coursePercentTypeGroupStudent.setGroupId(coursePercentTypeGroup.getId());
+				coursePercentTypeGroupStudent.setCourseId(courseId);
+				coursePercentTypeGroupStudentMapper.addCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
+			}
+			return true;
+		}
+		return false;
+
 	}
 }

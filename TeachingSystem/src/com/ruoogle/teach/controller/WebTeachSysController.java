@@ -13,14 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
+import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
@@ -114,6 +118,8 @@ public class WebTeachSysController extends AbstractBaseController {
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
 		List<Profile> teacherProfiles = profileService.getProfileList(ProfileLevel.Teacher.getValue(), 0, -1);
+		List<Profile> companyProfiles = profileService.getProfileList(ProfileLevel.CompanyLeader.getValue(), 0, -1);
+		teacherProfiles.addAll(companyProfiles);
 		mv.addObject("teacherProfiles", teacherProfiles);
 		List<CourseProperty> courseProperties = courseService.getAllCourseProperties();
 		mv.addObject("courseProperties", courseProperties);
@@ -149,7 +155,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		Course course = courseService.getCourseById(courseId);
 		mv.addObject("course", course);
 		mv.addObject("courseId", courseId);
-		
+
 		boolean isEachStudent = false;
 		List<CourseScorePercent> courseScorePercents = courseService.getCourseScorePercentListByCourseId(courseId);
 		for (CourseScorePercent courseScorePercent : courseScorePercents) {
@@ -277,4 +283,80 @@ public class WebTeachSysController extends AbstractBaseController {
 		this.setUD(mv, request);
 		return mv;
 	}
+
+	/**
+	 * 反馈页面
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showFeedBackView(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("feedback");
+		Long userId = MyUser.getMyUser(request);
+		int limit = 10;
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", -1);
+		if (offset < 0) {
+			offset = 0;
+		}
+
+		List<FeedBack> feedBacks = feedBackService.getFeedBackList(userId, limit, offset, 0);
+		if (!ListUtils.isEmptyList(feedBacks)) {
+			for (FeedBack feedBack : feedBacks) {
+				if (feedBack.getStatus() == FeedBack.Unread) {
+					feedBackService.updateFeedBackReaded(feedBack.getId());
+				}
+			}
+		}
+		mv.addObject("feedbacks", feedBacks);
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 单个反馈页面
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showAFeedBackView(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("feedback");
+		Long userId = MyUser.getMyUser(request);
+		int limit = 10;
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", -1);
+		if (offset < 0) {
+			offset = 0;
+		}
+
+		List<FeedBack> feedBacks = feedBackService.getFeedBackList(userId, limit, offset, 0);
+		if (!ListUtils.isEmptyList(feedBacks)) {
+			for (FeedBack feedBack : feedBacks) {
+				if (feedBack.getStatus() == FeedBack.Unread) {
+					feedBackService.updateFeedBackReaded(feedBack.getId());
+				}
+			}
+		}
+		mv.addObject("feedbacks", feedBacks);
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	public ModelAndView showCourseCreateGroupView(HttpServletRequest request, HttpServletResponse response) {
+
+		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
+		ModelAndView mv = new ModelAndView("courseGroup");
+		mv.addObject("courseId", courseId);
+		List<CourseGroupStudentVO> courseGroupStudentVOs = courseService.getCourseGroupStudentVOByCourseId(courseId);
+		mv.addObject("courseGroupStudentVOs", courseGroupStudentVOs);
+		List<CoursePercentTypeGroup> coursePercentTypeGroups = courseService.getCoursePercentTypeGroupsByCourseId(courseId);
+		mv.addObject("coursePercentTypeGroups", coursePercentTypeGroups);
+		this.setUD(mv, request);
+		return mv;
+	}
+
 }

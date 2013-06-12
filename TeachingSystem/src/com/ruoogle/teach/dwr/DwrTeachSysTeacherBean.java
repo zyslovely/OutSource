@@ -7,13 +7,14 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.ArrayUtil;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
-import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -95,10 +96,11 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseId
 	 * @param studentId
 	 */
-	public boolean addCourseGroup(long courseId, long studentId, long groupId, int leader) {
-		WebContext ctx = WebContextFactory.get();
-		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addCourseGroup(courseId, studentId, groupId, teacherId, GroupLevel.genGroupLevel(leader));
+	public boolean addCourseGroup(long courseId, CoursePercentTypeGroupStudent[] students) {
+		if (ArrayUtils.isEmpty(students) || courseId < 0) {
+			return false;
+		}
+		return courseService.addNewGroup(Arrays.asList(students), courseId);
 	}
 
 	/**
@@ -108,7 +110,7 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseId
 	 * @return
 	 */
-	public boolean finishCourse(long courseId) {
+	public int finishCourse(long courseId) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		return courseService.finishCourse(courseId, teacherId);
@@ -141,5 +143,16 @@ public class DwrTeachSysTeacherBean {
 
 	public Object[] getList(long specialtyId) {
 		return classService.getClassListBySpecialty(specialtyId).toArray();
+	}
+
+	/**
+	 * 删除分组
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param groupId
+	 * @return
+	 */
+	public boolean deleteCoursePercentTypeGroup(long groupId) {
+		return courseService.deleteCoursePercentTypeGroup(groupId);
 	}
 }

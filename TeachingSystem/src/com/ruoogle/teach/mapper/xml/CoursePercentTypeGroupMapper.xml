@@ -34,6 +34,20 @@
 		courseId=#{courseId};
 	</select>
 
+	<delete id="deleteCoursePercentTypeGroup" flushCache="true"
+		statementType="PREPARED">
+		delete from
+		TB_Course_PercentType_Group
+		WHERE
+		id=#{id};
+	</delete>
+	<select id="getCoursePercentTypeGroupCountById" resultType="int">
+		SELECT count(*)
+		from
+		TB_Course_PercentType_Group
+		WHERE
+		courseId=#{courseId};
+	</select>
 
 
 </mapper>

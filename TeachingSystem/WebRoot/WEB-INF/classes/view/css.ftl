@@ -17,6 +17,10 @@
     	      
     	    
     	<#break>
+    	<#case "feedback">
+    	      
+    	      <link type="text/css" rel="stylesheet" href="/wbox/wbox/wbox.css"/>
+    	<#break>
     	
     </#switch>
 </#if>

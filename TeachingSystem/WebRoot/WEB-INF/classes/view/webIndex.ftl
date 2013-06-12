@@ -8,13 +8,13 @@ if(${error!0}==1){
   alert("账号或密码错误");
 }
 </script>
-<body style="min-width:1024px;min-height:600px">
-   <div style="height:63px;width:100%;">
-       <div style="margin-left:10%;margin-top:5px;">
+<body style="min-height:600px;background:url('/img/webIndex/bg.png') repeat scroll center top transparent">
+   <div style="height: 80px; width: 980px; margin: auto;">
+       <div style="margin-left: 5%; padding-top: 33px;">
            <img src="/img/webIndex/logo.png"/>
        </div>
    </div>
-   <div style="min-height:600px;min-width:1024px;background:url('/img/webIndex/bg.png') repeat scroll center top transparent;">
+   <section style="min-height:600px;width:1024px; margin: auto;">
        <div style="padding-top: 40px; padding-left: 5%;">
           <p style="font-size: 24px; color: rgb(95, 95, 95);">数字媒体技术应用专业学业评价系统</p>
        </div>
@@ -34,7 +34,7 @@ if(${error!0}==1){
                    <span id="dot_2" style="cursor: pointer;background: url('/img/webIndex/pic_mask_dot.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 92%;"></span>
               </div>
           </div>
-          <div style="float:left;width: 338px; height: 401px;margin-left:4%;background: url('/img/webIndex/login_bg.png') no-repeat scroll center top transparent; ">
+          <div style="float:left;width: 338px; height: 401px;margin-left:1%;background: url('/img/webIndex/login_bg.png') no-repeat scroll center top transparent; ">
               <p style="width: 100%; text-align: center; margin-top: 27px; color: rgb(95, 95, 95); font-size: 24px;">登录</p>
               <span style="height: 2px; background: url('/img/webIndex/line.png') repeat-x scroll center top transparent; position: absolute; margin-top: 14px; margin-left: 8px; width: 323px;"></span>
               <div id="username_div" style="background: url('/img/webIndex/input_bg_focus.png') no-repeat scroll center top transparent;  width: 295px; margin-left: 22px; margin-top: 50px;padding-top:15px\9; ">
@@ -55,7 +55,7 @@ if(${error!0}==1){
               </div>
           </div>
        </div>
-   </div>
+   </section>
 </body>
 </html>
 </#escape>		

@@ -13,8 +13,8 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;border-bottom: 2px solid rgb(224, 224, 224);">
-       <div style="margin-left: 10%;">
+   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
+       <div style="margin: auto; width: 600px;">
            <ul style="height:30px;width:100%;">
               <li style="float:left;width:300px;"><p>选择专业:</p></li>
               <li style="float:left;width:300px;"><p>选择班级:</p></li>

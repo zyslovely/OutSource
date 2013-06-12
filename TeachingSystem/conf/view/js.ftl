@@ -69,6 +69,13 @@
    	       <script type="text/javascript" src="/js/EachStudentScore.js" charset="utf-8"></script>
     	<#break>
     	
+    	<#case "feedback">
+   	       <script type="text/javascript" src="/js/feedback.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "courseGroup">
+   	       <script type="text/javascript" src="/js/courseGroup.js" charset="utf-8"></script>
+    	<#break>
+    	
     	
     </#switch>
 </#if>

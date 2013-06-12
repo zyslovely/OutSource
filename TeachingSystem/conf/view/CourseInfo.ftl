@@ -13,14 +13,15 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
    </div>
    <div style="float:left;width: 600px;height:400px;margin-top: 30px;margin-left:60px">
        <div style="border-bottom: 2px solid rgb(224, 224, 224); height: 64px;">
            <p style="min-width: 100px; float: left; line-height: 64px; font-size: 20px;">${course.name!""}</p>
            <#if isEachStudent==1&&course.teacherId==visitUserId>
-           <a id="" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;width:180px; float: right;" href="javascript:void(0);;">编辑分组</a>
+           <a id="" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;width:180px; float: right;" href="/teach/course/${courseId!0}/group/create/">编辑分组</a>
            </#if>
            <#if course.status==0&&course.teacherId==visitUserId>
            <a id="courseInfo_endCourse" data_id="${course.id!0}" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;width:180px; float: right;" href="javascript:void(0);;">结束课程</a>
@@ -61,6 +62,7 @@ body{min-width:1024px;min-height:600px}
                      </#if>
                 </tbody>
            </table>
+   </div>
    </div>
 </body>
 </html>

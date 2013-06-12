@@ -72,11 +72,11 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("admin_newClass");
 		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
 		if (specialtyId < 0) {
-			
+
 		}
 		mv.addObject("specialtyId", specialtyId);
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
-		
+
 		mv.addObject("classList", classList);
 		List<Specialty> specialties = classService.getSpecialties();
 		mv.addObject("specialties", specialties);
@@ -97,7 +97,7 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-		
+
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -144,6 +144,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	public ModelAndView showAddTeacher(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin_newTeacher");
 		List<Profile> teacherList = profileService.getProfileList(ProfileLevel.Teacher.getValue(), 0, -1);
+		List<Profile> companyTeacherList = profileService.getProfileList(ProfileLevel.CompanyLeader.getValue(), 0, -1);
+		teacherList.addAll(companyTeacherList);
 		mv.addObject("teacherList", teacherList);
 		this.setUD(mv, request);
 		return mv;

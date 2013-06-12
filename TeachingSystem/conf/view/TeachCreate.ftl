@@ -12,10 +12,11 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/teachCreate/create_pic.png" style="width:195px;height:193px;"/>
    </div>
-       <table style="float:left;margin-left:10px;width:700px">
+       <table style="float: left;  margin-top: 20px; margin-left: 40px;">
             <tbody>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程名称*</th><th ><input type="text" style="width: 250px;" id="course_name"/></th></tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程类别选择*</th >
@@ -110,6 +111,7 @@ body{min-width:1024px;min-height:600px}
                  
             </tbody>
        </table>
+       </div>
 </body>
 </html>
 </#escape>

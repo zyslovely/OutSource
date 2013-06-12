@@ -13,6 +13,14 @@ public class FeedBack implements Serializable {
 	private int status;
 	private long feedbackId;
 
+	private String fromName;
+	private String toName;
+	private String createTimeStr;
+	private Course course;
+
+	public static final int Unread = 1;
+	public static final int readed = 0;
+
 	public long getId() {
 		return id;
 	}
@@ -75,6 +83,38 @@ public class FeedBack implements Serializable {
 
 	public void setFeedbackId(long feedbackId) {
 		this.feedbackId = feedbackId;
+	}
+
+	public String getFromName() {
+		return fromName;
+	}
+
+	public void setFromName(String fromName) {
+		this.fromName = fromName;
+	}
+
+	public String getToName() {
+		return toName;
+	}
+
+	public void setToName(String toName) {
+		this.toName = toName;
+	}
+
+	public String getCreateTimeStr() {
+		return createTimeStr;
+	}
+
+	public void setCreateTimeStr(String createTimeStr) {
+		this.createTimeStr = createTimeStr;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 }

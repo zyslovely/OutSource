@@ -13,12 +13,12 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/newCourseType/courseType.png" style="width:195px;height:193px;"/>
    </div>
    <#if coursePercentTypeDemos?exists>
-   <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-left: 40px; width: 600px; margin-top: 20px; font-size: 20px;">
+   <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-left: 80px; width: 600px; margin-top: 20px; font-size: 20px;">
        <thead style="height:60px;">
             <tr>
                <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">类型名称</th>
@@ -82,6 +82,7 @@ body{min-width:1024px;min-height:600px}
             </tbody>
        </table>
        <div style="width: 500px; margin-left: 126px;" > </div>
+   </div>
    </div>
 </body>
 </html>

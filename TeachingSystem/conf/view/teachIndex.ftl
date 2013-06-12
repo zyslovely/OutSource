@@ -18,7 +18,8 @@ canvas {border:1px solid #4c4c4c;}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
    </div>
    <#if courseList?exists>
@@ -54,7 +55,7 @@ canvas {border:1px solid #4c4c4c;}
         </tbody>
    </table>
    </#if> 
-   
+   </div>
 </body>
 </html>
 </#escape>

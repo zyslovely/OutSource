@@ -245,4 +245,3 @@ insert into TB_Course_Property (name) values ('理解能力');
 insert into TB_Semester (name) values ('1999~2000');
 insert into TB_Semester (name) values ('2000~2001');
 
-

@@ -320,7 +320,7 @@ public class WebExcelController extends AbstractBaseController {
 			logger.error("没有MyUser");
 			return null;
 		}
-		if (myUser.getLevel() != ProfileLevel.Teacher.getValue()) {
+		if (myUser.getLevel() != ProfileLevel.Teacher.getValue() && myUser.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
 			logger.error("不是老师");
 			return null;
 		}

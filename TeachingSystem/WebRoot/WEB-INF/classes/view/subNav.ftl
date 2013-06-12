@@ -1,4 +1,4 @@
-<div style="margin-left: 15%; min-width: 75%; margin-top: 15px; border-bottom: 2px solid rgb(224, 224, 224); height: 78px;">
+<div style="border-bottom: 2px solid rgb(224, 224, 224); height: 78px; margin: 15px auto 0px; width: 1024px;">
      <p style="<#if pageName = "courseScore">min-width: 400px;<#else>min-width: 300px;</#if> color: rgb(102, 102, 102); font-size: 23px; float: left; margin-left: 20px; margin-top: 36px;">
      <#if pageName = "teachIndex">
      课程列表
@@ -20,6 +20,10 @@
      课程列表 > <a href="/teach/course/${courseId!0}/">课程信息</a> > (${percentTypeName!""})<#if stageName?exists>${stageName!""}</#if>
      <#elseif pageName = "EachStudentScore">
      课程列表 > <a href="/teach/course/${courseId!0}/">课程信息</a> > (学生互评)
+     <#elseif pageName = "feedback">
+     课程反馈
+     <#elseif pageName = "courseGroup">
+     课程列表 > <a href="/teach/course/${courseId!0}/">课程信息</a> >编辑分组
      </#if>
 
      </p>
@@ -57,11 +61,11 @@
            </#if>
       </div>
       <#elseif pageName="newTeacher">
-      <div style="float: left; margin-left: 50%; margin-top: 15px; width: 200px;">
+      <div style="float: left; margin-left: 30%; margin-top: 15px; width: 200px;">
                  <a id="newTeacher_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">添加老师账号</a>
       </div>
      <#elseif pageName="newCourseType">
-      <div style="float: left; margin-left: 50%; margin-top: 15px; width: 200px;">
+      <div style="margin-top: 15px; width: 200px; float: right; margin-right: 10%;">
                  <a id="newCourseType_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">添加课程类型</a>
       </div>
      <#elseif pageName="newStudent">

@@ -13,7 +13,8 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div id="normal_newTeacher" style="margin-left:15%;width:75%;height:105px;margin-top: 20px;">
+   <div style="width: 1024px; margin: auto;">
+   <div id="normal_newTeacher" style="height: 105px; width: 75%; margin: 20px auto 0px;">
        <#if teacherList?exists>
        <table style="" cellspacing="0">
             <thead style="height: 60px;">
@@ -21,6 +22,7 @@ body{min-width:1024px;min-height:600px}
                <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">姓名</th>
                <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
                <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th>
+               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">类型</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +33,7 @@ body{min-width:1024px;min-height:600px}
                   <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.name!""}</th>
                   <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.userName!""}</th>
                   <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.password!""}</th>
+                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);"><#if teacher.level==2>企业老师<#else>普通老师</#if></th>
                   </tr>
                  </#list>
                  
@@ -38,7 +41,7 @@ body{min-width:1024px;min-height:600px}
        </table>
        </#if>
    </div>
-   <div id="create_newTeacher_Profile" style="margin-left:30%;height:105px;margin-top: 20px;width: 500px;display:none;">
+   <div id="create_newTeacher_Profile" style="height: 105px; width: 500px;  margin: 20px auto 0px;display:none;">
        <table>
             <tbody>
                 <tr>
@@ -65,11 +68,20 @@ body{min-width:1024px;min-height:600px}
                       </div>
                    </th>
                 </tr>
+                <tr>
+                   <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">类型</p></th>
+                   <th>
+                      <select id="newTeacher_level"> 
+                           <option value="1">普通老师</option>
+                           <option value="2">企业老师</option>
+                      </select>
+                   </th>
+                </tr>
             </tbody>
        </table>
        <div style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; font-size: 20px; line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加老师账号</a></div>
    </div>
-       
+       </div>
 </body>
 </html>
 </#escape>

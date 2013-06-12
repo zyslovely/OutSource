@@ -28,7 +28,15 @@
 		SELECT *
 		from
 		TB_FeedBack
-		WHERE courseId=#{courseId} and toUserId=#{toUserId};
+		WHERE
+		toUserId=#{userId}
+		<if test="courseId">0>
+			and courseId=#{courseId}
+         </if>
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
 	</select>
 
 	<select id="getFeedbacksByOriginId" resultType="FeedBack">
@@ -37,4 +45,21 @@
 		TB_FeedBack
 		WHERE id=#{id} or feedbackId=#{id};
 	</select>
+
+	<select id="getUnreadCount" resultType="int">
+		SELECT count(*)
+		from
+		TB_FeedBack
+		WHERE toUserId=#{toUserId} and status=1;
+	</select>
+	<update id="updateFeedBackReaded" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_FeedBack
+		set
+		status=0
+		WHERE
+		id=
+		#{id};
+	</update>
 </mapper>
