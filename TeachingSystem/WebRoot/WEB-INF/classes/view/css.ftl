@@ -21,6 +21,10 @@
     	      
     	      <link type="text/css" rel="stylesheet" href="/wbox/wbox/wbox.css"/>
     	<#break>
+    	<#case "newStudent">
+    	      
+    	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
+    	<#break>
     	
     </#switch>
 </#if>

@@ -142,9 +142,13 @@ public class WebExcelController extends AbstractBaseController {
 						HSSFRow row = sheet.getRow(i);
 
 						HSSFCell cell2 = row.getCell(2);
-						cell2.setCellType(Cell.CELL_TYPE_STRING);
 						HSSFCell cell4 = row.getCell(4);
-						cell4.setCellType(Cell.CELL_TYPE_STRING);
+						if (cell2 != null) {
+							cell2.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell4 != null) {
+							cell4.setCellType(Cell.CELL_TYPE_STRING);
+						}
 						if (cell2 == null || StringUtils.isEmpty(cell2.getRichStringCellValue().getString())) {
 							continue;
 						}
@@ -262,9 +266,16 @@ public class WebExcelController extends AbstractBaseController {
 						HSSFCell cell1 = row.getCell(0);
 						HSSFCell cell2 = row.getCell(1);
 						HSSFCell cell3 = row.getCell(2);
-						cell1.setCellType(Cell.CELL_TYPE_STRING);
-						cell2.setCellType(Cell.CELL_TYPE_STRING);
-						cell3.setCellType(Cell.CELL_TYPE_STRING);
+						if (cell1 != null) {
+							cell1.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell2 != null) {
+							cell2.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell3 != null) {
+							cell3.setCellType(Cell.CELL_TYPE_STRING);
+						}
+
 						if (cell1.getRichStringCellValue().getString().trim().isEmpty()
 								&& cell2.getRichStringCellValue().getString().trim().isEmpty()
 								&& cell3.getRichStringCellValue().getString().trim().isEmpty()) {

@@ -42,9 +42,11 @@
    	       <script type="text/javascript" src="/js/admin_newSpecialty.js" charset="utf-8"></script>
     	<#break>
     	<#case "newStudent">
-    	  
+    	   <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/subNav.js" charset="utf-8"></script>
+   	       
    	       <script type="text/javascript" src="/js/admin_newStudent.js" charset="utf-8"></script>
+   	       
     	<#break>
     	<#case "newTeacher">
     	  
