@@ -58,4 +58,14 @@
 		groupId=#{groupId};
 	</select>
 
+	<select id="getCoursePercentTypeGroupStudentScoreByCourseGroupFrom"
+		resultType="CoursePercentTypeGroupStudentScore">
+		SELECT *
+		from TB_Course_PercentType_Group_Student_Score
+		WHERE
+		courseId=#{courseId} and
+		groupId=#{groupId} and
+		fromStudentId=#{fromStudentId};
+	</select>
+
 </mapper>

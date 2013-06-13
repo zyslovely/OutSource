@@ -13,9 +13,9 @@
 		INSERT INTO
 		TB_Course_PercentType_Stage
 		(
-		courseId,studentId,score,stageIndex
+		courseId,studentId,score,stageIndex,percentType
 		)VALUES(
-		#{courseId},#{studentId},#{score},#{stageIndex}
+		#{courseId},#{studentId},#{score},#{stageIndex},#{percentType}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -44,11 +44,23 @@
 		percentType=#{percentType} ;
 	</select>
 
-	<select id="getCoursePercentTypeStageListByStudentId" resultType="CoursePercentTypeStage">
+	<select id="getCoursePercentTypeStageListByStudentId"
+		resultType="CoursePercentTypeStage">
 		SELECT *
 		from
 		TB_Course_PercentType_Stage
-		WHERE courseId=#{courseId} and
+		WHERE
+		courseId=#{courseId} and
 		studentId=#{studentId} ;
+	</select>
+
+	<select id="getCoursePercentTypeStageListByCourseIdStage"
+		resultType="CoursePercentTypeStage">
+		SELECT *
+		from
+		TB_Course_PercentType_Stage
+		WHERE
+		courseId=#{courseId} and
+		stageIndex=#{stage} ;
 	</select>
 </mapper>

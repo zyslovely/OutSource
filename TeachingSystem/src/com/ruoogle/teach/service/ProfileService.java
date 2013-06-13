@@ -53,5 +53,15 @@ public interface ProfileService {
 	 */
 	public List<Profile> getProfileList(int level, int limit, int offset);
 
+	/**
+	 * 两种老师的情况
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<Profile> getProfileListWithTeacher(int limit, int offset);
+
 	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId);
 }

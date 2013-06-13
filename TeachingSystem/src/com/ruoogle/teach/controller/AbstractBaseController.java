@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
+import com.ruoogle.teach.service.FeedBackService;
 import com.ruoogle.teach.service.ProfileService;
 
 /**
@@ -29,6 +30,8 @@ public abstract class AbstractBaseController extends MultiActionController {
 
 	@Resource
 	protected ProfileService profileService;
+	@Resource
+	protected FeedBackService feedBackService;
 
 	/**
 	 * 初始化
@@ -67,6 +70,8 @@ public abstract class AbstractBaseController extends MultiActionController {
 		mv.addObject("visitUserId", profile.getUserId());
 		mv.addObject("visitName", profile.getName());
 		mv.addObject("level", profile.getLevel());
+		int unreadCount = feedBackService.getUnreadCount(userId);
+		mv.addObject("unreadCount", unreadCount);
 	}
 
 	/**

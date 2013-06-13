@@ -22,14 +22,27 @@ $("#teachCreate_save").click(function(){
 	 _percents=$(".coursePercentTypes_biaozhun_input_"+_demoId);
 	 _teachers=$(".coursePercentTypes_biaozhun_selectteacher_"+_demoId);
 	 _propertiesOpts=$(".coursePercentTypes_shuxing_li_"+_demoId);
+	 _objectCounts=$(".coursePercentTypes_biaozhun_input_objectCount_"+_demoId);
 	 var _courseScorePercents=new Array();
 	 var _properties=new Array();
 	 for(i=0;i<_opts.length;i++){
 	 	_tempOpt=_opts[i];
+	 	_percentType=$(_tempOpt).attr("data_type_id");
+	 	_objectCount=$(_objectCounts[i]).val();
+	 	//分组
+	 	if(_percentType==4&&_objectCount==0){
+	 		alert("分组数量不能为0");
+	 		return;
+	 	}
+	 	if(_percentType==2&&_objectCount==0){
+	 		alert("多次课程不能为0");
+	 		return;
+	 	}
 	 	 var _courseScorePercent={
-	 		                  "percentType": $(_tempOpt).attr("data_type_id"),
+	 		                  "percentType": _percentType,
 	 		                  "percent": $(_percents[i]).val(),
-	 		                  "teacherId": $(_teachers[i]).val()
+	 		                  "teacherId": $(_teachers[i]).val()==undefined?0:$(_teachers[i]).val(),
+	 		                  "objectCount":_objectCount
 	 	                    };
 	 	      _courseScorePercents.push(_courseScorePercent);             
 	 }
@@ -54,7 +67,14 @@ $("#teachCreate_save").click(function(){
 	
 });
 
-function submitCBBrand(flag){
-	
+function submitCBBrand(semesterId){
+	if(semesterId>0){
+		jAlert("课程创建成功","恭喜",function(){
+			location.href="/teach/index/?semesterId="+semesterId;
+		});
+	}else{
+		jAlert("课程创建失败","悲剧",function(){
+		});
+	}
 };
 

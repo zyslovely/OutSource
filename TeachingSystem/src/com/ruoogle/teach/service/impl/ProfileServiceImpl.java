@@ -121,4 +121,16 @@ public class ProfileServiceImpl implements ProfileService {
 		}
 		return profileList;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.ProfileService#getProfileListWithTeacher(int,
+	 * int)
+	 */
+	@Override
+	public List<Profile> getProfileListWithTeacher(int limit, int offset) {
+		return profileMapper.getProfileListWithTeacher(limit, offset);
+	}
 }

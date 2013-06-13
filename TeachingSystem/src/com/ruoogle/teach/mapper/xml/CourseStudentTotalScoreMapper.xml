@@ -26,4 +26,23 @@
 		TB_Course_Student_TotalScore
 		WHERE courseId=#{courseId};
 	</select>
+
+
+	<select id="getCourseStudentTotalScoreByStudentId" resultType="CourseStudentTotalScore">
+		SELECT *
+		from
+		TB_Course_Student_TotalScore
+		WHERE courseId=#{courseId} and
+		studentId=#{studentId};
+	</select>
+
+	<update id="updateCourseStudentTotalScore" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_Student_TotalScore
+		set
+		score=#{score}
+		WHERE
+		id =#{id};
+	</update>
 </mapper>

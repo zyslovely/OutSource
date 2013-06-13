@@ -13,15 +13,15 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;border-bottom: 2px solid rgb(224, 224, 224);">
-       <div style="margin-left: 10%;">
-           <ul style="height:30px;width:100%;">
-              <li style="float:left;width:300px;"><p>选择专业:</p></li>
+   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
+       <div style="width: 800px; margin: auto;">
+           <ul style="height:30px;">
+              <li style="float:left;width:200px;"><p>选择专业:</p></li>
               <li style="float:left;width:300px;"><p>输入班级名称:</p></li>
               <li style="float:left;"><p></p></li>
            </ul>
-           <ul style=" height: 60px;width:100%;">
-              <li style="float:left;width:300px;">
+           <ul style=" height: 60px;">
+              <li style="float:left;width:200px;">
                  <div class="select-wrapper wide">
                           <select class="select-receiver" id="newClass_Create_Specialty" name="receiver" onChange="newSpecialtyCreateClassChange(this);return;">
                              <#if specialtyId <0>
@@ -47,11 +47,12 @@ body{min-width:1024px;min-height:600px}
        </div>
        
    </div> 
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/newClass/class.png" style="width:195px;height:193px;"/>
    </div>
    <#if classList?exists>
-   <table cellspacing="0" style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;">
+   <table cellspacing="0" style="float: left; margin-left: 80px; width: 500px; margin-top: 20px; font-size: 20px;">
        <thead style="height:60px;">
             <tr>
                <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">班级</th>
@@ -70,6 +71,7 @@ body{min-width:1024px;min-height:600px}
        </tbody>
    </table> 
    </#if>
+   </div>
 </body>
 </html>
 </#escape>

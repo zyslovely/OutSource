@@ -9,13 +9,19 @@
      -->
      <link type="text/css" rel="stylesheet" href="/css/subNav.css"/>
 	<#switch pageName>
-    	<#case "teachIndex">
-    	   
-
-    	<#break>
+    	
     	<#case "newClass">
     	      
     	    
+    	<#break>
+    	<#case "feedback">
+    	      
+    	      <link type="text/css" rel="stylesheet" href="/wbox/wbox/wbox.css"/>
+    	<#break>
+    	<#case "newStudent">
+    	<#case "newTeacher">   
+    	<#case "teachIndex"> 
+    	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
     	<#break>
     	
     </#switch>

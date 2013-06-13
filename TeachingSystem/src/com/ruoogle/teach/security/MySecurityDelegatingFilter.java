@@ -21,6 +21,7 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import com.eason.web.util.CookieUtil;
+import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Profile;
 
@@ -157,9 +158,10 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 					MyUser myUser = new MyUser();
 					myUser.setUserId(profile.getUserId());
 					myUser.setSessionStr(httpRequest.getSession().getId());
+					httpRequest.getSession().setMaxInactiveInterval(1000 * 60 * 60 * 24);
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
-
+					logger.info("try to login session=" + httpRequest.getSession().getId());
 					if (rememberMe == 1) {
 						CookieUtil.setCookie(httpResponse, CookieUtil.PARA_LOGIN_COOKIE, httpRequest.getSession().getId(), 1000 * 60 * 60 * 24);
 					}
@@ -178,6 +180,8 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		// 如果需要认证
 		if (this.noNeedAdminConfig(uri, httpRequest) && !this.noNeedAuthConfig(uri, httpRequest)) {
 			Long userId = MyUser.getMyUser(httpRequest);
+			logger.info("logined session=" + httpRequest.getSession().getId());
+			logger.info("logined userId=" + userId);
 			MyUser myUser = userMap.get(userId);
 			Cookie cookie = CookieUtil.getCookie(httpRequest, CookieUtil.PARA_LOGIN_COOKIE);
 			if (myUser == null) {

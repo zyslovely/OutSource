@@ -3,18 +3,50 @@
 	namespace="com.ruoogle.teach.mapper.CourseStudentPropertySemesterScoreMapper">
 	<resultMap type="CourseStudentPropertySemesterScore" id="courseStudentPropertySemesterScoreMap ">
 		<id property="id" column="id" />
-		<result property="semester" column="semester" />
+		<result property="semesterId" column="semesterId" />
 		<result property="propertyId" column="propertyId" />
 		<result property="score" column="score" />
+		<result property="studentId" column="studentId" />
+
 	</resultMap>
 	<insert id="addCourseStudentPropertySemesterScore"
 		parameterType="CourseStudentPropertySemesterScore">
 		INSERT INTO TB_Course_Student_Property_SemesterScore
-		(semester,propertyId,score )VALUES(
-		#{semester},#{propertyId},#{score})
+		(
+		semesterId,propertyId,score ,studentId
+		)VALUES(
+		#{semesterId},#{propertyId},#{score},#{studentId}
+		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
 	</insert>
+	<select id="getCourseStudentPropertySemesterScoreByStudentIdSemester"
+		resultType="CourseStudentPropertySemesterScore">
+		SELECT *
+		from
+		TB_Course_Student_Property_SemesterScore
+		WHERE
+		semesterId=#{semesterId} and studentId=#{studentId};
+	</select>
+	<update id="updateCourseStudentPropertySemesterScore"
+		flushCache="true" parameterType="CourseStudentPropertySemesterScore"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_Student_Property_SemesterScore
+		set
+		score=#{score}
+		WHERE
+		id =#{id};
+	</update>
+	<delete id="deleteCourseStudentPropertySemesterScore"
+		flushCache="true" statementType="PREPARED">
+		delete from
+		TB_Course_Student_Property_SemesterScore
+		WHERE
+		semesterId=#{semesterId} and
+		studentId=#{studentId} ;
+	</delete>
+
 </mapper>

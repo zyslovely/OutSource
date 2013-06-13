@@ -22,7 +22,10 @@
    	       <script type="text/javascript" src="/js/webIndex.js" charset="utf-8"></script>
     	<#break>
     	<#case "teachIndex">
-    	
+    	  
+    	   <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
+    	   <!--[if IE]><script type="text/javascript" src="/js/radar/radarc.js"></script><![endif]-->
+    	   <script type="text/javascript" src="/js/radar/radar.js"></script>
    	       <script type="text/javascript" src="/js/upload.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/teachIndex.js" charset="utf-8"></script>
    	       
@@ -40,12 +43,14 @@
    	       <script type="text/javascript" src="/js/admin_newSpecialty.js" charset="utf-8"></script>
     	<#break>
     	<#case "newStudent">
-    	  
+    	   <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/subNav.js" charset="utf-8"></script>
+   	       
    	       <script type="text/javascript" src="/js/admin_newStudent.js" charset="utf-8"></script>
+   	       
     	<#break>
     	<#case "newTeacher">
-    	  
+    	  <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/admin_newTeacher.js" charset="utf-8"></script>
     	<#break>
     	<#case "newCourseType">
@@ -56,8 +61,23 @@
     	  
    	       <script type="text/javascript" src="/js/courseInfo.js" charset="utf-8"></script>
     	<#break>
-
     	
+    	<#case "courseScore">
+    	  
+   	       <script type="text/javascript" src="/js/courseScore.js" charset="utf-8"></script>
+    	<#break>
+
+    	<#case "EachStudentScore">
+    	  
+   	       <script type="text/javascript" src="/js/EachStudentScore.js" charset="utf-8"></script>
+    	<#break>
+    	
+    	<#case "feedback">
+   	       <script type="text/javascript" src="/js/feedback.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "courseGroup">
+   	       <script type="text/javascript" src="/js/courseGroup.js" charset="utf-8"></script>
+    	<#break>
     	
     	
     </#switch>

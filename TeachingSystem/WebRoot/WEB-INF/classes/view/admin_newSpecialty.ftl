@@ -13,7 +13,7 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;border-bottom: 2px solid rgb(224, 224, 224);">
+   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
        <div style="margin-left: 10%;">
            <ul style="height:30px;width:100%;">
               <li style="float:left;width:300px;"><p>专业名称:</p></li>
@@ -38,15 +38,16 @@ body{min-width:1024px;min-height:600px}
        </div>
        
    </div> 
-   <div style="float:left;margin-left:15%;height:193px;margin-top: 30px;">
+   <div style="width: 1024px; margin: auto;">
+   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
        <img src="/img/newSpecialty/specialty.png" style="width:195px;height:193px;"/>
    </div>
-   <table cellspacing="0" style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
+   <table cellspacing="0" style="float: left; margin-left: 80px; width: 500px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
        <thead style="height:60px;">
             <tr>
                <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">专业名称</th>
                <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">专业拼音</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学期数量</th>
+               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学期数</th>
             </tr>
        </thead>
        <tbody  style="font-size: 16px;">
@@ -59,7 +60,7 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
-       
+       </div>
 </body>
 </html>
 </#escape>

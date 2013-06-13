@@ -26,7 +26,8 @@
 		SELECT *
 		from
 		TB_Course_Student
-		WHERE courseId=#{courseId} and type=0;
+		WHERE courseId=#{courseId} and type=0 order by id
+		desc ;
 	</select>
 
 	<select id="getCourseStudentsByUserId" resultType="CourseStudent">
@@ -34,12 +35,12 @@
 		from
 		TB_Course_Student
 		WHERE userId=#{userId} and type=#{type}
-		and status=0 and semesterId=#{semesterId}
+		and semesterId=#{semesterId} order by id
+		desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
-		order by id
-		desc;
+		;
 	</select>
 
 	<update id="updateCourseStudentsStatus" parameterType="CourseStudent"
@@ -52,4 +53,22 @@
 		courseId =
 		#{courseId};
 	</update>
+
+	<select id="getCourseListBySemesterStudentId" resultType="CourseStudent">
+		SELECT
+		*
+		from
+		TB_Course_Student
+		WHERE userId=#{userId} and
+		semesterId=#{semesterId} order by id
+		desc;
+	</select>
+	<select id="getCourseStudentByStudentId" resultType="CourseStudent">
+		SELECT
+		*
+		from
+		TB_Course_Student
+		WHERE userId=#{studentId} and
+		courseId=#{courseId}
+	</select>
 </mapper>

@@ -13,8 +13,8 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;border-bottom: 2px solid rgb(224, 224, 224);">
-       <div style="margin-left: 10%;">
+   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
+       <div style="margin: auto; width: 600px;">
            <ul style="height:30px;width:100%;">
               <li style="float:left;width:300px;"><p>选择专业:</p></li>
               <li style="float:left;width:300px;"><p>选择班级:</p></li>
@@ -49,8 +49,9 @@ body{min-width:1024px;min-height:600px}
        </div>
        
    </div> 
+   <#if studentList?exists>
    <div style="margin-left:15%;width:75%;height:105px;margin-top: 20px;">
-      <#if studentList?exists>
+      
        <table cellspacing="0" style="">
             <thead style="height: 60px;">
             <tr>
@@ -73,10 +74,31 @@ body{min-width:1024px;min-height:600px}
                  
             </tbody>
        </table>
-       </#if>
+      
+       <div style="margin-top: 10px;"><div id="jpage_student"></div></div>
+        </#if>
    </div>
 </body>
 </html>
 </#escape>
 		
 <#include "js.ftl">
+<script type="text/javascript">
+$("#jpage_student").paginate({
+				count 		: ${totalCount!0},
+				start 		: ${page!0},
+				display     : ${limit!0},
+				border_color			: '#BEF8B8',
+				text_color  			: '#68BA64',
+				background_color    	: '#E3F2E1',	
+				border_hover_color		: '#68BA64',
+				text_hover_color  		: 'black',
+				background_hover_color	: '#CAE6C6', 
+				images		: false,
+				mouse		: 'press',
+				border		: true,
+				onChange    : function(page){
+								location.href="/teach/admin/student/list/?classId=${classId!0}&specialtyId=${specialtyId!0}&page="+page;
+							}
+			});
+</script>

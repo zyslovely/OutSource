@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.SemesterStudentMapper">
+	<resultMap type="SemesterStudent" id="semesterStudentMap ">
+		<id property="id" column="id" />
+		<result property="semesterId" column="semesterId" />
+		<result property="studentId" column="studentId" />
+		<result property="status" column="status" />
+	</resultMap>
+	<insert id="addSemesterStudent" parameterType="SemesterStudent">
+		INSERT INTO
+		TB_Semester_Student (
+		semesterId,studentId,status
+		)VALUES(
+		#{semesterId},#{studentId},#{status}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getSemesterStudentByStudentSemester" resultType="SemesterStudent">
+		SELECT *
+		from
+		TB_Semester_Student
+		WHERE semesterId=#{semesterId} and
+		studentId=#{studentId};
+	</select>
+
+	<update id="updateSemesterStudentStatus" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Course_Student
+		set
+		status=#{status}
+		WHERE
+		id =
+		#{id};
+	</update>
+</mapper>

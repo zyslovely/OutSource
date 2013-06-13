@@ -5,9 +5,10 @@ import java.io.Serializable;
 public class CourseStudentPropertySemesterScore implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
-	private int semester;
+	private long semesterId;
 	private long propertyId;
 	private double score;
+	private long studentId;
 
 	public long getId() {
 		return id;
@@ -17,12 +18,12 @@ public class CourseStudentPropertySemesterScore implements Serializable {
 		this.id = id;
 	}
 
-	public int getSemester() {
-		return semester;
+	public long getSemesterId() {
+		return semesterId;
 	}
 
-	public void setSemester(int semester) {
-		this.semester = semester;
+	public void setSemesterId(long semesterId) {
+		this.semesterId = semesterId;
 	}
 
 	public long getPropertyId() {
@@ -39,6 +40,14 @@ public class CourseStudentPropertySemesterScore implements Serializable {
 
 	public void setScore(double score) {
 		this.score = score;
+	}
+
+	public long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(long studentId) {
+		this.studentId = studentId;
 	}
 
 }

@@ -1,10 +1,12 @@
-<div style="height:120px;width:100%;background: url('/img/teachCreate/nav_bg.png') repeat-x scroll center top transparent; ">
-   <div style="margin-left: 15%; margin-top: 23px; width: 40%; float: left;">
+<div style="background: url('/img/teachCreate/nav_bg.png') repeat scroll center top transparent; height: 122px;">
+<div style="width: 1024px; margin: auto;">
+   
+   <div style="margin-left: 5%; margin-top: 23px; width: 40%; float: left;">
        <img src="/img/webIndex/logo.png"/>
    </div>
-   <div style="float: right; margin-right: 10%; margin-top: 23px;height:52px;">
+   <div style="float: right;  margin-top: 23px;height:52px;">
        <ul style="width:350px;">
-          <li style="float: left; width: 80px; text-align: center;">
+          <li style="float: left; width: 100px; text-align: center;">
              <img src="/img/teachCreate/user.png" style="width: 14px; height: 14px;"/>
              <a href="/user/profile/" style="color: white;">${visitName!""}</a>
           </li>
@@ -13,7 +15,7 @@
           </li>
           <li style="float: left; width: 80px; text-align: center;">
              <img src="/img/teachCreate/message.png" style="width: 17px; height: 11px;"/>
-             <a href="/user/profile/" style="color: white;">信箱</a>
+             <a href="/teach/feedback/" style="color: white;">信箱(${unreadCount!0})</a>
           </li>
           <li style="float: left; width: 3px; text-align: center;">
           <span style="color: white;">|<span>
@@ -29,11 +31,11 @@
           </li>
        </ul>
    </div>
-   <div style="height: 49px; width: 100%; display: inline-block;">
-     <ul style="margin-left:15%;width:85%;">
+   <div style="height: 49px; margin-top:2px; display: inline-block;width:100%;">
+     <ul style="margin-left:5%;">
         <#if level!=3>
-        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/index/" style="<#if pageName!='teachIndex' && pageName!='courseInfo'>color: white</#if>;">课程列表</a>
+        <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'|| pageName='courseScore'|| pageName='EachStudentScore'|| pageName='courseGroup'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/index/" style="<#if pageName!='teachIndex' && pageName!='courseInfo'&& pageName!='courseScore'&& pageName!='EachStudentScore'&& pageName!='courseGroup'>color: white</#if>;">课程列表</a>
         </li>
         </#if>
         <#if level==1>
@@ -57,10 +59,13 @@
         <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='newStudent'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/student/list/" style="<#if pageName!='newStudent'>color: white;</#if>">添加学生信息</a>
         </li>
+        <#--
         <li style="text-align: center; float: left; width: 140px; padding: 15px; height: 15px;<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/schoolInfo/list/" style="<#if pageName!='newSchoolInfo'>color: white;</#if>">添加学校学院信息</a>
         </li>
+        -->
         </#if>
      </ul>
    </div>
+</div>
 </div>

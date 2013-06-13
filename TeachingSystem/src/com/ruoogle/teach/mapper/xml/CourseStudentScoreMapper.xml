@@ -20,7 +20,8 @@
 	</insert>
 
 	<select id="getCourseStudentScoreByStudentId" resultType="CourseStudentScore">
-		SELECT *
+		SELECT
+		*
 		from TB_Course_Student_Score
 		WHERE studentId=#{studentId} and
 		percentType=#{percentType} and courseId=#{courseId};
@@ -44,5 +45,13 @@
 		id =
 		#{id};
 	</update>
+
+	<select id="getCourseStudentScoreListByCourseIdPercentType"
+		resultType="CourseStudentScore">
+		SELECT *
+		from TB_Course_Student_Score
+		WHERE
+		percentType=#{percentType} and courseId=#{courseId};
+	</select>
 
 </mapper>

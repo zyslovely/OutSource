@@ -20,7 +20,8 @@
 		</selectKey>
 	</insert>
 
-	<select id="getCoursePercentTypeGroupStudentByIds" resultType="CoursePercentTypeGroupStudent">
+	<select id="getCoursePercentTypeGroupStudentByStudentId"
+		resultType="CoursePercentTypeGroupStudent">
 		SELECT *
 		from TB_Course_PercentType_Group_Student
 		WHERE
@@ -28,16 +29,17 @@
 		courseId=#{courseId};
 	</select>
 
-	<select id="getCoursePercentTypeGroupCountByIds" resultType="int">
-		SELECT count(*)
-		from TB_Course_PercentType_Group_Student where
-		courseId=#{courseId}
-		group by groupId;
+
+	<select id="getCoursePercentTypeGroupStudentByCourseId"
+		resultType="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student
+		where
+		courseId=#{courseId};
 	</select>
 
-	<update id="updateCoursePercentTypeGroupStudentMapper"
-		parameterType="CoursePercentTypeGroupStudent" flushCache="true"
-		statementType="PREPARED">
+	<update id="updateCoursePercentTypeGroupStudent" parameterType="CoursePercentTypeGroupStudent"
+		flushCache="true" statementType="PREPARED">
 		UPDATE
 		TB_Course_PercentType_Group_Student
 		set
@@ -56,6 +58,22 @@
 		courseId=#{courseId}
 		and groupId = #{groupId};
 	</select>
+	<select id="getCoursePercentTypeGroupStudentListByGroupId"
+		resultType="CoursePercentTypeGroupStudent">
+		SELECT *
+		from TB_Course_PercentType_Group_Student
+		where
+		courseId=#{courseId}
+		and groupId = #{groupId};
+	</select>
+	
+	<delete id="deleteCoursePercentTypeGroupStudent" flushCache="true"
+		statementType="PREPARED">
+		delete from
+		TB_Course_PercentType_Group_Student
+		WHERE
+		groupId=#{groupId};
+	</delete>
 
 
 </mapper>

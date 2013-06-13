@@ -40,11 +40,11 @@
 		resultMap="profileMap">
 		SELECT *
 		from TB_Profile
-		WHERE level=#{level}
+		WHERE level=#{level} order by userId desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
-		order by userId desc;
+		;
 	</select>
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
@@ -63,11 +63,22 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and level=#{level}
+		WHERE classId=#{classId} and level=#{level} order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
-		order by userId asc;
+		;
+	</select>
+	
+	<select id="getProfileListWithTeacher" resultType="Profile">
+	SELECT *
+	from
+	TB_Profile
+	WHERE level=1 or level=2 order by userId asc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
 	</select>
 
 
@@ -87,5 +98,14 @@
 		userId=
 		#{userId};
 	</update>
-
+	<select id="getProfileListByIds" resultType="Profile"
+		parameterType="list">
+		SELECT * from TB_Profile where
+		userId in
+		<foreach item="item" collection="userIds" index="index" open="("
+			separator="," close=")">
+			#{item} 
+	     </foreach>
+		;
+	</select>
 </mapper>

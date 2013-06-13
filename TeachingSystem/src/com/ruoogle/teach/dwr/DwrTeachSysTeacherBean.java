@@ -5,14 +5,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.util.ArrayUtil;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
-import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -38,12 +40,20 @@ public class DwrTeachSysTeacherBean {
 	 * @param coursePercentTypes
 	 * @param classId
 	 */
-	public boolean addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
+	public long addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
 			CourseScorePercentProperty courseScorePercentProperties[], String desc) {
+		if (ArrayUtils.isEmpty(courseScorePercentProperties) || ArrayUtils.isEmpty(CourseScorePercents)) {
+			return -1;
+		}
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents), classId,
-				teacherId, semesterId, desc);
+		boolean succ = courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents),
+				classId, teacherId, semesterId, desc);
+		if (succ) {
+			return semesterId;
+		}
+
+		return -1;
 	}
 
 	/**
@@ -56,6 +66,9 @@ public class DwrTeachSysTeacherBean {
 	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		if (score < 0) {
+			return false;
+		}
 		return courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
 
 	}
@@ -83,10 +96,11 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseId
 	 * @param studentId
 	 */
-	public boolean addCourseGroup(long courseId, long studentId, long groupId, int leader) {
-		WebContext ctx = WebContextFactory.get();
-		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addCourseGroup(courseId, studentId, groupId, teacherId, GroupLevel.genGroupLevel(leader));
+	public boolean addCourseGroup(long courseId, CoursePercentTypeGroupStudent[] students) {
+		if (ArrayUtils.isEmpty(students) || courseId < 0) {
+			return false;
+		}
+		return courseService.addNewGroup(Arrays.asList(students), courseId);
 	}
 
 	/**
@@ -96,7 +110,7 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseId
 	 * @return
 	 */
-	public boolean finishCourse(long courseId) {
+	public int finishCourse(long courseId) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		return courseService.finishCourse(courseId, teacherId);
@@ -128,6 +142,17 @@ public class DwrTeachSysTeacherBean {
 	}
 
 	public Object[] getList(long specialtyId) {
-		return  classService.getClassListBySpecialty(specialtyId).toArray();
+		return classService.getClassListBySpecialty(specialtyId).toArray();
+	}
+
+	/**
+	 * 删除分组
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param groupId
+	 * @return
+	 */
+	public boolean deleteCoursePercentTypeGroup(long groupId) {
+		return courseService.deleteCoursePercentTypeGroup(groupId);
 	}
 }

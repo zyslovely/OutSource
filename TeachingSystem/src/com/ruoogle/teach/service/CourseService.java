@@ -3,12 +3,19 @@ package com.ruoogle.teach.service;
 import java.util.List;
 
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.CoursePercentTypeGroup;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
+import com.ruoogle.teach.meta.CourseStudent;
+import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+import com.ruoogle.teach.meta.CourseStudentScoreVO;
+import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
-import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -74,16 +81,6 @@ public interface CourseService {
 	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId, long teacherId);
 
 	/**
-	 * 添加分组
-	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param courseId
-	 * @param studentId
-	 * @param groupId
-	 */
-	public boolean addCourseGroup(long courseId, long studentId, long groupId, long teacherId, GroupLevel level);
-
-	/**
 	 * 添加分组分数
 	 * 
 	 * @auther zyslovely@gmail.com
@@ -94,7 +91,7 @@ public interface CourseService {
 	 * @param fromStudentId
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId, long percentType);
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId);
 
 	/**
 	 * 完成课程
@@ -104,7 +101,7 @@ public interface CourseService {
 	 * @param teacherid
 	 * @return
 	 */
-	public boolean finishCourse(long courseId, long teacherid);
+	public int finishCourse(long courseId, long teacherid);
 
 	/**
 	 * 获取课程
@@ -155,4 +152,97 @@ public interface CourseService {
 	 * @return
 	 */
 	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId);
+
+	/**
+	 * 得到这门课的学生列表，以及分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId, long percentType);
+
+	/**
+	 * 根据stage获取课程分数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param stage
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage, long courseId);
+
+	/**
+	 * 获得这个学生这个学期的属性
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @param semesterId
+	 * @return
+	 */
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(long studentId, long semesterId);
+
+	/**
+	 * 获取互评学生列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param fromStudentId
+	 * @param courseId
+	 * @return
+	 */
+	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(long fromStudentId, long courseId);
+
+	public CourseStudent getCourseStudent(long courseId, long studentId);
+
+	/**
+	 * 获取成绩列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(long courseId);
+
+	/**
+	 * 获得课程学生分组
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(long courseId);
+
+	/**
+	 * 获取分组列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(long courseId);
+
+	/**
+	 * 删除分组
+	 */
+	public boolean deleteCoursePercentTypeGroup(long groupId);
+
+	/**
+	 * 添加新分组
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param coursePercentTypeGroupStudents
+	 * @param courseId
+	 * @return
+	 */
+	public boolean addNewGroup(List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents, long courseId);
+
+	/**
+	 * 得到某个学期课程总数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param semesterId
+	 * @return
+	 */
+	public int getCourseTotalSemesterCount(long userId, long semesterId);
 }
