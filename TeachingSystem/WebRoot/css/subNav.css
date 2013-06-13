@@ -24,7 +24,7 @@
 	border: none;
 	background: none;
 	opacity: 0;
-	filter: alpha(opacity =           0);
+	filter: alpha(opacity =             0);
 }
 
 .top_li {
@@ -45,9 +45,5 @@
 }
 
 .w-btn {
-	font-size:16px	
-}
-
-subtop_title {
-	
+	font-size: 16px
 }
