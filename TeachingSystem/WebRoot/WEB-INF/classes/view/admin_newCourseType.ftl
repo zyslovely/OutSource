@@ -21,22 +21,22 @@ body{min-width:1024px;min-height:600px}
    <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-left: 80px; width: 600px; margin-top: 20px; font-size: 20px;">
        <thead style="height:60px;">
             <tr>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">类型名称</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">评分标准</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">类型名称</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">评分标准</th>
             </tr>
        </thead>
        <tbody  style="font-size: 16px;">
             <#list coursePercentTypeDemos as demo>
             <tr style="">
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">
                ${demo.name!""}
                </th>
-               <th style="width:220px;border-bottom: 2px solid rgb(224, 224, 224);">
+               <th class="f3" style="width:220px;border-bottom: 1px solid rgb(224, 224, 224);">
                <#if demo.coursePercentTypes?exists>
                <#list demo.coursePercentTypes as type>
                <#list demo.percents as percent>
                <#if percent_index==type_index>
-               <p style="color: rgb(123, 123, 123);">${type.getName()!""}占比:${percent!0}%</span></p>
+               <p style="color: rgb(139, 139, 139);">${type.getName()!""}占比:${percent!0}%</span></p>
                </#if>
                </#list>
                </#list>
@@ -76,7 +76,7 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;"></p></th>
                    <th style="">
-                      <a id="newCourseType_newPercent" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; font-size: 20px; line-height: 55px;  text-align: center; width: 174px;" href="javascript:void(0);;">增加评分类型</a>
+                      <a class="w-btn" id="newCourseType_newPercent" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; line-height: 55px;  text-align: center; width: 174px;" href="javascript:void(0);;">增加评分类型</a>
                    </th>
                 </tr>
             </tbody>

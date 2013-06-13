@@ -13,11 +13,11 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
+   <div style="height: 105px; border-bottom: 1px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
        <div style="width: 800px; margin: auto;">
            <ul style="height:30px;">
-              <li style="float:left;width:200px;"><p>选择专业:</p></li>
-              <li style="float:left;width:300px;"><p>输入班级名称:</p></li>
+              <li style="float:left;width:200px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">选择专业:</p></li>
+              <li style="float:left;width:300px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">输入班级名称:</p></li>
               <li style="float:left;"><p></p></li>
            </ul>
            <ul style=" height: 60px;">
@@ -41,7 +41,7 @@ body{min-width:1024px;min-height:600px}
                       </div>
               </li>
               <li style="float:left;width:200px;">
-                  <a id="newClass_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; font-size: 20px; line-height: 55px;" href="javascript:void(0);;">创建班级</a>
+                  <a class="w-btn" id="newClass_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;" href="javascript:void(0);;">创建班级</a>
               </li>
            </ul>
        </div>
@@ -55,17 +55,17 @@ body{min-width:1024px;min-height:600px}
    <table cellspacing="0" style="float: left; margin-left: 80px; width: 500px; margin-top: 20px; font-size: 20px;">
        <thead style="height:60px;">
             <tr>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">班级</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学期数量</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">学生数量</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">班级</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">学期数量</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">学生数量</th>
             </tr>
        </thead>
        <tbody style="font-size: 16px;">
             <#list classList as class>
             <tr style="height:40px">
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.name!""}</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
-               <th style="color: rgb(123, 123, 123);width:190px;border-bottom: 2px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.name!""}</th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
             </tr>
             </#list>
        </tbody>

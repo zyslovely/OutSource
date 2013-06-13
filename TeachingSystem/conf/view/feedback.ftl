@@ -19,7 +19,7 @@ body{min-width:1024px;min-height:600px}
        <ul>
        <#list feedbacks as feedback>
        
-       <li style="margin: auto; width: 660px; border-bottom: 2px solid rgb(224, 224, 224); min-height: 120px; display: block;">
+       <li style="margin: auto; width: 660px; border-bottom: 1px solid rgb(224, 224, 224); min-height: 120px; display: block;">
           <div style="margin:10px 0 0px;min-height:38px;">
              <p style="width: 100px; font-size: 25px; display: inline;color: rgb(123, 123, 123);">${feedback.fromName!""}</p>
              <p style="float: right; margin-top: 10px;color: rgb(123, 123, 123);">${feedback.createTimeStr!""}</p>

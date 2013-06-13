@@ -27,14 +27,14 @@ canvas {border:1px solid #4c4c4c;}
    <table style="width: 600px;">
         <thead>
              <tr style="height: 40px; font-size: 20px;">
-                <td style="width: 100px;color: rgb(123, 123, 123);">课程名称</td>
-                <td style="color: rgb(123, 123, 123);width: 100px;">班级名称</td>
+                <td class="f2" style="width: 100px;color: rgb(94, 94, 94);">课程名称</td>
+                <td class="f2" style="color: rgb(94, 94, 94);width: 100px;">班级名称</td>
                 <#if level!=0>
-                <td style="color: rgb(123, 123, 123);width: 100px;">课程老师</td>
-                <td style="color: rgb(123, 123, 123);width: 100px;">状态</td>
+                <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">课程老师</td>
+                <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">状态</td>
                 <#else>
-                <td style="color: rgb(123, 123, 123);width: 100px;">姓名</td>
-                <td style="color: rgb(123, 123, 123);width: 100px;">总成绩</td>
+                <td class="f2" style="color: rgb(94, 94, 94);width: 100px;">姓名</td>
+                <td class="f2" style="color: rgb(94, 94, 94);width: 100px;">总成绩</td>
                 </#if>
              </tr>
         </thead>
@@ -42,13 +42,13 @@ canvas {border:1px solid #4c4c4c;}
              
              <#list courseList as coursevo>
              <tr style="height: 40px; font-size: 16px;">
-                <td style="width: 100px;"><a href="/teach/course/${coursevo.course.id}/" style="color:black;color: rgb(123, 123, 123);">${coursevo.course.name}</a></td>
-                <td style="color: rgb(123, 123, 123);width: 100px;">${coursevo.class1.name}</td>
-                <td style="color: rgb(123, 123, 123);width: 100px;">${coursevo.user.name}</td>
+                <td class="f3" style="width: 100px;"><a href="/teach/course/${coursevo.course.id}/" style="color: rgb(139, 139, 139);">${coursevo.course.name}</a></td>
+                <td class="f3" style="color: rgb(139, 139, 139);width: 100px;">${coursevo.class1.name}</td>
+                <td class="f3"style="color: rgb(139, 139, 139);width: 100px;">${coursevo.user.name}</td>
                 <#if level!=0>
-                <td style="width: 100px;<#if coursevo.course.status==0>color:green<#else>color:red</#if>"><#if coursevo.course.status==0>进行中<#else>已结束</#if></td>
+                <td class="f3" style="width: 100px;<#if coursevo.course.status==0>color:green<#else>color:red</#if>"><#if coursevo.course.status==0>进行中<#else>已结束</#if></td>
                 <#else>
-                <td style="width: 100px;"><#if coursevo.score < 0>未出<#else>${coursevo.score!0}</#if><#if coursevo.haveGroupToScore==1><a href="/teach/eachStudent/score/?courseId=${coursevo.course.id}">(等待互评)</a></#if></td>
+                <td class="f3" style="width: 100px;color: rgb(139, 139, 139);"><#if coursevo.score < 0>未出<#else>${coursevo.score!0}</#if><#if coursevo.haveGroupToScore==1><a href="/teach/eachStudent/score/?courseId=${coursevo.course.id}">(等待互评)</a></#if></td>
                 </#if>
              </tr>
              </#list>

@@ -13,7 +13,7 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-   <div style="height: 105px; border-bottom: 2px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
+   <div style="height: 105px; border-bottom: 1px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
        <div style="margin-left: 10%;">
            <ul style="height:30px;width:100%;">
               <li style="float:left;width:300px;"><p>课程类型名称:</p></li>
@@ -32,7 +32,7 @@ body{min-width:1024px;min-height:600px}
                  </div>
               </li>
               <li style="float:left;width:200px;">
-                  <a id="newSpecialty_Create" style="margin-left: 20px;" href="javascript:void(0);;"><img src="/img/teachCreate/button_edit.png" style="width:174px;height:59px;"/></a>
+                  <a class="w-btn" id="newSpecialty_Create" style="margin-left: 20px;" href="javascript:void(0);;"><img src="/img/teachCreate/button_edit.png" style="width:174px;height:59px;"/></a>
               </li>
            </ul>
        </div>
