@@ -9,8 +9,8 @@
 #import "OSAddressViewController.h"
 #import "SVProgressHUD.h"
 #import "NSString+TomAddition.h"
-#define kClientKey @"AWHBmxA_vWKVqGvAKrOakIu4d2NQBa7BNWI4s9nwbtiPb_GkhBItcq6w04Dw"
-#define kReceiverEmail @"zyslovely@gmail.com"
+#define kClientKey @"AeIKUxCF0kWkTzXpz1EsMVYk6owI44gHPaOrUEvDtUEFPhFEUAKjc25hqtAH"
+#define kReceiverEmail @"skyapps@icloud.com"
 
 @interface OSAddressViewController (){
   double _unitPrice;
