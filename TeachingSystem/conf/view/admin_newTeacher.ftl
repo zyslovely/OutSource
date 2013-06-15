@@ -23,6 +23,7 @@ body{min-width:1024px;min-height:600px}
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">账号</th>
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">密码</th>
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">类型</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +35,8 @@ body{min-width:1024px;min-height:600px}
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.userName!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.password!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);"><#if teacher.level==2>企业老师<#else>普通老师</#if></th>
+                  <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newTeacher_delete" data_id="${teacher.userId!0}">删除</a></th>
+         
                   </tr>
                  </#list>
                  
@@ -72,10 +75,13 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">类型</p></th>
                    <th>
+                      <div style="margin-left:5px;">
                       <select id="newTeacher_level"> 
+                           <option value="-1"></option>
                            <option value="1">普通老师</option>
                            <option value="2">企业老师</option>
                       </select>
+                      </div>
                    </th>
                 </tr>
             </tbody>
@@ -107,4 +113,5 @@ $("#jpage_teacher").paginate({
 								location.href="/teach/admin/teacher/list/?page="+page;
 							}
 			});
+ 
 </script>

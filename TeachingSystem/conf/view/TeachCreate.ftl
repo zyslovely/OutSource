@@ -21,32 +21,38 @@ body{min-width:1024px;min-height:600px}
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程名称*</th><th ><input type="text" style="width: 250px;" id="course_name"/></th></tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程类别选择*</th >
                     <th>
-                       <select  style="width: 200px;"  onChange="coursePercentTypeChange(this);return;" id="demoselector">
+                       <div style="width: 160px; margin: auto;">
+                       <select  style="width: 200px;" id="demoselector">
                            <option value=""></option>
                            <#list coursePercentTypeDemos as demo>
                            <option value="${demo.id!""}">${demo.name!""}</option>
                            </#list>
                        </select>
+                       </div>
                     </th>
                  </tr>
                  <tr>
                      <th style="float: right; height: 40px; line-height: 40px; width: 150px;">选择学期*</th>
                      <th>
+                        <div style="width: 160px; margin: auto;">
                         <select style="width: 200px;" id="semester_selector">
                            <#list semesters as semester>
                            <option value="${semester.id!0}">${semester.name!""}</option>
                            </#list>
                        </select>
+                       </div>
                      </th>
                  </tr>
                  <tr>
                      <th style="float: right; height: 40px; line-height: 40px; width: 150px;">选择班级*</th>
                      <th>
+                        <div style="width: 160px; margin: auto;">
                         <select style="width: 200px;" id="class_selector">
                            <#list classList as class>
                            <option value="${class.id!0}">${class.name!""}</option>
                            </#list>
                        </select>
+                       </div>
                      </th>
                  </tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">评分标准*</th>

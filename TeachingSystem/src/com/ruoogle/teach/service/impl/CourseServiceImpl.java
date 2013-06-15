@@ -989,4 +989,41 @@ public class CourseServiceImpl implements CourseService {
 		}
 		return courseStudentList.size();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#deleteCourseById(long)
+	 */
+	@Override
+	public boolean deleteCourseById(long courseId) {
+		Course course = courseMapper.getCourseById(courseId);
+		if (course == null) {
+			return false;
+		}
+		if (course.getStatus() == Course.FINISHED) {
+			return false;
+		}
+		return courseMapper.deleteCourse(courseId) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getTheCourseListByUserId(long,
+	 * int, int)
+	 */
+	@Override
+	public List<Course> getTheCourseListByUserId(long userId, int limit, int offset) {
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseListByUserId(userId, limit, offset);
+		if (ListUtils.isEmptyList(courseStudents)) {
+			return null;
+		}
+		List<Long> courseIds = new ArrayList<Long>(courseStudents.size());
+		for (CourseStudent courseStudent : courseStudents) {
+			courseIds.add(courseStudent.getCourseId());
+		}
+		return courseMapper.getCourseListByIds(courseIds);
+	}
 }

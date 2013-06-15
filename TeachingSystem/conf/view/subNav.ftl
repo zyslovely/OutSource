@@ -49,9 +49,9 @@
      </div>
  
      <#elseif pageName="teachIndex">
-      <div style="float: left;  margin-top: 45px; width: 200px;">
+      <div style="float: left;  margin-top: 36px; width: 200px;">
            <#if semesters?exists>
-           <select onChange="semestersChange(this);return;">
+           <select id="teachIndex_semester_select"">
                  <option value="-1"></option>
              
                  <#list semesters as semester>

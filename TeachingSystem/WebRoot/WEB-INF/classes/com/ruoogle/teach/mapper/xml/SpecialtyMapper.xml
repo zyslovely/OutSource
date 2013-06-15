@@ -8,7 +8,7 @@
 	</resultMap>
 	<insert id="addSpecialty" parameterType="Specialty">
 		INSERT INTO
-		TB_Specialty 
+		TB_Specialty
 		(
 		specialty,shortSpecialty,semesterCount
 		)VALUES(
@@ -31,7 +31,14 @@
 	<select id="getSpecialties" resultType="Specialty">
 		SELECT *
 		from
-		TB_Specialty order by id desc;
+		TB_Specialty
+		order by id desc;
 		
 	</select>
+
+	<delete id="deleteSpecialty" flushCache="true" statementType="PREPARED">
+		delete from TB_Specialty
+		where id=#{id};
+	</delete>
+
 </mapper>

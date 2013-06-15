@@ -2,6 +2,7 @@ package com.ruoogle.teach.dwr;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,9 @@ public class DwrTeachSysBean {
 	public boolean addInteractive(String content, long courseId, int status, String photoUrl, long forwardId) {
 		WebContext ctx = WebContextFactory.get();
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		if (StringUtils.isEmpty(content)) {
+			return false;
+		}
 		return interactiveService.addInteractive(userId, content, courseId, status, photoUrl, forwardId);
 	}
 

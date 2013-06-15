@@ -52,4 +52,26 @@ public interface FeedBackMapper {
 	 * @return
 	 */
 	public int updateFeedBackReaded(@Param(value = "id") long id);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param fromUserId
+	 * @param toUserId
+	 * @return
+	 */
+	public List<FeedBack> getFeedBacksByFromUserId(@Param(value = "limit") int limit, @Param(value = "offset") int offset,
+			@Param(value = "fromUserId") long fromUserId, @Param(value = "toUserId") long toUserId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param limit
+	 * @param offset
+	 * @param courseId
+	 * @param toUserId
+	 * @return
+	 */
+	public List<FeedBack> getFeedBacksByCourseId(@Param(value = "limit") int limit, @Param(value = "offset") int offset,
+			@Param(value = "courseId") long courseId, @Param(value = "toUserId") long toUserId);
 }

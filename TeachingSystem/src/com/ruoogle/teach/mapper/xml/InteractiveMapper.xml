@@ -9,16 +9,44 @@
 		<result property="photoUrl" column="photoUrl" />
 		<result property="CreateTime" column="CreateTime" />
 		<result property="status" column="status" />
+		<result property="showUserId" column="showUserId" />
+
 	</resultMap>
 	<insert id="addInteractive" parameterType="Interactive">
 		INSERT INTO
 		TB_Interactive
-		(userId,content,courseId,forwardId,photoUrl,CreateTime,status
+		(userId,content,courseId,forwardId,photoUrl,CreateTime,status,showUserId
 		)VALUES(
-		#{userId},#{content},#{courseId},#{forwardId},#{photoUrl},#{CreateTime},#{status})
+		#{userId},#{content},#{courseId},#{forwardId},#{photoUrl},#{CreateTime},#{status},#{showUserId}
+		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
 	</insert>
+
+	<select id="getInteractiveListByShowUserId" parameterType="long"
+		resultType="Interactive">
+		SELECT *
+		from TB_Interactive
+		WHERE showUserId=#{showUserId} order by
+		createTime desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
+	</select>
+
+	<select id="getInteractieTotalCount" parameterType="long"
+		resultType="int">
+		SELECT count(*)
+		from TB_Interactive
+		WHERE
+		showUserId=#{showUserId}
+
+		;
+	</select>
+
+
+
 </mapper>

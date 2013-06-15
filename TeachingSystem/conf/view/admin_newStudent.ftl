@@ -14,10 +14,10 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="height: 105px; border-bottom: 1px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
-       <div style="margin: auto; width: 600px;">
+       <div style="margin-left: 10%;">
            <ul style="height:30px;width:100%;">
-              <li style="float:left;width:300px;"><p>选择专业:</p></li>
-              <li style="float:left;width:300px;"><p>选择班级:</p></li>
+              <li style="float:left;width:300px;"><p style="font-size: 18px; padding-left: 7px;color: rgb(106, 106, 106);">选择专业:</p></li>
+              <li style="float:left;width:300px;"><p style="font-size: 18px; padding-left: 7px;color: rgb(106, 106, 106);">选择班级:</p></li>
            </ul>
            <ul style=" height: 60px;width:100%;">
               <li style="float:left;width:300px;">
@@ -69,6 +69,8 @@ body{min-width:1024px;min-height:600px}
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.name!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.userName!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.password!""}</th>
+                  <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newStudent_delete" data_id="${student.userId!0}">删除</a></th>
+         
                   </tr>
                  </#list>
                  
@@ -83,22 +85,3 @@ body{min-width:1024px;min-height:600px}
 </#escape>
 		
 <#include "js.ftl">
-<script type="text/javascript">
-$("#jpage_student").paginate({
-				count 		: ${totalCount!0},
-				start 		: ${page!0},
-				display     : ${limit!0},
-				border_color			: '#BEF8B8',
-				text_color  			: '#68BA64',
-				background_color    	: '#E3F2E1',	
-				border_hover_color		: '#68BA64',
-				text_hover_color  		: 'black',
-				background_hover_color	: '#CAE6C6', 
-				images		: false,
-				mouse		: 'press',
-				border		: true,
-				onChange    : function(page){
-								location.href="/teach/admin/student/list/?classId=${classId!0}&specialtyId=${specialtyId!0}&page="+page;
-							}
-			});
-</script>

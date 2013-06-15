@@ -14,6 +14,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.InteractiveMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -25,6 +26,7 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
+import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
@@ -33,6 +35,7 @@ import com.ruoogle.teach.security.MySecurityDelegatingFilter;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
+import com.ruoogle.teach.service.InteractiveService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -47,6 +50,8 @@ public class WebTeachSysController extends AbstractBaseController {
 	private CourseService courseService;
 	@Resource
 	private ClassService classService;
+	@Resource
+	private InteractiveService interactiveService;
 
 	/**
 	 * 退出
@@ -308,14 +313,23 @@ public class WebTeachSysController extends AbstractBaseController {
 	public ModelAndView showFeedBackView(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("feedback");
+		long fromuserId = ServletRequestUtils.getLongParameter(request, "fromUserId", -1L);
+		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
 		Long userId = MyUser.getMyUser(request);
 		int limit = 10;
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", -1);
 		if (offset < 0) {
 			offset = 0;
 		}
-
-		List<FeedBack> feedBacks = feedBackService.getFeedBackList(userId, limit, offset, 0);
+		List<FeedBack> feedBacks;
+		if (fromuserId > 0) {
+			feedBacks = feedBackService.getFeedBackListFromUserId(fromuserId, limit, offset, userId);
+			
+		} else if (courseId > 0) {
+			feedBacks = feedBackService.getFeedBackListCourseId(courseId, limit, offset, userId);
+		} else {
+			feedBacks = feedBackService.getFeedBackList(userId, limit, offset, 0);
+		}
 		if (!ListUtils.isEmptyList(feedBacks)) {
 			for (FeedBack feedBack : feedBacks) {
 				if (feedBack.getStatus() == FeedBack.Unread) {
@@ -326,6 +340,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("feedbacks", feedBacks);
 		this.setUD(mv, request);
 		return mv;
+		
 	}
 
 	/**
@@ -363,6 +378,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
 		ModelAndView mv = new ModelAndView("courseGroup");
+
 		mv.addObject("courseId", courseId);
 		List<CourseGroupStudentVO> courseGroupStudentVOs = courseService.getCourseGroupStudentVOByCourseId(courseId);
 		mv.addObject("courseGroupStudentVOs", courseGroupStudentVOs);
@@ -372,4 +388,37 @@ public class WebTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 互动页面
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showInteractive(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("interactive");
+		Long userId = MyUser.getMyUser(request);
+		int limit = 10;
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		if (page <= 0) {
+			page = 1;
+		}
+		mv.addObject("limit", limit);
+		mv.addObject("page", page);
+		List<Course> courseList = courseService.getTheCourseListByUserId(userId, 0, -1);
+		mv.addObject("courseList", courseList);
+		List<Interactive> interactiveList = interactiveService.getInteractiveByUserId(userId, limit, (page - 1) * limit);
+		mv.addObject("interactiveList", interactiveList);
+
+		int totalCount = interactiveService.getInteractiveCountByUserId(userId);
+		if (totalCount % limit == 0) {
+			mv.addObject("totalCount", totalCount / limit);
+		} else {
+			mv.addObject("totalCount", totalCount / limit + 1);
+		}
+		this.setUD(mv, request);
+		return mv;
+	}
 }

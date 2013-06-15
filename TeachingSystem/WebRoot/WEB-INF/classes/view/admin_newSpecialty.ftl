@@ -48,6 +48,7 @@ body{min-width:1024px;min-height:600px}
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">专业名称</th>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">专业拼音</th>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">学期数</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">操作</th>
             </tr>
        </thead>
        <tbody  style="font-size: 16px;">
@@ -56,6 +57,7 @@ body{min-width:1024px;min-height:600px}
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${specialty.specialty!""}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${specialty.shortSpecialty!""}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${specialty.semesterCount!0}</th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newSpecialty_delete" data_id="${specialty.id!0}">删除</a></th>
             </tr>
             </#list>
        </tbody>

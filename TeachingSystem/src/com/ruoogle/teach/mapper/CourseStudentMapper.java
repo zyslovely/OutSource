@@ -18,6 +18,8 @@ public interface CourseStudentMapper {
 	 */
 	public List<CourseStudent> getCourseStudentsByCourseId(@Param(value = "courseId") long courseId);
 
+	public List<CourseStudent> getCourseTeacherByCourseId(@Param(value = "courseId") long courseId);
+
 	/**
 	 * 获取
 	 * 
@@ -56,4 +58,23 @@ public interface CourseStudentMapper {
 	 * @return
 	 */
 	public List<CourseStudent> getCourseListBySemesterStudentId(@Param(value = "semesterId") long semesterId, @Param(value = "userId") long userId);
+
+	/**
+	 * 课程列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public List<CourseStudent> getCourseListByUserId(@Param(value = "userId") long userId, @Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
+
+	/**
+	 * 删除课程
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @return
+	 */
+	public int deleteCourseStudentByCourse(@Param(value = "courseId") long courseId);
 }

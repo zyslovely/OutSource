@@ -63,18 +63,19 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and level=#{level} order by userId asc
+		WHERE classId=#{classId} and level=#{level}
+		order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
 		;
 	</select>
-	
+
 	<select id="getProfileListWithTeacher" resultType="Profile">
-	SELECT *
-	from
-	TB_Profile
-	WHERE level=1 or level=2 order by userId asc
+		SELECT *
+		from
+		TB_Profile
+		WHERE level=1 or level=2 order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -108,4 +109,17 @@
 	     </foreach>
 		;
 	</select>
+
+	<delete id="deleteProfileByClassId" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Profile
+		where classId=#{classId};
+	</delete>
+
+	<delete id="deleteProfileByUserId" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Profile
+		where userId=
+		#{userId};
+	</delete>
 </mapper>

@@ -30,6 +30,15 @@
 		desc ;
 	</select>
 
+	<select id="getCourseTeacherByCourseId" resultType="CourseStudent">
+		SELECT *
+		from
+		TB_Course_Student
+		WHERE courseId=#{courseId} and (type=1 or type=2)
+		order by id
+		desc ;
+	</select>
+
 	<select id="getCourseStudentsByUserId" resultType="CourseStudent">
 		SELECT *
 		from
@@ -71,4 +80,22 @@
 		WHERE userId=#{studentId} and
 		courseId=#{courseId}
 	</select>
+
+
+	<select id="getCourseListByUserId" resultType="CourseStudent">
+		SELECT
+		*
+		from
+		TB_Course_Student
+		WHERE userId=#{userId} order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
+	</select>
+	<delete id="deleteCourseStudentByCourse" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Course_Student
+		where courseId=#{courseId};
+	</delete>
 </mapper>

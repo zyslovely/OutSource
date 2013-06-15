@@ -22,7 +22,7 @@ body{min-width:1024px;min-height:600px}
            </ul>
            <ul style=" height: 60px;">
               <li style="float:left;width:200px;">
-                 <div class="select-wrapper wide">
+                 <div class="select-wrapper wide" style="margin-top: 11px;">
                           <select class="select-receiver" id="newClass_Create_Specialty" name="receiver" onChange="newSpecialtyCreateClassChange(this);return;">
                              <#if specialtyId <0>
                                 <option value="0" selected="selected"></option>
@@ -58,6 +58,7 @@ body{min-width:1024px;min-height:600px}
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">班级</th>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">学期数量</th>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">学生数量</th>
+                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">操作</th>
             </tr>
        </thead>
        <tbody style="font-size: 16px;">
@@ -66,7 +67,8 @@ body{min-width:1024px;min-height:600px}
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.name!""}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
-            </tr>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newClass_delete" data_id="${class.id!0}">删除</a></th>
+             </tr>
             </#list>
        </tbody>
    </table> 

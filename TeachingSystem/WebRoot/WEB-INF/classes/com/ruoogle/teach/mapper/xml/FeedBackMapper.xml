@@ -52,6 +52,34 @@
 		TB_FeedBack
 		WHERE toUserId=#{toUserId} and status=1;
 	</select>
+
+	<select id="getFeedBacksByFromUserId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE (toUserId=#{toUserId} and
+		fromUserId=#{fromUserId}) or (toUserId=#{fromUserId} and
+		fromUserId=#{toUserId}) 
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+		;
+	</select>
+
+	<select id="getFeedBacksByCourseId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE toUserId=#{toUserId} and
+		courseId=#{courseId}
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+		;
+	</select>
+
 	<update id="updateFeedBackReaded" flushCache="true"
 		statementType="PREPARED">
 		UPDATE

@@ -12,8 +12,17 @@ $("#newClass_Create").click(function(){
      });
 });
 
-function newSpecialtyCreateClassChange(opt){
+function newSpecialtyCreateClassChange(obj,val){
 	
-	_specialtyId=$(opt).val();
-	location.href="/teach/admin/class/list/?specialtyId="+_specialtyId;
+
+	location.href="/teach/admin/class/list/?specialtyId="+val;
 };
+
+$(".admin_newClass_delete").click(function(){
+    _classId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteClass',_classId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});

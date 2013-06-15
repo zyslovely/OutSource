@@ -91,4 +91,36 @@ public class DwrTeachSysAdminBean {
 				.asList(percents)));
 	}
 
+	/**
+	 * 删除专业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSpecialty(long id) {
+		return classService.deleteSpecialty(id);
+	}
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public boolean deleteClass(long classId) {
+		return classService.deleteClass(classId);
+	}
+
+	public boolean deleteUser(long userId) {
+		return classService.deleteProfile(userId);
+	}
+
+	public boolean deleteCourseType(long demoId) {
+		return classService.deleteCourseType(demoId);
+	}
+
+	public boolean deleteCourse(long courseId) {
+		return courseService.deleteCourseById(courseId);
+	}
 }

@@ -1,8 +1,8 @@
-<div style="background: url('/img/teachCreate/nav_bg.png') repeat scroll center top transparent; height: 122px;">
+<div style="background: url('/img/teachCreate/nav_bg.png') repeat scroll center top transparent; <#if pageName!="interactive">height: 122px;<#else>height: 80px;</#if>">
 <div >
    <div style=" margin: auto;width: 1024px;">
    <div style="margin-left: 5%; margin-top: 23px; width: 40%; float: left;">
-       <img src="/img/webIndex/logo.png"/>
+       <a href="/"><img src="/img/webIndex/logo.png"/></a>
    </div>
    <div style="float: right;  margin-top: 23px;height:52px;">
        <ul style="width:350px;">
@@ -32,6 +32,7 @@
        </ul>
    </div>
    </div>
+   <#if pageName!="interactive">
    <div style="display: inline-block; width: 100%; background-color: rgb(51, 133, 210); height: 39px; margin-top: 9px;">
      <div style="width:1024px;margin:auto;">
      <ul style="margin-left:5%;">
@@ -70,5 +71,29 @@
      </ul>
      </div>
    </div>
+   <#else>
+    <div style="display: inline-block; width: 100%; background-color: rgb(51, 133, 210); height: 230px; ">
+     <div style="width:600px;margin:auto;">
+         <p style="margin: 10px 0px; font-size: 18px;">师生互动</p>
+         <textarea id="interactive_send_text" rows="3" cols="80" style="width: 600px; height: 130px; overflow-x: hidden; overflow-y: auto; border-style: none; border-width: 0px; word-wrap: break-word;"></textarea>
+         <div>
+             <div style="width:100px;height:30px;float:left;">
+                 <#if courseList?exists>
+                 <select  id="interactive_send_select"">
+                   <#list courseList as course>
+                       <option value="${course.id!0}" <#if course_index == 0>selected="selected"</#if>>${course.name!""}</option>
+                   </#list>
+                 </select>
+             </#if>
+             </div>
+             <div class="w-filebtn" style="float:right;width: 200px;cursor: pointer;">
+                 <a class="w-btn" id="interactive_send" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;" href="javascript:void(0);;">下载名单模版</a>
+             </div>
+             
+         </div>
+         
+     </div>
+    </div>
+   </#if>
 </div>
 </div>

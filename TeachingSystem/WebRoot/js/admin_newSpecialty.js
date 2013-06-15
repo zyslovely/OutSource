@@ -1,7 +1,7 @@
 $("#newSpecialty_Create").click(function(){
      name=$("#newSpecialty_Name").val();
      shortName=$("#newSpecialty_ShortName").val();
-     dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'addSpecialty',name,shortName,4,submitCB);
+     dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'addSpecialty',name,shortName,6,submitCB);
 });
 
 function submitCB(flag){
@@ -10,3 +10,13 @@ function submitCB(flag){
 		location.href=location.href;
 	});
 };
+
+$(".admin_newSpecialty_delete").click(function(){
+	
+	_specialtyId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteSpecialty',_specialtyId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});

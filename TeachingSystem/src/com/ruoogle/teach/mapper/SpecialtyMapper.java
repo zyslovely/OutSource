@@ -18,4 +18,11 @@ public interface SpecialtyMapper {
 	 * @return
 	 */
 	public List<Specialty> getSpecialties();
+	/**
+	 * 删除
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public int deleteSpecialty(@Param(value = "id") long id);
 }

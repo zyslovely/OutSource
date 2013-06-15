@@ -1,5 +1,9 @@
 package com.ruoogle.teach.service;
 
+import java.util.List;
+
+import com.ruoogle.teach.meta.Interactive;
+
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
  * @version CreateTime：2013-5-25 下午05:55:25
@@ -17,4 +21,8 @@ public interface InteractiveService {
 	 * @return
 	 */
 	public boolean addInteractive(long userId, String content, long courseId, int status, String photoUrl, long forwardId);
+
+	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset);
+
+	public int getInteractiveCountByUserId(long userId);
 }

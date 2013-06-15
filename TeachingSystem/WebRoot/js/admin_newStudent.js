@@ -3,19 +3,12 @@ $("#newStudent_download").click(function(){
 	
 });
 
-function newStudentCreateSpecialtyChange(opt){
+function newStudentCreateSpecialtyChange(obj,val){
 	
-	_specialtyId=$(opt).val();
-	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'getList',_specialtyId,function submitCBClassList(_list){
-		$("#newStudent_Class_list").empty();
-		$("#newStudent_Class_list").append("<option value='0'></option>");
-		for(var i=0;i<_list.length;i++){
-			$("#newStudent_Class_list").append("<option value="+_list[i].id+">"+_list[i].name+"</option>");
-		}
-	});
+	location.href="/teach/admin/student/list/?specialtyId="+val;
 };
 
-function newStudentCreateClassChange(opt){
+function newStudentCreateClassChange(obj,val){
 	_classId=$("#newStudent_Class_list").val();
 	_specialtyId=$("#newStudent_Specialty_list").val();
 	location.href="/teach/admin/student/list/?classId="+_classId+"&specialtyId="+_specialtyId;
@@ -43,5 +36,15 @@ function newfileChange(opt){
      });
      return false;
 };
+
+$(".admin_newStudent_delete").click(function(){
+	_studentId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteUser',_studentId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});
+
 
 

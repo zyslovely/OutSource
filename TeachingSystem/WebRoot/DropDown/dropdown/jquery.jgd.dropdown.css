@@ -1,0 +1,112 @@
+/* basic examples */
+.jgd-dropdown dd, .jgd-dropdown dt, .jgd-dropdown ul {
+	margin: 0;
+	padding: 0;
+}
+.jgd-dropdown dd {
+	position: relative;
+}
+.jgd-dropdown a, .jgd-dropdown a:visited {
+	color: #696969;
+	text-decoration: none;
+	outline: none;
+}
+.jgd-dropdown a:hover {
+	color: #696969;
+}
+.jgd-dropdown dt a:hover {
+	color: #696969;
+	border: 1px solid #a9a9a9;
+}
+.jgd-dropdown dt {
+	background: #ffffff url(/DropDown/dropdown/gfx/arrow.png) no-repeat right center;
+	width: 220px;
+}
+.jgd-dropdown dt a {
+	display: block;
+	padding-right: 20px;
+	border: 1px solid #a9a9a9;
+	width: 210px;
+	padding: 7px;
+}
+.jgd-dropdown dt a span {
+	cursor: pointer;
+	display: block;
+}
+.jgd-dropdown dd ul {
+	background-color: #ffffff;
+	border: 1px solid #a9a9a9;
+	color: #696969;
+	display: none;
+	z-index: 1000;
+	left: 0;
+	padding: 0;
+	position: absolute;
+	top: 2px;
+	width: 224px;
+	list-style: none;
+}
+.jgd-dropdown span.value {
+	display: none;
+}
+.jgd-dropdown dd ul li a {
+	padding: 5px;
+	display: block;
+}
+.jgd-dropdown dd ul li.hide_selected {
+	display: none;
+}
+.jgd-dropdown dd ul li.item-odd a {
+	background-color: #f5f5f5;
+}
+.jgd-dropdown dd ul li.item-even a {
+	background-color: #fafafa;
+}
+.jgd-dropdown dd ul li a:hover {
+	text-decoration: underline;
+	color: #222222;
+}
+
+/* countries expansion */
+.jgd-dropdown.jgd-countries dt {
+	width: 244px;
+}
+.jgd-dropdown.jgd-countries dt a {
+	padding: 4px 4px 4px 32px;
+	font-weight:bold;
+}
+.jgd-dropdown.jgd-countries dd ul {
+	width: 246px;
+}
+.jgd-dropdown.jgd-countries .flag a {
+	padding: 4px 4px 4px 32px;
+	background-image: url(gfx/countries.png);
+	background-repeat: no-repeat;
+	background-position: -24px 0px;
+	font-size:0.9em;
+	line-height:18px;
+}
+.jgd-dropdown.jgd-countries .flag.BR a {
+	background-position: 0 0;
+}
+.jgd-dropdown.jgd-countries .flag.FR a {
+	background-position: 0px -24px ;
+}
+.jgd-dropdown.jgd-countries .flag.DE a {
+	background-position: 0px -48px;
+}
+.jgd-dropdown.jgd-countries .flag.IN a {
+	background-position: 0px -72px;
+}
+.jgd-dropdown.jgd-countries .flag.JP a {
+	background-position: 0px -96px;
+}
+.jgd-dropdown.jgd-countries .flag.RS a {
+	background-position: 0px -120px;
+}
+.jgd-dropdown.jgd-countries .flag.UK a {
+	background-position: 0px -144px;
+}
+.jgd-dropdown.jgd-countries .flag.US a {
+	background-position: 0px -168px;
+}

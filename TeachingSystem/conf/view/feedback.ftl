@@ -21,7 +21,7 @@ body{min-width:1024px;min-height:600px}
        
        <li style="margin: auto; width: 660px; border-bottom: 1px solid rgb(224, 224, 224); min-height: 120px; display: block;">
           <div style="margin:10px 0 0px;min-height:38px;">
-             <p style="width: 100px; font-size: 25px; display: inline;color: rgb(123, 123, 123);">${feedback.fromName!""}</p>
+             <p style="width: 100px; font-size: 25px; display: inline;color: rgb(123, 123, 123);"><a style="color: rgb(94, 94, 94);" href="/teach/feedback/?fromUserId=${feedback.fromUserId!0}">${feedback.fromName!""}</a></p>
              <p style="float: right; margin-top: 10px;color: rgb(123, 123, 123);">${feedback.createTimeStr!""}</p>
           </div>
           <div style="min-height:62px;">
@@ -29,7 +29,7 @@ body{min-width:1024px;min-height:600px}
           </div>
           <div style="min-height:20px;">
              <#if feedback.course?exists>
-             <p style="display: inline;"><a href="/teach/course/${feedback.course.id!0}/">来自${feedback.course.name!""}</a></p>
+             <p style="display: inline;"><a  href="/teach/feedback/?courseId=${feedback.course.id!0}">来自${feedback.course.name!""}</a></p>
              </#if>
              <p style="float: right; margin-right: 25px;"><a onClick="feedbackBackClick(${feedback.id!0},${feedback.course.id!0},${feedback.fromUserId!0});return;" href="javascript:void(0);;"">回复</a></p>
           </div>

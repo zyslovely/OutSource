@@ -72,6 +72,16 @@ public class FeedBackServiceImpl implements FeedBackService {
 		if (ListUtils.isEmptyList(feedBacks)) {
 			return null;
 		}
+		this.insertInfoForFeedback(feedBacks);
+		return feedBacks;
+	}
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param feedBacks
+	 */
+	private void insertInfoForFeedback(List<FeedBack> feedBacks) {
 		List<Long> ids = new ArrayList<Long>();
 		List<Long> courseIds = new ArrayList<Long>();
 		for (FeedBack feedBack : feedBacks) {
@@ -100,7 +110,6 @@ public class FeedBackServiceImpl implements FeedBackService {
 			}
 
 		}
-		return feedBacks;
 	}
 
 	/*
@@ -111,5 +120,39 @@ public class FeedBackServiceImpl implements FeedBackService {
 	@Override
 	public boolean updateFeedBackReaded(long feedbackId) {
 		return feedBackMapper.updateFeedBackReaded(feedbackId) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.FeedBackService#getFeedBackListFromUserId(long,
+	 * int, int)
+	 */
+	@Override
+	public List<FeedBack> getFeedBackListFromUserId(long fromUserId, int limit, int offset, long toUserId) {
+		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByFromUserId(limit, offset, fromUserId, toUserId);
+		if (ListUtils.isEmptyList(feedBacks)) {
+			return null;
+		}
+		this.insertInfoForFeedback(feedBacks);
+		return feedBacks;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.FeedBackService#getFeedBackListCourseId(long,
+	 * int, int, long)
+	 */
+	@Override
+	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit, int offset, long toUserId) {
+		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByCourseId(limit, offset, courseId, toUserId);
+		if (ListUtils.isEmptyList(feedBacks)) {
+			return null;
+		}
+		this.insertInfoForFeedback(feedBacks);
+		return feedBacks;
 	}
 }

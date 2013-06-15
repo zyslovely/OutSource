@@ -1,0 +1,32 @@
+.jgd-dropdown{
+	width:160px;
+	height:34px;
+}
+
+.jgd-dropdown dd ul {
+	background-color: #ffffff;
+	border: 1px solid #a9a9a9;
+	color: #696969;
+	display: none;
+	z-index: 1000;
+	left: 0;
+	padding: 0;
+	position: absolute;
+	top: 2px;
+	width: 160px;
+	list-style: none;
+}
+
+.jgd-dropdown dt a {
+	display: block;
+	padding-right: 20px;
+	border: 1px solid #a9a9a9;
+	width: 150px;
+	height:20px;
+	padding: 7px;
+}
+
+.jgd-dropdown dt {
+	background: #ffffff url(/DropDown/dropdown/gfx/arrow.png) no-repeat right center;
+	width: 150px;
+}

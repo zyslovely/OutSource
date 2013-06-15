@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>jGD DropDown</title>
+    <script type='text/javascript' src='../shared/jquery.js'></script>
+    <script type='text/javascript' src='../shared/syntaxhighlighter/shCore.js'></script>
+    <script type='text/javascript' src='jquery.jgd.dropdown.js'></script>
+    <link rel="stylesheet" type="text/css" href="../shared/style.css">
+    <link rel="stylesheet" type="text/css" href="jquery.jgd.dropdown.css">
+    <link rel="stylesheet" type="text/css" href="../shared/syntaxhighlighter/shCore.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="jquery.jgd.dropdown.ie.css">
+    <link rel="stylesheet" type="text/css" href="../shared/ie.css">
+    <![endif]-->
+</head>
+<body>
+<div class="wrapper">
+    <div id="header">
+        <h1>jGD DropDown</h1>
+    </div>
+    <div id="content">
+        <div class="example">
+            <h2>Example #1</h2>
+            <p>Simple example with default options for the dropdown.</p>
+            <pre class="brush: js">
+                $("select#example-01").jgdDropdown();
+            </pre>
+            <select id="example-01">
+                <option value="BR">Brasil</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="JP">Japan</option>
+                <option value="RS">Serbia</option>
+                <option value="UK">United Kingdom</option>
+                <option value="US">United States</option>
+            </select>
+        </div>
+        <div class="example">
+            <h2>Example #2</h2>
+            <p>Example with option to extend LI classes turned off, and preselected value Serbia.</p>
+            <pre class="brush: js">
+                $("select#example-02").jgdDropdown({
+                    clsLIExpand: false,
+                    selected: 'RS'
+                });
+            </pre>
+            <select id="example-02">
+                <option value="BR">Brasil</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="JP">Japan</option>
+                <option value="RS">Serbia</option>
+                <option value="UK">United Kingdom</option>
+                <option value="US">United States</option>
+            </select>
+        </div>
+        <div class="example">
+            <h2>Example #3</h2>
+            <p>Example setting initial title for the drop down and hiding select one from the drop down.</p>
+            <pre class="brush: js">
+                $("select#example-03").jgdDropdown({
+                    clsLIExpand: false,
+                    clsLISelected: 'hide_selected',
+                    initTitle: 'Select Country'
+                });
+            </pre>
+            <select id="example-03">
+                <option value="BR">Brasil</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="JP">Japan</option>
+                <option value="RS">Serbia</option>
+                <option value="UK">United Kingdom</option>
+                <option value="US">United States</option>
+            </select>
+        </div>
+        <div class="example">
+            <h2>Example #4</h2>
+            <p>Add flags to each of the element in the list with additional top level class control.</p>
+            <pre class="brush: js">
+                $("select#example-04").jgdDropdown({
+                    clsLIPrefix: 'flag ',
+                    cls: 'jgd-dropdown jgd-countries',
+                    selected: 'UK'
+                });
+            </pre>
+            <select id="example-04">
+                <option value="BR">Brasil</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="JP">Japan</option>
+                <option value="RS">Serbia</option>
+                <option value="UK">United Kingdom</option>
+                <option value="US">United States</option>
+            </select>
+        </div>
+    </div>
+    <div class="push"></div>
+</div>
+<div id="footer">
+    <div class="info">
+        <h2>jGD DropDown 0.4</h2>
+        <p>
+            <a target="_blank" href="http://www.dev4press.com/jquery/jgd-dropdown/">Homepage</a>
+            <a target="_blank" href="http://www.dev4press.com/jquery/jgd-dropdown/faq/">FAQ</a>
+            <a target="_blank" href="http://www.dev4press.com/jquery/jgd-dropdown/usage/">Usage</a>
+            <a target="_blank" href="http://www.dev4press.com/jquery/jgd-dropdown/changelog/">Changelog</a>
+            <a target="_blank" href="http://www.dev4press.com/downloads/jquery-downloads/">Download</a>
+            <a target="_blank" href="http://www.dev4press.com/jgd/dropdown/">Examples</a>
+        </p>
+    </div>
+    <div class="home">
+        <h2>jGD</h2>
+        <p>
+            <a target="_blank" href="http://www.dev4press.com/jquery/">Homepage</a>
+            <a target="_blank" href="http://www.dev4press.com/jquery-downloads/">Downloads</a>
+            <a target="_blank" href="http://www.dev4press.com/jgd/">Examples</a>
+        </p>
+    </div>
+    <div class="copyright">
+        <a target="_blank" href="http://www.dev4press.com/"><img src="../shared/logo.png" alt="Dev4Press" /></a>
+        <div class="line"></div>
+        &copy; 2008-2010. <a target="_blank" href="http://www.dev4press.com/">Dev4Press</a>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all();
+    $("select#example-01").jgdDropdown();
+    $("select#example-02").jgdDropdown({clsLIExpand: false, selected: 'RS'});
+    $("select#example-03").jgdDropdown({clsLIExpand: false, clsLISelected: 'hide_selected', initTitle: 'Select Country'});
+    $("select#example-04").jgdDropdown({clsLIPrefix: 'flag ', cls: 'jgd-dropdown jgd-countries', selected: 'UK'});
+</script>
+</body>
+</html>

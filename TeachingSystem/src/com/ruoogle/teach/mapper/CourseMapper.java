@@ -27,7 +27,6 @@ public interface CourseMapper {
 	 */
 	public int finishedCourse(@Param(value = "courseId") long courseId);
 	
-	
 
 	/**
 	 * 根据id获取列表
@@ -37,5 +36,14 @@ public interface CourseMapper {
 	 * @return
 	 */
 	public List<Course> getCourseListByIds(@Param(value = "list") List<Long> ids);
+
+	/**
+	 * 删除课程
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public int deleteCourse(@Param(value = "id") long id);
 
 }

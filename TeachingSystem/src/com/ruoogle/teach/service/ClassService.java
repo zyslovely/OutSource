@@ -121,4 +121,37 @@ public interface ClassService {
 	 */
 	public boolean updateClassStudentCount(long classId);
 
+	/**
+	 * 删除专业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSpecialty(long id);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public boolean deleteClass(long classId);
+
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public boolean deleteProfile(long userId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param demoId
+	 * @return
+	 */
+	public boolean deleteCourseType(long demoId);
 }

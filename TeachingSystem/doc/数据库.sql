@@ -200,6 +200,7 @@ CREATE TABLE `TB_FeedBack` (
 CREATE TABLE `TB_Interactive` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `showUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `forwardId` bigint(20) NOT NULL DEFAULT '0' COMMENT '转发id',

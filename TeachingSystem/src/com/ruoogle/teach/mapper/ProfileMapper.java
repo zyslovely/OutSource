@@ -93,4 +93,21 @@ public interface ProfileMapper {
 	 */
 	public List<Profile> getProfileListWithTeacher(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
+	/**
+	 * 删除用户信息通过classid
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public int deleteProfileByClassId(@Param(value = "classId") long classId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public int deleteProfileByUserId(@Param(value = "userId") long userId);
+
 }

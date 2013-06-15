@@ -15,8 +15,8 @@ public class Course implements Serializable {
 	public static final int VALID = 0;
 
 	public static final int FINISHED = 1;
-	
 
+	public static final int Deleted = 2;
 
 	public long getId() {
 		return id;

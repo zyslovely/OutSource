@@ -1,13 +1,26 @@
 package com.ruoogle.teach.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.HashMapMaker;
+import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.ClassMapper;
+import com.ruoogle.teach.mapper.CourseMapper;
+import com.ruoogle.teach.mapper.CourseStudentMapper;
 import com.ruoogle.teach.mapper.InteractiveMapper;
+import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.Interactive;
+import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.InteractiveService;
 
 /**
@@ -20,16 +33,144 @@ public class InteractiveServiceImpl implements InteractiveService {
 	@Resource
 	private InteractiveMapper interactiveMapper;
 
+	@Resource
+	private CourseStudentMapper courseStudentMapper;
+	@Resource
+	private ProfileMapper profileMapper;
+
+	@Resource
+	private CourseMapper courseMapper;
+
+	@Resource
+	private ClassMapper classMapper;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.InteractiveService#addInteractive(long,
+	 * java.lang.String, long, int, java.lang.String, long)
+	 */
 	@Override
 	public boolean addInteractive(long userId, String content, long courseId, int status, String photoUrl, long forwardId) {
+
+		Profile profile = profileMapper.getProfile(userId);
+		if (profile == null) {
+			return false;
+		}
+		if (profile.getLevel() == ProfileLevel.Teacher.getValue() || profile.getLevel() == ProfileLevel.CompanyLeader.getValue()) {
+			List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+			if (!ListUtils.isEmptyList(courseStudents)) {
+				for (CourseStudent courseStudent : courseStudents) {
+					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+				}
+			}
+			List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+			if (!ListUtils.isEmptyList(courseTeachers)) {
+				for (CourseStudent courseStudent : courseTeachers) {
+					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+				}
+			}
+			return true;
+		} else if (profile.getLevel() == ProfileLevel.Student.getValue()) {
+			Course course = courseMapper.getCourseById(courseId);
+			if (course != null) {
+				List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+				for (CourseStudent courseStudent : courseStudents) {
+					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+				}
+				List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+				if (!ListUtils.isEmptyList(courseTeachers)) {
+					for (CourseStudent courseStudent : courseTeachers) {
+						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+					}
+				}
+			} else {
+				List<Profile> profileList = profileMapper.getProfileByClassId(profile.getClassId(), ProfileLevel.Student.getValue(), 0, -1);
+				if (!ListUtils.isEmptyList(profileList)) {
+					for (Profile profile2 : profileList) {
+						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, profile2.getUserId());
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 添加一条
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param content
+	 * @param courseId
+	 * @param status
+	 * @param photoUrl
+	 * @param forwardId
+	 * @param userId
+	 * @param showUserId
+	 * @return
+	 */
+	private boolean addOneInteractive(String content, long courseId, int status, String photoUrl, long forwardId, long userId, long showUserId) {
 		Interactive interactive = new Interactive();
 		interactive.setUserId(userId);
 		interactive.setCourseId(courseId);
 		interactive.setCreateTime(new Date().getTime());
 		interactive.setForwardId(forwardId);
+		interactive.setShowUserId(showUserId);
 		interactive.setPhotoUrl(photoUrl);
 		interactive.setStatus(status);
 		interactive.setContent(content);
 		return interactiveMapper.addInteractive(interactive) > 0;
+	}
+
+	/**
+	 * 获取
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset) {
+
+		List<Interactive> interactives = interactiveMapper.getInteractiveListByShowUserId(userId, limit, offset);
+		if (ListUtils.isEmptyList(interactives)) {
+			return null;
+		}
+		List<Long> ids = new ArrayList<Long>();
+		List<Long> courseIds = new ArrayList<Long>();
+		for (Interactive interactive : interactives) {
+			ids.add(interactive.getUserId());
+			courseIds.add(interactive.getCourseId());
+		}
+		List<Profile> profiles = profileMapper.getProfileListByIds(ids);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profiles, "getUserId", Profile.class);
+		List<Course> courseList = courseMapper.getCourseListByIds(courseIds);
+		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList, "getId", Course.class);
+		for (Interactive interactive : interactives) {
+			Profile profile = profileMap.get(interactive.getUserId());
+			if (profile != null) {
+				interactive.setName(profile.getName());
+			}
+			if (interactive.getCourseId() != 0) {
+				Course course = courseMap.get(interactive.getCourseId());
+				if (course != null) {
+					interactive.setCourseName(course.getName());
+				}
+			}
+		}
+		return interactives;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.InteractiveService#getInteractiveCountByUserId
+	 * (long)
+	 */
+	public int getInteractiveCountByUserId(long userId) {
+		return interactiveMapper.getInteractieTotalCount(userId);
 	}
 }
