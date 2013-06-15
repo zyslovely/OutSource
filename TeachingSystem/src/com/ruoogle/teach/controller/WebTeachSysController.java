@@ -29,6 +29,7 @@ import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
+import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MySecurityDelegatingFilter;
@@ -324,7 +325,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		List<FeedBack> feedBacks;
 		if (fromuserId > 0) {
 			feedBacks = feedBackService.getFeedBackListFromUserId(fromuserId, limit, offset, userId);
-			
+
 		} else if (courseId > 0) {
 			feedBacks = feedBackService.getFeedBackListCourseId(courseId, limit, offset, userId);
 		} else {
@@ -340,7 +341,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("feedbacks", feedBacks);
 		this.setUD(mv, request);
 		return mv;
-		
+
 	}
 
 	/**
@@ -421,4 +422,37 @@ public class WebTeachSysController extends AbstractBaseController {
 		this.setUD(mv, request);
 		return mv;
 	}
+
+	/**
+	 * 显示搜索
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSearch(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("CourseSearch");
+		Long userId = MyUser.getMyUser(request);
+
+		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
+		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
+		mv.addObject("specialtyId", specialtyId);
+		if (specialtyId > 0) {
+			List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
+			mv.addObject("classList", classList);
+		}
+
+		if (classId > 0) {
+			com.ruoogle.teach.meta.Class class1 = classService.getClassById(classId);
+			mv.addObject("class1", class1);
+		}
+		List<Specialty> specialties = classService.getSpecialties();
+		mv.addObject("specialties", specialties);
+
+		this.setUD(mv, request);
+		return mv;
+	}
+
 }

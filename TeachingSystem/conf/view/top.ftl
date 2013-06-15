@@ -27,7 +27,7 @@
           <span style="color: white;">|<span>
           </li>
           <li style="float: left; width: 80px; text-align: center;">
-             <a href="/help/" style="color: white;">帮助</a>
+             <a href="/teach/search/" style="color: white;">搜索</a>
           </li>
        </ul>
    </div>

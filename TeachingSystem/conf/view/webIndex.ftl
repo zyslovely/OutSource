@@ -10,17 +10,17 @@ if(${error!0}==1){
 </script>
 <body style="background:url('/img/webIndex/bg.png') repeat scroll center top transparent">
    <div style="background-color:white;">
-   <div style="height: 95px; width: 980px; margin: auto;">
-       <div style="margin-left: 5%; padding-top: 33px;">
+   <div style="height: 60px; width: 980px; margin: auto;">
+       <div style=" padding-top: 10px;">
            <img src="/img/webIndex/logo.png"/>
        </div>
    </div>
    </div>
    <section style="width:1024px; margin: auto;">
-       <div style="padding-top: 20px; padding-left: 5%;">
+       <div style="padding-top: 20px; ">
           <p style="color: rgb(95, 95, 95); font-size: 22px; font-weight: bold;">数字媒体技术应用专业学业评价系统</p>
        </div>
-       <div style="margin-left: 5%; margin-top: 26px;">
+       <div style=" margin-top: 26px;">
           <div style="float:left;width: 615px; height: 398px; background: url('/img/webIndex/pic_bg.png') no-repeat scroll center top transparent; ">
               <ul style="height: 387px; width: 605px; margin-left: 5px; margin-top: 5px;">
                  <li id="img_1" style="position: absolute;"> 
@@ -58,6 +58,7 @@ if(${error!0}==1){
           </div>
        </div>
    </section>
+   
 </body>
 </html>
 </#escape>		
