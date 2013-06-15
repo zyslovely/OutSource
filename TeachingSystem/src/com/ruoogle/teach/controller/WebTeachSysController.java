@@ -133,7 +133,7 @@ public class WebTeachSysController extends AbstractBaseController {
 	 * @return
 	 */
 	public ModelAndView teachCreate(HttpServletRequest request, HttpServletResponse response) {
-		ModelAndView mv = new ModelAndView("teachCreate");
+		ModelAndView mv = new ModelAndView("TeachCreate");
 
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);

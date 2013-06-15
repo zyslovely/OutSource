@@ -14,8 +14,9 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
-   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
-       <img src="/img/newCourseType/courseType.png" style="width:195px;height:193px;"/>
+   
+   <div id="newCourseType" style="float:left;margin-left:5%;height:160px;margin-top: 30px;">
+       <img src="/img/newCourseType/courseType.png" style="width:160px;height:160px;"/>
    </div>
    <#if coursePercentTypeDemos?exists>
    <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-left: 80px; width: 600px; margin-top: 20px; font-size: 20px;">

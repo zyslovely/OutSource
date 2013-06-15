@@ -39,10 +39,11 @@ body{min-width:1024px;min-height:600px}
        
    </div> 
    <div style="width: 1024px; margin: auto;">
-   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
-       <img src="/img/newSpecialty/specialty.png" style="width:195px;height:193px;"/>
-   </div>
    <#if specialties?exists>
+   <div style="float:left;margin-left:5%;height:160px;margin-top: 30px;">
+       <img src="/img/newSpecialty/specialty.png" style="width:160px;height:160px;"/>
+   </div>
+   
    <table cellspacing="0" style="float: left; margin-left: 80px; width: 500px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
        <thead style="height:60px;">
             <tr>

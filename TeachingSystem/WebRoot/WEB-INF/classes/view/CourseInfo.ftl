@@ -24,7 +24,7 @@ body{min-width:1024px;min-height:600px}
            <a class="w-btn" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;width:180px; float: right;" href="/teach/course/${courseId!0}/group/create/">编辑分组</a>
            </#if>
            <#if course.status==0&&course.teacherId==visitUserId>
-           <a id="courseInfo_endCourse" data_id="${course.id!0}" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;width:180px; float: right;" href="javascript:void(0);;">结束课程</a>
+           <a class="w-btn" id="courseInfo_endCourse" data_id="${course.id!0}" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;width:180px; float: right;" href="javascript:void(0);;">结束课程</a>
            </#if>
        </div>
        <div style="border-bottom: 1px solid rgb(224, 224, 224); min-height: 64px;">

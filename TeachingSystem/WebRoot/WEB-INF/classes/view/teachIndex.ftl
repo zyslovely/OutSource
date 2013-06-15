@@ -19,8 +19,8 @@ canvas {border:1px solid #4c4c4c;}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
-   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
-       <img src="/img/teachCreate/pic_list.png" style="width:195px;height:193px;"/>
+   <div style="float:left;margin-left:5%;height:160px;margin-top: 30px;">
+       <img src="/img/teachCreate/pic_list.png" style="width:160px;height:160px;"/>
    </div>
    <#if courseList?exists>
    <div style="float: left; width: 600px; margin-top: 20px; margin-left: 60px;">

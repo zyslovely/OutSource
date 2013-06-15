@@ -55,10 +55,10 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newSpecialty");
 		List<Specialty> specialties = classService.getSpecialties();
-		if(!ListUtils.isEmptyList(specialties)){
+		if (!ListUtils.isEmptyList(specialties)) {
 			mv.addObject("specialties", specialties);
 		}
-		
+
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -81,7 +81,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		mv.addObject("specialtyId", specialtyId);
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
 
-		mv.addObject("classList", classList);
+		if (!ListUtils.isEmptyList(classList)) {
+			mv.addObject("classList", classList);
+		}
 		List<Specialty> specialties = classService.getSpecialties();
 		mv.addObject("specialties", specialties);
 		this.setUD(mv, request);
@@ -100,8 +102,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
-		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-
+		if (!ListUtils.isEmptyList(coursePercentTypeDemos)) {
+			mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
+		}
 		this.setUD(mv, request);
 		return mv;
 	}
