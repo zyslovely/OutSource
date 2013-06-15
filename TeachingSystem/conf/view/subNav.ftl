@@ -49,9 +49,11 @@
      </div>
  
      <#elseif pageName="teachIndex">
-      <div style="float: left;  margin-top: 36px; width: 200px;">
+      <div style="float: right;  margin-top: 36px; width: 400px;">
+           <p style="float: left; font-size: 16px; line-height: 37px; margin-right: 15px;">选择学期:</p>
+           <div style="float:left;">
            <#if semesters?exists>
-           <select id="teachIndex_semester_select"">
+           <select id="teachIndex_semester_select">
                  <option value="-1"></option>
              
                  <#list semesters as semester>
@@ -59,6 +61,7 @@
                  </#list>
            </select>  
            </#if>
+           </div>
       </div>
       <#elseif pageName="newTeacher">
       <div style="float: left; margin-left: 30%; margin-top: 15px; width: 200px;">

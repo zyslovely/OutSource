@@ -14,7 +14,7 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="height: 105px; border-bottom: 1px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
-       <div style="width: 800px; margin: auto;">
+       <div style="width: 800px;  margin-left: 5%;">
            <ul style="height:30px;">
               <li style="float:left;width:200px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">选择专业:</p></li>
               <li style="float:left;width:300px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">输入班级名称:</p></li>

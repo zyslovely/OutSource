@@ -14,7 +14,7 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="height: 105px; border-bottom: 1px solid rgb(224, 224, 224); width: 1024px; margin: 15px auto 0px;">
-       <div style="margin-left: 10%;">
+       <div style="margin-left: 5%;">
            <ul style="height:30px;width:100%;">
               <li style="float:left;width:300px;"><p style="font-size: 18px; padding-left: 7px;color: rgb(106, 106, 106);">专业名称:</p></li>
               <li style="float:left;width:300px;"><p style="font-size: 18px; padding-left: 7px;color: rgb(106, 106, 106);">专业名称缩写:</p></li>

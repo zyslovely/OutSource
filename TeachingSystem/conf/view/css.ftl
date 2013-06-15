@@ -45,7 +45,7 @@
     	<#break>
     	<#case "teachCreate"> 
     	     
-    	     <link type="text/css" rel="stylesheet" href="/css/teachIndex.css"/>
+    	     <link type="text/css" rel="stylesheet" href="/css/teachCreate.css"/>
     	<#break>
     	<#case "interactive"> 
     	

@@ -13,16 +13,22 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
-   <div style="float:left;margin-left:5%;height:193px;margin-top: 30px;">
-       <img src="/img/teachCreate/create_pic.png" style="width:195px;height:193px;"/>
+   <div style="float:left;margin-left:5%;height:160px;margin-top: 30px;">
+       <img src="/img/teachCreate/create_pic.png" style="width:160px;height:160px;"/>
    </div>
        <table style="float: left;  margin-top: 20px; margin-left: 40px;">
-            <tbody>
-                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程名称*</th><th ><input type="text" style="width: 250px;" id="course_name"/></th></tr>
-                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程类别选择*</th >
+            <tbody cellSpacing="3px">
+                 <tr >
+                    <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">课程名称*</th><th >
+                       <div style="background: url('/img/teachCreate/input_bg_create.png') no-repeat scroll center top transparent; width: 250px; ">
+                       <input type="text" style="width: 250px;border: 0px none; height: 34px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 10px; font-size: 20px;" id="course_name"/>
+                       </div>
+                    </th>
+                 </tr>
+                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">课程类别选择*</th >
                     <th>
-                       <div style="width: 160px; margin: auto;">
-                       <select  style="width: 200px;" id="demoselector">
+                       <div style="width:252px;">
+                       <select  style="" id="demoselector" style="margin:auto;">
                            <option value=""></option>
                            <#list coursePercentTypeDemos as demo>
                            <option value="${demo.id!""}">${demo.name!""}</option>
@@ -32,10 +38,10 @@ body{min-width:1024px;min-height:600px}
                     </th>
                  </tr>
                  <tr>
-                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;">选择学期*</th>
+                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">选择学期*</th>
                      <th>
-                        <div style="width: 160px; margin: auto;">
-                        <select style="width: 200px;" id="semester_selector">
+                        <div style="width:252px;">
+                        <select style="" id="semester_selector">
                            <#list semesters as semester>
                            <option value="${semester.id!0}">${semester.name!""}</option>
                            </#list>
@@ -44,10 +50,10 @@ body{min-width:1024px;min-height:600px}
                      </th>
                  </tr>
                  <tr>
-                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;">选择班级*</th>
+                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">选择班级*</th>
                      <th>
-                        <div style="width: 160px; margin: auto;">
-                        <select style="width: 200px;" id="class_selector">
+                        <div style="width:252px;">
+                        <select style="" id="class_selector">
                            <#list classList as class>
                            <option value="${class.id!0}">${class.name!""}</option>
                            </#list>
@@ -55,7 +61,7 @@ body{min-width:1024px;min-height:600px}
                        </div>
                      </th>
                  </tr>
-                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">评分标准*</th>
+                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">评分标准*</th>
                      <th>
                         <#if coursePercentTypeDemos?exists>
                         <#list coursePercentTypeDemos as demo>
@@ -63,7 +69,7 @@ body{min-width:1024px;min-height:600px}
                             <#if demo.coursePercentTypes?exists>
                             <#list demo.coursePercentTypes as type>
                             <li class="clearfix coursePercentTypes_biaozhun_li_${demo.id!0}" style="width:100%"  data_type_id="${type.getValue()!0}">
-                               <p style="margin-right:10px;float:left;width:150px;">${type.getName()!""}</p>
+                               <p style="text-align: left;margin-right:10px;float:left;width:150px;">${type.getName()!""}</p>
                                <div style="float:left;">
                                     <#if demo.percents?exists>
                                     <#list demo.percents as percent>
@@ -97,13 +103,14 @@ body{min-width:1024px;min-height:600px}
                         </#if>
                      </th>
                  </tr>
-                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">相关属性标准*</th>
+                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">相关属性标准*</th>
                      <th>
                         <#list coursePercentTypeDemos as demo>
                         <div style="display:none;" class="coursePercentTypeDemos_property_ul" id="coursePercentTypeDemos_property_${demo.id!0}">
                             <#list demo.coursePercentTypes as type>
                             <ul style="margin: 5px 0; height:20px;" class="coursePercentTypes_shuxing_li_${demo.id!0}" data_type_id="${type.getValue()!0}">
-                                   <li style="float:left"><p style="margin-right:10px;width:150px;">${type.getName()!""}</p></li>
+                                   <li style="float:left">
+                                   <p style="color: rgb(139, 139, 139);margin-right:10px;width:150px;text-align: left;">${type.getName()!""}</p></li>
                                    <#list courseProperties as property>
                                         <li style="float:left;margin:0 2px;"><input type="checkbox" style="height:13px;" class="coursePercentTypes_shuxing_checkbox_${demo.id!0}_${type.getValue()!0}" data_property_id="${property.id}"/>${property.name!""}</li>
                                    </#list>
@@ -113,7 +120,7 @@ body{min-width:1024px;min-height:600px}
                         </#list>
                      </th>
                  </tr>
-                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;">课程描述</th><th ><textarea id="desc_textarea" rows="3" cols="80" style="width: 250px;height:100px;"></textarea></th></tr>
+                 <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);">课程描述</th><th ><div style="width: 250px;"><textarea id="desc_textarea" rows="3" cols="80" style="width: 250px;height:100px;"></textarea></div></th></tr>
                  
             </tbody>
        </table>
