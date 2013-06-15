@@ -55,7 +55,10 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newSpecialty");
 		List<Specialty> specialties = classService.getSpecialties();
-		mv.addObject("specialties", specialties);
+		if(!ListUtils.isEmptyList(specialties)){
+			mv.addObject("specialties", specialties);
+		}
+		
 		this.setUD(mv, request);
 		return mv;
 	}
