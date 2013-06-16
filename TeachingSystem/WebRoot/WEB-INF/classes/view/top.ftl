@@ -98,9 +98,9 @@
          <textarea id="interactive_send_text" rows="3" cols="80" style="font-size:20px;resize:none;width: 600px; height: 130px; overflow-x: hidden; overflow-y: auto; border-style: none; border-width: 0px; word-wrap: break-word;"></textarea>
          <div>
              <p style="color: white; float: left; margin-top: 18px; width: 54px;">选择课程:</p>
-             <div style="width: 110px; height: 30px; float: left; margin-top: 15px; margin-left: 9px;">
+             <div style="width: 140px; height: 30px; float: left; margin-top: 15px; margin-left: 9px;">
                  <#if courseList?exists>
-                 <select style="float:right" id="interactive_send_select"">
+                 <select style="float:right" id="interactive_send_select" >
                    <#list courseList as course>
                        <option value="${course.id!0}" <#if course_index == 0>selected="selected"</#if>>${course.name!""}</option>
                    </#list>

@@ -50,7 +50,7 @@
     	<#case "interactive"> 
     	
     	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
-    	      <link type="text/css" rel="stylesheet" href="/css/CourseInfo.css"/>
+    	      <link type="text/css" rel="stylesheet" href="/css/interactive.css"/>
     	<#break>
     	<#case "courseSearch"> 
     	
