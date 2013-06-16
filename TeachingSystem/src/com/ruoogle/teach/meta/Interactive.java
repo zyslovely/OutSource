@@ -16,6 +16,8 @@ public class Interactive implements Serializable {
 	private long showUserId;
 	private String name;
 
+	private String forwardFromStr;
+
 	private String courseName;
 
 	public String getName() {
@@ -104,6 +106,14 @@ public class Interactive implements Serializable {
 
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+
+	public String getForwardFromStr() {
+		return forwardFromStr;
+	}
+
+	public void setForwardFromStr(String forwardFromStr) {
+		this.forwardFromStr = forwardFromStr;
 	}
 
 }

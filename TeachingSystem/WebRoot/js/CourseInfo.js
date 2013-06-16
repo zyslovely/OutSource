@@ -16,3 +16,23 @@ $("#courseInfo_endCourse").click(function(){
 		}
 	});
 });
+
+function feedbackClick(courseId){
+
+jHtml("<div style='width:400px;height:228px;'><textarea id='textarea_"+courseId+"' style='width:400px;height:200px;' rows='3' cols='100' value='反馈内容'></textarea><input type='button' style='float: right;' value='确定' onClick='backClick("+courseId+")'/></div>","反馈内容","600","228");
+};
+
+function backClick(_courseId){
+	
+	_contentOpt= $("#textarea_"+_courseId);
+	if(_contentOpt.val()==''){
+		return;
+	}
+	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysBean', 'addFeedBack',0,0,_contentOpt.val(),_courseId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+	
+	
+};

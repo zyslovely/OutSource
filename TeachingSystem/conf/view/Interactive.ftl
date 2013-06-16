@@ -21,7 +21,9 @@ body{min-width:1024px;min-height:600px}
                 <p style="word-wrap:break-word; word-break:normal;font-size:13px;color: rgb(123, 123, 123);">${interactive.content!""}</p>
                 <div style="margin-top: 5px;">
                     <#if interactive.courseName?exists><a href="" style="">课程:${interactive.courseName!""}</a></#if>
-                    <a href="" style="float: right; margin-right: 28px;">评论</a>
+                    <#if interactive.forwardFromStr?exists><span>${interactive.forwardFromStr!""}</span></#if>
+                    <a href="javascript:void(0);;" onClick="back(${interactive.id!0});return;" style="float: right; margin-right: 28px;">回复</a>
+                    <a href="javascript:void(0);;" onClick="forward(${interactive.id!0});return;" style="float: right; margin-right: 28px;">转发</a>
                 </div>
              </li>
         </#list>

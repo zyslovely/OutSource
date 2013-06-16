@@ -92,6 +92,28 @@ public class DwrTeachSysAdminBean {
 	}
 
 	/**
+	 * 新建学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param name
+	 * @return
+	 */
+	public boolean addNewSemester(String name) {
+		return classService.addNewSemester(name);
+	}
+
+	/**
+	 * 删除学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSemester(long id) {
+		return classService.deleteSemester(id);
+	}
+
+	/**
 	 * 删除专业
 	 * 
 	 * @auther zyslovely@gmail.com
@@ -122,5 +144,17 @@ public class DwrTeachSysAdminBean {
 
 	public boolean deleteCourse(long courseId) {
 		return courseService.deleteCourseById(courseId);
+	}
+
+	/**
+	 * 结束所有学业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public boolean endAllSemester(long userId) {
+		
+		return courseService.endStudentSemester(userId);
 	}
 }

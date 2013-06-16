@@ -22,6 +22,8 @@ public class Profile implements Serializable {
 	private long classId;
 	private long number;
 
+	private int status;
+
 	private String className;
 	private String specialtyName;
 
@@ -136,12 +138,12 @@ public class Profile implements Serializable {
 		this.name = name;
 	}
 
-	public long getNumber() {
-		return number;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setNumber(long number) {
-		this.number = number;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public String getClassName() {
@@ -158,6 +160,14 @@ public class Profile implements Serializable {
 
 	public void setSpecialtyName(String specialtyName) {
 		this.specialtyName = specialtyName;
+	}
+
+	public long getNumber() {
+		return number;
+	}
+
+	public void setNumber(long number) {
+		this.number = number;
 	}
 
 }

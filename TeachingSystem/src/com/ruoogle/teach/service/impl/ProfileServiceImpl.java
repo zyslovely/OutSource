@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.ProfilePropertyMapper;
 import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.service.ProfileService;
 
@@ -29,6 +31,8 @@ public class ProfileServiceImpl implements ProfileService {
 	private ClassMapper classMapper;
 	@Resource
 	private SpecialtyMapper specialtyMapper;
+	@Resource
+	private ProfilePropertyMapper profilePropertyMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -55,10 +59,10 @@ public class ProfileServiceImpl implements ProfileService {
 	 * java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean changePassword(long studentId, String newPassword, String oldPassword) {
+	public boolean changePassword(long studentId, String newPassword) {
 
 		Profile profile = profileMapper.getProfile(studentId);
-		if (profile == null || !profile.getPassword().equals(oldPassword)) {
+		if (profile == null) {
 			return false;
 		}
 		return profileMapper.updateProfilePassword(studentId, newPassword) > 0;
@@ -132,5 +136,15 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public List<Profile> getProfileListWithTeacher(int limit, int offset) {
 		return profileMapper.getProfileListWithTeacher(limit, offset);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ProfileService#getProfileProperties(long)
+	 */
+	@Override
+	public List<ProfileProperty> getProfileProperties(long userId) {
+		return profilePropertyMapper.getProfileProperty(userId);
 	}
 }

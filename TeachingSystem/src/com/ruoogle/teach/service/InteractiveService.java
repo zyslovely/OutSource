@@ -25,4 +25,8 @@ public interface InteractiveService {
 	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset);
 
 	public int getInteractiveCountByUserId(long userId);
+
+	public boolean addForward(long id, String content, long userId);
+
+	public boolean addForwardBack(long id, String content, long userId);
 }

@@ -1,3 +1,4 @@
+
 $("#newStudent_download").click(function(){
 	
 	
@@ -31,6 +32,12 @@ function newfileChange(opt){
      if(_val==''){
      	return;
      }
+     _classId=$("#newStudent_Class_list").val();
+	 _specialtyId=$("#newStudent_Specialty_list").val();
+	 if(_specialtyId<=0||_classId<=0){
+	 	alert("请选择专业和班级");
+	 	return;
+	 }
      $("#fileUpdate_form").ajaxSubmit(function(message) {
      	location.href=location.href;
      });
@@ -46,5 +53,14 @@ $(".admin_newStudent_delete").click(function(){
 	});
 });
 
+$(".admin_newStudent_end").click(function(){
+	
+	_studentId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'endAllSemester',_studentId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});
 
 

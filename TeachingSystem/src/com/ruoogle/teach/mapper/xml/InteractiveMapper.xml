@@ -47,6 +47,15 @@
 		;
 	</select>
 
+	<select id="getInteractive" resultType="Interactive">
+		SELECT *
+		from
+		TB_Interactive
+		WHERE
+		id=#{id}
+		;
+	</select>
+
 
 
 </mapper>

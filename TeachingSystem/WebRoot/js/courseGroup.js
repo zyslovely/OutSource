@@ -1,10 +1,14 @@
 function deleteGroup(_id){
 
-dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'deleteCoursePercentTypeGroup',_id,function(flag){
-	if(flag){
+	jConfirm('确定要删除么','删除操作',function(_flag){
+	if(_flag){
+		dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'deleteCoursePercentTypeGroup',_id,function(flag){
+	  if(flag){
 		location.href=location.href;
+	   }
+		});
 	}
-});
+	});
 	
 };
 
@@ -53,6 +57,8 @@ $("#courseGroup_New").click(function(){
     dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'addCourseGroup',_courseId,_coursePercentTypeGroupStudents,function(flag){
 	if(flag){
 		location.href=location.href;
+	}else{
+		alert("添加出错，请检查分组数量是否超过预设定的数量");
 	}
 });
 });

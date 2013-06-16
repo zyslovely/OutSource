@@ -70,8 +70,8 @@
 								location.href="/teach/admin/student/list/?classId=${classId!0}&specialtyId=${specialtyId!0}&page="+page;
 							}
 			});
-			 $('#newStudent_Specialty_list').jgdDropdown({selected: '${semesterId!-1}',callback: function(obj, val) { newStudentCreateSpecialtyChange(obj,val) }});
-			 $('#newStudent_Class_list').jgdDropdown({selected: '${classId!-1}',callback: function(obj, val) { newStudentCreateClassChange(obj,val) }});
+			 $('#newStudent_Specialty_list').jgdDropdown({callback: function(obj, val) { newStudentCreateSpecialtyChange(obj,val) }});
+			 $('#newStudent_Class_list').jgdDropdown({callback: function(obj, val) { newStudentCreateClassChange(obj,val) }});
            </script>
    	       <script type="text/javascript" src="/js/admin_newStudent.js" charset="utf-8"></script>
    	       
@@ -117,7 +117,23 @@
     	<script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/interactive.js" charset="utf-8"></script>
     	<#break>
-    	
+    	<#case "userProfile">
+    	  <!--[if IE]><script type="text/javascript" src="/js/radar/radarc.js"></script><![endif]-->
+    	   <script type="text/javascript" src="/js/radar/radar.js"></script>
+   	       <script type="text/javascript" src="/js/userProfile.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "teachSemester">
+   	       <script type="text/javascript" src="/js/teachSemester.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "courseSearch">
+    	   <script type="text/javascript">
+			 $('#courseSearch_Specialty_select').jgdDropdown({selected: '${specialtyId!-1}',callback: function(obj, val) { courseSearchSepcialtyChange(obj,val) }});
+			 $('#courseSearch_Class_select').jgdDropdown({selected: '${classId!-1}',callback: function(obj, val) { courseSearchClassChange(obj,val) }});
+			 $('#courseSearch_Semester_select').jgdDropdown({selected: '${classId!-1}',callback: function(obj, val) { courseSearchSemesterChange(obj,val) }});
+           
+           </script>
+   	       <script type="text/javascript" src="/js/courseSearch.js" charset="utf-8"></script>
+    	<#break>
     	
     </#switch>
 </#if>

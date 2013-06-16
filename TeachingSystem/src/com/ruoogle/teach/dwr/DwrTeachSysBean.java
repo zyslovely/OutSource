@@ -12,6 +12,7 @@ import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.FeedBackService;
 import com.ruoogle.teach.service.InteractiveService;
+import com.ruoogle.teach.service.ProfileService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -28,6 +29,8 @@ public class DwrTeachSysBean {
 	private CourseService courseService;
 	@Resource
 	private ClassService classService;
+	@Resource
+	private ProfileService profileService;
 
 	/**
 	 * 添加反馈
@@ -59,6 +62,33 @@ public class DwrTeachSysBean {
 	}
 
 	/**
+	 * 转发
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param content
+	 * @param forwardId
+	 * @return
+	 */
+	public boolean addForward(String content, long forwardId) {
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		if (StringUtils.isEmpty(content)) {
+			return false;
+		}
+		return interactiveService.addForward(forwardId, content, userId);
+	}
+
+	public boolean addInteractiveBack(long id, String content) {
+
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		if (StringUtils.isEmpty(content)) {
+			return false;
+		}
+		return interactiveService.addForwardBack(id, content, userId);
+	}
+
+	/**
 	 * 添加日志
 	 */
 	public boolean addJournal(String content, int type, long courseId) {
@@ -66,4 +96,25 @@ public class DwrTeachSysBean {
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		return classService.addJournal(content, type, courseId, userId);
 	}
+
+	/**
+	 * 改密码
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param newPassword1
+	 * @return
+	 */
+	public boolean changePass(String newPassword1, String newPassword2) {
+		if (StringUtils.isEmpty(newPassword2) || StringUtils.isEmpty(newPassword1)) {
+			return false;
+		}
+		if (!newPassword1.equals(newPassword2)) {
+			return false;
+		}
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+
+		return profileService.changePassword(userId, newPassword1);
+	}
+
 }

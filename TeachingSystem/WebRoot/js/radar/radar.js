@@ -44,7 +44,7 @@ html5jp.graph.radar.prototype.draw = function(items, inparams) {
 		sLabelColor: "#000000",
 		sLabelFontSize: "10px",
 		sLabelFontFamily: "Arial,sans-serif",
-		legend: true,
+		legend: false,
 		legendFontSize: "12px",
 		legendFontFamily: "Arial,sans-serif",
 		legendColor: "#000000"
@@ -108,9 +108,10 @@ html5jp.graph.radar.prototype.draw = function(items, inparams) {
 		axis_angles.push( Math.PI / 2 - Math.PI * 2 * i / angle_num );
 	}
 	this._draw_chart_shape(params, cpos, axis_angles);
-	var max_v = null;
-	var min_v = null;
-	var max_n = 0;
+	var max_v = 10;
+	var min_v = 0;
+	var max_n = 1;
+	/**
 	for(var i=0; i<item_num; i++) {
 		var n = items[i].length;
 		for(var j=1; j<n; j++) {
@@ -133,6 +134,7 @@ html5jp.graph.radar.prototype.draw = function(items, inparams) {
 			max_n = n - 1;
 		}
 	}
+	**/
 	if( typeof(params.aMin) != "number" ) {
 		params.aMin = 0;
 	}

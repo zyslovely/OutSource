@@ -3,6 +3,7 @@ package com.ruoogle.teach.service;
 import java.util.List;
 
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.ProfileProperty;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -31,7 +32,7 @@ public interface ProfileService {
 	 * @param oldPassword
 	 * @return
 	 */
-	public boolean changePassword(long studentId, String newPassword, String oldPassword);
+	public boolean changePassword(long studentId, String newPassword);
 
 	/**
 	 * 获得用户信息
@@ -64,4 +65,6 @@ public interface ProfileService {
 	public List<Profile> getProfileListWithTeacher(int limit, int offset);
 
 	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId);
+
+	public List<ProfileProperty> getProfileProperties(long userId);
 }

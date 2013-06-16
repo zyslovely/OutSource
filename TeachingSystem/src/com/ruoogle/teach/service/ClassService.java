@@ -154,4 +154,32 @@ public interface ClassService {
 	 * @return
 	 */
 	public boolean deleteCourseType(long demoId);
+
+	/**
+	 * 获取学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<Semester> getAllSemesterList(int limit, int offset);
+
+	/**
+	 * 添加新的学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param name
+	 * @return
+	 */
+	public boolean addNewSemester(String name);
+
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSemester(long id);
 }

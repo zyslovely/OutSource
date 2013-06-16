@@ -13,7 +13,7 @@ body{min-width:1024px;min-height:600px}
    <#include "top.ftl"/>
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
-    <div id="CourseScoreDiv" data_percentType=${percentTypeId!0} data_stage="${stage!0}" data_id="${courseId!0}" style="width: 75%; height: 105px; margin-left: auto; margin-top: 20px;">
+    <div id="CourseScoreDiv" data_percentType=${percentTypeId!0} data_stage="${stage!0}" data_id="${courseId!0}" style="height: 105px; width: 1024px; margin: auto;">
        <#if studentList?exists>
        <table style="width:500px" cellspacing="0">
             <thead style="height: 60px;">

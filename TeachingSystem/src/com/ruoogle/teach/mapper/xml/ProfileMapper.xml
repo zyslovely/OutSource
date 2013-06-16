@@ -9,6 +9,7 @@
 		<result property="level" column="level" />
 		<result property="classId" column="classId" />
 		<result property="name" column="name" />
+		<result property="status" column="status" />
 		<result property="number" column="number" />
 	</resultMap>
 
@@ -21,6 +22,7 @@
 		level,
 		classId,
 		name,
+		status,
 		number
 		)VALUES(
 		#{userName},
@@ -29,6 +31,7 @@
 		#{level},
 		#{classId},
 		#{name},
+		#{status},
 		#{number}
 		)
 		<selectKey keyProperty="userId" resultType="long">
@@ -40,7 +43,7 @@
 		resultMap="profileMap">
 		SELECT *
 		from TB_Profile
-		WHERE level=#{level} order by userId desc
+		WHERE level=#{level} and status=0 order by userId desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -49,21 +52,21 @@
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
 		from TB_Profile
-		WHERE UserId=#{UserId};
+		WHERE UserId=#{UserId} and status=0;
 	</select>
 
 	<select id="getProfileByUserName" resultType="Profile">
 		SELECT *
 		from
 		TB_Profile
-		WHERE userName=#{userName} ;
+		WHERE userName=#{userName} and status=0;
 	</select>
 
 	<select id="getProfileByClassId" resultType="Profile">
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and level=#{level}
+		WHERE classId=#{classId} and status=0 and level=#{level}
 		order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
@@ -75,7 +78,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE level=1 or level=2 order by userId asc
+		WHERE (level=1 or level=2) and status=0 order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -87,7 +90,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} order by number desc limit 1;
+		WHERE classId=#{classId} and status=0 order by number desc limit 1;
 	</select>
 	<update id="updateProfilePassword" flushCache="true"
 		statementType="PREPARED">
@@ -99,9 +102,21 @@
 		userId=
 		#{userId};
 	</update>
+	
+	<update id="updateProfileStatus" flushCache="true"
+		statementType="PREPARED">
+		UPDATE
+		TB_Profile
+		set
+		status=#{status}
+		WHERE
+		userId=
+		#{userId};
+	</update>
+	
 	<select id="getProfileListByIds" resultType="Profile"
 		parameterType="list">
-		SELECT * from TB_Profile where
+		SELECT * from TB_Profile where  status=0 and 
 		userId in
 		<foreach item="item" collection="userIds" index="index" open="("
 			separator="," close=")">
@@ -113,13 +128,13 @@
 	<delete id="deleteProfileByClassId" flushCache="true"
 		statementType="PREPARED">
 		delete from TB_Profile
-		where classId=#{classId};
+		where classId=#{classId} ;
 	</delete>
 
 	<delete id="deleteProfileByUserId" flushCache="true"
 		statementType="PREPARED">
 		delete from TB_Profile
 		where userId=
-		#{userId};
+		#{userId} ;
 	</delete>
 </mapper>

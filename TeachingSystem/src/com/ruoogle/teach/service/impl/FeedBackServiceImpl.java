@@ -13,11 +13,14 @@ import com.eason.web.util.HashMapMaker;
 import com.eason.web.util.ListUtils;
 import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.CourseMapper;
+import com.ruoogle.teach.mapper.CourseStudentMapper;
 import com.ruoogle.teach.mapper.FeedBackMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.FeedBackService;
 
 /**
@@ -35,6 +38,8 @@ public class FeedBackServiceImpl implements FeedBackService {
 	private ProfileMapper profileMapper;
 	@Resource
 	private CourseMapper courseMapper;
+	@Resource
+	private CourseStudentMapper courseStudentMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -44,6 +49,32 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 */
 	@Override
 	public boolean addFeedBack(long toUserId, long feedbackId, String content, long courseId, long fromUserId) {
+		if (toUserId <= 0 && courseId > 0) {
+			List<CourseStudent> courseStudents = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+			if (ListUtils.isEmptyList(courseStudents)) {
+				return false;
+			}
+			for (CourseStudent courseStudent : courseStudents) {
+				this.addAFeedBack(courseStudent.getUserId(), feedbackId, content, courseId, fromUserId);
+			}
+			return true;
+		} else {
+			return this.addAFeedBack(toUserId, feedbackId, content, courseId, fromUserId);
+		}
+	}
+
+	/**
+	 * 一个
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param toUserId
+	 * @param feedbackId
+	 * @param content
+	 * @param courseId
+	 * @param fromUserId
+	 * @return
+	 */
+	private boolean addAFeedBack(long toUserId, long feedbackId, String content, long courseId, long fromUserId) {
 		// TODO Auto-generated method stub
 		FeedBack feedBack = new FeedBack();
 		feedBack.setContent(content);

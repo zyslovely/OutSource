@@ -164,4 +164,18 @@
 	</bean>
 
 
+	<bean id="profilePropertyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface"
+			value="com.ruoogle.teach.mapper.ProfilePropertyMapper" />
+	</bean>
+
+	<bean id="interactiveBackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface"
+			value="com.ruoogle.teach.mapper.InteractiveBackMapper" />
+	</bean>
+
+
+
 </beans>

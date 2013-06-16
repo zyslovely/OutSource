@@ -16,6 +16,8 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentScoreVO;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
+import com.ruoogle.teach.meta.SearchProfile;
+import com.ruoogle.teach.meta.SearchProperty;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -264,4 +266,24 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean deleteCourseById(long courseId);
+
+	/**
+	 * 搜索
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param semesterId
+	 * @param classId
+	 * @param searchProperties
+	 * @return
+	 */
+	public List<SearchProfile> getSearchProfile(long semesterId, long classId, List<SearchProperty> searchProperties);
+
+	/**
+	 * 结束学业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public boolean endStudentSemester(long userId);
 }

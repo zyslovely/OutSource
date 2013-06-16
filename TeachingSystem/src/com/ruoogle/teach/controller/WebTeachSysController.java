@@ -1,6 +1,8 @@
 package com.ruoogle.teach.controller;
 
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,13 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
-import com.ruoogle.teach.mapper.InteractiveMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -28,6 +32,9 @@ import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.ProfileProperty;
+import com.ruoogle.teach.meta.SearchProfile;
+import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
@@ -87,8 +94,28 @@ public class WebTeachSysController extends AbstractBaseController {
 	 */
 	public ModelAndView teachIndex(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("teachIndex");
-		Long userId = MyUser.getMyUser(request);
-		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
+
+		long userId = ServletRequestUtils.getLongParameter(request, "userId", -1L);
+		boolean isVisitor = false;
+		if (userId < 0) {
+			userId = MyUser.getMyUser(request);
+			mv.addObject("isVisitor", 1);
+			isVisitor = true;
+		} else {
+			if (userId == MyUser.getMyUser(request)) {
+				mv.addObject("isVisitor", 1);
+				isVisitor = true;
+			} else {
+				mv.addObject("isVisitor", 0);
+				mv.addObject("hostUserId", userId);
+				isVisitor = false;
+			}
+		}
+		Profile profile = profileService.getProfile(userId);
+		if (!isVisitor) {
+			mv.addObject("hostUserName", profile.getName());
+		}
+
 		long semesterId = ServletRequestUtils.getLongParameter(request, "semesterId", -1L);
 		List<Semester> semesters = classService.getAllSemesters();
 		mv.addObject("semesters", semesters);
@@ -105,7 +132,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		}
 		mv.addObject("page", page);
 		mv.addObject("limit", limit);
-		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, myUser.getLevel(), semesterId, limit, (page - 1) * limit);
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, profile.getLevel(), semesterId, limit, (page - 1) * limit);
 		mv.addObject("courseList", courseList);
 		int totalCount = courseService.getCourseTotalSemesterCount(userId, semesterId);
 		if (totalCount % limit == 0) {
@@ -113,12 +140,25 @@ public class WebTeachSysController extends AbstractBaseController {
 		} else {
 			mv.addObject("totalCount", totalCount / limit + 1);
 		}
-		if (myUser.getLevel() == ProfileLevel.Student.getValue()) {
+		if (profile.getLevel() == ProfileLevel.Student.getValue()) {
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseService
-					.getCourseStudentPropertySemesterScoresByStudentId(myUser.getUserId(), semesterId);
-			mv.addObject("courseStudentPropertySemesterScores", courseStudentPropertySemesterScores);
-			List<CourseProperty> coursePropertieList = courseService.getAllCourseProperties();
-			mv.addObject("coursePropertyList", coursePropertieList);
+					.getCourseStudentPropertySemesterScoresByStudentId(profile.getUserId(), semesterId);
+			if (!ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
+				double maxScore = 0;
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					if (courseStudentPropertySemesterScore.getScore() > maxScore) {
+						maxScore = courseStudentPropertySemesterScore.getScore();
+					}
+				}
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					double endScore = courseStudentPropertySemesterScore.getScore() / maxScore * 10;
+					courseStudentPropertySemesterScore.setScore(DoubleUtil.round(endScore, 2, RoundingMode.HALF_UP.ordinal()));
+				}
+				mv.addObject("courseStudentPropertySemesterScores", courseStudentPropertySemesterScores);
+				List<CourseProperty> coursePropertieList = courseService.getAllCourseProperties();
+				mv.addObject("coursePropertyList", coursePropertieList);
+			}
+
 		}
 
 		return mv;
@@ -183,6 +223,7 @@ public class WebTeachSysController extends AbstractBaseController {
 			}
 			courseScorePercent.setPercent(courseScorePercent.getPercent());
 		}
+
 		mv.addObject("isEachStudent", isEachStudent ? 1 : 0);
 		mv.addObject("courseScorePercents", courseScorePercents);
 		this.setUD(mv, request);
@@ -434,11 +475,14 @@ public class WebTeachSysController extends AbstractBaseController {
 	public ModelAndView showSearch(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("CourseSearch");
-		Long userId = MyUser.getMyUser(request);
 
 		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
 		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
+		long semesterId = ServletRequestUtils.getLongParameter(request, "semesterId", -1L);
+
 		mv.addObject("specialtyId", specialtyId);
+		mv.addObject("classId", classId);
+		mv.addObject("semesterId", semesterId);
 		if (specialtyId > 0) {
 			List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
 			mv.addObject("classList", classList);
@@ -449,8 +493,79 @@ public class WebTeachSysController extends AbstractBaseController {
 			mv.addObject("class1", class1);
 		}
 		List<Specialty> specialties = classService.getSpecialties();
-		mv.addObject("specialties", specialties);
+		if (!ListUtils.isEmptyList(specialties)) {
+			mv.addObject("specialties", specialties);
+		}
 
+		List<Semester> semesters = classService.getAllSemesterList(0, 0);
+		if (!ListUtils.isEmptyList(semesters)) {
+			mv.addObject("semesters", semesters);
+		}
+		List<CourseProperty> courseProperties = courseService.getAllCourseProperties();
+		if (!ListUtils.isEmptyList(courseProperties)) {
+			mv.addObject("courseProperties", courseProperties);
+		}
+
+		String properties = ServletRequestUtils.getStringParameter(request, "properties", null);
+		if (!StringUtils.isEmpty(properties)) {
+			String[] onePropertiesList = properties.split(";");
+			if (!ArrayUtils.isEmpty(onePropertiesList)) {
+				List<SearchProperty> searchProperties = new ArrayList<SearchProperty>();
+				for (String str : onePropertiesList) {
+					SearchProperty searchProperty = new SearchProperty();
+					String[] propertyIdValue = str.split(",");
+					if (ArrayUtils.isEmpty(onePropertiesList)) {
+						continue;
+					}
+					if (propertyIdValue.length < 2 || StringUtils.isEmpty(propertyIdValue[0]) || StringUtils.isEmpty(propertyIdValue[1])) {
+						continue;
+					}
+					searchProperty.setPropertyId(Long.valueOf(propertyIdValue[0]));
+					searchProperty.setValue(Double.valueOf(propertyIdValue[1]));
+					searchProperties.add(searchProperty);
+				}
+				if (!ListUtils.isEmptyList(searchProperties)) {
+					List<SearchProfile> seachProfileList = courseService.getSearchProfile(semesterId, classId, searchProperties);
+					if (!ListUtils.isEmptyList(seachProfileList)) {
+						mv.addObject("seachProfileList", seachProfileList);
+					}
+				}
+			}
+		}
+
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 显示用户信息
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showUserProfile(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("userProfile");
+		Long userId = MyUser.getMyUser(request);
+		Profile profile = profileService.getProfile(userId);
+		if (profile.getStatus() == 1) {
+			List<ProfileProperty> profileProperties = profileService.getProfileProperties(userId);
+			double maxScore = 0;
+			for (ProfileProperty profileProperty : profileProperties) {
+				if (profileProperty.getScore() > maxScore) {
+					maxScore = profileProperty.getScore();
+				}
+			}
+			for (ProfileProperty profileProperty : profileProperties) {
+				double endScore = profileProperty.getScore() / maxScore * 10;
+				profileProperty.setScore(DoubleUtil.round(endScore, 2, RoundingMode.HALF_UP.ordinal()));
+			}
+			mv.addObject("profileProperties", profileProperties);
+			List<CourseProperty> coursePropertieList = courseService.getAllCourseProperties();
+			mv.addObject("coursePropertyList", coursePropertieList);
+		}
 		this.setUD(mv, request);
 		return mv;
 	}

@@ -258,4 +258,21 @@ public class ClassServiceImpl implements ClassService {
 	public boolean deleteCourseType(long demoId) {
 		return coursePercentTypeDemoMapper.deleteCoursePercentTypeDemo(demoId) > 0;
 	}
+
+	@Override
+	public List<Semester> getAllSemesterList(int limit, int offset) {
+		return semesterMapper.getAllSemester();
+	}
+
+	@Override
+	public boolean addNewSemester(String name) {
+		Semester semester = new Semester();
+		semester.setName(name);
+		return semesterMapper.addSemester(semester) > 0;
+	}
+
+	@Override
+	public boolean deleteSemester(long id) {
+		return semesterMapper.deleteSelemster(id) > 0;
+	}
 }

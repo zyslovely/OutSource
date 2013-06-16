@@ -14,22 +14,22 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
-   <div id="courseGroup_DIV" data_id="${courseId!0}" style="float: left; min-height: 193px; margin-top: 10px; width: 240px; margin-left: 5%; background-color: rgb(224, 224, 224);">
-       <div style="border-bottom: 1px solid rgb(224, 224, 224); height: 31px; padding-left: 20px; padding-top: 12px;">
-           <p style="font-size: 15px;">未分组学生列表</p>
+   <div id="courseGroup_DIV" data_id="${courseId!0}" style="float: left; min-height: 193px; margin-top: 10px; width: 240px; margin-left: 5%; background-color: rgb(247, 247, 247);">
+       <div style="border-bottom: 1px solid rgb(224, 224, 224); height: 31px; padding-top: 12px; margin: auto; width: 200px;">
+           <p style="font-size: 15px;color: rgb(90, 90, 90);">未分组学生列表</p>
        </div>
        <ul style="margin: auto; width: 200px;">
           <#if courseGroupStudentVOs?exists>
           <#list courseGroupStudentVOs as courseGroupStudent>
           <#if !courseGroupStudent.coursePercentTypeGroupStudent?exists>
-          <li style="border-bottom: 1px solid rgb(224, 224, 224);min-height:30px;">
+          <li style="border-bottom: 1px solid rgb(224, 224, 224);min-height:30px;padding-top:5px">
              <#if courseGroupStudent.profile?exists>
-             <p style="width: 100px; display: inline; font-size: 14px;">${courseGroupStudent.profile.name!""}</p>
+             <p style="color: rgb(139, 139, 139);width: 100px; display: inline; font-size: 14px;">${courseGroupStudent.profile.name!""}</p>
              </#if>
-             <p style="width: 60px; display: inline; float: right; ">
+             <p style="color: rgb(139, 139, 139);width: 60px; display: inline; float: right; ">
                 <span style="margin-right:2px;">组长:</span><input class="courseGroup_checkbox_leader" data_id="${courseGroupStudent.profile.userId!0}" type="checkbox" style="height: 16px; width: 16px;"/>
              </p>
-             <p style="width: 60px; display: inline; float: right; ">
+             <p style="color: rgb(139, 139, 139);width: 60px; display: inline; float: right; ">
                 <span style="margin-right:2px;">组员:</span><input class="courseGroup_checkbox_teamer" data_id="${courseGroupStudent.profile.userId!0}" type="checkbox" style="height: 16px; width: 16px;"/>
              </p>
           </li>
@@ -37,11 +37,11 @@ body{min-width:1024px;min-height:600px}
           </#list>
           </#if>
        </ul>
-       <div style=" margin-top: 15px; width: 200px;">
-           <a class="w-btn" id="courseGroup_New" style="background: url("/img/teachCreate/button_edit.png") no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; line-height: 55px; text-align: center; margin-left: 20px;" href="javascript:void(0);;">新建分组</a>
+       <div style="margin-top: 15px; width: 185px;">
+           <a class="w-btn" id="courseGroup_New" style="margin-left: 20px; display: block; text-align: center; color: white; float: right; background: url('/img/courseInfo/button_bg_small.png') no-repeat scroll 0px 0px transparent; height: 45px; width: 135px; line-height: 33px; margin-top: 19px;" href="javascript:void(0);;">新建分组</a>
        </div>
    </div>
-   <table cellspacing="0" style="float: left; margin-left: 40px; width: 500px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
+   <table cellspacing="0" style="float: left; margin-left: 40px; width: 600px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
        <thead style="height:60px;">
             <tr>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">分组</th>

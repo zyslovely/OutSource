@@ -30,6 +30,24 @@
 		WHERE
 		semesterId=#{semesterId} and studentId=#{studentId};
 	</select>
+
+	<select id="getCourseStudentPropertySemesterScoreByStudentId"
+		resultType="CourseStudentPropertySemesterScore">
+		SELECT *
+		from
+		TB_Course_Student_Property_SemesterScore
+		WHERE
+		studentId=#{studentId};
+	</select>
+
+	<select id="getCourseStudentPropertySemesterCount" resultType="int">
+		SELECT count(*)
+		from
+		TB_Course_Student_Property_SemesterScore
+		WHERE
+		studentId=#{studentId} groupby semesterId;
+	</select>
+
 	<update id="updateCourseStudentPropertySemesterScore"
 		flushCache="true" parameterType="CourseStudentPropertySemesterScore"
 		statementType="PREPARED">
@@ -45,7 +63,8 @@
 		delete from
 		TB_Course_Student_Property_SemesterScore
 		WHERE
-		semesterId=#{semesterId} and
+		semesterId=#{semesterId}
+		and
 		studentId=#{studentId} ;
 	</delete>
 

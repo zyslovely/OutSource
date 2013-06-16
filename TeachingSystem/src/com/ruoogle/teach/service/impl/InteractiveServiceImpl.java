@@ -14,11 +14,13 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CourseMapper;
 import com.ruoogle.teach.mapper.CourseStudentMapper;
+import com.ruoogle.teach.mapper.InteractiveBackMapper;
 import com.ruoogle.teach.mapper.InteractiveMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.Interactive;
+import com.ruoogle.teach.meta.InteractiveBack;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.InteractiveService;
@@ -44,6 +46,9 @@ public class InteractiveServiceImpl implements InteractiveService {
 	@Resource
 	private ClassMapper classMapper;
 
+	@Resource
+	private InteractiveBackMapper interactiveBackMapper;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -56,6 +61,10 @@ public class InteractiveServiceImpl implements InteractiveService {
 		Profile profile = profileMapper.getProfile(userId);
 		if (profile == null) {
 			return false;
+		}
+		// 如果是保密的
+		if (status == 1) {
+			return this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, userId);
 		}
 		if (profile.getLevel() == ProfileLevel.Teacher.getValue() || profile.getLevel() == ProfileLevel.CompanyLeader.getValue()) {
 			List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
@@ -159,6 +168,14 @@ public class InteractiveServiceImpl implements InteractiveService {
 					interactive.setCourseName(course.getName());
 				}
 			}
+			if (interactive.getForwardId() > 0) {
+				Interactive interactive2 = interactiveMapper.getInteractive(interactive.getForwardId());
+				if (interactive2 != null) {
+					Profile profile2 = profileMapper.getProfile(interactive2.getUserId());
+					interactive.setForwardFromStr("转发自:" + profile2.getName());
+				}
+			}
+
 		}
 		return interactives;
 	}
@@ -172,5 +189,36 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 */
 	public int getInteractiveCountByUserId(long userId) {
 		return interactiveMapper.getInteractieTotalCount(userId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.InteractiveService#addForward(long,
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean addForward(long id, String content, long userId) {
+		Interactive interactive = interactiveMapper.getInteractive(id);
+		if (interactive == null) {
+			return false;
+		}
+		return this.addInteractive(userId, content, interactive.getCourseId(), 0, "", id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.InteractiveService#addForwardBack(long,
+	 * java.lang.String)
+	 */
+	@Override
+	public boolean addForwardBack(long id, String content, long userId) {
+		InteractiveBack interactiveBack = new InteractiveBack();
+		interactiveBack.setContent(content);
+		interactiveBack.setUserId(userId);
+		interactiveBack.setCreateTime(new Date().getTime());
+		interactiveBack.setInteractiveId(id);
+		return interactiveBackMapper.addInteractiveBack(interactiveBack) > 0;
 	}
 }

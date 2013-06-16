@@ -30,8 +30,8 @@ body{min-width:1024px;min-height:600px}
           <div style="min-height:20px;">
              <#if feedback.course?exists>
              <p style="display: inline;"><a  href="/teach/feedback/?courseId=${feedback.course.id!0}">来自${feedback.course.name!""}</a></p>
-             </#if>
              <p style="float: right; margin-right: 25px;"><a onClick="feedbackBackClick(${feedback.id!0},${feedback.course.id!0},${feedback.fromUserId!0});return;" href="javascript:void(0);;"">回复</a></p>
+             </#if>
           </div>
        </li>
        </#list>

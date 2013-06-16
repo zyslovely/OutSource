@@ -3,8 +3,10 @@ function semestersChange(obj,val){
 
 	if(parseInt(val)<0){
 		location.href="/teach/index/";
+	}else if(_isVisitor!=1){
+		location.href="/teach/index/?semesterId="+val+"&userId="+_hostUserId;
 	}else{
-		location.href="/teach/index/?semesterId="+val;
+		location.href="/teach/index/?semesterId="+val
 	}
 	
 };

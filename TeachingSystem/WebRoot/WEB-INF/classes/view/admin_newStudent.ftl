@@ -22,9 +22,9 @@ body{min-width:1024px;min-height:600px}
            <ul style=" height: 60px;width:100%;">
               <li style="float:left;width:300px;">
                  <div class="select-wrapper wide">
-                          <select class="select-receiver" id="newStudent_Specialty_list" name="receiver" onChange="newStudentCreateSpecialtyChange(this);return;">
+                          <select class="select-receiver" id="newStudent_Specialty_list" name="receiver">
                               <#if specialtyId lt 0>
-                                   <option value="0"></option>
+                                   <option value="0" selected="selected"></option>
                               </#if>
                               <#if specialties?exists>
                               <#list specialties as specialty>
@@ -36,7 +36,10 @@ body{min-width:1024px;min-height:600px}
               </li>
               <li style="float:left;width:300px;">
                  <div class="select-wrapper wide">
-                          <select class="select-receiver" id="newStudent_Class_list" name="receiver" onChange="newStudentCreateClassChange(this);return;" >
+                          <select class="select-receiver" id="newStudent_Class_list" name="receiver"  >
+                              <#if classId lt 0>
+                                   <option value="0" selected="selected"></option>
+                              </#if>
                               <#if classList?exists>
                               <#list classList as class>
                                    <option value="${class.id!0}" <#if classId == class.id>selected="selected"</#if>>${class.name!""}</option>
@@ -59,17 +62,22 @@ body{min-width:1024px;min-height:600px}
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">班级</th>
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">学生姓名</th>
                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">账号</th>
-               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">密码</th></tr></thead>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">密码</th>  
+                <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">操作</th>   
+            </tr></thead>
             <tbody>
                  
                  <#list studentList as student>
                   <tr style="height:40px;font-size: 16px;border-bottom: 1px solid rgb(224, 224, 224); ">
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.specialtyName!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.className!""}</th>
-                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.name!""}</th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);"><a target="_blank" style="color: rgb(139, 139, 139);" href="/teach/index/?userId=${student.userId!0}">${student.name!""}</a></th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.userName!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${student.password!""}</th>
-                  <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newStudent_delete" data_id="${student.userId!0}">删除</a></th>
+                  <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">
+                     <a href="javascript:void(0);" class="admin_newStudent_delete" data_id="${student.userId!0}">删除</a>
+                     <#if student.status==0><a href="javascript:void(0);" class="admin_newStudent_end" data_id="${student.userId!0}">结束学业</a></#if>
+                  </th>
          
                   </tr>
                  </#list>

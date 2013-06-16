@@ -41,20 +41,4 @@ public class DwrTeachSysStudentBean {
 		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId);
 	}
 
-	/**
-	 * 改密码
-	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param studentId
-	 * @param newPassWord
-	 * @param oldPassWord
-	 * @return
-	 */
-	public boolean changePassWord(String newPassWord, String oldPassWord) {
-		WebContext ctx = WebContextFactory.get();
-		Long studentId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return profileService.changePassword(studentId, newPassWord, oldPassWord);
-	}
-	
-	
 }

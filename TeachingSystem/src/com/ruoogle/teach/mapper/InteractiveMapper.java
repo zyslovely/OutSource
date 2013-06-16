@@ -27,4 +27,13 @@ public interface InteractiveMapper {
 	 * @return
 	 */
 	public int getInteractieTotalCount(@Param(value = "showUserId") long userId);
+
+	/**
+	 * 获取
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public Interactive getInteractive(@Param(value = "id") long id);
 }
