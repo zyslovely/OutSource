@@ -108,13 +108,14 @@
     	<#break>
     	
     	<#case "feedback">
+    	<script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/feedback.js" charset="utf-8"></script>
     	<#break>
     	<#case "courseGroup">
    	       <script type="text/javascript" src="/js/courseGroup.js" charset="utf-8"></script>
     	<#break>
     	<#case "interactive">
-    	<script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
+    	   <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/interactive.js" charset="utf-8"></script>
     	<#break>
     	<#case "userProfile">

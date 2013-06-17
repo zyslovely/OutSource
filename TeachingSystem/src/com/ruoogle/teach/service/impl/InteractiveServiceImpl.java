@@ -175,7 +175,10 @@ public class InteractiveServiceImpl implements InteractiveService {
 					interactive.setForwardFromStr("转发自:" + profile2.getName());
 				}
 			}
-
+			List<InteractiveBack> interactiveBackList = interactiveBackMapper.getInteractiveBack(interactive.getId());
+			if (!ListUtils.isEmptyList(interactiveBackList)) {
+				interactive.setSubInteractiveBackList(interactiveBackList);
+			}
 		}
 		return interactives;
 	}
@@ -219,6 +222,10 @@ public class InteractiveServiceImpl implements InteractiveService {
 		interactiveBack.setUserId(userId);
 		interactiveBack.setCreateTime(new Date().getTime());
 		interactiveBack.setInteractiveId(id);
+		Profile profile = profileMapper.getProfile(userId);
+		if (profile != null) {
+			interactiveBack.setName(profile.getName());
+		}
 		return interactiveBackMapper.addInteractiveBack(interactiveBack) > 0;
 	}
 }

@@ -355,29 +355,36 @@ public class WebTeachSysController extends AbstractBaseController {
 	public ModelAndView showFeedBackView(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("feedback");
-		long fromuserId = ServletRequestUtils.getLongParameter(request, "fromUserId", -1L);
-		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
 		Long userId = MyUser.getMyUser(request);
 		int limit = 10;
-		int offset = ServletRequestUtils.getIntParameter(request, "offset", -1);
-		if (offset < 0) {
-			offset = 0;
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		if (page <= 0) {
+			page = 1;
 		}
-		List<FeedBack> feedBacks;
-		if (fromuserId > 0) {
-			feedBacks = feedBackService.getFeedBackListFromUserId(fromuserId, limit, offset, userId);
+		mv.addObject("limit", limit);
+		mv.addObject("page", page);
 
-		} else if (courseId > 0) {
-			feedBacks = feedBackService.getFeedBackListCourseId(courseId, limit, offset, userId);
-		} else {
-			feedBacks = feedBackService.getFeedBackList(userId, limit, offset, 0);
-		}
+		List<FeedBack> feedBacks = feedBackService.getFeedBackList(userId, limit, (page - 1) * limit, 0);
+		int totalCount = feedBackService.getFeedBackListCount(userId, 0, -1, 0);
 		if (!ListUtils.isEmptyList(feedBacks)) {
 			for (FeedBack feedBack : feedBacks) {
+				if (!ListUtils.isEmptyList(feedBack.getSubFeedBackList())) {
+					for (FeedBack subFeedBack : feedBack.getSubFeedBackList()) {
+						if (subFeedBack.getStatus() == FeedBack.Unread) {
+							feedBackService.updateFeedBackReaded(subFeedBack.getId());
+						}
+					}
+				}
 				if (feedBack.getStatus() == FeedBack.Unread) {
 					feedBackService.updateFeedBackReaded(feedBack.getId());
 				}
 			}
+		}
+
+		if (totalCount % limit == 0) {
+			mv.addObject("totalCount", totalCount / limit);
+		} else {
+			mv.addObject("totalCount", totalCount / limit + 1);
 		}
 		mv.addObject("feedbacks", feedBacks);
 		this.setUD(mv, request);
@@ -442,7 +449,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("interactive");
 		Long userId = MyUser.getMyUser(request);
-		int limit = 10;
+		int limit = 5;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
 		if (page <= 0) {
 			page = 1;

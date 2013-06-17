@@ -36,4 +36,16 @@ public interface InteractiveMapper {
 	 * @return
 	 */
 	public Interactive getInteractive(@Param(value = "id") long id);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param limit
+	 * @param offset
+	 * @param forwardId
+	 * @return
+	 */
+	public List<Interactive> getInteractiveListByShowUserIdForwardId(@Param(value = "showUserId") long userId, @Param(value = "limit") int limit,
+			@Param(value = "offset") int offset, @Param(value = "forwardId") long forwardId);
 }

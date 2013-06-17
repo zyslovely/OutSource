@@ -6,13 +6,15 @@
 		<result property="interactiveId" column="interactiveId" />
 		<result property="content" column="content" />
 		<result property="CreateTime" column="CreateTime" />
+		<result property="name" column="name" />
 	</resultMap>
 	<insert id="addInteractiveBack" parameterType="InteractiveBack">
 		INSERT INTO
 		TB_Interactive_Back
-		(userId,interactiveId,content,CreateTime
+		(userId,interactiveId,content,CreateTime,name
 		)VALUES(
-		#{userId},#{interactiveId},#{content},#{CreateTime})
+		#{userId},#{interactiveId},#{content},#{CreateTime},#{name}
+		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE

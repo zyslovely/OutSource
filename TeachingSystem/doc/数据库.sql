@@ -199,6 +199,8 @@ CREATE TABLE `TB_FeedBack` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `FromUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `ToUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `fromName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
+  `toName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
   `feedbackId` bigint(20) NOT NULL DEFAULT '0' COMMENT '反馈id',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',

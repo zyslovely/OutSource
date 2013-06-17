@@ -57,3 +57,13 @@ function backClick(_id){
 	
 	
 };
+
+function comment(_id){
+	
+	if($("#interactive_"+_id).css("display")=='none'){
+		$("#interactive_"+_id).css("display","block");
+	}else{
+		$("#interactive_"+_id).css("display","none");
+	}
+	
+}

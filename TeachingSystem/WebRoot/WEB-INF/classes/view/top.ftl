@@ -1,6 +1,7 @@
-<div style="background: url('/img/teachCreate/nav_bg.png') repeat scroll center top transparent; <#if pageName!="interactive">height: 122px;<#else>height: 80px;</#if>">
+<div style="<#if pageName="interactive"><#else>background: url('/img/teachCreate/nav_bg.png') repeat scroll center top transparent;</#if> <#if pageName!="interactive">height: 122px;<#else>height: 80px;</#if>">
 <div >
    <div style=" margin: auto;width: 1024px;">
+   <#if pageName!="interactive">
    <div style="margin-left: 5%; margin-top: 23px; width: 40%; float: left;">
        <a href="/"><img src="/img/webIndex/logo.png"/></a>
    </div>
@@ -42,6 +43,49 @@
           
        </ul>
    </div>
+   <#else>
+   <div style="margin-left: 5%; margin-top: 23px; width: 40%; float: left;">
+       <a href="/"><img src="/img/webIndex/logo.png"/></a>
+   </div>
+   <div style="float: right; height: 52px; margin-top: 29px;">
+       <ul style="width:450px;">
+          <li style="float: left; width: 80px; text-align: center;">
+             <img src="/img/interactive/interactive.png" style="width: 24px; height: 24px;"/>
+             <a target="_blank" href="/teach/user/interactive/" style="color:rgb(66, 148, 225); position: relative; top: -6px;">互动</a>
+          </li>
+          <li style="float: left; width: 3px; text-align: center; height: 24px; font-size: 17px;">
+          <span style="color: white;">|<span>
+          </li>
+          <li style="float: left; width: 80px; text-align: center;">
+             <img src="/img/interactive/message.png" style="width: 24px; height: 24px;"/>
+             <a href="/teach/feedback/" style="color: rgb(66, 148, 225); position: relative; top: -6px;">信箱(${unreadCount!0})</a>
+          </li>
+          <li style="float: left; width: 3px; text-align: center; height: 24px; font-size: 17px;">
+          <span style="color: white;">|<span>
+          </li>
+          <li style="float: left; width: 80px; text-align: center;">
+             <img src="/img/interactive/search.png" style="width: 24px; height: 24px;"/>
+             <a href="/teach/search/" style="color: rgb(66, 148, 225); position: relative; top: -6px;">搜索</a>
+          </li>
+          <li style="float: left; width: 3px; text-align: center; height: 24px; font-size: 17px;">
+          <span style="color: white;">|<span>
+          </li>
+          <li style="float: left; width: 100px; text-align: center;">
+             <img src="/img/interactive/user.png" style="width: 24px; height: 24px;"/>
+             <a href="/teach/user/profile/" style="color: rgb(66, 148, 225); position: relative; top: -6px;">${visitName!""}</a>
+          </li>
+          <li style="float: left; width: 3px; text-align: center; height: 24px; font-size: 17px;">
+             <span style="color: white;">|<span>
+          </li>
+          <li style="float: left; width: 80px; text-align: center;">
+             <img src="/img/interactive/quit.png" style="width: 24px; height: 24px;"/>
+             <a href="/logout/" style="color: rgb(66, 148, 225); position: relative; top: -6px;">退出</a>
+          </li>
+          
+          
+       </ul>
+   </div>
+   </#if>
    </div>
    <#if pageName!="interactive">
    <div style="display: inline-block; width: 100%; background-color: rgb(51, 133, 210); height: 39px; margin-top: 9px;">
@@ -92,7 +136,7 @@
      </div>
    </div>
    <#else>
-    <div style="display: inline-block; width: 100%; background-color: rgb(51, 133, 210); height: 230px; ">
+    <div style="display: inline-block; width: 100%; background: url('/img/interactive/pic_bg.png') repeat scroll center top transparent; height: 230px; ">
      <div style="width:600px;margin:auto;">
          <p style="margin: 10px 0px; font-size: 18px;">师生互动</p>
          <textarea id="interactive_send_text" rows="3" cols="80" style="font-size:20px;resize:none;width: 600px; height: 130px; overflow-x: hidden; overflow-y: auto; border-style: none; border-width: 0px; word-wrap: break-word;"></textarea>

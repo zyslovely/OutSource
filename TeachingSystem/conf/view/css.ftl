@@ -35,7 +35,7 @@
     	     <link type="text/css" rel="stylesheet" href="/css/admin_newStudent.css"/>
     	<#break>
     	<#case "feedback">
-    	      
+    	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
     	      <link type="text/css" rel="stylesheet" href="/wbox/wbox/wbox.css"/>
     	<#break>  
     	<#case "teachIndex"> 

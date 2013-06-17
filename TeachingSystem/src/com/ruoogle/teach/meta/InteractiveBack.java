@@ -6,6 +6,7 @@ public class InteractiveBack implements Serializable {
 	private static final long serialVersionUID = 6L;
 	private long id;
 	private long userId;
+	private String name;
 	private long interactiveId;
 	private String content;
 	private long CreateTime;
@@ -48,6 +49,14 @@ public class InteractiveBack implements Serializable {
 
 	public void setCreateTime(long createTime) {
 		CreateTime = createTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

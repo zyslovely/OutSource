@@ -43,6 +43,17 @@ public interface FeedBackService {
 	public List<FeedBack> getFeedBackList(long userId, int limit, int offset, long courseId);
 
 	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param limit
+	 * @param offset
+	 * @param courseId
+	 * @return
+	 */
+	public int getFeedBackListCount(long userId, int limit, int offset, long courseId);
+
+	/**
 	 * 更新已读
 	 * 
 	 * @auther zyslovely@gmail.com

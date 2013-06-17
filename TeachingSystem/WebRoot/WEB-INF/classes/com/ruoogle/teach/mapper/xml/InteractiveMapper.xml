@@ -56,6 +56,19 @@
 		;
 	</select>
 
+	<select id="getInteractiveListByShowUserIdForwardId"
+		parameterType="long" resultType="Interactive">
+		SELECT *
+		from TB_Interactive
+		WHERE showUserId=#{showUserId} and
+		forwardId = #{forwardId} order by
+		createTime desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
+	</select>
+
 
 
 </mapper>
