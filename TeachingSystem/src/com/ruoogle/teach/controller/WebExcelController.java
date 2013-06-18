@@ -157,6 +157,9 @@ public class WebExcelController extends AbstractBaseController {
 						}
 						long userId = Long.valueOf(cell2.getRichStringCellValue().getString());
 						double score = Double.valueOf(cell4.getRichStringCellValue().getString());
+						if (score < 0) {
+							continue;
+						}
 						if (CoursePercentType.AvgGrading.getValue() == percentType) {
 							if (stage < 0) {
 								logger.error("分期给分的stage为空");

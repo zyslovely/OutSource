@@ -1,6 +1,7 @@
 package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class FeedBack implements Serializable {
 	private static final long serialVersionUID = 6L;
@@ -12,12 +13,13 @@ public class FeedBack implements Serializable {
 	private long courseId;
 	private int status;
 	private long feedbackId;
-
 	private String fromName;
 	private String toName;
+	
 	private String createTimeStr;
 	private Course course;
 
+	List<FeedBack> subFeedBackList;
 	public static final int Unread = 1;
 	public static final int readed = 0;
 
@@ -115,6 +117,14 @@ public class FeedBack implements Serializable {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public List<FeedBack> getSubFeedBackList() {
+		return subFeedBackList;
+	}
+
+	public void setSubFeedBackList(List<FeedBack> subFeedBackList) {
+		this.subFeedBackList = subFeedBackList;
 	}
 
 }

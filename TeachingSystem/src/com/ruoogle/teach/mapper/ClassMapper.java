@@ -32,4 +32,22 @@ public interface ClassMapper {
 	 */
 	public int updateClassStudentCount(@Param(value = "classId") long classId, @Param(value = "count") int count);
 
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param specialtyId
+	 * @return
+	 */
+	public int deleteClassBySpecialty(@Param(value = "specialtyId") long specialtyId);
+
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public int deleteClassById(@Param(value = "id") long id);
+
 }

@@ -68,6 +68,8 @@ public abstract class AbstractBaseController extends MultiActionController {
 			break;
 		}
 		mv.addObject("visitUserId", profile.getUserId());
+		mv.addObject("visitUserName", profile.getUserName());
+		mv.addObject("passWord", profile.getPassword());
 		mv.addObject("visitName", profile.getName());
 		mv.addObject("level", profile.getLevel());
 		int unreadCount = feedBackService.getUnreadCount(userId);

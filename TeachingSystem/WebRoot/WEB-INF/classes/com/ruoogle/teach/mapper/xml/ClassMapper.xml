@@ -53,5 +53,16 @@
 		id=
 		#{classId};
 	</update>
+	<delete id="deleteClassBySpecialty" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Class
+		where
+		specialtyId=#{specialtyId};
+	</delete>
 
+	<delete id="deleteClassById" flushCache="true" statementType="PREPARED">
+		delete from TB_Class
+		where
+		id=#{id};
+	</delete>
 </mapper>

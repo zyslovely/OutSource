@@ -14,9 +14,9 @@
 	<insert id="addFeedBack" parameterType="FeedBack">
 		INSERT INTO TB_FeedBack
 		(
-		fromUserId,toUserId,content,createTime,courseId,status,feedbackId
+		fromUserId,toUserId,content,createTime,courseId,status,feedbackId,fromName,toName
 		)VALUES(
-		#{fromUserId},#{toUserId},#{content},#{createTime},#{courseId},#{status},#{feedbackId}
+		#{fromUserId},#{toUserId},#{content},#{createTime},#{courseId},#{status},#{feedbackId},#{fromName},#{toName}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -29,7 +29,24 @@
 		from
 		TB_FeedBack
 		WHERE
-		toUserId=#{userId}
+		(toUserId=#{userId} or
+		fromUserId=#{userId}) and feedbackId=0
+		<if test="courseId">0>
+			and courseId=#{courseId}
+         </if>
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+	</select>
+
+	<select id="getFeedBackListCount" resultType="int">
+		SELECT count(*)
+		from
+		TB_FeedBack
+		WHERE
+		(toUserId=#{userId} or
+		fromUserId=#{userId}) and feedbackId=0
 		<if test="courseId">0>
 			and courseId=#{courseId}
          </if>
@@ -50,8 +67,48 @@
 		SELECT count(*)
 		from
 		TB_FeedBack
-		WHERE toUserId=#{toUserId} and status=1;
+		WHERE toUserId=#{toUserId} and status=1 and feedbackId!=0 ;
 	</select>
+
+	<select id="getFeedBacksByFromUserId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE (toUserId=#{toUserId} and
+		fromUserId=#{fromUserId}) or (toUserId=#{fromUserId} and
+		fromUserId=#{toUserId}) and feedbackId!=0
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+		;
+	</select>
+
+	<select id="getFeedBackListWithBack" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE feedbackId= #{id}
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+		;
+	</select>
+
+	<select id="getFeedBacksByCourseId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE toUserId=#{toUserId} and
+		courseId=#{courseId} and feedbackId!=0
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset}
+		</if>
+		;
+	</select>
+
 	<update id="updateFeedBackReaded" flushCache="true"
 		statementType="PREPARED">
 		UPDATE

@@ -15,6 +15,7 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
@@ -55,7 +56,10 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newSpecialty");
 		List<Specialty> specialties = classService.getSpecialties();
-		mv.addObject("specialties", specialties);
+		if (!ListUtils.isEmptyList(specialties)) {
+			mv.addObject("specialties", specialties);
+		}
+
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -78,7 +82,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		mv.addObject("specialtyId", specialtyId);
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
 
-		mv.addObject("classList", classList);
+		if (!ListUtils.isEmptyList(classList)) {
+			mv.addObject("classList", classList);
+		}
 		List<Specialty> specialties = classService.getSpecialties();
 		mv.addObject("specialties", specialties);
 		this.setUD(mv, request);
@@ -97,8 +103,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
-		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-
+		if (!ListUtils.isEmptyList(coursePercentTypeDemos)) {
+			mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
+		}
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -167,7 +174,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		mv.addObject("page", page);
 		mv.addObject("limit", limit);
 		List<Profile> teacherList = profileService.getProfileListWithTeacher(limit, (page - 1) * limit);
-		mv.addObject("teacherList", teacherList);
+		if (!ListUtils.isEmptyList(teacherList)) {
+			mv.addObject("teacherList", teacherList);
+		}
 
 		List<Profile> totalTeachers = profileService.getProfileListWithTeacher(0, -1);
 		int totalCount = ListUtils.isEmptyList(totalTeachers) ? 0 : totalTeachers.size();
@@ -199,4 +208,25 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		this.setUD(mv, request);
 		return mv;
 	}
+
+	/**
+	 * 学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showAddSemester(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("teachSemester");
+
+		List<Semester> semesterList = classService.getAllSemesterList(0, 0);
+		if (!ListUtils.isEmptyList(semesterList)) {
+			mv.addObject("semesterList", semesterList);
+		}
+
+		this.setUD(mv, request);
+		return mv;
+	}
+
 }

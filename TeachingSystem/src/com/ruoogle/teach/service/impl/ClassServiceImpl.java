@@ -206,4 +206,73 @@ public class ClassServiceImpl implements ClassService {
 
 		return classMapper.updateClassStudentCount(classId, count) > 0;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#deleteSpecialty(long)
+	 */
+	@Override
+	public boolean deleteSpecialty(long id) {
+		if (specialtyMapper.deleteSpecialty(id) > 0) {
+			List<com.ruoogle.teach.meta.Class> classList = classMapper.getClassListBySpecialty(id);
+			if (ListUtils.isEmptyList(classList)) {
+				for (com.ruoogle.teach.meta.Class aClass : classList) {
+					profileMapper.deleteProfileByClassId(aClass.getId());
+					classMapper.deleteClassBySpecialty(id);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#deleteClass(long)
+	 */
+	public boolean deleteClass(long classId) {
+		if (classMapper.deleteClassById(classId) > 0) {
+			profileMapper.deleteProfileByClassId(classId);
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#deleteProfile(long)
+	 */
+	public boolean deleteProfile(long userId) {
+		return profileMapper.deleteProfileByUserId(userId) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#deleteCourseType(long)
+	 */
+	@Override
+	public boolean deleteCourseType(long demoId) {
+		return coursePercentTypeDemoMapper.deleteCoursePercentTypeDemo(demoId) > 0;
+	}
+
+	@Override
+	public List<Semester> getAllSemesterList(int limit, int offset) {
+		return semesterMapper.getAllSemester();
+	}
+
+	@Override
+	public boolean addNewSemester(String name) {
+		Semester semester = new Semester();
+		semester.setName(name);
+		return semesterMapper.addSemester(semester) > 0;
+	}
+
+	@Override
+	public boolean deleteSemester(long id) {
+		return semesterMapper.deleteSelemster(id) > 0;
+	}
 }

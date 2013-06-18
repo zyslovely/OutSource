@@ -1,10 +1,22 @@
-function semestersChange(opt){
+function semestersChange(obj,val){
 	
-	_semesterId=$(opt).val();
-	if(parseInt(_semesterId)<0){
+
+	if(parseInt(val)<0){
 		location.href="/teach/index/";
+	}else if(_isVisitor!=1){
+		location.href="/teach/index/?semesterId="+val+"&userId="+_hostUserId;
 	}else{
-		location.href="/teach/index/?semesterId="+_semesterId;
+		location.href="/teach/index/?semesterId="+val
 	}
 	
 };
+
+
+$(".teachIndex_delete").click(function(){
+	 _courseId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourse',_courseId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});

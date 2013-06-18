@@ -16,4 +16,13 @@ public interface CoursePercentTypeDemoMapper {
 	 * @return
 	 */
 	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public int deleteCoursePercentTypeDemo(@Param(value = "id") long id);
 }

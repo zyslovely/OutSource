@@ -179,16 +179,28 @@ CREATE TABLE `TB_Profile` (
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '姓名',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `classId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
-  `level` int(11) NOT NULL DEFAULT '0' COMMENT '用户登录等级',
   `number` bigint(20) NOT NULL DEFAULT '0' COMMENT '编号',
+  `level` int(11) NOT NULL DEFAULT '0' COMMENT '用户登录等级',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0未结束,1已结束',
   PRIMARY KEY (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户信息表'; 
+
+CREATE TABLE `TB_Profile_Property` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `name` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
+  `propertyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '属性id',
+  `score` double NOT NULL DEFAULT '-1' COMMENT '分数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='用户学业属性'; 
 
 
 CREATE TABLE `TB_FeedBack` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `FromUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `ToUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `fromName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
+  `toName` varchar(64) NOT NULL DEFAULT '' COMMENT '用户名',
   `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
   `feedbackId` bigint(20) NOT NULL DEFAULT '0' COMMENT '反馈id',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -200,6 +212,7 @@ CREATE TABLE `TB_FeedBack` (
 CREATE TABLE `TB_Interactive` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `showUserId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
   `courseId` bigint(20) NOT NULL DEFAULT '0' COMMENT '课程id',
   `forwardId` bigint(20) NOT NULL DEFAULT '0' COMMENT '转发id',
@@ -208,6 +221,17 @@ CREATE TABLE `TB_Interactive` (
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0公开,1隐藏',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='互动表';    
+
+CREATE TABLE `TB_Interactive_Back` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `interactiveId` bigint(20) NOT NULL DEFAULT '0' COMMENT '互动id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
+  `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='互动回复表';    
+
+
 
 CREATE TABLE `TB_Journal` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -242,6 +266,5 @@ insert into TB_Course_Property (name) values ('创新能力');
 insert into TB_Course_Property (name) values ('执行能力');
 insert into TB_Course_Property (name) values ('团队协作');
 insert into TB_Course_Property (name) values ('理解能力');
-insert into TB_Semester (name) values ('1999~2000');
-insert into TB_Semester (name) values ('2000~2001');
+
 

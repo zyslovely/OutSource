@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.SemesterMapper">
 	<resultMap type="Semester" id="semesterMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>
 
@@ -9,9 +9,9 @@
 	<insert id="addSemester" parameterType="Semester">
 		INSERT INTO TB_Semester
 		(
-		id,name
+		name
 		)VALUES(
-		#{id},#{name}
+		#{name}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -21,6 +21,11 @@
 
 	<select id="getAllSemester" resultType="Semester">
 		SELECT *
-		from TB_Semester;
+		from TB_Semester order by id desc;
 	</select>
+
+	<delete id="deleteSelemster" flushCache="true" statementType="PREPARED">
+		delete from TB_Semester
+		where id=#{id};
+	</delete>
 </mapper>

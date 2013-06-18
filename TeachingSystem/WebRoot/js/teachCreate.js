@@ -1,20 +1,34 @@
-function coursePercentTypeChange(opt){
+_semesterId=-1;
+_classId=-1;
+function coursePercentTypeChange(obj,val){
 	  
-	 _demoId=$(opt).val();
 	 $(".coursePercentTypeDemos_ul").css("display","none");
 	 $(".coursePercentTypeDemos_property_ul").css("display","none");
-	 $("#coursePercentTypeDemos_"+_demoId).css("display","block");
-	 $("#coursePercentTypeDemos_property_"+_demoId).css("display","block");
+	 $("#coursePercentTypeDemos_"+val).css("display","block");
+	 $("#coursePercentTypeDemos_property_"+val).css("display","block");
 	 
 	
 };
 
+function semesterChange(obj,val){
+	_semesterId=val;
+};
+
+function classChange(obj,val){
+	_classId=val;
+};
 
 $("#teachCreate_save").click(function(){
 	
+	if(_classId<0){
+		alert("请选择班级");
+		return;
+	}
+	if(_semesterId<0){
+		alert("请选择专业");
+		return;
+	}
 	course_name=$("#course_name").val();
-	class_id=$("#class_selector").val();
-	semeter_id=$("#semester_selector").val();
 	desc=$("#desc_textarea").val();
 	_demoId=$("#demoselector").val();
 	
@@ -63,7 +77,7 @@ $("#teachCreate_save").click(function(){
 
 	 	}
 	 }
-	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'addNewCourse',course_name,_courseScorePercents,semeter_id,class_id,_properties,desc,submitCBBrand);
+	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'addNewCourse',course_name,_courseScorePercents,_semesterId,_classId,_properties,desc,submitCBBrand);
 	
 });
 

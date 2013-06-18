@@ -1,6 +1,7 @@
 package com.ruoogle.teach.meta;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Interactive implements Serializable {
 	private static final long serialVersionUID = 6L;
@@ -12,6 +13,23 @@ public class Interactive implements Serializable {
 	private String photoUrl;
 	private long CreateTime;
 	private int status;
+
+	private long showUserId;
+	private String name;
+
+	private String forwardFromStr;
+
+	private String courseName;
+
+	private List<InteractiveBack> subInteractiveBackList;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public long getId() {
 		return id;
@@ -75,6 +93,38 @@ public class Interactive implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public long getShowUserId() {
+		return showUserId;
+	}
+
+	public void setShowUserId(long showUserId) {
+		this.showUserId = showUserId;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getForwardFromStr() {
+		return forwardFromStr;
+	}
+
+	public void setForwardFromStr(String forwardFromStr) {
+		this.forwardFromStr = forwardFromStr;
+	}
+
+	public List<InteractiveBack> getSubInteractiveBackList() {
+		return subInteractiveBackList;
+	}
+
+	public void setSubInteractiveBackList(List<InteractiveBack> subInteractiveBackList) {
+		this.subInteractiveBackList = subInteractiveBackList;
 	}
 
 }

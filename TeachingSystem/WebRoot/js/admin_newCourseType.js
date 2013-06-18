@@ -1,11 +1,8 @@
 var _isEdit=false;
+var objs=new Array();
 $("#newCourseType_newPercent").click(function(){
 	
-	$("#newCourseType_scoreType").append("<div style='height: 35px;'><select  class='newCourseType_scoreType_select'><option value=\"0\">平时成绩</option>" +
-			"<option value=\"1\">考试成绩</option><option value=\"2\">多次平时考试成绩</option>" +
-			"<option value=\"3\">创意成绩</option><option value=\"4\">团队互评成绩</option>" +
-			"</select><input class='newCourseType_scoreType_percent' type=\"text\" value='' style=\"width:50px;margin-left:10px\"/><span style=\"margin-left:10px;\">%</span></div>");
-			
+	
 });
 
 $("#newCourseType_Create").click(function(){
@@ -13,13 +10,12 @@ $("#newCourseType_Create").click(function(){
 	if(_isEdit){
 		
 		_name=$("#newCourseType_name").val();
-		_typeIdOpt=$(".newCourseType_scoreType_select");
 		_percentOpt=$(".newCourseType_scoreType_percent");
 		_typeIds=new Array();
 		_percentIds=new Array();
 		_total=0;
-		for(i=0;i<_typeIdOpt.length;i++){
-			_typeIds.push($(_typeIdOpt[i]).val());
+		for(i=0;i<objs.length;i++){
+			_typeIds.push(objs[i].val);
 			_percentIds.push(parseInt($(_percentOpt[i]).val()));
 			_total+=parseInt($(_percentOpt[i]).val());
 			if($(_percentOpt[i]).val()==''||$(_percentOpt[i]).val()==0){
@@ -36,6 +32,7 @@ $("#newCourseType_Create").click(function(){
 			
 			if(flag){
 				location.href=location.href;
+				return;
 			}else{
 				alert("添加失败");
 			}
@@ -50,3 +47,32 @@ $("#newCourseType_Create").click(function(){
 	}
 	
 });
+
+$(".admin_newCourseType_delete").click(function(){
+    _demoId=$(this).attr("data_id");
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_demoId,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+});
+
+function scoreType_select(obj,val){
+	_in=0;
+	for(i=0;i<objs.length;i++){
+		if(objs[i].obj==obj){
+			objs[i].val=val;
+			_in=1;
+			break;
+		}
+	}
+	if(_in==0){
+	  objs.push({
+		"obj":obj,
+		"val":val
+	  });
+	}
+
+};
+
+

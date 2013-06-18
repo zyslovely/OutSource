@@ -2,7 +2,7 @@
 	overflow: hidden;
 	position: relative;
 	width: 50px;
-	height: 60px;
+	height: 50px;
 }
 
 .w-filebtn .btn {
@@ -24,5 +24,35 @@
 	border: none;
 	background: none;
 	opacity: 0;
-	filter: alpha(opacity = 0);
+	filter: alpha(opacity =               0);
+}
+
+.top_li {
+	font-size: 14px;
+	text-align: center;
+	float: left;
+	width: 100px;
+	padding: 12px 15px;;
+	height: 15px;
+}
+
+.top_li_span {
+	color: white;
+	float: left;
+}
+
+.top_li_selected_color {
+	color: rgb(251, 251, 251);
+}
+
+.top_li_diselected_color {
+	color: rgb(27, 89, 147);
+}
+
+.w-btn {
+	font-size: 16px
+}
+
+.clear{
+	clear:both;
 }

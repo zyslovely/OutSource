@@ -21,6 +21,24 @@ public interface CourseStudentPropertySemesterScoreMapper {
 			@Param(value = "semesterId") long semesterId, @Param(value = "studentId") long studentId);
 
 	/**
+	 * 获取学生学期数
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @return
+	 */
+	public int getCourseStudentPropertySemesterCount(@Param(value = "studentId") long studentId);
+
+	/**
+	 * 获取学生的所有
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param studentId
+	 * @return
+	 */
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoreByStudentId(@Param(value = "studentId") long studentId);
+
+	/**
 	 * 更新
 	 * 
 	 * @auther zyslovely@gmail.com

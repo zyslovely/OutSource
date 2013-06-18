@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.InteractiveBackMapper">
+	<resultMap type="InteractiveBack" id="interactiveBackMap ">
+		<id property="id" column="id" />
+		<result property="userId" column="userId" />
+		<result property="interactiveId" column="interactiveId" />
+		<result property="content" column="content" />
+		<result property="CreateTime" column="CreateTime" />
+		<result property="name" column="name" />
+	</resultMap>
+	<insert id="addInteractiveBack" parameterType="InteractiveBack">
+		INSERT INTO
+		TB_Interactive_Back
+		(userId,interactiveId,content,CreateTime,name
+		)VALUES(
+		#{userId},#{interactiveId},#{content},#{CreateTime},#{name}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getInteractiveBack" resultType="InteractiveBack">
+		SELECT *
+		from
+		TB_Interactive_Back
+		WHERE interactiveId=#{interactiveId};
+	</select>
+</mapper>

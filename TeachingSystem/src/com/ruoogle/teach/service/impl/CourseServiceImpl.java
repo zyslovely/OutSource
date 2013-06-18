@@ -3,6 +3,7 @@ package com.ruoogle.teach.service.impl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,7 @@ import com.ruoogle.teach.mapper.CourseStudentPropertySemesterScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.ProfilePropertyMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -50,6 +52,9 @@ import com.ruoogle.teach.meta.CourseStudentTotalScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.ProfileProperty;
+import com.ruoogle.teach.meta.SearchProfile;
+import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -96,6 +101,8 @@ public class CourseServiceImpl implements CourseService {
 	private CourseStudentPropertyScoreMapper courseStudentPropertyScoreMapper;
 	@Resource
 	private CourseStudentPropertySemesterScoreMapper courseStudentPropertySemesterScoreMapper;
+	@Resource
+	private ProfilePropertyMapper profilePropertyMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -473,10 +480,9 @@ public class CourseServiceImpl implements CourseService {
 		if (course == null) {
 			return -1;
 		}
-		List<CourseScorePercent> courseScorePercentList = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
 		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseStudentsByCourseId(courseId);
 		List<CourseStudentTotalScore> totalScoreList = courseStudentTotalScoreMapper.getCourseStudentTotalScores(courseId);
-		if (totalScoreList.size() < courseStudentList.size() * courseScorePercentList.size()) {
+		if (totalScoreList.size() < courseStudentList.size()) {
 			return 2; // 还有学生的成绩没有录入
 		}
 		if (courseMapper.finishedCourse(courseId) > 0) {
@@ -988,5 +994,135 @@ public class CourseServiceImpl implements CourseService {
 			return 0;
 		}
 		return courseStudentList.size();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#deleteCourseById(long)
+	 */
+	@Override
+	public boolean deleteCourseById(long courseId) {
+		Course course = courseMapper.getCourseById(courseId);
+		if (course == null) {
+			return false;
+		}
+		if (course.getStatus() == Course.FINISHED) {
+			return false;
+		}
+		return courseMapper.deleteCourse(courseId) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getTheCourseListByUserId(long,
+	 * int, int)
+	 */
+	@Override
+	public List<Course> getTheCourseListByUserId(long userId, int limit, int offset) {
+		List<CourseStudent> courseStudents = courseStudentMapper.getCourseListByUserId(userId, limit, offset);
+		if (ListUtils.isEmptyList(courseStudents)) {
+			return null;
+		}
+		List<Long> courseIds = new ArrayList<Long>(courseStudents.size());
+		for (CourseStudent courseStudent : courseStudents) {
+			courseIds.add(courseStudent.getCourseId());
+		}
+		return courseMapper.getCourseListByIds(courseIds);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getSearchProfile(long, long,
+	 * java.util.List)
+	 */
+	@Override
+	public List<SearchProfile> getSearchProfile(long semesterId, long classId, List<SearchProperty> searchProperties) {
+
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue(), 0, -1);
+		if (ListUtils.isEmptyList(profileList)) {
+			return null;
+		}
+		List<SearchProfile> searchProfiles = new ArrayList<SearchProfile>();
+		for (Profile profile : profileList) {
+			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseStudentPropertySemesterScoreMapper
+					.getCourseStudentPropertySemesterScoreByStudentIdSemester(semesterId, profile.getUserId());
+			if (ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
+				continue;
+			}
+			boolean succ = true;
+			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+				for (SearchProperty searchProperty : searchProperties) {
+					if (searchProperty.getPropertyId() == courseStudentPropertySemesterScore.getPropertyId()) {
+						if (searchProperty.getValue() >= courseStudentPropertySemesterScore.getScore()) {
+							succ = false;
+							break;
+						}
+					}
+				}
+				if (!succ) {
+					break;
+				}
+			}
+			if (!succ) {
+				continue;
+			}
+			SearchProfile searchProfile = new SearchProfile();
+			searchProfile.setProfile(profile);
+			searchProfile.setCourseStudentPropertySemesterScoreList(courseStudentPropertySemesterScores);
+			searchProfiles.add(searchProfile);
+		}
+		return searchProfiles;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#endStudentSemester(long)
+	 */
+	@Override
+	public boolean endStudentSemester(long userId) {
+
+		List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScoreList = courseStudentPropertySemesterScoreMapper
+				.getCourseStudentPropertySemesterScoreByStudentId(userId);
+		if (!ListUtils.isEmptyList(courseStudentPropertySemesterScoreList)) {
+			List<CourseProperty> courseProperties = coursePropertyMapper.getAllCourseProperties();
+			if (!ListUtils.isEmptyList(courseProperties)) {
+				Map<Long, Double> totalScoreMap = new HashMap<Long, Double>();
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScoreList) {
+					for (CourseProperty courseProperty : courseProperties) {
+						if (courseProperty.getId() != courseStudentPropertySemesterScore.getPropertyId()) {
+							continue;
+						}
+						Double score = totalScoreMap.get(courseProperty);
+						if (score != null) {
+							score += courseStudentPropertySemesterScore.getScore();
+						} else {
+							score = courseStudentPropertySemesterScore.getScore();
+						}
+						totalScoreMap.put(courseProperty.getId(), score);
+					}
+				}
+				int semesterCount = courseStudentPropertySemesterScoreMapper.getCourseStudentPropertySemesterCount(userId);
+				Iterator<Long> keySetIterator = totalScoreMap.keySet().iterator();
+				while (keySetIterator.hasNext()) {
+					long propertyId = keySetIterator.next();
+					Double score = totalScoreMap.get(propertyId);
+					double avgScore = score / semesterCount;
+					ProfileProperty profileProperty = new ProfileProperty();
+					profileProperty.setUserId(userId);
+					Profile profile = profileMapper.getProfile(userId);
+					profileProperty.setName(profile.getName());
+					profileProperty.setPropertyId(propertyId);
+					profileProperty.setScore(avgScore);
+					profilePropertyMapper.addProfileProperty(profileProperty);
+				}
+			}
+		}
+
+		return profileMapper.updateProfileStatus(userId, 1) > 0;
 	}
 }

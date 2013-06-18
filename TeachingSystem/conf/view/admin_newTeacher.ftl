@@ -19,21 +19,24 @@ body{min-width:1024px;min-height:600px}
        <table style="" cellspacing="0">
             <thead style="height: 60px;">
             <tr>
-               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">姓名</th>
-               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">账号</th>
-               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">密码</th>
-               <th style="border-bottom: 2px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(123, 123, 123);">类型</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">姓名</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">账号</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">密码</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">类型</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">操作</th>
             </tr>
             </thead>
             <tbody>
                  
                  <#list teacherList as teacher>
-                  <tr style="height:40px;font-size: 16px;border-bottom: 2px solid rgb(224, 224, 224); ">
+                  <tr  style="height:40px;font-size: 16px;border-bottom: 1px solid rgb(224, 224, 224); ">
 
-                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.name!""}</th>
-                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.userName!""}</th>
-                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);">${teacher.password!""}</th>
-                  <th style="border-bottom: 2px solid rgb(224, 224, 224);color: rgb(123, 123, 123);"><#if teacher.level==2>企业老师<#else>普通老师</#if></th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.name!""}</th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.userName!""}</th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.password!""}</th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);"><#if teacher.level==2>企业老师<#else>普通老师</#if></th>
+                  <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newTeacher_delete" data_id="${teacher.userId!0}">删除</a></th>
+         
                   </tr>
                  </#list>
                  
@@ -72,15 +75,18 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">类型</p></th>
                    <th>
+                      <div style="margin-left:5px;">
                       <select id="newTeacher_level"> 
+                           <option value="-1"></option>
                            <option value="1">普通老师</option>
                            <option value="2">企业老师</option>
                       </select>
+                      </div>
                    </th>
                 </tr>
             </tbody>
        </table>
-       <div style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white; font-size: 20px; line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加老师账号</a></div>
+       <div class="w-btn" style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white;  line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加老师账号</a></div>
        
    </div>
        </div>
@@ -107,4 +113,5 @@ $("#jpage_teacher").paginate({
 								location.href="/teach/admin/teacher/list/?page="+page;
 							}
 			});
+ 
 </script>

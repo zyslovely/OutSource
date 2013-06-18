@@ -76,6 +76,16 @@ public interface ProfileMapper {
 	public int updateProfilePassword(@Param(value = "userId") long userId, @Param(value = "password") String password);
 
 	/**
+	 * 更新学生状态
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param status
+	 * @return
+	 */
+	public int updateProfileStatus(@Param(value = "userId") long userId, @Param(value = "status") int status);
+
+	/**
 	 * 获取profile列表
 	 * 
 	 * @auther zyslovely@gmail.com
@@ -92,5 +102,22 @@ public interface ProfileMapper {
 	 * @return
 	 */
 	public List<Profile> getProfileListWithTeacher(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
+	/**
+	 * 删除用户信息通过classid
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public int deleteProfileByClassId(@Param(value = "classId") long classId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public int deleteProfileByUserId(@Param(value = "userId") long userId);
 
 }

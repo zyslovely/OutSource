@@ -91,4 +91,70 @@ public class DwrTeachSysAdminBean {
 				.asList(percents)));
 	}
 
+	/**
+	 * 新建学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param name
+	 * @return
+	 */
+	public boolean addNewSemester(String name) {
+		return classService.addNewSemester(name);
+	}
+
+	/**
+	 * 删除学期
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSemester(long id) {
+		return classService.deleteSemester(id);
+	}
+
+	/**
+	 * 删除专业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteSpecialty(long id) {
+		return classService.deleteSpecialty(id);
+	}
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param classId
+	 * @return
+	 */
+	public boolean deleteClass(long classId) {
+		return classService.deleteClass(classId);
+	}
+
+	public boolean deleteUser(long userId) {
+		return classService.deleteProfile(userId);
+	}
+
+	public boolean deleteCourseType(long demoId) {
+		return classService.deleteCourseType(demoId);
+	}
+
+	public boolean deleteCourse(long courseId) {
+		return courseService.deleteCourseById(courseId);
+	}
+
+	/**
+	 * 结束所有学业
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public boolean endAllSemester(long userId) {
+		
+		return courseService.endStudentSemester(userId);
+	}
 }

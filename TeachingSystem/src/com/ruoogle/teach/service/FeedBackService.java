@@ -43,6 +43,17 @@ public interface FeedBackService {
 	public List<FeedBack> getFeedBackList(long userId, int limit, int offset, long courseId);
 
 	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param limit
+	 * @param offset
+	 * @param courseId
+	 * @return
+	 */
+	public int getFeedBackListCount(long userId, int limit, int offset, long courseId);
+
+	/**
 	 * 更新已读
 	 * 
 	 * @auther zyslovely@gmail.com
@@ -50,4 +61,26 @@ public interface FeedBackService {
 	 * @return
 	 */
 	public boolean updateFeedBackReaded(long feedbackId);
+
+	/**
+	 * 反馈
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @param limit
+	 * @param offset
+	 * @return
+	 */
+	public List<FeedBack> getFeedBackListFromUserId(long userId, int limit, int offset, long toUserId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param limit
+	 * @param offset
+	 * @param toUserId
+	 * @return
+	 */
+	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit, int offset, long toUserId);
 }

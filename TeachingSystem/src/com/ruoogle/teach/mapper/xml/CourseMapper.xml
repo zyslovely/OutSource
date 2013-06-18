@@ -36,7 +36,7 @@
 	<select id="getCourseById" resultType="Course">
 		SELECT *
 		from TB_Course
-		WHERE id=#{courseId};
+		WHERE status != 2 and id=#{courseId} ;
 	</select>
 
 	<update id="finishedCourse" flushCache="true" statementType="PREPARED">
@@ -49,7 +49,7 @@
 		SELECT *
 		from
 		TB_Course
-		WHERE
+		WHERE status != 2 and
 		id in
 		<foreach item="item" collection="list" index="index" open="("
 			separator="," close=")">
@@ -57,5 +57,12 @@
 	     </foreach>
 		;
 	</select>
-	
+
+	<update id="deleteCourse" flushCache="true" statementType="PREPARED">
+		update TB_Course set
+		status = 2
+		where id = #{id};
+	</update>
+
+
 </mapper>
