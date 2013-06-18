@@ -10,6 +10,8 @@ public class Class implements Serializable {
 	private long specialtyId;
 	private int semesterCount;
 	private int studentCount;
+	private String specialty;
+	private String shortSpecialty;
 
 	public int getSemesterCount() {
 		return semesterCount;
@@ -57,6 +59,22 @@ public class Class implements Serializable {
 
 	public void setStudentCount(int studentCount) {
 		this.studentCount = studentCount;
+	}
+
+	public String getSpecialty() {
+		return specialty;
+	}
+
+	public void setSpecialty(String specialty) {
+		this.specialty = specialty;
+	}
+
+	public String getShortSpecialty() {
+		return shortSpecialty;
+	}
+
+	public void setShortSpecialty(String shortSpecialty) {
+		this.shortSpecialty = shortSpecialty;
 	}
 
 }

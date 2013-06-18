@@ -59,7 +59,7 @@ public class DwrTeachSysAdminBean {
 	}
 
 	/**
-	 * 添加老师
+	 * 添加教师
 	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param name
@@ -154,7 +154,7 @@ public class DwrTeachSysAdminBean {
 	 * @return
 	 */
 	public boolean endAllSemester(long userId) {
-		
+
 		return courseService.endStudentSemester(userId);
 	}
 }

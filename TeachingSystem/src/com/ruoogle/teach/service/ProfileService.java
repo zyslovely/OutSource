@@ -46,7 +46,7 @@ public interface ProfileService {
 	public Profile getProfileByUserName(String userName);
 
 	/**
-	 * 老师列表
+	 * 教师列表
 	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param level
@@ -55,7 +55,7 @@ public interface ProfileService {
 	public List<Profile> getProfileList(int level, int limit, int offset);
 
 	/**
-	 * 两种老师的情况
+	 * 两种教师的情况
 	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param limit
@@ -63,6 +63,8 @@ public interface ProfileService {
 	 * @return
 	 */
 	public List<Profile> getProfileListWithTeacher(int limit, int offset);
+
+	public List<Profile> getProfileListWithMySelfAndCompany(long userId);
 
 	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId);
 

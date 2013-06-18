@@ -11,7 +11,7 @@
      <#elseif pageName = "newCourseType">
      添加课程类型
      <#elseif pageName = "newTeacher">
-     添加老师账号
+     添加教师账号
      <#elseif pageName = "newStudent">
      添加学生信息
      <#elseif pageName = "courseInfo">
@@ -30,6 +30,8 @@
      学期设置
      <#elseif pageName = "courseSearch">
      相关搜索
+     <#elseif pageName = "newHeadImage">
+     首页头图
      </#if>
 
      </p>
@@ -81,7 +83,7 @@
       </div>
       <#elseif pageName="newTeacher">
       <div style="width: 145px; margin-top: 23px; float: right; ">
-                 <a class="w-btn" id="newTeacher_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">添加老师账号</a>
+                 <a class="w-btn" id="newTeacher_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">添加教师账号</a>
       </div>
      <#elseif pageName="newCourseType">
       <div style="width: 145px; margin-top: 23px; float: right; ">

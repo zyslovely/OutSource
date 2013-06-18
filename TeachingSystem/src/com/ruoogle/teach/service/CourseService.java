@@ -13,6 +13,7 @@ import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentScoreVO;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
@@ -286,4 +287,23 @@ public interface CourseService {
 	 * @return
 	 */
 	public boolean endStudentSemester(long userId);
+
+	/**
+	 * 获得最近的专业id
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param specialtyId
+	 * @param userId
+	 * @return
+	 */
+	public long getLastestSemesterId(long userId);
+
+	/**
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param courseId
+	 * @param userId
+	 * @return
+	 */
+	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(long courseId, long userId);
 }

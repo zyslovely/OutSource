@@ -13,11 +13,11 @@ $("#newTeacher_Submit").click(function(){
 	_username=$("#newTeacher_username").val();
 	_password=$("#newTeacher_password").val();
 	if(_teacherLevel<=0){
-		alert("请选择老师类型");
+		alert("请选择教师类型");
 		return;
 	}
 	if(_name==""||_username==""||_password==""){
-		alert("内容为空，请填写老师信息");
+		alert("内容为空，请填写教师信息");
 	}
 	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysAdminBean', 'addTeacherPassPort',_name,_teacherLevel,_username,_password,function(flag){
 		if(flag){

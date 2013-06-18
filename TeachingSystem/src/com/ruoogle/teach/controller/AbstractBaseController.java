@@ -56,10 +56,10 @@ public abstract class AbstractBaseController extends MultiActionController {
 			mv.addObject("levelName", "学生");
 			break;
 		case Teacher:
-			mv.addObject("levelName", "老师");
+			mv.addObject("levelName", "教师");
 			break;
 		case CompanyLeader:
-			mv.addObject("levelName", "企业老师");
+			mv.addObject("levelName", "企业教师");
 			break;
 		case Admin:
 			mv.addObject("levelName", "管理员");

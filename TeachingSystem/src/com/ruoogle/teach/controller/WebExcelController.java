@@ -262,7 +262,7 @@ public class WebExcelController extends AbstractBaseController {
 					Profile maxProfile = profileMapper.getMaxProfileByNumber(classId);
 					long maxNumber = 0;
 					if (maxProfile != null) {
-						maxNumber = maxProfile.getNumber();
+						maxNumber = maxProfile.getNumber() + 1;
 					}
 					for (int i = 1; i <= totalRow; i++) {
 						HSSFRow row = sheet.getRow(i);
@@ -313,7 +313,7 @@ public class WebExcelController extends AbstractBaseController {
 	}
 
 	/**
-	 * 老师下载某门课的成绩单
+	 * 教师下载某门课的成绩单
 	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param request
@@ -335,7 +335,7 @@ public class WebExcelController extends AbstractBaseController {
 			return null;
 		}
 		if (myUser.getLevel() != ProfileLevel.Teacher.getValue() && myUser.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
-			logger.error("不是老师");
+			logger.error("不是教师");
 			return null;
 		}
 		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");

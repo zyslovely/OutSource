@@ -43,7 +43,8 @@
 		resultMap="profileMap">
 		SELECT *
 		from TB_Profile
-		WHERE level=#{level} and status=0 order by userId desc
+		WHERE level=#{level} and status=0 order by
+		userId desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -52,21 +53,24 @@
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
 		from TB_Profile
-		WHERE UserId=#{UserId} and status=0;
+		WHERE UserId=#{UserId} and status=0 order by userId
+		desc;
 	</select>
 
 	<select id="getProfileByUserName" resultType="Profile">
 		SELECT *
 		from
 		TB_Profile
-		WHERE userName=#{userName} and status=0;
+		WHERE userName=#{userName} and status=0 order by userId
+		desc;
 	</select>
 
 	<select id="getProfileByClassId" resultType="Profile">
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and status=0 and level=#{level}
+		WHERE classId=#{classId} and status=0 and
+		level=#{level}
 		order by userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
@@ -78,7 +82,8 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE (level=1 or level=2) and status=0 order by userId asc
+		WHERE (level=1 or level=2) and status=0 order by
+		userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -90,7 +95,8 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and status=0 order by number desc limit 1;
+		WHERE classId=#{classId} and status=0 order by userId desc
+		limit 1;
 	</select>
 	<update id="updateProfilePassword" flushCache="true"
 		statementType="PREPARED">
@@ -102,7 +108,7 @@
 		userId=
 		#{userId};
 	</update>
-	
+
 	<update id="updateProfileStatus" flushCache="true"
 		statementType="PREPARED">
 		UPDATE
@@ -113,15 +119,16 @@
 		userId=
 		#{userId};
 	</update>
-	
+
 	<select id="getProfileListByIds" resultType="Profile"
 		parameterType="list">
-		SELECT * from TB_Profile where  status=0 and 
+		SELECT * from TB_Profile where status=0 and
 		userId in
 		<foreach item="item" collection="userIds" index="index" open="("
 			separator="," close=")">
 			#{item} 
 	     </foreach>
+		order by userId desc
 		;
 	</select>
 

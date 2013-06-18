@@ -34,7 +34,7 @@ body{min-width:1024px;min-height:600px}
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.name!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.userName!""}</th>
                   <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">${teacher.password!""}</th>
-                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);"><#if teacher.level==2>企业老师<#else>普通老师</#if></th>
+                  <th class="f3" style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);"><#if teacher.level==2>企业教师<#else>专业教师</#if></th>
                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newTeacher_delete" data_id="${teacher.userId!0}">删除</a></th>
          
                   </tr>
@@ -49,10 +49,10 @@ body{min-width:1024px;min-height:600px}
        <table>
             <tbody>
                 <tr>
-                   <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">老师姓名</p></th>
+                   <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">教师姓名</p></th>
                    <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newTeacher_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="老师姓名"/>
+                        <input id="newTeacher_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="教师姓名"/>
                       </div>
                    </th>
                 </tr>
@@ -78,15 +78,15 @@ body{min-width:1024px;min-height:600px}
                       <div style="margin-left:5px;">
                       <select id="newTeacher_level"> 
                            <option value="-1"></option>
-                           <option value="1">普通老师</option>
-                           <option value="2">企业老师</option>
+                           <option value="1">普通教师</option>
+                           <option value="2">企业教师</option>
                       </select>
                       </div>
                    </th>
                 </tr>
             </tbody>
        </table>
-       <div class="w-btn" style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white;  line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加老师账号</a></div>
+       <div class="w-btn" style="width: 500px; margin-left: 126px;" > <a id="newTeacher_Submit" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; height: 59px; display: block; color: white;  line-height: 55px; margin-left: 20px; text-align: center; width: 174px;" href="javascript:void(0);;">添加教师账号</a></div>
        
    </div>
        </div>

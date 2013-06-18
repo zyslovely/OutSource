@@ -7,15 +7,17 @@
 		<result property="semesterCount" column="semesterCount" />
 		<result property="startYear" column="startYear" />
 		<result property="studentCount" column="studentCount" />
+		<result property="specialty" column="specialty" />
+		<result property="shortSpecialty" column="shortSpecialty" />
 
 	</resultMap>
 	<insert id="addClass" parameterType="Class">
 		INSERT INTO TB_Class
 		(
-		name,specialtyId,semesterCount,startYear,studentCount
+		name,specialtyId,semesterCount,startYear,studentCount,shortSpecialty,specialty
 		)
 		VALUES(
-		#{name},#{specialtyId},#{semesterCount},#{startYear},#{studentCount}
+		#{name},#{specialtyId},#{semesterCount},#{startYear},#{studentCount},#{shortSpecialty},#{specialty}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT

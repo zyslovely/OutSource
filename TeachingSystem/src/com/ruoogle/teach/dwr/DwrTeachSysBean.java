@@ -7,6 +7,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.StringUtil;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -109,6 +110,9 @@ public class DwrTeachSysBean {
 			return false;
 		}
 		if (!newPassword1.equals(newPassword2)) {
+			return false;
+		}
+		if (!StringUtil.isAllShuziYinwen(newPassword1)) {
 			return false;
 		}
 		WebContext ctx = WebContextFactory.get();

@@ -118,7 +118,7 @@
            <a href="/teach/admin/course/type/list/" class="<#if pageName!='newCourseType'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加课程类型</a>
         </li>
         <li class="top_li" style="<#if pageName=='newTeacher'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/admin/teacher/list/" class="<#if pageName!='newTeacher'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加老师账号</a>
+           <a href="/teach/admin/teacher/list/" class="<#if pageName!='newTeacher'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加教师账号</a>
         </li>
         <li class="top_li" style="<#if pageName=='newStudent'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/student/list/" class="<#if pageName!='newStudent'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学生信息</a>
@@ -126,6 +126,10 @@
         <li class="top_li" style="<#if pageName=='teachSemester'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/semester/list/" class="<#if pageName!='teachSemester'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学期</a>
         </li>
+         <li class="top_li" style="<#if pageName=='newHeadImage'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/admin/head/" class="<#if pageName!='newHeadImage'>top_li_selected_color<#else>top_li_diselected_color</#if>">首页头图</a>
+        </li>
+        
         <#--
         <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学校学院信息</a>

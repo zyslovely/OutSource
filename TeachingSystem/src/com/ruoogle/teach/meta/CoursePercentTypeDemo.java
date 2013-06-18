@@ -70,11 +70,11 @@ public class CoursePercentTypeDemo implements Serializable {
 			}
 
 			public String getName() {
-				return "多次平时考试成绩";
+				return "多次平时成绩";
 			}
 
 			public String getDesc() {
-				return "多次平时考试成绩描述";
+				return "多次平时成绩描述";
 			}
 
 			public int getObjectCount() {
@@ -91,7 +91,7 @@ public class CoursePercentTypeDemo implements Serializable {
 			}
 
 			public String getName() {
-				return "创意成绩成绩";
+				return "创意成绩";
 			}
 
 			public String getDesc() {

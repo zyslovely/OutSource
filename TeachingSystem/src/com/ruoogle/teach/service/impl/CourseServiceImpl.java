@@ -129,7 +129,7 @@ public class CourseServiceImpl implements CourseService {
 		for (CourseScorePercent courseScorePercent : CourseScorePercents) {
 			courseScorePercent.setCourseId(course.getId());
 			if (courseScorePercent.getTeacherId() != 0) {
-				// 添加老师
+				// 添加教师
 				teacherIds.add(courseScorePercent.getTeacherId());
 			}
 			courseScorePercentMapper.addCourseScorePercent(courseScorePercent);
@@ -149,7 +149,7 @@ public class CourseServiceImpl implements CourseService {
 			courseStudent.setSemesterId(semesterId);
 			courseStudentMapper.addCourseStudent(courseStudent);
 		}
-		// 添加老师和企业老师用户
+		// 添加教师和企业教师用户
 		for (Long userId : teacherIds) {
 			Profile profile = profileMapper.getProfile(userId);
 			CourseStudent courseStudent = new CourseStudent();
@@ -174,14 +174,14 @@ public class CourseServiceImpl implements CourseService {
 	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score, long teacherId) {
 
 		CourseScorePercent courseScorePercent = null;
-		// 判断当前老师有没有权限
+		// 判断当前教师有没有权限
 		if (percentType == CoursePercentType.EachStudent.getValue()) {
 			courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, percentType);
 		} else {
 			courseScorePercent = courseScorePercentMapper.getCourseScorePercentByTeacher(teacherId, courseId, percentType);
 		}
 		if (courseScorePercent == null) {
-			logger.error("当前老师有没有权限输入分数");
+			logger.error("当前教师有没有权限输入分数");
 			return false;
 		}
 
@@ -620,8 +620,17 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId) {
-
-		return courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+		List<CourseScorePercent> courseScorePercents = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+		if (ListUtils.isEmptyList(courseScorePercents)) {
+			return null;
+		}
+		for (CourseScorePercent courseScorePercent : courseScorePercents) {
+			Profile profile = profileMapper.getProfile(courseScorePercent.getTeacherId());
+			if (profile != null) {
+				courseScorePercent.setTeacherName(profile.getName());
+			}
+		}
+		return courseScorePercents;
 	}
 
 	/**
@@ -1010,6 +1019,7 @@ public class CourseServiceImpl implements CourseService {
 		if (course.getStatus() == Course.FINISHED) {
 			return false;
 		}
+		courseStudentMapper.deleteCourseStudentByCourse(courseId);
 		return courseMapper.deleteCourse(courseId) > 0;
 	}
 
@@ -1124,5 +1134,26 @@ public class CourseServiceImpl implements CourseService {
 		}
 
 		return profileMapper.updateProfileStatus(userId, 1) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.CourseService#getLastestSpecialtyId(long,
+	 * long)
+	 */
+	@Override
+	public long getLastestSemesterId(long userId) {
+		CourseStudent courseStudent = courseStudentMapper.getLastestSemesterId(userId);
+		if (courseStudent == null) {
+			return 0;
+		}
+		return courseStudent.getSemesterId();
+	}
+
+	@Override
+	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(long courseId, long userId) {
+
+		return courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, userId);
 	}
 }

@@ -1,5 +1,6 @@
 package com.ruoogle.teach.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.Specialty;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.service.ProfileService;
 
 /**
@@ -146,5 +148,20 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public List<ProfileProperty> getProfileProperties(long userId) {
 		return profilePropertyMapper.getProfileProperty(userId);
+	}
+
+	@Override
+	public List<Profile> getProfileListWithMySelfAndCompany(long userId) {
+
+		Profile profile = profileMapper.getProfile(userId);
+		List<Profile> companyProfile = profileMapper.getProfileListByLevel(ProfileLevel.CompanyLeader.getValue(), 0, -1);
+		List<Profile> profiles = new ArrayList<Profile>();
+		if (profile != null) {
+			profiles.add(profile);
+		}
+		if (!ListUtils.isEmptyList(companyProfile)) {
+			profiles.addAll(profiles);
+		}
+		return profiles;
 	}
 }

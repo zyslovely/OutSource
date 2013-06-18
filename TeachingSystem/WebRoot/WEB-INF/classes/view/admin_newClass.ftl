@@ -17,7 +17,7 @@ body{min-width:1024px;min-height:600px}
        <div style="width: 800px;  margin-left: 5%;">
            <ul style="height:30px;">
               <li style="float:left;width:200px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">选择专业:</p></li>
-              <li style="float:left;width:300px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">输入班级名称:</p></li>
+              <li style="float:left;width:300px;"><p style="color: rgb(106, 106, 106);padding-left: 7px;font-size: 18px;">班级编号:</p></li>
               <li style="float:left;"><p></p></li>
            </ul>
            <ul style=" height: 60px;">
@@ -65,7 +65,7 @@ body{min-width:1024px;min-height:600px}
        <tbody style="font-size: 16px;">
             <#list classList as class>
             <tr style="height:40px">
-               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.name!""}</th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.shortSpecialty!""}${class.name!""}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.semesterCount!0}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${class.studentCount!0}</th>
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newClass_delete" data_id="${class.id!0}">删除</a></th>

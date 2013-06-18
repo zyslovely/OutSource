@@ -12,6 +12,8 @@ public class Course implements Serializable {
 	private int status;
 	private String description;
 
+	private String teacherName;
+
 	public static final int VALID = 0;
 
 	public static final int FINISHED = 1;
@@ -72,6 +74,14 @@ public class Course implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 
 }

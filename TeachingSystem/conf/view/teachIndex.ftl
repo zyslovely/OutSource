@@ -45,7 +45,7 @@ canvas {border:1px solid #4c4c4c;}
                 <td class="f2" style="width: 100px;color: rgb(94, 94, 94);">课程名称</td>
                 <td class="f2" style="color: rgb(94, 94, 94);width: 100px;">班级名称</td>
                 <#if level!=0&&isVisitor==1>
-                <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">课程老师</td>
+                <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">课程教师</td>
                 <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">状态</td>
                 <td  class="f2" style="color: rgb(94, 94, 94);width: 100px;">操作</td>
                 <#else>
@@ -57,10 +57,11 @@ canvas {border:1px solid #4c4c4c;}
         </thead>
         <tbody>
              <#list courseList as coursevo>
+             <#if coursevo.class1?exists>
              <tr style="height: 40px; font-size: 16px;">
                 <td class="f3" style="width: 100px;"><#if isVisitor==1><a href="/teach/course/${coursevo.course.id}/" style="color: rgb(139, 139, 139);">${coursevo.course.name}</a><#else><p style="color: rgb(139, 139, 139);">${coursevo.course.name}</p></#if></td>
-                <td class="f3" style="color: rgb(139, 139, 139);width: 100px;">${coursevo.class1.name}</td>
-                <td class="f3"style="color: rgb(139, 139, 139);width: 100px;">${coursevo.user.name}</td>
+                <td class="f3" style="color: rgb(139, 139, 139);width: 100px;">${coursevo.class1.shortSpecialty!""}${coursevo.class1.name!""}</td>
+                <td class="f3"style="color: rgb(139, 139, 139);width: 100px;">${coursevo.user.name!""}</td>
                 <#if level!=0&&isVisitor==1>
                 <td class="f3" style="width: 100px;<#if coursevo.course.status==0>color:green<#else>color:red</#if>"><#if coursevo.course.status==0>进行中<#else>已结束</#if></td>
                 <td class="f3" style="width: 100px;color: rgb(139, 139, 139);"><a href="javascript:void(0);" class="teachIndex_delete" data_id="${coursevo.course.id!0}">删除</a></th>
@@ -68,6 +69,7 @@ canvas {border:1px solid #4c4c4c;}
                 <td class="f3" style="width: 100px;color: rgb(139, 139, 139);"><#if coursevo.score < 0>未出<#else>${coursevo.score!0}</#if><#if coursevo.haveGroupToScore==1&&isVisitor==1><a href="/teach/eachStudent/score/?courseId=${coursevo.course.id}">(等待互评)</a></#if></td>
                 </#if>
              </tr>
+             </#if>
              </#list>
              
         </tbody>

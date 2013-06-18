@@ -31,6 +31,18 @@ body{min-width:1024px;min-height:600px}
            <p style="margin-top:15px;margin-left:20px;">${course.description!""}</p>
        </div>
            <table style="width:698px">
+                <thead style="height: 60px;">
+            <tr>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">评分点</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">成绩构成</th>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">打分教师</th>
+               <#if level!=0>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">打分</th>
+               <#else>
+               <th class="f2" style="border-bottom: 1px solid rgb(224, 224, 224);font-size: 20px; width: 300px;color: rgb(94, 94, 94);">成绩</th>
+               </if>
+            </tr>
+            </thead>
                 <tbody>
                      <#if courseScorePercents?exists>
                      <#list courseScorePercents as courseScorePercent>
@@ -40,8 +52,9 @@ body{min-width:1024px;min-height:600px}
                      <tr style="font-size: 16px;height: 70px;">
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 150px;">${courseScorePercent.name!""}</th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 246px;">第${t}次课</th>
+                        <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 246px;">${courseScorePercent.teacherName!""}</th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">
-                           <#if courseScorePercent.teacherId == visitUserId>
+                           <#if courseScorePercent.teacherId == visitUserId&&course.status=0>
                            <a class="w-btn" style="margin-left: 20px; display: block; text-align: center; color: white; float: right; background: url('/img/courseInfo/button_bg_small.png') no-repeat scroll 0px 0px transparent; height: 45px; width: 135px; line-height: 33px; margin-top: 19px;" href="/teach/score/?percentTypeId=${courseScorePercent.percentType!0}&courseId=${courseScorePercent.courseId!0}&stage=${t}">打分</a>
                            
                            </#if>
@@ -53,7 +66,7 @@ body{min-width:1024px;min-height:600px}
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 150px;">${courseScorePercent.name!""}</th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 246px;">${courseScorePercent.percent!0}%</th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">
-                           <#if courseScorePercent.teacherId == visitUserId&&courseScorePercent.percentType!=4>
+                           <#if courseScorePercent.teacherId == visitUserId&&courseScorePercent.percentType!=4&&course.status=0>
                            
                            <a class="w-btn" style="margin-left: 20px; display: block; text-align: center; color: white; float: right; background: url('/img/courseInfo/button_bg_small.png') no-repeat scroll 0px 0px transparent; height: 45px; width: 135px; line-height: 33px; margin-top: 19px;" href="/teach/score/?percentTypeId=${courseScorePercent.percentType!0}&courseId=${courseScorePercent.courseId!0}">打分</a>
                            </#if>
