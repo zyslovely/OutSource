@@ -37,7 +37,7 @@ body{min-width:1024px;min-height:600px}
               </li>
               <li style="float:left;width:300px;">
                  <div  style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                          <input id="newClass_Create_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="用户名"/>
+                          <input id="newClass_Create_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="编号"/>
                       </div>
               </li>
               <li style="float:left;width:200px;">

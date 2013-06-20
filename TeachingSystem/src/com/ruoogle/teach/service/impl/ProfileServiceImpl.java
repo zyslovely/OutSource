@@ -154,13 +154,13 @@ public class ProfileServiceImpl implements ProfileService {
 	public List<Profile> getProfileListWithMySelfAndCompany(long userId) {
 
 		Profile profile = profileMapper.getProfile(userId);
-		List<Profile> companyProfile = profileMapper.getProfileListByLevel(ProfileLevel.CompanyLeader.getValue(), 0, -1);
+		List<Profile> companyProfiles = profileMapper.getProfileListByLevel(ProfileLevel.CompanyLeader.getValue(), 0, -1);
 		List<Profile> profiles = new ArrayList<Profile>();
 		if (profile != null) {
 			profiles.add(profile);
 		}
-		if (!ListUtils.isEmptyList(companyProfile)) {
-			profiles.addAll(profiles);
+		if (!ListUtils.isEmptyList(companyProfiles)) {
+			profiles.addAll(companyProfiles);
 		}
 		return profiles;
 	}

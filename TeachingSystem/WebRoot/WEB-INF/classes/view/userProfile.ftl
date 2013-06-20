@@ -39,7 +39,8 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">新密码</p></th>
                    <th>
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newProfile_password_1" name="username" type="password" style="text-align: center;border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" />
+                        <input id="newProfile_password_1" name="username" type="password" style="text-align: center;border: 0px none; height: 52px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" />
+                        <p style="color:rgb(139, 139, 139);">(密码只允许数字和英文字母)</p>
                       </div>
                    </th>
                 </tr>
@@ -47,7 +48,8 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">重输密码</p></th>
                    <th>
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newProfile_password_2" name="username" type="password" style="text-align: center;border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" />
+                        <input id="newProfile_password_2" name="username" type="password" style="text-align: center;border: 0px none; height: 52px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" />
+                        <p style="color:rgb(139, 139, 139);">(密码只允许数字和英文字母)</p>
                       </div>
                    </th>
                 </tr>

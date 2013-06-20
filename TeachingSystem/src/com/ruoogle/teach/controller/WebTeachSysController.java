@@ -24,6 +24,7 @@ import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
+import com.ruoogle.teach.meta.CoursePercentTypeStage;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudent;
@@ -238,6 +239,14 @@ public class WebTeachSysController extends AbstractBaseController {
 			if (courseStudent != null) {
 				List<CourseStudentScore> courseStudentScores = courseService.getCourseStudentScoresByUserIdCourseId(courseId, userId);
 				mv.addObject("courseStudentScores", courseStudentScores);
+			}
+			for (CourseScorePercent courseScorePercent : courseScorePercents) {
+				if (courseScorePercent.getPercentType() == CoursePercentType.AvgGrading.getValue()) {
+					List<CoursePercentTypeStage> coursePercentTypeStages = courseService.getCoursePercentTypeStageListByCourseId(courseId, userId);
+					if (!ListUtils.isEmptyList(coursePercentTypeStages)) {
+						mv.addObject("coursePercentTypeStages", coursePercentTypeStages);
+					}
+				}
 			}
 		}
 
@@ -466,7 +475,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("interactive");
 		Long userId = MyUser.getMyUser(request);
-		int limit = 5;
+		int limit = 10;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
 		if (page <= 0) {
 			page = 1;
@@ -474,7 +483,10 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("limit", limit);
 		mv.addObject("page", page);
 		List<Course> courseList = courseService.getTheCourseListByUserId(userId, 0, -1);
-		mv.addObject("courseList", courseList);
+		if (!ListUtils.isEmptyList(courseList)) {
+			mv.addObject("courseList", courseList);
+		}
+
 		List<Interactive> interactiveList = interactiveService.getInteractiveByUserId(userId, limit, (page - 1) * limit);
 		mv.addObject("interactiveList", interactiveList);
 

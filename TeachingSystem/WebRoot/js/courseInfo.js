@@ -1,5 +1,5 @@
 $("#courseInfo_endCourse").click(function(){
-	
+
 	_courseId=$("#courseInfo_endCourse").attr("data_id");
 	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'finishCourse',_courseId,function(tag){
 		if(tag==1){
@@ -11,7 +11,7 @@ $("#courseInfo_endCourse").click(function(){
 		      });
 		}else{
 			jAlert("操作失败","失败",function(){
-			
+
 			});
 		}
 	});
@@ -23,7 +23,7 @@ jHtml("<div style='width:400px;height:228px;'><textarea id='textarea_"+courseId+
 };
 
 function backClick(_courseId){
-	
+
 	_contentOpt= $("#textarea_"+_courseId);
 	if(_contentOpt.val()==''){
 		return;
@@ -33,6 +33,6 @@ function backClick(_courseId){
 			location.href=location.href;
 		}
 	});
-	
-	
+
+
 };

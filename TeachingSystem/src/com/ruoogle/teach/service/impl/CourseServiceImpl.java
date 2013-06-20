@@ -1156,4 +1156,9 @@ public class CourseServiceImpl implements CourseService {
 
 		return courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, userId);
 	}
+
+	@Override
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(long courseId, long userId) {
+		return coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId, userId);
+	}
 }

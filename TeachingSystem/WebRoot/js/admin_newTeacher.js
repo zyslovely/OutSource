@@ -32,7 +32,7 @@ $("#newTeacher_Submit").click(function(){
 });
 
 $(".admin_newTeacher_delete").click(function(){
-
+jConfirm('确定要删除么','删除操作',function(_flag){
 	_teacherUserId=$(this).attr("data_id");
 	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteUser',_teacherUserId,function(flag){
 		if(flag){
@@ -40,7 +40,16 @@ $(".admin_newTeacher_delete").click(function(){
 		}
 	});
 });
+});
 
 function teacherTypeChoice(obj,val){
 	_teacherLevel=val;
 }
+
+function newfileChange(opt){
+	
+     $("#fileUpdate_form").ajaxSubmit(function(message) {
+     	location.href=location.href;
+     });
+     return false;
+};

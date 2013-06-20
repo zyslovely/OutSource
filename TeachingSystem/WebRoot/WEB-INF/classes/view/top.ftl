@@ -145,16 +145,16 @@
          <p style="margin: 10px 0px; font-size: 18px;">师生互动</p>
          <textarea id="interactive_send_text" rows="3" cols="80" style="font-size:20px;resize:none;width: 600px; height: 130px; overflow-x: hidden; overflow-y: auto; border-style: none; border-width: 0px; word-wrap: break-word;"></textarea>
          <div>
+             <#if courseList?exists>
              <p style="color: white; float: left; margin-top: 18px; width: 54px;">选择课程:</p>
              <div style="width: 140px; height: 30px; float: left; margin-top: 15px; margin-left: 9px;">
-                 <#if courseList?exists>
                  <select style="float:right" id="interactive_send_select" >
                    <#list courseList as course>
                        <option value="${course.id!0}" <#if course_index == 0>selected="selected"</#if>>${course.name!""}</option>
                    </#list>
                  </select>
-             </#if>
              </div>
+             </#if>
              <div style="width: 100px; height: 30px; float: left; margin-left: 20px; margin-top: 20px;"> 
                  <p style="float: left; color: white; width: 55px;">是否保密:</p><input style="width: 16px; height: 16px;" type="checkbox" id="interactive_checkbox"/>
              </div>

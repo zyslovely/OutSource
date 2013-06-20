@@ -2,6 +2,9 @@ $("#interactive_send").click(function(){
 	
 	_text=$("#interactive_send_text").val();
 	_courseId=$("#interactive_send_select").val();
+	if(_courseId==undefined){
+		_courseId=0;
+	}
 	_checked=$("#interactive_checkbox").attr("checked");
 	status=0;
 	if(_checked){
@@ -65,5 +68,22 @@ function comment(_id){
 	}else{
 		$("#interactive_"+_id).css("display","none");
 	}
+};
+
+function deleteInteractive(_id){
 	
-}
+	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysBean', 'deleteInteractive',_id,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+};
+
+function deleteInteractiveBack(_id){
+	
+	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysBean', 'deleteInteractiveBack',_id,function(flag){
+		if(flag){
+			location.href=location.href;
+		}
+	});
+};

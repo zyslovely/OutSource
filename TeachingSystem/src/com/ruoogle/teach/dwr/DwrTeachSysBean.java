@@ -121,4 +121,26 @@ public class DwrTeachSysBean {
 		return profileService.changePassword(userId, newPassword1);
 	}
 
+	/**
+	 * 删除互动
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteInteractive(long id) {
+		return interactiveService.deleteInteractive(id);
+	}
+
+	/**
+	 * 删除互动评论
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteInteractiveBack(long id) {
+		return interactiveService.deleteInteractiveBack(id);
+	}
+
 }

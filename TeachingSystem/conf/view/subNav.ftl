@@ -56,7 +56,7 @@
      <#elseif pageName = "courseScore">
      <div style="margin-top: 25px; float: right;">
          <div class="w-filebtn" style="float:left;width: 145px;cursor: pointer;">
-                 <a href="/teach/teacher/download/addScore/?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" class="w-btn" href="javascript:void(0);;">下载模版</a>
+                 <a href="/teach/teacher/download/addScore/?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" class="w-btn" href="javascript:void(0);;">下载打分模版</a>
          </div>
          <form style="float: left;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addScore?courseId=${courseId!0}&percentTypeId=${percentTypeId!0}&stage=${stage!0}" >
              <div class="w-filebtn" style="width: 145px;cursor: pointer;">
@@ -82,8 +82,15 @@
            </div>
       </div>
       <#elseif pageName="newTeacher">
-      <div style="width: 145px; margin-top: 23px; float: right; ">
-                 <a class="w-btn" id="newTeacher_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">添加教师账号</a>
+      <div style="width: 450px; margin-top: 23px; float: right; ">
+                 <a class="w-btn" id="newTeacher_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px; float: right; width: 151px;" href="javascript:void(0);;">添加教师账号</a>
+                 <a class="w-btn" id="newStudent_download" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; float: right; margin-left: 3px; width: 144px;" href="/teach/teacher/download/addTeacher/">下载模版</a>
+                 <form style="float: right;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/addTeacher/" >
+                 <div class="w-filebtn" style="width: 145px;cursor: pointer;">
+                    <input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
+                    <a class="w-btn" id="" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; float: right; margin-left: 3px; width: 144px;" href="javascript:void(0);;">上传老师名单</a>
+                 </div>
+         </form>
       </div>
      <#elseif pageName="newCourseType">
       <div style="width: 145px; margin-top: 23px; float: right; ">

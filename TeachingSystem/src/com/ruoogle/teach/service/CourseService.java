@@ -8,6 +8,7 @@ import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
+import com.ruoogle.teach.meta.CoursePercentTypeStage;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
@@ -306,4 +307,6 @@ public interface CourseService {
 	 * @return
 	 */
 	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(long courseId, long userId);
+
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(long courseId, long userId);
 }

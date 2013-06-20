@@ -43,7 +43,7 @@
 		resultMap="profileMap">
 		SELECT *
 		from TB_Profile
-		WHERE level=#{level} and status=0 order by
+		WHERE level=#{level} order by
 		userId desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
@@ -53,7 +53,7 @@
 	<select id="getProfile" parameterType="long" resultType="Profile">
 		SELECT *
 		from TB_Profile
-		WHERE UserId=#{UserId} and status=0 order by userId
+		WHERE UserId=#{UserId} order by userId
 		desc;
 	</select>
 
@@ -61,7 +61,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE userName=#{userName} and status=0 order by userId
+		WHERE userName=#{userName} order by userId
 		desc;
 	</select>
 
@@ -69,7 +69,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and status=0 and
+		WHERE classId=#{classId} and
 		level=#{level}
 		order by userId asc
 		<if test="offset >=0 ">
@@ -82,7 +82,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE (level=1 or level=2) and status=0 order by
+		WHERE (level=1 or level=2) order by
 		userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
@@ -95,7 +95,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} and status=0 order by userId desc
+		WHERE classId=#{classId} order by userId desc
 		limit 1;
 	</select>
 	<update id="updateProfilePassword" flushCache="true"
@@ -122,7 +122,7 @@
 
 	<select id="getProfileListByIds" resultType="Profile"
 		parameterType="list">
-		SELECT * from TB_Profile where status=0 and
+		SELECT * from TB_Profile where
 		userId in
 		<foreach item="item" collection="userIds" index="index" open="("
 			separator="," close=")">

@@ -32,7 +32,7 @@ $("#courseScore_save").click(function(){
 	  	  }
 
 	  }
-	   jAlert("添加完成","恭喜",function(){
+	   jAlert("操作成功","恭喜",function(){
 			                	location.href=location.href;
 	                       	});
 });

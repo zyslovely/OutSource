@@ -67,7 +67,7 @@
 		SELECT count(*)
 		from
 		TB_FeedBack
-		WHERE toUserId=#{toUserId} and status=1 and feedbackId!=0 ;
+		WHERE toUserId=#{toUserId} and status=1 ;
 	</select>
 
 	<select id="getFeedBacksByFromUserId" resultType="FeedBack">

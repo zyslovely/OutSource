@@ -48,4 +48,16 @@ public interface InteractiveMapper {
 	 */
 	public List<Interactive> getInteractiveListByShowUserIdForwardId(@Param(value = "showUserId") long userId, @Param(value = "limit") int limit,
 			@Param(value = "offset") int offset, @Param(value = "forwardId") long forwardId);
+
+	/**
+	 * 删除
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public int deleteInteractive(@Param(value = "id") long id);
+
+	public int deleteInteractiveByOriId(@Param(value = "oriid") long oriid);
+
 }

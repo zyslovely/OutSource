@@ -312,6 +312,91 @@ public class WebExcelController extends AbstractBaseController {
 		return null;
 	}
 
+	public ModelAndView downLoadTeacherProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+
+		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		template.createRow(0);
+
+		template.createCell("姓名");
+		template.createCell("用户名");
+		template.createCell("密码");
+		template.createCell("类型(0普通教师,1企业教师)");
+		response.reset();
+		response.setContentType("application/x-download;charset=GBK");
+		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");
+		try {
+			template.getWorkbook().write(response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ModelAndView upLoadTeacherProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+
+		response.setContentType("text/html;charset=utf-8");
+		try {
+			Iterator<FileItem> it = this.getUPFiles(request);
+			while (it.hasNext()) {
+				FileItem item = it.next();
+				if (item != null && !item.isFormField() && item.getSize() > 0) {
+					InputStream inputStream = item.getInputStream();
+					HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+					HSSFSheet sheet = workbook.getSheetAt(0);
+					int totalRow = sheet.getLastRowNum();
+
+					for (int i = 1; i <= totalRow; i++) {
+						HSSFRow row = sheet.getRow(i);
+						HSSFCell cell1 = row.getCell(0);
+						HSSFCell cell2 = row.getCell(1);
+						HSSFCell cell3 = row.getCell(2);
+						HSSFCell cell4 = row.getCell(3);
+						if (cell1 != null) {
+							cell1.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell2 != null) {
+							cell2.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell3 != null) {
+							cell3.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell4 != null) {
+							cell4.setCellType(Cell.CELL_TYPE_STRING);
+						}
+
+						if (cell1.getRichStringCellValue().getString().trim().isEmpty()
+								|| cell2.getRichStringCellValue().getString().trim().isEmpty()
+								|| cell3.getRichStringCellValue().getString().trim().isEmpty()
+								|| cell4.getRichStringCellValue().getString().trim().isEmpty()) {
+							break;
+						}
+						int level = 0;
+						if (cell4.getRichStringCellValue().getString().trim().equals("1")) {
+							level = ProfileLevel.CompanyLeader.getValue();
+						} else if (cell4.getRichStringCellValue().getString().trim().equals("0")) {
+							level = ProfileLevel.Teacher.getValue();
+						} else {
+							break;
+						}
+						profileService.addProfile(cell1.getRichStringCellValue().getString().trim(), cell2.getRichStringCellValue().getString()
+								.trim(), cell3.getRichStringCellValue().getString().trim(), level);
+					}
+				}
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	/**
 	 * 教师下载某门课的成绩单
 	 * 
@@ -355,6 +440,7 @@ public class WebExcelController extends AbstractBaseController {
 			CoursePercentType coursePercentType = CoursePercentType.genCoursePercentType(courseScorePercent.getPercentType());
 			template.createCell(coursePercentType.getName());
 		}
+		
 		template.createCell("总成绩");
 		List<CourseStudentScoreVO> courseStudentScoreVOList = courseService.getCourseStudentScoreVOsByCourseId(courseId);
 		if (!ListUtils.isEmptyList(courseStudentScoreVOList)) {
