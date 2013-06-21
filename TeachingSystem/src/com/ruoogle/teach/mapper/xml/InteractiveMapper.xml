@@ -10,14 +10,15 @@
 		<result property="CreateTime" column="CreateTime" />
 		<result property="status" column="status" />
 		<result property="showUserId" column="showUserId" />
+		<result property="oriid" column="oriid" />
 
 	</resultMap>
 	<insert id="addInteractive" parameterType="Interactive">
 		INSERT INTO
 		TB_Interactive
-		(userId,content,courseId,forwardId,photoUrl,CreateTime,status,showUserId
+		(userId,content,courseId,forwardId,photoUrl,CreateTime,status,showUserId,oriid
 		)VALUES(
-		#{userId},#{content},#{courseId},#{forwardId},#{photoUrl},#{CreateTime},#{status},#{showUserId}
+		#{userId},#{content},#{courseId},#{forwardId},#{photoUrl},#{CreateTime},#{status},#{showUserId},#{oriid}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -68,6 +69,19 @@
 		</if>
 		;
 	</select>
+
+	<delete id="deleteInteractive" flushCache="true" statementType="PREPARED">
+		delete from TB_Interactive
+		where
+		id=#{id};
+	</delete>
+
+	<delete id="deleteInteractiveByOriId" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Interactive
+		where
+		oriid=#{oriid};
+	</delete>
 
 
 

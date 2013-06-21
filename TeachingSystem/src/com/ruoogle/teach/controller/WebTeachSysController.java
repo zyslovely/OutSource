@@ -24,9 +24,12 @@ import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
+import com.ruoogle.teach.meta.CoursePercentTypeStage;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
+import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
@@ -119,12 +122,12 @@ public class WebTeachSysController extends AbstractBaseController {
 		long semesterId = ServletRequestUtils.getLongParameter(request, "semesterId", -1L);
 		List<Semester> semesters = classService.getAllSemesters();
 		mv.addObject("semesters", semesters);
-		mv.addObject("semesterId", semesterId);
+
 		this.setUD(mv, request);
 		if (semesterId < 0) {
-			return mv;
+			semesterId = courseService.getLastestSemesterId(userId);
 		}
-
+		mv.addObject("semesterId", semesterId);
 		int limit = 10;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
 		if (page <= 0) {
@@ -175,15 +178,22 @@ public class WebTeachSysController extends AbstractBaseController {
 	public ModelAndView teachCreate(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("TeachCreate");
 
+		Long userId = MyUser.getMyUser(request);
 		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
 		mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
-		List<Profile> teacherProfiles = profileService.getProfileListWithTeacher(0, -1);
 
+		List<Profile> teacherProfiles = profileService.getProfileListWithMySelfAndCompany(userId);
 		mv.addObject("teacherProfiles", teacherProfiles);
+
 		List<CourseProperty> courseProperties = courseService.getAllCourseProperties();
 		mv.addObject("courseProperties", courseProperties);
+
+		List<Specialty> specialtieList = classService.getSpecialties();
+		mv.addObject("specialtieList", specialtieList);
+
 		List<com.ruoogle.teach.meta.Class> classList = classService.getAllClass();
 		mv.addObject("classList", classList);
+
 		List<Semester> semesters = classService.getAllSemesters();
 		mv.addObject("semesters", semesters);
 		this.setUD(mv, request);
@@ -201,7 +211,7 @@ public class WebTeachSysController extends AbstractBaseController {
 	public ModelAndView showCourseView(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("CourseInfo");
-
+		Long userId = MyUser.getMyUser(request);
 		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
 		if (courseId < 0) {
 			try {
@@ -222,6 +232,22 @@ public class WebTeachSysController extends AbstractBaseController {
 				isEachStudent = true;
 			}
 			courseScorePercent.setPercent(courseScorePercent.getPercent());
+		}
+		Profile profile = profileService.getProfile(userId);
+		if (profile != null && profile.getLevel() == ProfileLevel.Student.getValue()) {
+			CourseStudent courseStudent = courseService.getCourseStudent(courseId, profile.getUserId());
+			if (courseStudent != null) {
+				List<CourseStudentScore> courseStudentScores = courseService.getCourseStudentScoresByUserIdCourseId(courseId, userId);
+				mv.addObject("courseStudentScores", courseStudentScores);
+			}
+			for (CourseScorePercent courseScorePercent : courseScorePercents) {
+				if (courseScorePercent.getPercentType() == CoursePercentType.AvgGrading.getValue()) {
+					List<CoursePercentTypeStage> coursePercentTypeStages = courseService.getCoursePercentTypeStageListByCourseId(courseId, userId);
+					if (!ListUtils.isEmptyList(coursePercentTypeStages)) {
+						mv.addObject("coursePercentTypeStages", coursePercentTypeStages);
+					}
+				}
+			}
 		}
 
 		mv.addObject("isEachStudent", isEachStudent ? 1 : 0);
@@ -449,7 +475,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		ModelAndView mv = new ModelAndView("interactive");
 		Long userId = MyUser.getMyUser(request);
-		int limit = 5;
+		int limit = 10;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
 		if (page <= 0) {
 			page = 1;
@@ -457,7 +483,10 @@ public class WebTeachSysController extends AbstractBaseController {
 		mv.addObject("limit", limit);
 		mv.addObject("page", page);
 		List<Course> courseList = courseService.getTheCourseListByUserId(userId, 0, -1);
-		mv.addObject("courseList", courseList);
+		if (!ListUtils.isEmptyList(courseList)) {
+			mv.addObject("courseList", courseList);
+		}
+
 		List<Interactive> interactiveList = interactiveService.getInteractiveByUserId(userId, limit, (page - 1) * limit);
 		mv.addObject("interactiveList", interactiveList);
 

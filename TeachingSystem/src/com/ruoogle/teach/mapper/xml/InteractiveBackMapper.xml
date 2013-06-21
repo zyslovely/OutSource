@@ -27,4 +27,20 @@
 		TB_Interactive_Back
 		WHERE interactiveId=#{interactiveId};
 	</select>
+
+
+	<delete id="deleteInteractiveBackByInteractive" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Interactive_Back
+		where
+		interactiveId=#{interactiveId};
+	</delete>
+
+
+	<delete id="deleteInteractiveBack" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_Interactive_Back
+		where
+		id=#{id};
+	</delete>
 </mapper>

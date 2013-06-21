@@ -7,6 +7,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.StringUtil;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -111,10 +112,35 @@ public class DwrTeachSysBean {
 		if (!newPassword1.equals(newPassword2)) {
 			return false;
 		}
+		if (!StringUtil.isAllShuziYinwen(newPassword1)) {
+			return false;
+		}
 		WebContext ctx = WebContextFactory.get();
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
 
 		return profileService.changePassword(userId, newPassword1);
+	}
+
+	/**
+	 * 删除互动
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteInteractive(long id) {
+		return interactiveService.deleteInteractive(id);
+	}
+
+	/**
+	 * 删除互动评论
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteInteractiveBack(long id) {
+		return interactiveService.deleteInteractiveBack(id);
 	}
 
 }

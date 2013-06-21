@@ -45,7 +45,7 @@ public class Profile implements Serializable {
 			}
 		},
 		/**
-		 * 老师
+		 * 教师
 		 */
 		Teacher {
 			@Override
@@ -54,7 +54,7 @@ public class Profile implements Serializable {
 			}
 		},
 		/**
-		 * 企业老师
+		 * 企业教师
 		 */
 		CompanyLeader {
 			@Override

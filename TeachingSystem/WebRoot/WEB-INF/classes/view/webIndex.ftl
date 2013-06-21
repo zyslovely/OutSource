@@ -50,10 +50,10 @@ if(${error!0}==1){
                      <img src="/img/webIndex/radio_button_select.png" style="width: 18px; height: 18px;cursor: pointer;" id="remember_me" data-remember="1" name="remember" value="1"/>
                      <span style="margin-left: 10px; position: absolute; color: rgb(95, 95, 95); font-size: 15px; line-height: 15px;">记住我<span>
                   </p>
-                  <span style="font-size: 15px; float: right; margin-right: 35px;"><a href="">忘记密码?</a></span>
+                  <span style="font-size: 15px; float: right; margin-right: 35px;"><a href="javascript:void(0);;" id="forget_pass">忘记密码?</a></span>
               </div>
               <div style="background: url('/img/webIndex/login_button_normal.png') no-repeat scroll center top transparent;height:60px; width: 283px;margin-left:27px;margin-left:16px\9">
-                  <input id="submit_login" type="button" style="cursor: pointer;border: 0px none; background: none repeat scroll 0% 0% transparent; font-size: 20px; width: 100%; text-align: center; height: 60px; color: #ffffff;" value="登录"/>
+                  <input id="submit_login" type="button" style="cursor: pointer;border: 0px none; background: none repeat scroll 0% 0% transparent; font-size: 20px; width: 100%; text-align: center; height: 60px; color: #ffffff;" value="登 录"/>
               </div>
           </div>
        </div>

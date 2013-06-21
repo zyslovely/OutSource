@@ -33,6 +33,7 @@ body{min-width:1024px;min-height:600px}
             </tbody>
        </table>
        </#if>
+       <p style="color: rgb(139, 139, 139); width: 500px; text-align: center; margin-top: 5px;">tips:打分成绩只允许在0~100分的区间内</p>
        <div style="float: left; width: 200px; margin: 20px auto auto 150px;">
            <a  class="w-btn" id="courseScore_save" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white;  line-height: 55px;" href="javascript:void(0);;">确定保存</a>
      </div>

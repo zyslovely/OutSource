@@ -19,22 +19,26 @@ body{min-width:1024px;min-height:600px}
              <li style="border-bottom: 1px solid rgb(94, 94, 94); padding: 10px 0px;">
                 <p style="margin-left: 10px;font-size: 18px;color:rgb(94, 94, 94);">${interactive.name!""}</p>
                 <p style="margin-left: 10px;word-wrap:break-word; word-break:normal;font-size:13px;color: rgb(139, 139, 139);">${interactive.content!""}</p>
-                <div style="margin-left: 10px;margin-top: 5px;">
-                    <#if interactive.courseName?exists><a href="" style="color: rgb(46, 127, 203);">课程:${interactive.courseName!""}</a></#if>
+                <div style="margin-left: 10px;margin-top: 5px;height:20px;">
+                    <#if interactive.courseName?exists><a target="_black" href="/teach/course/${interactive.courseId!""}/" style="color: rgb(46, 127, 203);">课程:${interactive.courseName!""}</a></#if>
                     <#if interactive.forwardFromStr?exists><span>${interactive.forwardFromStr!""}</span></#if>
+                    <#if interactive.userId == visitUserId||level=3><a href="javascript:void(0);;" onClick="deleteInteractive(${interactive.id!0});return;" style="float: right; margin-right: 28px;">删除</a></#if>
                     <a href="javascript:void(0);;" onClick="back(${interactive.id!0});return;" style="float: right; margin-right: 28px;">回复</a>
                     <a href="javascript:void(0);;" onClick="forward(${interactive.id!0});return;" style="float: right; margin-right: 28px;">转发</a>
-                    <a href="javascript:void(0);;" onClick="comment(${interactive.id!0});return;" style="float: right; margin-right: 28px;">评论(<#if interactive.subInteractiveBackList?exists>${interactive.subInteractiveBackList?size}<#else>0</#if>)</a>
+                    <#if interactive.subInteractiveBackList?exists><a href="javascript:void(0);;" onClick="comment(${interactive.id!0});return;" style="float: right; margin-right: 28px;">评论(${interactive.subInteractiveBackList?size})</a></#if>
                 </div>
                 <#if interactive.subInteractiveBackList?exists>
                 <div style="border: 1px solid #8b8b8b; margin-top: 16px;width:95%;display:none;" id="interactive_${interactive.id!0}">
-                    <img src="/img/interactive/triangle.png" style="width: 31px; height: 15px; position: relative; top: -15px; right: -430px;"/>
+                    <img src="/img/interactive/triangle.png" style="width: 31px; height: 15px; position: relative; top: -15px; right: -378px;"/>
                     <ul style="margin: 0px 20px;">
                     
                     <#list interactive.subInteractiveBackList as interactiveBack>
                        <li style="<#if interactiveBack_index!=0>border-top: 1px solid #8B8B8B;</#if>">
                           <p style="word-wrap:break-word; word-break:normal;padding-top: 10px;">${interactiveBack.name!""} : ${interactiveBack.content!""}</p>
-                          <p style="word-wrap:break-word; word-break:normal;padding-bottom: 23px;"><a href="javascript:void(0);;" style="float:right;" onClick="back(${interactiveBack.interactiveId!0});return;">回复</a></p>
+                          <p style="word-wrap:break-word; word-break:normal;padding-bottom: 23px;">
+                             <a href="javascript:void(0);;" style="float:right;" onClick="back(${interactiveBack.interactiveId!0});return;">回复</a>
+                             <#if interactive.userId == visitUserId||level=3> <a href="javascript:void(0);;" style="float: right; margin-right: 10px;" onClick="deleteInteractiveBack(${interactiveBack.id!0});return;">删除</a></#if>
+                          </p>
                        </li>
                     </#list>
                     </ul>

@@ -161,6 +161,8 @@ CREATE TABLE TB_Class (
   `startYear` int(11) NOT NULL DEFAULT '0' COMMENT '入学年份',
   `semesterCount` int(11) NOT NULL DEFAULT '0' COMMENT '学期数量',
   `studentCount` int(11) NOT NULL DEFAULT '0' COMMENT '学生数量',
+  `specialty` varchar(127) NOT NULL DEFAULT '' COMMENT '专业',
+  `shortSpecialty` varchar(127) NOT NULL DEFAULT '' COMMENT '缩写专业',
   
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='班级';
@@ -219,6 +221,8 @@ CREATE TABLE `TB_Interactive` (
   `photoUrl` varchar(127) NOT NULL DEFAULT '' COMMENT '内容',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0公开,1隐藏',
+   `name` varchar(127) NOT NULL DEFAULT '' COMMENT '姓名',
+   `oriid` bigint(20) NOT NULL DEFAULT '0' COMMENT '原始',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='互动表';    
 
@@ -228,6 +232,7 @@ CREATE TABLE `TB_Interactive_Back` (
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
   `content` varchar(1023) NOT NULL DEFAULT '' COMMENT '内容',
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+`name` varchar(127) NOT NULL DEFAULT '' COMMENT '姓名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='互动回复表';    
 

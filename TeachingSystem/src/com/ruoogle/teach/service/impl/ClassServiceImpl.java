@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.eason.web.util.ListUtils;
+import com.eason.web.util.StringUtil;
 import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.CoursePercentTypeDemoMapper;
 import com.ruoogle.teach.mapper.JournalMapper;
@@ -76,6 +77,8 @@ public class ClassServiceImpl implements ClassService {
 		class1.setStartYear(year);
 		class1.setSemesterCount(specialty.getSemesterCount());
 		class1.setSpecialtyId(specialtyId);
+		class1.setSpecialty(specialty.getSpecialty());
+		class1.setShortSpecialty(specialty.getShortSpecialty());
 		return classMapper.addClass(class1) > 0;
 	}
 
@@ -95,8 +98,9 @@ public class ClassServiceImpl implements ClassService {
 		if (specialty == null) {
 			return false;
 		}
-		String userName = specialty.getShortSpecialty() + class1.getName() + number;
-		String passWord = class1.getName() + number;
+
+		String userName = specialty.getShortSpecialty() + StringUtil.removeZhongWen(class1.getName()) + number;
+		String passWord = StringUtil.removeZhongWen(class1.getName()) + number;
 		profile.setUserName(userName);
 		profile.setPassword(passWord);
 		profile.setNumber(number);
@@ -182,6 +186,7 @@ public class ClassServiceImpl implements ClassService {
 	 */
 	@Override
 	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+
 		return classMapper.getClassListBySpecialty(specialtyId);
 	}
 

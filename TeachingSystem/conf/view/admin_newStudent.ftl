@@ -48,6 +48,9 @@ body{min-width:1024px;min-height:600px}
                           </select>
                  </div>
               </li>
+              <li>
+                 <p style="color:rgb(139, 139, 139)">帮助:下载模版后，在模版中添加学生姓名(账号，密码请不要填写)。</p>
+              </li>
            </ul>
        </div>
        

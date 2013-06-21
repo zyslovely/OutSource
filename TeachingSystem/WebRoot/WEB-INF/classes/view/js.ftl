@@ -34,7 +34,9 @@
     	   <script type="text/javascript">
     	   $('#demoselector').jgdDropdown({callback: function(obj, val) { coursePercentTypeChange(obj,val) }});
     	   $('#semester_selector').jgdDropdown({callback: function(obj, val) { semesterChange(obj,val) }});
-    	   $('#class_selector').jgdDropdown({callback: function(obj, val) { classChange(obj,val) }});
+    	   
+    	   $('#specialty_selector').jgdDropdown({callback: function(obj, val) { specialtyChange(obj,val) }});
+    	   
     	   </script>
    	       <script type="text/javascript" src="/js/teachCreate.js" charset="utf-8"></script>
     	<#break>
@@ -125,6 +127,10 @@
     	<#break>
     	<#case "teachSemester">
    	       <script type="text/javascript" src="/js/teachSemester.js" charset="utf-8"></script>
+    	<#break>
+    	
+    	<#case "newHeadImage">
+   	       <script type="text/javascript" src="/js/admin_newHeadImage.js" charset="utf-8"></script>
     	<#break>
     	<#case "courseSearch">
     	   <script type="text/javascript">

@@ -57,53 +57,72 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 */
 	@Override
 	public boolean addInteractive(long userId, String content, long courseId, int status, String photoUrl, long forwardId) {
-
 		Profile profile = profileMapper.getProfile(userId);
 		if (profile == null) {
 			return false;
 		}
+		long oriid = this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, userId, 0);
+		// 管理员收到所有内容
+		List<Profile> adminProfileList = profileMapper.getProfileListByLevel(ProfileLevel.Admin.getValue(), 0, -1);
+		if (!ListUtils.isEmptyList(adminProfileList)) {
+			for (Profile adminProfile : adminProfileList) {
+				this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, adminProfile.getUserId(), oriid);
+			}
+		}
 		// 如果是保密的
 		if (status == 1) {
-			return this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, userId);
+			return true;
 		}
 		if (profile.getLevel() == ProfileLevel.Teacher.getValue() || profile.getLevel() == ProfileLevel.CompanyLeader.getValue()) {
-			List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
-			if (!ListUtils.isEmptyList(courseStudents)) {
-				for (CourseStudent courseStudent : courseStudents) {
-					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+			if (courseId > 0) {
+				List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+				if (!ListUtils.isEmptyList(courseStudents)) {
+					for (CourseStudent courseStudent : courseStudents) {
+						if (courseStudent.getUserId() != userId) {
+							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+						}
+
+					}
+				}
+				List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+				if (!ListUtils.isEmptyList(courseTeachers)) {
+					for (CourseStudent courseStudent : courseTeachers) {
+						if (courseStudent.getUserId() != userId) {
+							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+						}
+					}
 				}
 			}
-			List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
-			if (!ListUtils.isEmptyList(courseTeachers)) {
-				for (CourseStudent courseStudent : courseTeachers) {
-					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
-				}
-			}
-			return true;
 		} else if (profile.getLevel() == ProfileLevel.Student.getValue()) {
 			Course course = courseMapper.getCourseById(courseId);
 			if (course != null) {
 				List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
 				for (CourseStudent courseStudent : courseStudents) {
-					this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+					if (courseStudent.getUserId() != userId) {
+						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+					}
+
 				}
 				List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
 				if (!ListUtils.isEmptyList(courseTeachers)) {
 					for (CourseStudent courseStudent : courseTeachers) {
-						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId());
+						if (courseStudent.getUserId() != userId) {
+							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+						}
 					}
 				}
 			} else {
 				List<Profile> profileList = profileMapper.getProfileByClassId(profile.getClassId(), ProfileLevel.Student.getValue(), 0, -1);
 				if (!ListUtils.isEmptyList(profileList)) {
 					for (Profile profile2 : profileList) {
-						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, profile2.getUserId());
+						if (profile2.getUserId() != userId) {
+							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, profile2.getUserId(), oriid);
+						}
 					}
 				}
 			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -119,7 +138,8 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * @param showUserId
 	 * @return
 	 */
-	private boolean addOneInteractive(String content, long courseId, int status, String photoUrl, long forwardId, long userId, long showUserId) {
+	private long addOneInteractive(String content, long courseId, int status, String photoUrl, long forwardId, long userId, long showUserId,
+			long oriid) {
 		Interactive interactive = new Interactive();
 		interactive.setUserId(userId);
 		interactive.setCourseId(courseId);
@@ -129,7 +149,17 @@ public class InteractiveServiceImpl implements InteractiveService {
 		interactive.setPhotoUrl(photoUrl);
 		interactive.setStatus(status);
 		interactive.setContent(content);
-		return interactiveMapper.addInteractive(interactive) > 0;
+		interactive.setOriid(oriid);
+		Profile profile = profileMapper.getProfile(userId);
+		if (profile != null) {
+			interactive.setName(profile.getName());
+		} else {
+			interactive.setName("");
+		}
+		if (interactiveMapper.addInteractive(interactive) > 0) {
+			return interactive.getId();
+		}
+		return -1;
 	}
 
 	/**
@@ -227,5 +257,40 @@ public class InteractiveServiceImpl implements InteractiveService {
 			interactiveBack.setName(profile.getName());
 		}
 		return interactiveBackMapper.addInteractiveBack(interactiveBack) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.InteractiveService#deleteInteractive(long)
+	 */
+	@Override
+	public boolean deleteInteractive(long id) {
+		Interactive interactive = interactiveMapper.getInteractive(id);
+		if (interactive == null) {
+			return false;
+		}
+		if (interactiveMapper.deleteInteractive(id) > 0) {
+			if (interactive.getOriid() != 0) {
+				interactiveMapper.deleteInteractiveByOriId(interactive.getOriid());
+				interactiveMapper.deleteInteractive(interactive.getOriid());
+			} else {
+				interactiveMapper.deleteInteractiveByOriId(id);
+			}
+			interactiveBackMapper.deleteInteractiveBackByInteractive(id);
+		}
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.InteractiveService#deleteInteractiveBack(long)
+	 */
+	@Override
+	public boolean deleteInteractiveBack(long id) {
+		return interactiveBackMapper.deleteInteractiveBack(id) > 0;
 	}
 }

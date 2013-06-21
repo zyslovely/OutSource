@@ -77,4 +77,13 @@ public interface CourseStudentMapper {
 	 * @return
 	 */
 	public int deleteCourseStudentByCourse(@Param(value = "courseId") long courseId);
+
+	/**
+	 * 最近
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param userId
+	 * @return
+	 */
+	public CourseStudent getLastestSemesterId(@Param(value = "userId") long userId);
 }

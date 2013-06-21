@@ -10,6 +10,10 @@ $("#courseScore_save").click(function(){
 			alert("分数不能大于100!");
 			return;
 		}
+		if(_score<0){
+			alert("分数不能小于0!");
+			return;
+		}
 	}
 	  for(i=0;i<_opts.length;i++){
 	  	  _studentId=$(_opts[i]).attr("data_id");
@@ -28,7 +32,7 @@ $("#courseScore_save").click(function(){
 	  	  }
 
 	  }
-	   jAlert("添加完成","恭喜",function(){
+	   jAlert("操作成功","恭喜",function(){
 			                	location.href=location.href;
 	                       	});
 });

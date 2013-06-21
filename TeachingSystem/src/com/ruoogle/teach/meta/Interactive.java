@@ -14,6 +14,8 @@ public class Interactive implements Serializable {
 	private long CreateTime;
 	private int status;
 
+	private long oriid;
+
 	private long showUserId;
 	private String name;
 
@@ -125,6 +127,14 @@ public class Interactive implements Serializable {
 
 	public void setSubInteractiveBackList(List<InteractiveBack> subInteractiveBackList) {
 		this.subInteractiveBackList = subInteractiveBackList;
+	}
+
+	public long getOriid() {
+		return oriid;
+	}
+
+	public void setOriid(long oriid) {
+		this.oriid = oriid;
 	}
 
 }

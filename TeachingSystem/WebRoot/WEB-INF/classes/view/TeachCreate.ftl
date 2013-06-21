@@ -51,15 +51,23 @@ body{min-width:1024px;min-height:600px}
                      </th>
                  </tr>
                  <tr>
-                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">选择班级*</p></th>
+                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">选择专业*</p></th>
                      <th>
                         <div style="width:252px;">
-                        <select style="" id="class_selector">
-                           <#list classList as class>
-                           <option value="${class.id!0}">${class.name!""}</option>
+                        <select style="" id="specialty_selector">
+                           <#list specialtieList as specialty>
+                           <option value="${specialty.id!0}">${specialty.specialty!""}</option>
                            </#list>
                        </select>
                        </div>
+                     </th>
+                 </tr>
+                 <tr>
+                     <th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">选择班级*</p></th>
+                     <th>
+                        <div style="width:252px;" id="class_selector_div">
+                        <select id='class_selector'></select>
+                        </div>
                      </th>
                  </tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">评分标准*</p></th>
@@ -80,7 +88,7 @@ body{min-width:1024px;min-height:600px}
                                     </#list>
                                     </#if>
                                     <span style="<#if type.getValue() ==4>display:none</#if>">
-                                    <span style="margin-left:5px">打分老师:</span>
+                                    <span style="margin-left:5px">打分教师:</span>
                                     <select class="coursePercentTypes_biaozhun_selectteacher_${demo.id!0}" style="color: rgb(139, 139, 139);">
                                         <#if teacherProfiles?exists>
                                         <#list teacherProfiles as profile>
@@ -110,8 +118,9 @@ body{min-width:1024px;min-height:600px}
                         <div style="display:none;" class="coursePercentTypeDemos_property_ul" id="coursePercentTypeDemos_property_${demo.id!0}">
                             <#list demo.coursePercentTypes as type>
                             <ul style="margin: 5px 0; height:20px;" class="coursePercentTypes_shuxing_li_${demo.id!0}" data_type_id="${type.getValue()!0}">
-                                   <li style="float:left;color: rgb(139, 139, 139);">
-                                   <p style="color: rgb(139, 139, 139);margin-right:10px;width:150px;text-align: left;">${type.getName()!""}</p></li>
+                                   <li style="float:left;width: 100%;font-size:16px;">
+                                   <p style="color: rgb(106, 106, 106);margin-right:10px;width:150px;text-align: left;">${type.getName()!""}</p>
+                                   </li>
                                    <#list courseProperties as property>
                                         <li style="float:left;margin:0 2px;color: rgb(139, 139, 139);"><input type="checkbox" style="height:13px;" class="coursePercentTypes_shuxing_checkbox_${demo.id!0}_${type.getValue()!0}" data_property_id="${property.id}"/>${property.name!""}</li>
                                    </#list>

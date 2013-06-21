@@ -29,4 +29,10 @@ public interface InteractiveService {
 	public boolean addForward(long id, String content, long userId);
 
 	public boolean addForwardBack(long id, String content, long userId);
+
+	public boolean deleteInteractive(long id);
+
+	public boolean deleteInteractiveBack(long id);
+
+	
 }

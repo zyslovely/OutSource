@@ -1,11 +1,22 @@
 package com.ruoogle.teach.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -83,6 +94,7 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
 
 		if (!ListUtils.isEmptyList(classList)) {
+
 			mv.addObject("classList", classList);
 		}
 		List<Specialty> specialties = classService.getSpecialties();
@@ -229,4 +241,77 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 显示头图
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView updateShowHeadImage(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("admin_newHeadImage");
+		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 图片上传接口
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView authUpload(HttpServletRequest request, HttpServletResponse response) throws Exception, IOException {
+		RequestContext requestContext = new ServletRequestContext(request);
+		ModelAndView mv = new ModelAndView("upload");
+		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
+		if (type != 1 && type != 2) {
+			return null;
+		}
+		if (FileUploadBase.isMultipartContent(requestContext) && request.getMethod().toLowerCase().equals("post")) {
+
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setSizeMax(2000000);
+			List items = new ArrayList();
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e1) {
+				logger.error("文件上传发生错误" + e1.getMessage());
+			}
+			Iterator it = items.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = (FileItem) it.next();
+				if (fileItem.isFormField()) {
+					logger.error("");
+				} else {
+					if (fileItem.getName() != null && fileItem.getSize() != 0) {
+
+						String path = "";
+						String oriPath = request.getSession().getServletContext().getRealPath("/");
+						if (type == 1) {
+							path = oriPath + "img/webIndex/pic1.png";
+						} else if (type == 2) {
+							path = oriPath + "img/webIndex/pic2.png";
+						} else {
+							break;
+						}
+						File file = new File(path);
+						if (file.isFile()) {
+							file.delete();
+						}
+
+						fileItem.write(file);
+						mv.addObject("imageUrl", "/" + path);
+
+					} else {
+						logger.error("文件没有选择 或 文件内容为空");
+					}
+				}
+			}
+		}
+		return mv;
+	}
 }

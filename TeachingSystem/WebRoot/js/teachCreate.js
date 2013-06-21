@@ -18,6 +18,22 @@ function classChange(obj,val){
 	_classId=val;
 };
 
+function specialtyChange(obj,val){
+	
+
+	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'getList',val,function(list){
+		$('#class_selector').html("");
+		$('#jgd_dd_class_selector').remove();
+		if(list){
+			for(i=0;i<list.length;i++){
+				$('#class_selector').append("<option value="+list[i].id+">"+list[i].name+"</option>");
+			}
+		}
+		$('#class_selector').jgdDropdown({callback: function(obj, val) { classChange(obj,val) }});
+	});
+	
+};
+
 $("#teachCreate_save").click(function(){
 	
 	if(_classId<0){

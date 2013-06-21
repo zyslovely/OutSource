@@ -118,7 +118,7 @@
            <a href="/teach/admin/course/type/list/" class="<#if pageName!='newCourseType'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加课程类型</a>
         </li>
         <li class="top_li" style="<#if pageName=='newTeacher'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
-           <a href="/teach/admin/teacher/list/" class="<#if pageName!='newTeacher'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加老师账号</a>
+           <a href="/teach/admin/teacher/list/" class="<#if pageName!='newTeacher'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加教师账号</a>
         </li>
         <li class="top_li" style="<#if pageName=='newStudent'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/student/list/" class="<#if pageName!='newStudent'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学生信息</a>
@@ -126,6 +126,10 @@
         <li class="top_li" style="<#if pageName=='teachSemester'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/semester/list/" class="<#if pageName!='teachSemester'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学期</a>
         </li>
+         <li class="top_li" style="<#if pageName=='newHeadImage'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
+           <a href="/teach/admin/head/" class="<#if pageName!='newHeadImage'>top_li_selected_color<#else>top_li_diselected_color</#if>">首页头图</a>
+        </li>
+        
         <#--
         <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;</#if>">
            <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学校学院信息</a>
@@ -141,16 +145,16 @@
          <p style="margin: 10px 0px; font-size: 18px;">师生互动</p>
          <textarea id="interactive_send_text" rows="3" cols="80" style="font-size:20px;resize:none;width: 600px; height: 130px; overflow-x: hidden; overflow-y: auto; border-style: none; border-width: 0px; word-wrap: break-word;"></textarea>
          <div>
+             <#if courseList?exists>
              <p style="color: white; float: left; margin-top: 18px; width: 54px;">选择课程:</p>
              <div style="width: 140px; height: 30px; float: left; margin-top: 15px; margin-left: 9px;">
-                 <#if courseList?exists>
                  <select style="float:right" id="interactive_send_select" >
                    <#list courseList as course>
                        <option value="${course.id!0}" <#if course_index == 0>selected="selected"</#if>>${course.name!""}</option>
                    </#list>
                  </select>
-             </#if>
              </div>
+             </#if>
              <div style="width: 100px; height: 30px; float: left; margin-left: 20px; margin-top: 20px;"> 
                  <p style="float: left; color: white; width: 55px;">是否保密:</p><input style="width: 16px; height: 16px;" type="checkbox" id="interactive_checkbox"/>
              </div>

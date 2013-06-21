@@ -98,4 +98,12 @@
 		delete from TB_Course_Student
 		where courseId=#{courseId};
 	</delete>
+
+	<select id="getLastestSemesterId" resultType="CourseStudent">
+		SELECT
+		*
+		from
+		TB_Course_Student
+		WHERE userId=#{userId} order by semesterId desc limit 1;
+	</select>
 </mapper>
