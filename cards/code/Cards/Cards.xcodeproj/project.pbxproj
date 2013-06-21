@@ -280,7 +280,6 @@
 				38C272AF175F7723002D1FB9 /* OSAddressViewController.h */,
 				38C272B0175F7723002D1FB9 /* OSAddressViewController.m */,
 				38C272B1175F7723002D1FB9 /* OSAddressViewController.xib */,
-				18AC7A6A1742284900EAE5FA /* Supporting Files */,
 				38675F5517636A590085E697 /* OSImage.h */,
 				38675F5617636A5A0085E697 /* OSImage.m */,
 				38675F5817636ACF0085E697 /* OSSubImage.h */,
@@ -289,6 +288,7 @@
 				38675F5C17636AD80085E697 /* OSSubText.m */,
 				38675F5E17636BB90085E697 /* OSSub.h */,
 				38675F5F17636BB90085E697 /* OSSub.m */,
+				18AC7A6A1742284900EAE5FA /* Supporting Files */,
 			);
 			path = Cards;
 			sourceTree = "<group>";

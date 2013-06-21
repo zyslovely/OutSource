@@ -8,22 +8,41 @@
 		<key>type</key>
 		<integer>1</integer>
 		<key>size_width</key>
-		<integer>280</integer>
+		<integer>630</integer>
 		<key>size_height</key>
-		<integer>320</integer>
+		<integer>1136</integer>
 		<key>images</key>
 		<array>
 			<dict>
 				<key>ori_x</key>
-				<string>140</string>
+				<string>71</string>
 				<key>ori_y</key>
-				<string>120</string>
+				<string>123</string>
 				<key>ori_width</key>
-				<string>40</string>
+				<string>500</string>
 				<key>ori_height</key>
-				<string>60</string>
+				<string>900</string>
 			</dict>
 		</array>
+		<key>texts</key>
+		<array/>
+		<key>New item</key>
+		<dict>
+			<key>font_size</key>
+			<string>17</string>
+			<key>font</key>
+			<string>Times</string>
+			<key>text</key>
+			<string>SAM &amp; CLAIRE</string>
+			<key>ori_x</key>
+			<string>90</string>
+			<key>ori_y</key>
+			<string>897</string>
+			<key>ori_width</key>
+			<string>333</string>
+			<key>ori_height</key>
+			<string>40</string>
+		</dict>
 	</dict>
 </array>
 </plist>
