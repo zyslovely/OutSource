@@ -205,7 +205,13 @@ public class InteractiveServiceImpl implements InteractiveService {
 					interactive.setForwardFromStr("转发自:" + profile2.getName());
 				}
 			}
-			List<InteractiveBack> interactiveBackList = interactiveBackMapper.getInteractiveBack(interactive.getId());
+			long backId;
+			if (interactive.getOriid() == 0) {
+				backId = interactive.getId();
+			} else {
+				backId = interactive.getOriid();
+			}
+			List<InteractiveBack> interactiveBackList = interactiveBackMapper.getInteractiveBack(backId);
 			if (!ListUtils.isEmptyList(interactiveBackList)) {
 				interactive.setSubInteractiveBackList(interactiveBackList);
 			}
@@ -251,6 +257,12 @@ public class InteractiveServiceImpl implements InteractiveService {
 		interactiveBack.setContent(content);
 		interactiveBack.setUserId(userId);
 		interactiveBack.setCreateTime(new Date().getTime());
+		Interactive interactive = interactiveMapper.getInteractive(id);
+		if (interactive.getOriid() == 0) {
+			id = interactive.getId();
+		} else {
+			id = interactive.getOriid();
+		}
 		interactiveBack.setInteractiveId(id);
 		Profile profile = profileMapper.getProfile(userId);
 		if (profile != null) {

@@ -1,5 +1,5 @@
 $("#courseInfo_endCourse").click(function(){
-
+jConfirm('确定要结束课程么','结束课程操作',function(_flag){
 	_courseId=$("#courseInfo_endCourse").attr("data_id");
 	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'finishCourse',_courseId,function(tag){
 		if(tag==1){
@@ -15,6 +15,7 @@ $("#courseInfo_endCourse").click(function(){
 			});
 		}
 	});
+});
 });
 
 function feedbackClick(courseId){
