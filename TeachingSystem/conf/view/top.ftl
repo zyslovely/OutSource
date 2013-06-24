@@ -93,7 +93,7 @@
      <ul style="margin-left:5%;">
         <#if level!=3>
         <#if isVisitor?exists&&isVisitor==1>
-        <li style="font-size:14px;text-align: center; float: left; width: 100px; padding: 12px 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'|| pageName='courseScore'|| pageName='EachStudentScore'|| pageName='courseGroup'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li style="font-size:14px;text-align: center; float: left; width: 100px; padding: 12px 15px; height: 15px;<#if pageName=='teachIndex' || pageName='courseInfo'|| pageName='courseScore'|| pageName='EachStudentScore'|| pageName='courseGroup'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/index/" class="<#if pageName!='teachIndex' && pageName!='courseInfo'&& pageName!='courseScore'&& pageName!='EachStudentScore'&& pageName!='courseGroup'>top_li_selected_color<#else>top_li_diselected_color</#if>">课程列表</a>
         </li>
         <#else>
@@ -103,35 +103,35 @@
         </#if>
         </#if>
         <#if level==1>
-        <li style="font-size:14px;text-align: center; float: left; width: 100px; padding: 12px 15px; height: 15px;<#if pageName=='teachCreate'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li style="font-size:14px;text-align: center; float: left; width: 100px; padding: 12px 15px; height: 15px;<#if pageName=='teachCreate'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/create/" class="<#if pageName!='teachCreate'>top_li_selected_color<#else>top_li_diselected_color</#if>">创建课程</a>
         </li>
         </#if>
         <#if level==3>
-        <li class="top_li" style="<#if pageName=='newSpecialty'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newSpecialty'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/specialty/list/" class="<#if pageName!='newSpecialty'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加专业</a>
         </li>
-        <li class="top_li" style="<#if pageName=='newClass'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newClass'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/class/list/" class="<#if pageName!='newClass'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加班级</a>
         </li>
-        <li class="top_li" style="<#if pageName=='newCourseType'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newCourseType'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/course/type/list/" class="<#if pageName!='newCourseType'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加课程类型</a>
         </li>
-        <li class="top_li" style="<#if pageName=='newTeacher'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newTeacher'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/teacher/list/" class="<#if pageName!='newTeacher'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加教师账号</a>
         </li>
-        <li class="top_li" style="<#if pageName=='newStudent'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newStudent'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/student/list/" class="<#if pageName!='newStudent'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学生信息</a>
         </li>
-        <li class="top_li" style="<#if pageName=='teachSemester'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='teachSemester'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/semester/list/" class="<#if pageName!='teachSemester'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学期</a>
         </li>
-         <li class="top_li" style="<#if pageName=='newHeadImage'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+         <li class="top_li" style="<#if pageName=='newHeadImage'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/head/" class="<#if pageName!='newHeadImage'>top_li_selected_color<#else>top_li_diselected_color</#if>">首页头图</a>
         </li>
         
         <#--
-        <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/teachCreate/tab_bg.png') no-repeat scroll center top transparent;height:24px;</#if>">
+        <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学校学院信息</a>
         </li>
         -->
