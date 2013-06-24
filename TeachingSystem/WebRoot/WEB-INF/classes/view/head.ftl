@@ -18,6 +18,8 @@
 	
 <#include "config.ftl">
 <#include "css.ftl">
-
+<style type="text/css">
+body{background-color:#fbfbfb;}
+</style>
 </head>
 

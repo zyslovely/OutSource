@@ -44,7 +44,7 @@ body{min-width:1024px;min-height:600px}
                </#list>
                </#if>
                </th>
-               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" class="admin_newCourseType_delete" data_id="${demo.id!0}">删除</a></th>
+               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a href="javascript:void(0);" onClick="deleteCourseType(${demo.id!0});return;" >删除</a></th>
             </tr>
             </#list>
        </tbody>

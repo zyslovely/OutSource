@@ -37,7 +37,7 @@ body{min-width:1024px;min-height:600px}
                           <p style="word-wrap:break-word; word-break:normal;padding-top: 10px;">${interactiveBack.name!""} : ${interactiveBack.content!""}</p>
                           <p style="word-wrap:break-word; word-break:normal;padding-bottom: 23px;">
                              <a href="javascript:void(0);;" style="float:right;" onClick="back(${interactiveBack.interactiveId!0});return;">回复</a>
-                             <#if interactive.userId == visitUserId||level=3> <a href="javascript:void(0);;" style="float: right; margin-right: 10px;" onClick="deleteInteractiveBack(${interactiveBack.id!0});return;">删除</a></#if>
+                             <#if interactiveBack.userId == visitUserId||level=3> <a href="javascript:void(0);;" style="float: right; margin-right: 10px;" onClick="deleteInteractiveBack(${interactiveBack.id!0});return;">删除</a></#if>
                           </p>
                        </li>
                     </#list>

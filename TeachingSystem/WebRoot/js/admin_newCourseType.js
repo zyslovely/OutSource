@@ -48,16 +48,15 @@ $("#newCourseType_Create").click(function(){
 	
 });
 
-$(".admin_newCourseType_delete").click(function(){
+function deleteCourseType(_id){
 	jConfirm('确定要删除么','删除操作',function(_flag){
-    _demoId=$(this).attr("data_id");
-	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_demoId,function(flag){
+	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_id,function(flag){
 		if(flag){
 			location.href=location.href;
 		}
 	});
 	});
-});
+};
 
 function scoreType_select(obj,val){
 	_in=0;
