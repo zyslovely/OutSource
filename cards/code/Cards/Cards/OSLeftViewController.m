@@ -86,7 +86,7 @@
   
   // set the root controller
   DDMenuController *menuController = (DDMenuController*)((OSAppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
-  OSFeedViewController *controller = [[OSFeedViewController alloc] init];
+  OSFeedViewController *controller = [[OSFeedViewController alloc] initWithType:indexPath.row+1];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
   
   [menuController setRootController:navController animated:YES];

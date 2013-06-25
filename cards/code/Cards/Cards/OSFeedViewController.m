@@ -10,33 +10,55 @@
 #import "OSSingleViewController.h"
 #import "DDMenuController.h"
 #import "OSAppDelegate.h"
-@interface OSFeedViewController ()
+#import "OSImage.h"
+#import "OSFeedViewCell.h"
+#import "Utilities.h"
+@interface OSFeedViewController ()<OSFeedViewCellDelegate>{
+  OSDesignType _type;
+  CGFloat _singleViewWidth;
+}
 
 @end
 
 @implementation OSFeedViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-      
-      self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
-    }
-    return self;
+- (id)initWithType:(int)type{
+  self=[super init];
+  if(self){
+    
+    _type=type;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
   _dataSource=[[NSMutableArray alloc]init];
-    // Do any additional setup after loading the view from its nib.
+  self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
+  _singleViewWidth=[OSImage viewWidth:_type];
+  [self resetDataSource];
+  [_ibTableView reloadData];
+  
+  // Do any additional setup after loading the view from its nib.
+}
+
+- (void)resetDataSource{
+  
+  [_dataSource removeAllObjects];
+  NSArray *imageArray=[OSAppDelegate sharedInstance].imagesArray;
+  for(OSImage *image in imageArray){
+    if(image.type==_type){
+      [_dataSource addObject:image];
+    }
+  }
+  
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
 }
 
 - (void)viewDidUnload{
@@ -49,56 +71,62 @@
 {
   [_ibTableView release];
   [_dataSource release];
-  [_ibBtn release];
   [super dealloc];
 }
 
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-  return [_dataSource count];
+  
+  if([_dataSource count]%2==0){
+    return [_dataSource count]/2;
+  }else{
+    return [_dataSource count]/2+1;
+  }
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-  return 45;
+  
+  return DefaultCellHeight;
+  
 }
+
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  static NSString *CellIdentifier = @"CellIdentifier";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  if(cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-  }
+  OSFeedViewCell *cell= (OSFeedViewCell*)[Utilities cellByClassName:@"OSFeedViewCell" inNib:@"OSFeedViewCell" forTableView:_ibTableView];
+  cell.delegate=self;
   cell.selectionStyle=UITableViewCellSelectionStyleNone;
-  /*
-   * Content in this cell should be inset the size of kMenuOverlayWidth
-   */
-  
-  cell.textLabel.text = [NSString stringWithFormat:@"Cell %i", indexPath.row];
+  OSImage *image1=nil;
+  OSImage *image2=nil;
+  if([_dataSource count]>indexPath.row*2){
+    image1=(OSImage*)[_dataSource objectAtIndex:indexPath.row*2];
+    NSString *screenShot = [image1 screenShotStr:indexPath.row*2];
+    image1.screenShotStr=screenShot;
+  }
+  if([_dataSource count]>indexPath.row*2+1){
+    image2 =(OSImage*)[_dataSource objectAtIndex:indexPath.row*2+1];
+    [image2 screenShotStr:indexPath.row*2+1];
+    NSString *screenShot = [image2 screenShotStr:indexPath.row*2+1];
+    image2.screenShotStr=screenShot;
+  }
+ [cell setOSImage1:image1 image2:image2 viewWidth:_singleViewWidth];
   
   return cell;
   
 }
-#pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  OSSingleViewController *singleVCTL=[[OSSingleViewController alloc]init];
-  [self.navigationController pushViewController:singleVCTL animated:YES];
-  [singleVCTL release];
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-  
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   
 }
 
-- (IBAction)btnClick:(id)sender{
+#pragma mark -OSFeedViewCellDelegate
+- (void)imageViewClick:(OSImage*)image{
   
-  NSArray *images=[OSAppDelegate sharedInstance].imagesArray;
-  OSImage *image=[images objectAtIndex:0];
   OSSingleViewController *singleVCTL=[[OSSingleViewController alloc]initWithSingleView:image];
   [self.navigationController pushViewController:singleVCTL animated:YES];
   [singleVCTL release];
 }
+
 
 @end

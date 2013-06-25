@@ -47,6 +47,7 @@ static OSImage *osImage = nil;
   [_images release];
   [_texts release];
   [_thumbnail release];
+  [_screenShotStr release];
   [super dealloc];
 }
 
@@ -57,5 +58,85 @@ static OSImage *osImage = nil;
   }
   
   return osImage;
+}
+
+
+- (NSString*)screenShotStr:(int)index{
+  switch (_type) {
+      //手机壳
+    case OSDesignType_PhoneShell:
+    {
+      return [NSString stringWithFormat:@"phoneShell-mask-%d",index];
+    }
+      break;
+    case OSDesignType_BusinessCard:
+    {
+      
+    }
+      break;
+    case OSDesignType_InvitationCard:
+    {
+      
+    }
+      break;
+    case OSDesignType_JigsawDiy:
+    {
+      
+    }
+      break;
+    case OSDesignType_Postcard:
+    {
+      
+    }
+      break;
+    case OSDesignType_SchoolCard:
+    {
+      
+    }
+      break;
+    default:
+      break;
+  }
+  return @"";
+}
+
++ (CGFloat)viewWidth:(OSDesignType)type{
+  
+  switch (type) {
+      //手机壳
+    case OSDesignType_PhoneShell:
+    {
+      return 80.0;
+    }
+      break;
+    case OSDesignType_BusinessCard:
+    {
+      
+    }
+      break;
+    case OSDesignType_InvitationCard:
+    {
+      
+    }
+      break;
+    case OSDesignType_JigsawDiy:
+    {
+      
+    }
+      break;
+    case OSDesignType_Postcard:
+    {
+      
+    }
+      break;
+    case OSDesignType_SchoolCard:
+    {
+      
+    }
+      break;
+    default:
+      break;
+  }
+  return 0;
 }
 @end

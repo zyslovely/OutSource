@@ -9,6 +9,7 @@
 #import "OSSingleViewController.h"
 #import "OSAddressViewController.h"
 #import "OSSubImage.h"
+#import "Utilities.h"
 #import <QuartzCore/QuartzCore.h>
 @interface OSSingleViewController (){
   OSImage *_image;
@@ -34,17 +35,18 @@
   
   _ibImageView.frame=CGRectMake((SCREEN_WIDTH-_image.size_width)/2, (SCREEN_HEIGHT_WITHOUT_STATUS_BAR-_image.size_height)/2, _image.size_width, _image.size_height);
   _ibImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:_image.thumbnail]];
-  
+
   
   for(OSSubImage *subImage in _image.images){
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame=CGRectMake(subImage.ori_x, subImage.ori_y, subImage.ori_width, subImage.ori_height);
-    [btn addTarget:self action:@selector(choiceImage:) forControlEvents:UIControlEventTouchUpInside];
+    btn.frame=CGRectMake(_ibImageView.frame.origin.x+subImage.ori_x, _ibImageView.frame.origin.y+subImage.ori_y, subImage.ori_width, subImage.ori_height);
+    btn.tag=1;
     [btn setImage:UIIMAGE_FROMPNG(@"nav_bar_save") forState:UIControlStateNormal];
     [btn setImage:UIIMAGE_FROMPNG(@"nav_bar_save") forState:UIControlStateHighlighted];
     [btn setEnabled:YES];
-    [_ibImageView addSubview:btn];
+    [self.view addSubview:btn];
   }
+  [self.view bringSubviewToFront:_ibImageView];
   // Do any additional setup after loading the view from its nib.
 }
 
@@ -55,7 +57,6 @@
 }
 
 - (void)viewDidUnload{
-  
   
   _ibBackBtn=nil;
   _ibChangeBtn=nil;
@@ -112,8 +113,48 @@
 
 - (IBAction)refreshBtnClick:(id)sender{
   
+  NSArray *subViews=[self.view subviews];
+  for(UIView *view in subViews){
+    if([view isMemberOfClass:[UIButton class]]){
+      UIButton *btn=(UIButton*)view;
+      if(btn.tag!=1){
+        continue;
+      }
+    }
+  }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+  
+  UITouch *touch = [touches anyObject];
+  NSInteger numTaps=[touch tapCount];
+  if(numTaps==1){
+    
+    CGPoint previousPoint = [touch previousLocationInView:self.view];
+    NSLog(@"%f,%f",previousPoint.x,previousPoint.y);
+    NSArray *subViews=[self.view subviews];
+    for(UIView *view in subViews){
+      if([view isMemberOfClass:[UIButton class]]){
+        UIButton *btn=(UIButton*)view;
+        if(btn.tag!=1){
+          continue;
+        }
+        
+        if((btn.frame.origin.x<previousPoint.x&&btn.frame.origin.x+btn.frame.size.width>previousPoint.x)&&(btn.frame.origin.y<previousPoint.y&&btn.frame.origin.y+btn.frame.size.height>previousPoint.y)){
+          
+          SAFECHECK_RELEASE(_selectedBtn);
+          _selectedBtn=[btn retain];
+          [self choiceImage:_selectedBtn];
+        }
+        
+      }
+    }
+
+  }
+  
   
 }
+
 
 - (void)choiceImage:(id)sender{
   

@@ -24,9 +24,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSArray *osImages = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Cards.plist" ofType:nil]];
+  _imagesArray=[[NSMutableArray alloc]init];
+  for(NSDictionary *dic in osImages){
+    
+    OSImage *image=[[OSImage alloc]initWithJSONDic:dic];
+    [_imagesArray addObject:image];
+    [image release];
+  }
   self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
   // Override point for customization after application launch.
-  OSFeedViewController *mainController = [[OSFeedViewController alloc] init];
+  OSFeedViewController *mainController = [[OSFeedViewController alloc] initWithType:OSDesignType_PhoneShell];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:mainController];
   [mainController release];
   
@@ -36,14 +44,7 @@
   OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
   _menuController.leftViewController = leftController;
 
-  NSArray *osImages = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Cards.plist" ofType:nil]];
-  _imagesArray=[[NSMutableArray alloc]init];
-  for(NSDictionary *dic in osImages){
-    
-    OSImage *image=[[OSImage alloc]initWithJSONDic:dic];
-    [_imagesArray addObject:image];
-    [image release];
-  }
+  
   
   self.window.rootViewController = _menuController;
   [self.window makeKeyAndVisible];

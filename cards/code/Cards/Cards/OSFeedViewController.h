@@ -13,5 +13,6 @@
 }
 
 @property (nonatomic,retain) IBOutlet UITableView *ibTableView;
-@property (nonatomic,retain) IBOutlet UIButton *ibBtn;
+
+- (id)initWithType:(int)type;
 @end

@@ -4,24 +4,150 @@
 <array>
 	<dict>
 		<key>thumbnail</key>
-		<string>screenshot1.png</string>
+		<string>phoneShell-0</string>
 		<key>type</key>
 		<integer>1</integer>
 		<key>size_width</key>
-		<integer>630</integer>
+		<integer>195</integer>
 		<key>size_height</key>
-		<integer>1136</integer>
+		<integer>419</integer>
 		<key>images</key>
 		<array>
 			<dict>
 				<key>ori_x</key>
-				<string>71</string>
+				<string>5</string>
 				<key>ori_y</key>
-				<string>123</string>
+				<string>5</string>
 				<key>ori_width</key>
-				<string>500</string>
+				<string>190</string>
 				<key>ori_height</key>
-				<string>900</string>
+				<string>414</string>
+			</dict>
+		</array>
+		<key>texts</key>
+		<array/>
+		<key>New item</key>
+		<dict>
+			<key>font_size</key>
+			<string>17</string>
+			<key>font</key>
+			<string>Times</string>
+			<key>text</key>
+			<string>SAM &amp; CLAIRE</string>
+			<key>ori_x</key>
+			<string>90</string>
+			<key>ori_y</key>
+			<string>897</string>
+			<key>ori_width</key>
+			<string>333</string>
+			<key>ori_height</key>
+			<string>40</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>thumbnail</key>
+		<string>phoneShell-1</string>
+		<key>type</key>
+		<integer>1</integer>
+		<key>size_width</key>
+		<integer>195</integer>
+		<key>size_height</key>
+		<integer>419</integer>
+		<key>images</key>
+		<array>
+			<dict>
+				<key>ori_x</key>
+				<string>5</string>
+				<key>ori_y</key>
+				<string>5</string>
+				<key>ori_width</key>
+				<string>190</string>
+				<key>ori_height</key>
+				<string>414</string>
+			</dict>
+		</array>
+		<key>texts</key>
+		<array/>
+		<key>New item</key>
+		<dict>
+			<key>font_size</key>
+			<string>17</string>
+			<key>font</key>
+			<string>Times</string>
+			<key>text</key>
+			<string>SAM &amp; CLAIRE</string>
+			<key>ori_x</key>
+			<string>90</string>
+			<key>ori_y</key>
+			<string>897</string>
+			<key>ori_width</key>
+			<string>333</string>
+			<key>ori_height</key>
+			<string>40</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>thumbnail</key>
+		<string>phoneShell-2</string>
+		<key>type</key>
+		<integer>1</integer>
+		<key>size_width</key>
+		<integer>195</integer>
+		<key>size_height</key>
+		<integer>419</integer>
+		<key>images</key>
+		<array>
+			<dict>
+				<key>ori_x</key>
+				<string>5</string>
+				<key>ori_y</key>
+				<string>5</string>
+				<key>ori_width</key>
+				<string>190</string>
+				<key>ori_height</key>
+				<string>414</string>
+			</dict>
+		</array>
+		<key>texts</key>
+		<array/>
+		<key>New item</key>
+		<dict>
+			<key>font_size</key>
+			<string>17</string>
+			<key>font</key>
+			<string>Times</string>
+			<key>text</key>
+			<string>SAM &amp; CLAIRE</string>
+			<key>ori_x</key>
+			<string>90</string>
+			<key>ori_y</key>
+			<string>897</string>
+			<key>ori_width</key>
+			<string>333</string>
+			<key>ori_height</key>
+			<string>40</string>
+		</dict>
+	</dict>
+	<dict>
+		<key>thumbnail</key>
+		<string>phoneShell-3</string>
+		<key>type</key>
+		<integer>1</integer>
+		<key>size_width</key>
+		<integer>195</integer>
+		<key>size_height</key>
+		<integer>419</integer>
+		<key>images</key>
+		<array>
+			<dict>
+				<key>ori_x</key>
+				<string>5</string>
+				<key>ori_y</key>
+				<string>5</string>
+				<key>ori_width</key>
+				<string>190</string>
+				<key>ori_height</key>
+				<string>414</string>
 			</dict>
 		</array>
 		<key>texts</key>
