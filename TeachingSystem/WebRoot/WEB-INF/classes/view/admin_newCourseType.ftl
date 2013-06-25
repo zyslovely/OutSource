@@ -57,7 +57,7 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">类型名称</p></th>
                    <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newCourseType_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="类型名称"/>
+                        <input onClick="if(this.value=='类型名称')this.value=''" id="newCourseType_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="类型名称"/>
                       </div>
                    </th>
                 </tr>

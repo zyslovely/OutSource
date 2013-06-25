@@ -52,7 +52,7 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">教师姓名</p></th>
                    <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newTeacher_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="教师姓名"/>
+                        <input onClick="if(this.value=='教师姓名')this.value=''" id="newTeacher_name" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="教师姓名"/>
                       </div>
                    </th>
                 </tr>
@@ -60,7 +60,7 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">账号</p></th>
                    <th style="">
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newTeacher_username" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="账号"/>
+                        <input onClick="if(this.value=='账号')this.value=''" id="newTeacher_username" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="账号"/>
                       </div>
                    </th>
                 </tr>
@@ -68,7 +68,7 @@ body{min-width:1024px;min-height:600px}
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">密码</p></th>
                    <th>
                       <div style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                        <input id="newTeacher_password" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="密码"/>
+                        <input onClick="if(this.value=='密码')this.value=''" id="newTeacher_password" name="username" type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 20px;" value="密码"/>
                       </div>
                    </th>
                 </tr>

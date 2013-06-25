@@ -19,7 +19,7 @@ canvas {border:1px solid #4c4c4c;}
    <div style="width: 1024px; margin: auto;">
    <div style="float:left;margin-left:5%;height:160px;margin-top: 30px;">
        <img src="/img/teachCreate/pic_list.png" style="width:160px;height:160px;"/>
-       
+       <p style="width: 100px; margin: 15px auto;color:rgb(139, 139, 139)">提示:选择学期后即可查看当前学期课程列表</p>
    </div>
    <#if courseList?exists>
    <div style="float: left; width: 600px; margin-top: 20px; margin-left: 60px;">

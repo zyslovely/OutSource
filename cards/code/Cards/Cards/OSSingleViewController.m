@@ -10,11 +10,13 @@
 #import "OSAddressViewController.h"
 #import "OSSubImage.h"
 #import "Utilities.h"
+#import "OSSubText.h"
 #import <QuartzCore/QuartzCore.h>
 @interface OSSingleViewController (){
   OSImage *_image;
   UIImagePickerController *_imagePicker;
   UIButton *_selectedBtn;
+  UITextField *_selectedTextField;
 }
 @end
 
@@ -41,10 +43,18 @@
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame=CGRectMake(_ibImageView.frame.origin.x+subImage.ori_x, _ibImageView.frame.origin.y+subImage.ori_y, subImage.ori_width, subImage.ori_height);
     btn.tag=1;
-    [btn setImage:UIIMAGE_FROMPNG(@"nav_bar_save") forState:UIControlStateNormal];
-    [btn setImage:UIIMAGE_FROMPNG(@"nav_bar_save") forState:UIControlStateHighlighted];
     [btn setEnabled:YES];
     [self.view addSubview:btn];
+  }
+  for(OSSubText *subText in _image.texts){
+
+    UITextField *textField=[[UITextField alloc]initWithFrame:CGRectMake(_ibImageView.frame.origin.x+subText.ori_x, _ibImageView.frame.origin.y+subText.ori_y, subText.ori_width, subText.ori_height)];
+    textField.tag=2;
+    textField.text=subText.text;
+    textField.backgroundColor=[UIColor clearColor];
+    textField.font=[UIFont fontWithName:subText.font size:subText.font_size];
+    [self.view addSubview:textField];
+    [textField release];
   }
   [self.view bringSubviewToFront:_ibImageView];
   // Do any additional setup after loading the view from its nib.
@@ -62,6 +72,8 @@
   _ibChangeBtn=nil;
   _ibImageView=nil;
   _ibSaveBtn=nil;
+  SAFECHECK_RELEASE(_selectedBtn);
+  SAFECHECK_RELEASE(_selectedTextField);
   SAFECHECK_RELEASE(_image);
   SAFECHECK_RELEASE(_imagePicker);
   [super viewDidUnload];
@@ -75,6 +87,8 @@
   [_ibImageView release];
   [_ibSaveBtn release];
   [_imagePicker release];
+  [_selectedTextField release];
+  [_selectedBtn release];
   [super dealloc];
 }
 
@@ -115,6 +129,15 @@
   
   NSArray *subViews=[self.view subviews];
   for(UIView *view in subViews){
+    if([view isMemberOfClass:[UILabel class]]){
+      UILabel *label=(UILabel*)view;
+      if(label.tag!=2){
+        continue;
+      }
+      
+    }
+  }
+  for(UIView *view in subViews){
     if([view isMemberOfClass:[UIButton class]]){
       UIButton *btn=(UIButton*)view;
       if(btn.tag!=1){
@@ -133,6 +156,30 @@
     CGPoint previousPoint = [touch previousLocationInView:self.view];
     NSLog(@"%f,%f",previousPoint.x,previousPoint.y);
     NSArray *subViews=[self.view subviews];
+    BOOL foundLabel=NO;
+    BOOL foundBtn=NO;
+    for(UIView *view in subViews){
+      if([view isMemberOfClass:[UITextField class]]){
+        UITextField *textField=(UITextField*)view;
+        if(textField.tag!=2){
+          continue;
+        }
+        if((textField.frame.origin.x<previousPoint.x&&textField.frame.origin.x+textField.frame.size.width>previousPoint.x)&&(textField.frame.origin.y<previousPoint.y&&textField.frame.origin.y+textField.frame.size.height>previousPoint.y)){
+          
+          SAFECHECK_RELEASE(_selectedTextField);
+          _selectedTextField=[textField retain];
+          [self choiceLabel:_selectedTextField];
+          foundLabel=YES;
+        }
+      }
+    }
+    if(foundLabel){
+      return;
+    }
+    if(_selectedTextField){
+      [_selectedTextField resignFirstResponder];
+
+    }
     for(UIView *view in subViews){
       if([view isMemberOfClass:[UIButton class]]){
         UIButton *btn=(UIButton*)view;
@@ -145,6 +192,7 @@
           SAFECHECK_RELEASE(_selectedBtn);
           _selectedBtn=[btn retain];
           [self choiceImage:_selectedBtn];
+          foundBtn=YES;
         }
         
       }
@@ -155,6 +203,11 @@
   
 }
 
+- (void)choiceLabel:(id)sender{
+  
+  UITextField *textField=(UITextField*)sender;
+  [textField becomeFirstResponder];
+}
 
 - (void)choiceImage:(id)sender{
   
@@ -162,7 +215,6 @@
   UIActionSheet *actionSheet=[[UIActionSheet alloc]initWithTitle:@"选择照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"相机拍照" otherButtonTitles:@"照片库", nil];
   [actionSheet showInView:self.view];
   [actionSheet release];
-  
   
 }
 
@@ -190,6 +242,7 @@
     
   }
 }
+
 
 #pragma mark -
 #pragma mark UIImagePickerControllerDelegate

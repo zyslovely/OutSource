@@ -1,6 +1,7 @@
 $("#courseInfo_endCourse").click(function(){
-jConfirm('确定要结束课程么','结束课程操作',function(_flag){
 	_courseId=$("#courseInfo_endCourse").attr("data_id");
+jConfirm('确定要结束课程么','结束课程操作',function(_flag){
+	
 	dwr.engine._execute(_cfg_host+"/dwr/", 'TeachSysTeacherBean', 'finishCourse',_courseId,function(tag){
 		if(tag==1){
 			jAlert("结束课程成功","恭喜",function(){

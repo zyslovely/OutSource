@@ -12,12 +12,17 @@
 @interface OSAddressViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,PayPalPaymentDelegate,MFMailComposeViewControllerDelegate>
 
 
+@property (nonatomic,retain) IBOutlet UITextField *ibNumberField;
+@property (nonatomic,retain) IBOutlet UITextField *ibTypeField;
 @property (nonatomic,retain) IBOutlet UITextField *ibNameField;
-@property (nonatomic,retain) IBOutlet UITextField *ibContractField;
+@property (nonatomic,retain) IBOutlet UITextField *ibPostCodeField;
+@property (nonatomic,retain) IBOutlet UITextField *ibCityField;
+@property (nonatomic,retain) IBOutlet UITextField *ibAddressField;
+@property (nonatomic,retain) IBOutlet UITextField *ibPhoneField;
 @property (nonatomic,retain) IBOutlet UITextField *ibCountField;
 @property (nonatomic,retain) IBOutlet UITextField *ibEmailField;
-@property (nonatomic,retain) IBOutlet UITextView *ibAddressView;
-@property (nonatomic,retain) IBOutlet UILabel *ibUnitPriceLabel;
+@property (nonatomic,retain) IBOutlet UILabel *ibTotalPriceLabel;
+@property (nonatomic,retain) IBOutlet UIImageView *ibBGImageView;
 
 @property (nonatomic,retain) IBOutlet UIButton *ibBuyBtn;
 

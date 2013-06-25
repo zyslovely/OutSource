@@ -9,6 +9,7 @@
 #import "OSAddressViewController.h"
 #import "SVProgressHUD.h"
 #import "NSString+TomAddition.h"
+#import "Utilities.h"
 #import <StoreKit/StoreKit.h>
 #define kClientKey @"AeIKUxCF0kWkTzXpz1EsMVYk6owI44gHPaOrUEvDtUEFPhFEUAKjc25hqtAH"
 #define kReceiverEmail @"skyapps@icloud.com"
@@ -27,8 +28,15 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg")];
-   [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+  self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
+  
+  if([Utilities isRetina4]){
+    _ibBGImageView.frame=CGRectMake((SCREEN_WIDTH-282)/2, 60, 282, 454);
+    _ibBGImageView.image=[UIImage imageNamed:@"book_bg-568h@2x.png"];
+  }
+  
+  
+  //[[SKPaymentQueue defaultQueue] addTransactionObserver:self];
   // Do any additional setup after loading the view from its nib.
 }
 
@@ -43,7 +51,10 @@
   if(self){
     _unitPrice=price;
     _imagePath=[imagePath copy];
-    
+    _ibTotalPriceLabel.text=[NSString stringWithFormat:@"0.1%f",_unitPrice];
+    _ibCountField.text=@"1";
+    [_ibNumberField setEnabled:NO];
+    [_ibTypeField setEnabled:NO];
   }
   return self;
 }
@@ -51,7 +62,7 @@
 - (IBAction)buyBtnClick:(id)sender{
   
   UIActionSheet *actionSheet=nil;
-  if(ISPRO){
+  if(!ISPRO){
       actionSheet=[[UIActionSheet alloc]initWithTitle:@"支付" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"PayPal支付" otherButtonTitles:nil];
   }else{
      actionSheet=[[UIActionSheet alloc]initWithTitle:@"支付" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"PayPal支付" otherButtonTitles:@"应用内支付", nil];
@@ -64,6 +75,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
   
+  _totalPrice=[_ibCountField.text intValue]*_unitPrice;
   if(buttonIndex==0){
     
     [self payWithPayPal];
@@ -112,7 +124,6 @@
   
   PayPalPayment *payment=[[PayPalPayment alloc]init];
   
-  _totalPrice=[_ibCountField.text intValue]*_unitPrice;
   payment.amount=[[[NSDecimalNumber alloc]initWithDouble:_totalPrice]autorelease];
   payment.currencyCode=@"USD";
   payment.shortDescription=@"购买的描述";
@@ -138,7 +149,9 @@
     NSLog(@"无法获取产品信息，购买失败");
     return;
   }
-  SKPayment *payment=[SKPayment paymentWithProduct:myProduct[0]];
+  SKMutablePayment *payment=[SKMutablePayment paymentWithProduct:myProduct[0]];
+  NSLog(@"%@",payment.requestData);
+  payment.quantity=[_ibCountField.text intValue];
   [[SKPaymentQueue defaultQueue] addPayment:payment];
   
   
@@ -178,6 +191,7 @@
 - (void)completeTransaction:(SKPaymentTransaction*)transaction{
   
   NSLog(@"交易完成");
+  [self sendEmail:[NSDictionary dictionaryWithObjectsAndKeys:DOUBLE2NUM(_totalPrice),@"app store payment totalPrice", nil]];
   
 }
 
@@ -186,10 +200,12 @@
   if(transaction.error.code!=SKErrorPaymentCancelled){
     
     NSLog(@"购买失败");
+    
   }else{
     
     NSLog(@"用户取消交易");
   }
+  [SVProgressHUD showErrorWithStatus:@"购买失败" duration:1.0];
 }
 
 
@@ -206,7 +222,7 @@
   [self verifyCompletedPayment:completedPayment];
   
   // Dismiss the PayPalPaymentViewController.
-  [self dismissViewControllerAnimated:YES completion:nil];
+  [self dismissViewControllerAnimated:NO completion:nil];
   [self sendEmail:completedPayment.confirmation];
 }
 
@@ -238,7 +254,7 @@
   mc.mailComposeDelegate = self;
   [mc setToRecipients:[NSArray arrayWithObjects:kReceiverEmail, nil]];
   [mc setSubject:@"购买邮件标题"];
-  NSString *str=[NSString stringWithFormat:@"姓名:%@\n地址:%@\n联系方式:%@\n数量:%@\n总价:%f\n%@",_ibNameField.text,_ibAddressView.text,_ibContractField.text,_ibCountField.text,_totalPrice,dic];
+  NSString *str=[NSString stringWithFormat:@"商品编号:%@\n商品类别:%@\n订购姓名:%@\n邮编区号:%@\n所在城市:%@\n收货地址:%@\n联络电话:%@\n订购数量:%@\n商品总价:0.1%f\n%@",_ibNumberField.text,_ibTypeField.text,_ibNameField.text,_ibPostCodeField.text,_ibCityField.text,_ibAddressField.text,_ibPhoneField.text,_ibCountField.text,_totalPrice,dic];
   [mc setMessageBody:str isHTML:NO];
   NSData *data =[NSData dataWithContentsOfFile:_imagePath];
   [mc addAttachmentData:data mimeType:@"image/png" fileName:@"图片文件"];
@@ -262,6 +278,7 @@
     case MFMailComposeResultSent:
       NSLog(@"Mail sent...");
       [SVProgressHUD showSuccessWithStatus:@"发送email成功"];
+      [self.navigationController popToRootViewControllerAnimated:YES];
       break;
     case MFMailComposeResultFailed:
       NSLog(@"Mail send errored: %@...", [error localizedDescription]);
@@ -277,13 +294,18 @@
 
 - (void)viewDidUnload{
   
+  _ibNumberField=nil;
+  _ibTypeField=nil;
   _ibNameField=nil;
-  _ibContractField=nil;
-  _ibBuyBtn=nil;
-  _ibAddressView=nil;
-  _ibEmailField=nil;
+  _ibPostCodeField=nil;
+  _ibCityField=nil;
+  _ibAddressField=nil;
+  _ibPhoneField=nil;
   _ibCountField=nil;
-  _ibUnitPriceLabel=nil;
+  _ibBuyBtn=nil;
+  _ibEmailField=nil;
+  _ibTotalPriceLabel=nil;
+  _ibBGImageView=nil;
   SAFECHECK_RELEASE(_imagePath);
   [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
   [super viewDidUnload];
@@ -292,15 +314,46 @@
 - (void)dealloc
 {
   [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
-  [_imagePath release];
-  [_ibUnitPriceLabel release];
+ 
+  [_ibNumberField release];
+  [_ibTypeField release];
+  [_ibNameField release];
+  [_ibPostCodeField release];
+  [_ibCityField release];
+  [_ibAddressField release];
+  [_ibPhoneField release];
   [_ibCountField release];
   [_ibEmailField release];
-  [_ibAddressView release];
+  [_ibTotalPriceLabel release];
   [_ibBuyBtn release];
-  [_ibContractField release];
-  [_ibNameField release];
+  [_imagePath release];
+  [_ibBGImageView release];
   [super dealloc];
 }
 
+
+- (IBAction)viewClick:(id)sender{
+  
+  if(![sender isMemberOfClass:[UITextField class]]){
+    [_ibNumberField resignFirstResponder];
+    [_ibTypeField resignFirstResponder];
+    [_ibNameField resignFirstResponder];
+    [_ibPostCodeField resignFirstResponder];
+    [_ibCityField resignFirstResponder];
+    [_ibAddressField resignFirstResponder];
+    [_ibPhoneField resignFirstResponder];
+    [_ibCountField resignFirstResponder];
+    [_ibEmailField resignFirstResponder];
+    [_ibTotalPriceLabel resignFirstResponder];
+  }
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+  
+  if(textField==_ibCountField){
+    
+    _ibTotalPriceLabel.text=[NSString stringWithFormat:@"0.1%f",_unitPrice*[_ibCountField.text intValue]];
+  }
+  return YES;
+}
 @end

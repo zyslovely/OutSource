@@ -25,24 +25,24 @@
 			</dict>
 		</array>
 		<key>texts</key>
-		<array/>
-		<key>New item</key>
-		<dict>
-			<key>font_size</key>
-			<string>17</string>
-			<key>font</key>
-			<string>Times</string>
-			<key>text</key>
-			<string>SAM &amp; CLAIRE</string>
-			<key>ori_x</key>
-			<string>90</string>
-			<key>ori_y</key>
-			<string>897</string>
-			<key>ori_width</key>
-			<string>333</string>
-			<key>ori_height</key>
-			<string>40</string>
-		</dict>
+		<array>
+			<dict>
+				<key>ori_x</key>
+				<string>20</string>
+				<key>ori_y</key>
+				<string>100</string>
+				<key>ori_width</key>
+				<string>150</string>
+				<key>ori_height</key>
+				<string>30</string>
+				<key>font_size</key>
+				<string>14</string>
+				<key>font</key>
+				<string>Zapfino</string>
+				<key>text</key>
+				<string>测试文字</string>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>thumbnail</key>

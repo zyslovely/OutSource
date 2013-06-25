@@ -8,8 +8,20 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon.png</string>
+				<string>icon.png</string>
+				<string>icon@2x.png</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.skyinc104.HAPP016</string>
+	<string>com.outsource.outsource</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,6 +36,25 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>078MKSD_MC.TTF</string>
+		<string>911v2.ttf</string>
+		<string>Arial Bold.ttf</string>
+		<string>Arial Rounded Bold.ttf</string>
+		<string>Arial.ttf</string>
+		<string>BellGothicStd-Black.otf</string>
+		<string>Brush Script.ttf</string>
+		<string>CNN.TTF</string>
+		<string>FAKEP___.TTF</string>
+		<string>Georgia.ttf</string>
+		<string>Impact.ttf</string>
+		<string>JBCalli-Regular.otf</string>
+		<string>KOMIKZBA.ttf</string>
+		<string>MASQUE__.ttf</string>
+		<string>Times New Roman Bold.ttf</string>
+		<string>Times New Roman.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -22,11 +22,11 @@ body{min-width:1024px;min-height:600px}
            <ul style=" height: 60px;width:100%;">
               <li style="float:left;width:300px;">
                  <div  style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                          <input  id="newSemester_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="学期名称"/>
+                          <input onClick="if(this.value=='学期名称')this.value=''"  id="newSemester_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="学期名称"/>
                       </div>
               </li>
               <li style="float:left;width:200px;">
-                  <a class="w-btn" id="newSemester_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; line-height: 55px;" href="javascript:void(0);;">新建学期</a>
+                  <a   class="w-btn" id="newSemester_Create" style="background: url('/img/teachCreate/button_edit.png') no-repeat scroll 0px 0px transparent; margin-left: 20px; height: 59px; display: block; text-align: center; color: white; line-height: 55px;" href="javascript:void(0);;">新建学期</a>
               </li>
            </ul>
        </div>

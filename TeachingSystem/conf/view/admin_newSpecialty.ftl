@@ -23,12 +23,12 @@ body{min-width:1024px;min-height:600px}
            <ul style=" height: 60px;width:100%;">
               <li style="float:left;width:300px;">
                  <div  style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                          <input  id="newSpecialty_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="专业名称"/>
+                          <input onClick="if(this.value=='专业名称')this.value=''"  id="newSpecialty_Name"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="专业名称"/>
                       </div>
               </li>
               <li style="float:left;width:300px;">
                  <div  style="background: url('/img/webIndex/input_bg.png') no-repeat scroll center top transparent;  width: 295px; padding-top:15px\9; ">
-                          <input id="newSpecialty_ShortName"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="专业拼音"/>
+                          <input onClick="if(this.value=='专业拼音')this.value=''" id="newSpecialty_ShortName"  type="text" style="border: 0px none; height: 60px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 20px; font-size: 14px;color: rgb(143, 143, 143);" value="专业拼音"/>
                       </div>
               </li>
               <li style="float:left;width:200px;">
