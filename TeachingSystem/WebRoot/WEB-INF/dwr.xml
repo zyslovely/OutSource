@@ -29,6 +29,7 @@
 		<convert converter="bean" match="com.ruoogle.teach.meta.Course" />
 		<convert converter="bean"
 			match="com.ruoogle.teach.meta.CoursePercentTypeGroupStudent" />
-
+		<convert converter="bean"
+			match="com.ruoogle.teach.meta.CoursePercentTypeDemo" />
 	</allow>
 </dwr>

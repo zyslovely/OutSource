@@ -21,8 +21,9 @@ static OSImage *osImage = nil;
     _size_width=[[jsonDic objectForKey:@"size_width"]floatValue];
     _size_height=[[jsonDic objectForKey:@"size_height"]floatValue];
     _thumbnail=[[jsonDic objectForKey:@"thumbnail"]copy];
+    _test=[jsonDic objectForKey:@"test"];
     
-    
+  
     _images=[[NSMutableArray alloc]init];
     NSArray *imageArray=[jsonDic objectForKey:@"images"];
     for(NSDictionary *dic in imageArray){
@@ -38,6 +39,7 @@ static OSImage *osImage = nil;
       [_texts addObject:subText];
       [subText release];
     }
+    
   }
   return self;
 }
@@ -47,6 +49,7 @@ static OSImage *osImage = nil;
   [_images release];
   [_texts release];
   [_thumbnail release];
+  [_test release];
   [_screenShotStr release];
   [super dealloc];
 }

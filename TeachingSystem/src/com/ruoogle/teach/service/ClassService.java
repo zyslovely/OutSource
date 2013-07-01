@@ -3,9 +3,11 @@ package com.ruoogle.teach.service;
 import java.util.List;
 
 import com.ruoogle.teach.meta.Class;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
+import com.ruoogle.teach.meta.Teach;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -22,7 +24,8 @@ public interface ClassService {
 	 * @param semesterCount
 	 * @return
 	 */
-	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount);
+	public boolean addSpecialty(String SpecialtyName,
+			String SpecialtyShortName, int semesterCount);
 
 	/**
 	 * 
@@ -80,7 +83,8 @@ public interface ClassService {
 	 * @param userId
 	 * @return
 	 */
-	public boolean addJournal(String content, int type, long courseId, long userId);
+	public boolean addJournal(String content, int type, long courseId,
+			long userId);
 
 	/**
 	 * 
@@ -182,4 +186,12 @@ public interface ClassService {
 	 * @return
 	 */
 	public boolean deleteSemester(long id);
+
+	public boolean addTeach(String name, long demoId);
+
+	public List<Teach> getTeachList(int limit, int offset);
+
+	public boolean deleteTeach(long id);
+
+	public CoursePercentTypeDemo getCoursePercentTypeDemoByTeachId(long teachId);
 }

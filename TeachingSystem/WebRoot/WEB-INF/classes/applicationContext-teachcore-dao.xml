@@ -20,10 +20,8 @@
 
 	<!-- 导入属性配置文件 -->
 	<context:property-placeholder location="classpath:mysql.properties" />
-	<!--
-		<context:property-placeholder
-		location="classpath:memcached.properties" />
-	-->
+	<!-- <context:property-placeholder location="classpath:memcached.properties" 
+		/> -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${mysql.driver}" />
@@ -174,6 +172,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
 			value="com.ruoogle.teach.mapper.InteractiveBackMapper" />
+	</bean>
+	<bean id="teachMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface" value="com.ruoogle.teach.mapper.TeachMapper" />
 	</bean>
 
 

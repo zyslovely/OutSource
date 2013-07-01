@@ -21,20 +21,20 @@ body{min-width:1024px;min-height:600px}
                  <tr >
                     <th  style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">课程名称*</p></th>
                     <th >
-                       <div style="background: url('/img/teachCreate/input_bg_create.png') no-repeat scroll center top transparent; width: 250px; ">
-                       <input type="text" style="width: 250px;border: 0px none; height: 34px; background: none repeat scroll 0% 0% transparent; width: 90%; padding-left: 10px; font-size: 20px;" id="course_name"/>
+                       <div style="width:252px;">
+                       <select  style="" id="teachSelector" style="margin:auto;">
+                           <option value=""></option>
+                           <#list teachList as teach>
+                           <option value="${teach.id!""}">${teach.name!""}</option>
+                           </#list>
+                       </select>
                        </div>
                     </th>
                  </tr>
                  <tr><th style="float: right; height: 40px; line-height: 40px; width: 150px;font-size: 16px;color: rgb(106, 106, 106);"><p style="float:right;margin-right: 10px;">课程类别选择*</p></th >
                     <th>
                        <div style="width:252px;">
-                       <select  style="" id="demoselector" style="margin:auto;">
-                           <option value=""></option>
-                           <#list coursePercentTypeDemos as demo>
-                           <option value="${demo.id!""}">${demo.name!""}</option>
-                           </#list>
-                       </select>
+                       <p id="teach_demo"></p>
                        </div>
                     </th>
                  </tr>

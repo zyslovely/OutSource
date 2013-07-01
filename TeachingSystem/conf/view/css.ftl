@@ -29,6 +29,10 @@
     	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
     	     <link type="text/css" rel="stylesheet" href="/css/admin_newTeacher.css"/>
     	<#break>
+    	<#case "newTeach">
+    	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>
+    	     <link type="text/css" rel="stylesheet" href="/css/admin_newTeach.css"/>
+    	<#break>
     	<#case "newStudent">
     	
     	      <link type="text/css" rel="stylesheet" href="/jPaginate/css/style.css"/>

@@ -32,10 +32,13 @@
     	<#break>
     	<#case "teachCreate">
     	   <script type="text/javascript">
-    	   $('#demoselector').jgdDropdown({callback: function(obj, val) { coursePercentTypeChange(obj,val) }});
+    	   
     	   $('#semester_selector').jgdDropdown({callback: function(obj, val) { semesterChange(obj,val) }});
     	   
     	   $('#specialty_selector').jgdDropdown({callback: function(obj, val) { specialtyChange(obj,val) }});
+    	   
+    	   $('#teachSelector').jgdDropdown({callback: function(obj, val) { teachChange(obj,val) }});
+    	   
     	   
     	   </script>
    	       <script type="text/javascript" src="/js/teachCreate.js" charset="utf-8"></script>
@@ -84,6 +87,13 @@
     	  $('#newTeacher_level').jgdDropdown({callback: function(obj, val) { teacherTypeChoice(obj,val) }});
     	  </script>
    	       <script type="text/javascript" src="/js/admin_newTeacher.js" charset="utf-8"></script>
+    	<#break>
+    	<#case "newTeach">
+    	  <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
+    	  <script type="text/javascript">
+    	  $('#newTeach_demo').jgdDropdown({callback: function(obj, val) { teachTypeChoice(obj,val) }});
+    	  </script>
+   	       <script type="text/javascript" src="/js/admin_newTeach.js" charset="utf-8"></script>
     	<#break>
     	<#case "newCourseType">
     	  

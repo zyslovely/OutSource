@@ -154,6 +154,17 @@ CREATE TABLE TB_Specialty (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='专业' ;
 
+
+
+CREATE TABLE TB_Teach (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(127) NOT NULL DEFAULT '' COMMENT '课程名称',
+  `demoId` bigint(20) NOT NULL DEFAULT '0' COMMENT 'demoid',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='课程' ;
+
+
+
 CREATE TABLE TB_Class (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `specialtyId` bigint(20) NOT NULL DEFAULT '0' COMMENT '专业id',

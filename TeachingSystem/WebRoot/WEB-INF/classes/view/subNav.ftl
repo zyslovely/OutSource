@@ -32,6 +32,8 @@
      相关搜索
      <#elseif pageName = "newHeadImage">
      首页头图
+     <#elseif pageName = "newTeach">
+     课程模板
      </#if>
 
      </p>
@@ -90,6 +92,11 @@
                     <input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
                     <a class="w-btn" id="" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; float: right; margin-left: 3px; width: 144px;" href="javascript:void(0);;">上传老师名单</a>
                  </div>
+         </form>
+      </div>
+       <#elseif pageName="newTeach">
+      <div style="width: 450px; margin-top: 23px; float: right; ">
+                 <a class="w-btn" id="newTeach_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px; float: right; width: 151px;" href="javascript:void(0);;">添加课程模板</a>
          </form>
       </div>
      <#elseif pageName="newCourseType">

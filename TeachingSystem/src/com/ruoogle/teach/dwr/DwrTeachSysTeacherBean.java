@@ -11,6 +11,7 @@ import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
+import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
@@ -25,7 +26,8 @@ import com.ruoogle.teach.service.CourseService;
  */
 @Service("dwrTeachSysTeacherBean")
 public class DwrTeachSysTeacherBean {
-	private static final Logger logger = Logger.getLogger(DwrTeachSysTeacherBean.class);
+	private static final Logger logger = Logger
+			.getLogger(DwrTeachSysTeacherBean.class);
 	@Resource
 	private CourseService courseService;
 	@Resource
@@ -39,15 +41,21 @@ public class DwrTeachSysTeacherBean {
 	 * @param coursePercentTypes
 	 * @param classId
 	 */
-	public long addNewCourse(String courseName, CourseScorePercent CourseScorePercents[], long semesterId, long classId,
-			CourseScorePercentProperty courseScorePercentProperties[], String desc) {
-		if (ArrayUtils.isEmpty(courseScorePercentProperties) || ArrayUtils.isEmpty(CourseScorePercents)) {
+	public long addNewCourse(long teachId,
+			CourseScorePercent CourseScorePercents[], long semesterId,
+			long classId,
+			CourseScorePercentProperty courseScorePercentProperties[],
+			String desc) {
+		if (ArrayUtils.isEmpty(courseScorePercentProperties)
+				|| ArrayUtils.isEmpty(CourseScorePercents)) {
 			return -1;
 		}
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		boolean succ = courseService.addNewCourse(Arrays.asList(courseScorePercentProperties), courseName, Arrays.asList(CourseScorePercents),
-				classId, teacherId, semesterId, desc);
+		boolean succ = courseService.addNewCourse(
+				Arrays.asList(courseScorePercentProperties), teachId,
+				Arrays.asList(CourseScorePercents), classId, teacherId,
+				semesterId, desc);
 		if (succ) {
 			return semesterId;
 		}
@@ -62,13 +70,15 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseStudentScores
 	 * @return
 	 */
-	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score) {
+	public boolean insertCourseScore(long courseId, long studentId,
+			long percentType, double score) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		if (score < 0) {
 			return false;
 		}
-		return courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
+		return courseService.insertCourseScore(courseId, studentId,
+				percentType, score, teacherId);
 
 	}
 
@@ -82,10 +92,12 @@ public class DwrTeachSysTeacherBean {
 	 * @param studentId
 	 * @return
 	 */
-	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId) {
+	public boolean insertCourseStageScore(long courseId, int stage,
+			double score, long studentId) {
 		WebContext ctx = WebContextFactory.get();
 		Long teacherId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.insertCourseStageScore(courseId, stage, score, studentId, teacherId);
+		return courseService.insertCourseStageScore(courseId, stage, score,
+				studentId, teacherId);
 	}
 
 	/**
@@ -95,7 +107,8 @@ public class DwrTeachSysTeacherBean {
 	 * @param courseId
 	 * @param studentId
 	 */
-	public boolean addCourseGroup(long courseId, CoursePercentTypeGroupStudent[] students) {
+	public boolean addCourseGroup(long courseId,
+			CoursePercentTypeGroupStudent[] students) {
 		if (ArrayUtils.isEmpty(students) || courseId < 0) {
 			return false;
 		}
@@ -133,7 +146,8 @@ public class DwrTeachSysTeacherBean {
 	 * @param specialtyId
 	 * @return
 	 */
-	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(
+			long specialtyId) {
 		if (specialtyId < 0) {
 			return null;
 		}
@@ -153,5 +167,9 @@ public class DwrTeachSysTeacherBean {
 	 */
 	public boolean deleteCoursePercentTypeGroup(long groupId) {
 		return courseService.deleteCoursePercentTypeGroup(groupId);
+	}
+
+	public CoursePercentTypeDemo getCoursePercentTypeDemoByTeachId(long teachId) {
+		return classService.getCoursePercentTypeDemoByTeachId(teachId);
 	}
 }

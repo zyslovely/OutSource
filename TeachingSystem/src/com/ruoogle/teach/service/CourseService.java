@@ -39,7 +39,7 @@ public interface CourseService {
 	 * @param teacherId
 	 * @return
 	 */
-	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties, String courseName,
+	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties,long teachId,
 			List<CourseScorePercent> CourseScorePercents, long classId, long teacherId, long semesterId, String desc);
 
 	/**

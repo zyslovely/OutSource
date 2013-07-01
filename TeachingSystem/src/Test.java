@@ -11,9 +11,9 @@ public class Test {
 
 	public static void main(String[] args) throws Exception {
 
-		String metaJavaPath = "/Users/apple/Downloads/code/meta/";
-		String mapperJavaPath = "/Users/apple/Downloads/code/mapper/";
-		String mapperXmlPath = "/Users/apple/Downloads/code/mapperxml/";
+		String metaJavaPath = "/Users/zhengeason/Downloads/code/meta/";
+		String mapperJavaPath = "/Users/zhengeason/Downloads/code/mapper/";
+		String mapperXmlPath = "/Users/zhengeason/Downloads/code/mapperxml/";
 
 		Test.CreateDir(metaJavaPath);
 		Test.CreateDir(mapperJavaPath);
@@ -22,23 +22,18 @@ public class Test {
 		String metaJavaPackage = "com.ruoogle.teach.meta";
 		String mapperJavaPackage = "com.ruoogle.teach.mapper";
 
-		String functionName = "InteractiveBack";
-		String firstLowerCaseName = "interactiveBack";
-		String tableName = "TB_Interactive_Back";
+		String functionName = "Teach";
+		String firstLowerCaseName = "teach";
+		String tableName = "TB_Teach";
 
 		List<String> metaNameList = new ArrayList<String>();
 		metaNameList.add("id");
-		metaNameList.add("userId");
-		metaNameList.add("interactiveId");
-		metaNameList.add("content");
-		metaNameList.add("CreateTime");
+		metaNameList.add("name");
+		metaNameList.add("demoId");
 
 		List<String> metaTypeList = new ArrayList<String>();
 		metaTypeList.add("long");
-		metaTypeList.add("long");
-		metaTypeList.add("long");
 		metaTypeList.add("String");
-		
 		metaTypeList.add("long");
 		
 

@@ -25,11 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
-import com.ruoogle.teach.meta.Profile.ProfileLevel;
-import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
+import com.ruoogle.teach.meta.Teach;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;
@@ -43,7 +44,8 @@ import com.ruoogle.teach.service.SchoolInfoService;
 @Controller("webTeachSysAdminController")
 public class WebTeachSysAdminController extends AbstractBaseController {
 
-	private static final Logger logger = Logger.getLogger(WebTeachSysAdminController.class);
+	private static final Logger logger = Logger
+			.getLogger(WebTeachSysAdminController.class);
 
 	@Resource
 	private ProfileService profileService;
@@ -63,7 +65,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddSpecialty(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddSpecialty(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("admin_newSpecialty");
 		List<Specialty> specialties = classService.getSpecialties();
@@ -83,15 +86,18 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddClass(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddClass(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("admin_newClass");
-		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
+		long specialtyId = ServletRequestUtils.getLongParameter(request,
+				"specialtyId", -1L);
 		if (specialtyId < 0) {
 
 		}
 		mv.addObject("specialtyId", specialtyId);
-		List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
+		List<com.ruoogle.teach.meta.Class> classList = classService
+				.getClassListBySpecialty(specialtyId);
 
 		if (!ListUtils.isEmptyList(classList)) {
 
@@ -111,10 +117,12 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddCourseType(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddCourseType(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("admin_newCourseType");
-		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService.getCoursePercentTypeDemos(0, -1);
+		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService
+				.getCoursePercentTypeDemos(0, -1);
 		if (!ListUtils.isEmptyList(coursePercentTypeDemos)) {
 			mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
 		}
@@ -130,11 +138,14 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddStudent(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddStudent(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("admin_newStudent");
-		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
-		long specialtyId = ServletRequestUtils.getLongParameter(request, "specialtyId", -1L);
+		long classId = ServletRequestUtils.getLongParameter(request, "classId",
+				-1L);
+		long specialtyId = ServletRequestUtils.getLongParameter(request,
+				"specialtyId", -1L);
 
 		if (classId > 0) {
 			int limit = 10;
@@ -144,10 +155,15 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 			}
 			mv.addObject("limit", limit);
 			mv.addObject("page", page);
-			List<Profile> studentList = profileService.getProfileListByClassId(ProfileLevel.Student.getValue(), limit, (page - 1) * limit, classId);
+			List<Profile> studentList = profileService.getProfileListByClassId(
+					ProfileLevel.Student.getValue(), limit, (page - 1) * limit,
+					classId);
 			mv.addObject("studentList", studentList);
-			List<Profile> countProfiles = profileService.getProfileListByClassId(ProfileLevel.Student.getValue(), 0, -1, classId);
-			int totalCount = ListUtils.isEmptyList(countProfiles) ? 0 : countProfiles.size();
+			List<Profile> countProfiles = profileService
+					.getProfileListByClassId(ProfileLevel.Student.getValue(),
+							0, -1, classId);
+			int totalCount = ListUtils.isEmptyList(countProfiles) ? 0
+					: countProfiles.size();
 			if (totalCount % limit == 0) {
 				mv.addObject("totalCount", totalCount / limit);
 			} else {
@@ -156,7 +172,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		}
 		if (specialtyId > 0) {
-			List<com.ruoogle.teach.meta.Class> classList = classService.getClassListBySpecialty(specialtyId);
+			List<com.ruoogle.teach.meta.Class> classList = classService
+					.getClassListBySpecialty(specialtyId);
 			mv.addObject("classList", classList);
 		}
 
@@ -176,7 +193,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddTeacher(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddTeacher(HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin_newTeacher");
 		int limit = 10;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
@@ -185,13 +203,16 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		}
 		mv.addObject("page", page);
 		mv.addObject("limit", limit);
-		List<Profile> teacherList = profileService.getProfileListWithTeacher(limit, (page - 1) * limit);
+		List<Profile> teacherList = profileService.getProfileListWithTeacher(
+				limit, (page - 1) * limit);
 		if (!ListUtils.isEmptyList(teacherList)) {
 			mv.addObject("teacherList", teacherList);
 		}
 
-		List<Profile> totalTeachers = profileService.getProfileListWithTeacher(0, -1);
-		int totalCount = ListUtils.isEmptyList(totalTeachers) ? 0 : totalTeachers.size();
+		List<Profile> totalTeachers = profileService.getProfileListWithTeacher(
+				0, -1);
+		int totalCount = ListUtils.isEmptyList(totalTeachers) ? 0
+				: totalTeachers.size();
 		if (totalCount % limit == 0) {
 			mv.addObject("totalCount", totalCount / limit);
 		} else {
@@ -209,13 +230,15 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddSchoolInfo(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddSchoolInfo(HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin_newSchoolInfo");
 		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
 		if (type < 0) {
 
 		}
-		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(0, -1, SchoolInfoType.school.getValue());
+		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(0,
+				-1, SchoolInfoType.school.getValue());
 		mv.addObject("schoolInfos", schoolInfos);
 		this.setUD(mv, request);
 		return mv;
@@ -229,7 +252,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showAddSemester(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showAddSemester(HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("teachSemester");
 
 		List<Semester> semesterList = classService.getAllSemesterList(0, 0);
@@ -249,10 +273,53 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView updateShowHeadImage(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView updateShowHeadImage(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView mv = new ModelAndView("admin_newHeadImage");
 		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 课程列表
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showTeachView(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("admin_newTeach");
+		this.setUD(mv, request);
+		int limit = 10;
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		if (page <= 0) {
+			page = 1;
+		}
+		mv.addObject("page", page);
+		mv.addObject("limit", limit);
+		List<Teach> teachList = classService.getTeachList(limit, (page - 1)
+				* limit);
+		if (!ListUtils.isEmptyList(teachList)) {
+			mv.addObject("teachList", teachList);
+		}
+
+		List<Teach> totalTeachList = classService.getTeachList(0, -1 * limit);
+		int totalCount = ListUtils.isEmptyList(totalTeachList) ? 0
+				: totalTeachList.size();
+		if (totalCount % limit == 0) {
+			mv.addObject("totalCount", totalCount / limit);
+		} else {
+			mv.addObject("totalCount", totalCount / limit + 1);
+		}
+		List<CoursePercentTypeDemo> coursePercentTypeDemos = courseService
+				.getCoursePercentTypeDemos(0, -1);
+		if (!ListUtils.isEmptyList(coursePercentTypeDemos)) {
+			mv.addObject("coursePercentTypeDemos", coursePercentTypeDemos);
+		}
+
 		return mv;
 	}
 
@@ -263,14 +330,16 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView authUpload(HttpServletRequest request, HttpServletResponse response) throws Exception, IOException {
+	public ModelAndView authUpload(HttpServletRequest request,
+			HttpServletResponse response) throws Exception, IOException {
 		RequestContext requestContext = new ServletRequestContext(request);
 		ModelAndView mv = new ModelAndView("upload");
 		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
 		if (type != 1 && type != 2) {
 			return null;
 		}
-		if (FileUploadBase.isMultipartContent(requestContext) && request.getMethod().toLowerCase().equals("post")) {
+		if (FileUploadBase.isMultipartContent(requestContext)
+				&& request.getMethod().toLowerCase().equals("post")) {
 
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
@@ -290,7 +359,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 					if (fileItem.getName() != null && fileItem.getSize() != 0) {
 
 						String path = "";
-						String oriPath = request.getSession().getServletContext().getRealPath("/");
+						String oriPath = request.getSession()
+								.getServletContext().getRealPath("/");
 						if (type == 1) {
 							path = oriPath + "img/webIndex/pic1.png";
 						} else if (type == 2) {

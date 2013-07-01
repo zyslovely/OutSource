@@ -25,7 +25,15 @@
 		order by id desc
 	</select>
 
-	<delete id="deleteCoursePercentTypeDemo" flushCache="true" statementType="PREPARED">
+	<select id="getCoursePercentTypeDemoById" resultType="CoursePercentTypeDemo">
+		SELECT *
+		from
+		TB_Course_PercentType_Demo
+		where id=#{id}
+	</select>
+
+	<delete id="deleteCoursePercentTypeDemo" flushCache="true"
+		statementType="PREPARED">
 		delete from TB_Course_PercentType_Demo
 		where id=#{id};
 	</delete>

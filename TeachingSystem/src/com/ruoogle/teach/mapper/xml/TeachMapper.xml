@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.TeachMapper">
+	<resultMap type="Teach" id="teachMap ">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="demoId" column="demoId" />
+	</resultMap>
+	<insert id="addTeach" parameterType="Teach">
+		INSERT INTO TB_Teach
+		(name,demoId
+		)VALUES(
+		#{name},#{demoId}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<delete id="deleteTeach" flushCache="true" statementType="PREPARED">
+		delete
+		from TB_Teach
+		where id=#{id} ;
+	</delete>
+
+	<select id="getTeachList" resultType="Teach">
+		SELECT *
+		from
+		TB_Teach
+		order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
+	</select>
+
+	<select id="getTeachById" resultType="Teach">
+		SELECT *
+		from
+		TB_Teach where
+		id=#{id}
+		;
+	</select>
+
+
+
+
+</mapper>

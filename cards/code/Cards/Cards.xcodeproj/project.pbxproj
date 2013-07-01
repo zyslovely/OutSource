@@ -71,6 +71,7 @@
 		38755C3E175E3881001F5DA1 /* left_head.png in Resources */ = {isa = PBXBuildFile; fileRef = 38755C3D175E3881001F5DA1 /* left_head.png */; };
 		3877615C175EE0AB0051E5C3 /* OSSingleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3877615A175EE0AB0051E5C3 /* OSSingleViewController.m */; };
 		3877615D175EE0AB0051E5C3 /* OSSingleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3877615B175EE0AB0051E5C3 /* OSSingleViewController.xib */; };
+		3882E644177FDD120063CD1C /* OSUncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3882E643177FDD120063CD1C /* OSUncaughtExceptionHandler.m */; };
 		38A739D7175E27FF00B91478 /* OSLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A739D5175E27FF00B91478 /* OSLeftViewController.m */; };
 		38A739D8175E27FF00B91478 /* OSLeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A739D6175E27FF00B91478 /* OSLeftViewController.xib */; };
 		38A739DC175E293800B91478 /* OSFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A739DA175E293800B91478 /* OSFeedViewController.m */; };
@@ -219,6 +220,8 @@
 		38776159175EE0AB0051E5C3 /* OSSingleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSSingleViewController.h; sourceTree = "<group>"; };
 		3877615A175EE0AB0051E5C3 /* OSSingleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSSingleViewController.m; sourceTree = "<group>"; };
 		3877615B175EE0AB0051E5C3 /* OSSingleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSSingleViewController.xib; sourceTree = "<group>"; };
+		3882E642177FDD120063CD1C /* OSUncaughtExceptionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSUncaughtExceptionHandler.h; sourceTree = "<group>"; };
+		3882E643177FDD120063CD1C /* OSUncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSUncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		38A739D4175E27FF00B91478 /* OSLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSLeftViewController.h; sourceTree = "<group>"; };
 		38A739D5175E27FF00B91478 /* OSLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSLeftViewController.m; sourceTree = "<group>"; };
 		38A739D6175E27FF00B91478 /* OSLeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSLeftViewController.xib; sourceTree = "<group>"; };
@@ -384,6 +387,8 @@
 				38466C5E1778A5FB007E88DC /* OSFeedViewCell.m */,
 				38466C601778A612007E88DC /* OSFeedViewCell.xib */,
 				18AC7A6A1742284900EAE5FA /* Supporting Files */,
+				3882E642177FDD120063CD1C /* OSUncaughtExceptionHandler.h */,
+				3882E643177FDD120063CD1C /* OSUncaughtExceptionHandler.m */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 				38675F6017636BB90085E697 /* OSSub.m in Sources */,
 				38466C5F1778A5FB007E88DC /* OSFeedViewCell.m in Sources */,
 				38466C681778A8DB007E88DC /* Utilities.m in Sources */,
+				3882E644177FDD120063CD1C /* OSUncaughtExceptionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

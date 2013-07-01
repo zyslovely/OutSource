@@ -36,11 +36,14 @@ public class DwrTeachSysAdminBean {
 	 * @param semesterCount
 	 * @return
 	 */
-	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
-		if (StringUtils.isEmpty(SpecialtyName) || StringUtils.isEmpty(SpecialtyShortName)) {
+	public boolean addSpecialty(String SpecialtyName,
+			String SpecialtyShortName, int semesterCount) {
+		if (StringUtils.isEmpty(SpecialtyName)
+				|| StringUtils.isEmpty(SpecialtyShortName)) {
 			return false;
 		}
-		return classService.addSpecialty(SpecialtyName, SpecialtyShortName, semesterCount);
+		return classService.addSpecialty(SpecialtyName, SpecialtyShortName,
+				semesterCount);
 	}
 
 	/**
@@ -68,8 +71,10 @@ public class DwrTeachSysAdminBean {
 	 * @param passWord
 	 * @return
 	 */
-	public boolean addTeacherPassPort(String name, int level, String userName, String passWord) {
-		if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(passWord) || StringUtils.isEmpty(name)) {
+	public boolean addTeacherPassPort(String name, int level, String userName,
+			String passWord) {
+		if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(passWord)
+				|| StringUtils.isEmpty(name)) {
 			return false;
 		}
 		return profileService.addProfile(name, userName, passWord, level);
@@ -83,12 +88,18 @@ public class DwrTeachSysAdminBean {
 	 * @param coursePercentTypes
 	 * @return
 	 */
-	public boolean addCoursePercentTypeDemo(String name, Integer[] coursePercentTypeId, Double[] percents) {
-		if (StringUtils.isEmpty(name) || ArrayUtils.isEmpty(coursePercentTypeId) || ArrayUtils.isEmpty(percents)) {
+	public boolean addCoursePercentTypeDemo(String name,
+			Integer[] coursePercentTypeId, Double[] percents) {
+		if (StringUtils.isEmpty(name)
+				|| ArrayUtils.isEmpty(coursePercentTypeId)
+				|| ArrayUtils.isEmpty(percents)) {
 			return false;
 		}
-		return classService.addCoursePercentTypeDemo(name, CoursePercentTypeDemo.getCoursePercentTypeList(Arrays.asList(coursePercentTypeId), Arrays
-				.asList(percents)));
+		return classService.addCoursePercentTypeDemo(
+				name,
+				CoursePercentTypeDemo.getCoursePercentTypeList(
+						Arrays.asList(coursePercentTypeId),
+						Arrays.asList(percents)));
 	}
 
 	/**
@@ -156,5 +167,13 @@ public class DwrTeachSysAdminBean {
 	public boolean endAllSemester(long userId) {
 
 		return courseService.endStudentSemester(userId);
+	}
+
+	public boolean addNewTeach(String name, long demoId) {
+		return classService.addTeach(name, demoId);
+	}
+
+	public boolean deleteNewTeach(long id) {
+		return classService.deleteTeach(id);
 	}
 }

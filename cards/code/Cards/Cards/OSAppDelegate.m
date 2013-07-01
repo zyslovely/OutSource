@@ -12,6 +12,8 @@
 #import "OSFeedViewController.h"
 #import "DDMenuController.h"
 #import "OSImage.h"
+#import "OSUncaughtExceptionHandler.h"
+#import <Foundation/Foundation.h>
 @implementation OSAppDelegate
 
 - (void)dealloc
@@ -44,7 +46,13 @@
   OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
   _menuController.leftViewController = leftController;
 
+  NSString *path = [applicationDocumentsDirectory() stringByAppendingPathComponent:@"Exception.txt"];
+  NSLog(@"%@",path);
+  [OSUncaughtExceptionHandler setDefaultHandler];
   
+  NSArray *array = [NSArray arrayWithObject:@"there is only one objective in this arary,call index one, app will crash and throw an exception!"];
+  
+  NSLog(@"%@", [array objectAtIndex:1]);
   
   self.window.rootViewController = _menuController;
   [self.window makeKeyAndVisible];

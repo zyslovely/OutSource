@@ -1,4 +1,4 @@
-<div style="<#if pageName="interactive"><#else>background: url('/img/webIndex/nav_bg.png') repeat scroll center top transparent;</#if> <#if pageName!="interactive">height: 156px;<#else>height: 80px;</#if>">
+<div style="<#if pageName="interactive"><#else>background: url('/img/webIndex/nav_bg.png') repeat scroll center top transparent;</#if> <#if pageName!="interactive">height: 154px;<#else>height: 80px;</#if>">
 <div >
    <div style=" margin: auto;width: 1024px;">
    <#if pageName!="interactive">
@@ -128,6 +128,9 @@
         </li>
          <li class="top_li" style="<#if pageName=='newHeadImage'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/head/" class="<#if pageName!='newHeadImage'>top_li_selected_color<#else>top_li_diselected_color</#if>">首页头图</a>
+        </li>
+        <li class="top_li" style="<#if pageName=='newTeach'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
+           <a href="/teach/admin/teach/list/" class="<#if pageName!='newTeach'>top_li_selected_color<#else>top_li_diselected_color</#if>">课程模板</a>
         </li>
         
         <#--

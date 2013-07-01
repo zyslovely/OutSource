@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 
 public interface CoursePercentTypeDemoMapper {
-	public int addCoursePercentTypeDemo(CoursePercentTypeDemo coursePercentTypeDemo);
+	public int addCoursePercentTypeDemo(
+			CoursePercentTypeDemo coursePercentTypeDemo);
 
 	/**
 	 * 
@@ -15,7 +16,9 @@ public interface CoursePercentTypeDemoMapper {
 	 * @param limit
 	 * @return
 	 */
-	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 删除
@@ -25,4 +28,7 @@ public interface CoursePercentTypeDemoMapper {
 	 * @return
 	 */
 	public int deleteCoursePercentTypeDemo(@Param(value = "id") long id);
+
+	public CoursePercentTypeDemo getCoursePercentTypeDemoById(
+			@Param(value = "id") long id);
 }

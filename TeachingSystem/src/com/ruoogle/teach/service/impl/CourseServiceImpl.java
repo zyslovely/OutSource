@@ -32,6 +32,7 @@ import com.ruoogle.teach.mapper.CourseStudentScoreMapper;
 import com.ruoogle.teach.mapper.CourseStudentTotalScoreMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.mapper.ProfilePropertyMapper;
+import com.ruoogle.teach.mapper.TeachMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -58,6 +59,7 @@ import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.Teach;
 import com.ruoogle.teach.service.CourseService;
 
 /**
@@ -67,7 +69,8 @@ import com.ruoogle.teach.service.CourseService;
  */
 @Service("courseServiceImpl")
 public class CourseServiceImpl implements CourseService {
-	private static final Logger logger = Logger.getLogger(CourseServiceImpl.class);
+	private static final Logger logger = Logger
+			.getLogger(CourseServiceImpl.class);
 
 	@Resource
 	private CourseScorePercentMapper courseScorePercentMapper;
@@ -103,6 +106,8 @@ public class CourseServiceImpl implements CourseService {
 	private CourseStudentPropertySemesterScoreMapper courseStudentPropertySemesterScoreMapper;
 	@Resource
 	private ProfilePropertyMapper profilePropertyMapper;
+	@Resource
+	private TeachMapper teachMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -112,10 +117,13 @@ public class CourseServiceImpl implements CourseService {
 	 * java.util.List, long, int, long)
 	 */
 	@Override
-	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties, String courseName,
-			List<CourseScorePercent> CourseScorePercents, long classId, long teacherId, long semesterId, String desc) {
+	public boolean addNewCourse(
+			List<CourseScorePercentProperty> courseScorePercentProperties,
+			long teachId, List<CourseScorePercent> CourseScorePercents,
+			long classId, long teacherId, long semesterId, String desc) {
+		Teach teach = teachMapper.getTeachById(teachId);
 		Course course = new Course();
-		course.setName(courseName);
+		course.setName(teach.getName());
 		course.setClassId(classId);
 		course.setSemester(semesterId);
 		course.setTeacherId(teacherId);
@@ -137,9 +145,11 @@ public class CourseServiceImpl implements CourseService {
 
 		for (CourseScorePercentProperty courseScorePercentProperty : courseScorePercentProperties) {
 			courseScorePercentProperty.setCourseId(course.getId());
-			courseScorePercentPropertyMapper.addCourseScorePercentProperty(courseScorePercentProperty);
+			courseScorePercentPropertyMapper
+					.addCourseScorePercentProperty(courseScorePercentProperty);
 		}
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue(), 0, -1);
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId,
+				ProfileLevel.Student.getValue(), 0, -1);
 		for (Profile profile : profileList) {
 			CourseStudent courseStudent = new CourseStudent();
 			courseStudent.setClassId(classId);
@@ -171,21 +181,27 @@ public class CourseServiceImpl implements CourseService {
 	 * long, long, double)
 	 */
 	@Override
-	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score, long teacherId) {
+	public boolean insertCourseScore(long courseId, long studentId,
+			long percentType, double score, long teacherId) {
 
 		CourseScorePercent courseScorePercent = null;
 		// 判断当前教师有没有权限
 		if (percentType == CoursePercentType.EachStudent.getValue()) {
-			courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, percentType);
+			courseScorePercent = courseScorePercentMapper
+					.getCourseScorePercentBypercentType(courseId, percentType);
 		} else {
-			courseScorePercent = courseScorePercentMapper.getCourseScorePercentByTeacher(teacherId, courseId, percentType);
+			courseScorePercent = courseScorePercentMapper
+					.getCourseScorePercentByTeacher(teacherId, courseId,
+							percentType);
 		}
 		if (courseScorePercent == null) {
 			logger.error("当前教师有没有权限输入分数");
 			return false;
 		}
 
-		CourseStudentScore courseStudentScore = courseStudentScoreMapper.getCourseStudentScoreByStudentId(studentId, percentType, courseId);
+		CourseStudentScore courseStudentScore = courseStudentScoreMapper
+				.getCourseStudentScoreByStudentId(studentId, percentType,
+						courseId);
 		if (courseStudentScore == null) {
 			courseStudentScore = new CourseStudentScore();
 			courseStudentScore.setCourseId(courseId);
@@ -193,12 +209,14 @@ public class CourseServiceImpl implements CourseService {
 			courseStudentScore.setPercentType(percentType);
 			courseStudentScore.setPercent(courseScorePercent.getPercent());
 			courseStudentScore.setScore(score);
-			if (courseStudentScoreMapper.addCourseStudentScore(courseStudentScore) <= 0) {
+			if (courseStudentScoreMapper
+					.addCourseStudentScore(courseStudentScore) <= 0) {
 				return false;
 			}
 		} else {
 			courseStudentScore.setScore(score);
-			courseStudentScoreMapper.updateCourseStudentScore(courseStudentScore);
+			courseStudentScoreMapper
+					.updateCourseStudentScore(courseStudentScore);
 		}
 
 		if (this.checkIsAllScoreOut(courseId, studentId)) {
@@ -216,9 +234,13 @@ public class CourseServiceImpl implements CourseService {
 	 * long)
 	 */
 	public boolean checkIsAllScoreOut(long courseId, long studentId) {
-		List<CourseScorePercent> list = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
-		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
-		if (ListUtils.isEmptyList(list) || ListUtils.isEmptyList(courseStudentScores) || list.size() != courseStudentScores.size()) {
+		List<CourseScorePercent> list = courseScorePercentMapper
+				.getCourseScorePercentListByCourseId(courseId);
+		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper
+				.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
+		if (ListUtils.isEmptyList(list)
+				|| ListUtils.isEmptyList(courseStudentScores)
+				|| list.size() != courseStudentScores.size()) {
 			return false;
 		}
 		return true;
@@ -232,9 +254,12 @@ public class CourseServiceImpl implements CourseService {
 	 * (long)
 	 */
 	public boolean checkIsAllScoreInsertFinished(long courseId) {
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
-		List<CourseStudentTotalScore> courseStudentTotalScores = courseStudentTotalScoreMapper.getCourseStudentTotalScores(courseId);
-		if (ListUtils.isEmptyList(courseStudents) || ListUtils.isEmptyList(courseStudentTotalScores)
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
+		List<CourseStudentTotalScore> courseStudentTotalScores = courseStudentTotalScoreMapper
+				.getCourseStudentTotalScores(courseId);
+		if (ListUtils.isEmptyList(courseStudents)
+				|| ListUtils.isEmptyList(courseStudentTotalScores)
 				|| courseStudents.size() != courseStudentTotalScores.size()) {
 			return false;
 		}
@@ -258,41 +283,54 @@ public class CourseServiceImpl implements CourseService {
 
 		List<CourseScorePercentProperty> courseScorePercentProperties = courseScorePercentPropertyMapper
 				.getCourseScorePercentPropertyByCourseId(courseId);
-		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
-		if (ListUtils.isEmptyList(courseScorePercentProperties) || ListUtils.isEmptyList(courseStudentScores)) {
+		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper
+				.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
+		if (ListUtils.isEmptyList(courseScorePercentProperties)
+				|| ListUtils.isEmptyList(courseStudentScores)) {
 			return false;
 
 		}
-		Map<Long, CourseStudentScore> courseStudentScoreMap = HashMapMaker.listToMap(courseStudentScores, "getPercentType", CourseStudentScore.class);
+		Map<Long, CourseStudentScore> courseStudentScoreMap = HashMapMaker
+				.listToMap(courseStudentScores, "getPercentType",
+						CourseStudentScore.class);
 
-		List<CourseProperty> courseProperties = coursePropertyMapper.getAllCourseProperties();
+		List<CourseProperty> courseProperties = coursePropertyMapper
+				.getAllCourseProperties();
 		for (CourseProperty courseProperty : courseProperties) {
 			double score = 0;
 			for (CourseScorePercentProperty courseScorePercentProperty : courseScorePercentProperties) {
-				if (courseScorePercentProperty.getPropertyId() != courseProperty.getId()) {
+				if (courseScorePercentProperty.getPropertyId() != courseProperty
+						.getId()) {
 					continue;
 				}
-				CourseStudentScore courseStudentScore = courseStudentScoreMap.get(courseScorePercentProperty.getPercentType());
+				CourseStudentScore courseStudentScore = courseStudentScoreMap
+						.get(courseScorePercentProperty.getPercentType());
 				if (courseStudentScore == null) {
 					continue;
 				}
 
-				score += courseStudentScore.getScore() / 100 * courseStudentScore.getPercent() / 100;
+				score += courseStudentScore.getScore() / 100
+						* courseStudentScore.getPercent() / 100;
 			}
 
 			CourseStudentPropertyScore courseStudentPropertyScore = courseStudentPropertyScoreMapper
-					.getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(studentId, courseId, courseProperty.getId());
+					.getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(
+							studentId, courseId, courseProperty.getId());
 			if (courseStudentPropertyScore == null) {
 				courseStudentPropertyScore = new CourseStudentPropertyScore();
 				courseStudentPropertyScore.setCourseId(courseId);
-				courseStudentPropertyScore.setPropertyId(courseProperty.getId());
+				courseStudentPropertyScore
+						.setPropertyId(courseProperty.getId());
 				courseStudentPropertyScore.setScore(score);
 				courseStudentPropertyScore.setSemesterId(course.getSemester());
 				courseStudentPropertyScore.setStudentId(studentId);
-				courseStudentPropertyScoreMapper.addCourseStudentPropertyScore(courseStudentPropertyScore);
+				courseStudentPropertyScoreMapper
+						.addCourseStudentPropertyScore(courseStudentPropertyScore);
 			} else {
 				courseStudentPropertyScore.setScore(score);
-				courseStudentPropertyScoreMapper.updateCourseStudentPropertyScoreById(courseStudentPropertyScore.getId(), score);
+				courseStudentPropertyScoreMapper
+						.updateCourseStudentPropertyScoreById(
+								courseStudentPropertyScore.getId(), score);
 			}
 
 		}
@@ -308,23 +346,28 @@ public class CourseServiceImpl implements CourseService {
 	 * @return
 	 */
 	private boolean insertCourseStudentTotalScore(long courseId, long studentId) {
-		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
+		List<CourseStudentScore> courseStudentScores = courseStudentScoreMapper
+				.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
 		Course course = courseMapper.getCourseById(courseId);
 		double score = 0;
 		for (CourseStudentScore courseStudentScore : courseStudentScores) {
-			score += courseStudentScore.getPercent() / 100 * courseStudentScore.getScore();
+			score += courseStudentScore.getPercent() / 100
+					* courseStudentScore.getScore();
 		}
-		CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper.getCourseStudentTotalScoreByStudentId(courseId, studentId);
+		CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper
+				.getCourseStudentTotalScoreByStudentId(courseId, studentId);
 		if (courseStudentTotalScore != null) {
 			courseStudentTotalScore.setScore(score);
-			return courseStudentTotalScoreMapper.updateCourseStudentTotalScore(courseStudentTotalScore.getId(), score) > 0;
+			return courseStudentTotalScoreMapper.updateCourseStudentTotalScore(
+					courseStudentTotalScore.getId(), score) > 0;
 		} else {
 			courseStudentTotalScore = new CourseStudentTotalScore();
 			courseStudentTotalScore.setCourseId(courseId);
 			courseStudentTotalScore.setSemester(course.getSemester());
 			courseStudentTotalScore.setScore(score);
 			courseStudentTotalScore.setStudentId(studentId);
-			return courseStudentTotalScoreMapper.addCourseStudentTotalScore(courseStudentTotalScore) > 0;
+			return courseStudentTotalScoreMapper
+					.addCourseStudentTotalScore(courseStudentTotalScore) > 0;
 		}
 
 	}
@@ -336,15 +379,19 @@ public class CourseServiceImpl implements CourseService {
 	 * int, double, long, long)
 	 */
 	@Override
-	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId, long teacherId) {
-		List<CourseScorePercent> list = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+	public boolean insertCourseStageScore(long courseId, int stage,
+			double score, long studentId, long teacherId) {
+		List<CourseScorePercent> list = courseScorePercentMapper
+				.getCourseScorePercentListByCourseId(courseId);
 		if (ListUtils.isEmptyList(list)) {
 			return false;
 		}
 		boolean succ = false;
 		long percentType = -1;
 		for (CourseScorePercent courseScorePercent : list) {
-			if (courseScorePercent.getPercentType() == CoursePercentType.AvgGrading.getValue() && teacherId == courseScorePercent.getTeacherId()) {
+			if (courseScorePercent.getPercentType() == CoursePercentType.AvgGrading
+					.getValue()
+					&& teacherId == courseScorePercent.getTeacherId()) {
 				succ = true;
 				percentType = courseScorePercent.getPercentType();
 			}
@@ -352,8 +399,9 @@ public class CourseServiceImpl implements CourseService {
 		if (!succ) {
 			return false;
 		}
-		CoursePercentTypeStage coursePercentTypeStage = coursePercentTypeStageMapper.getCoursePercentTypeStage(courseId, studentId, stage,
-				percentType);
+		CoursePercentTypeStage coursePercentTypeStage = coursePercentTypeStageMapper
+				.getCoursePercentTypeStage(courseId, studentId, stage,
+						percentType);
 		if (coursePercentTypeStage == null) {
 			coursePercentTypeStage = new CoursePercentTypeStage();
 			coursePercentTypeStage.setCourseId(courseId);
@@ -361,19 +409,24 @@ public class CourseServiceImpl implements CourseService {
 			coursePercentTypeStage.setScore(score);
 			coursePercentTypeStage.setPercentType(percentType);
 			coursePercentTypeStage.setStudentId(studentId);
-			coursePercentTypeStageMapper.addCoursePercentTypeStage(coursePercentTypeStage);
+			coursePercentTypeStageMapper
+					.addCoursePercentTypeStage(coursePercentTypeStage);
 		} else {
 			coursePercentTypeStage.setScore(score);
-			coursePercentTypeStageMapper.updateCoursePercentTypeStage(coursePercentTypeStage);
+			coursePercentTypeStageMapper
+					.updateCoursePercentTypeStage(coursePercentTypeStage);
 		}
 		if (this.checkIsAllStageFinished(courseId, studentId)) {
 			double stageTotalScore = 0;
-			List<CoursePercentTypeStage> coucoursePercentTypeStages = coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId,
-					studentId);
+			List<CoursePercentTypeStage> coucoursePercentTypeStages = coursePercentTypeStageMapper
+					.getCoursePercentTypeStageListByStudentId(courseId,
+							studentId);
 			for (CoursePercentTypeStage stage1 : coucoursePercentTypeStages) {
 				stageTotalScore += stage1.getScore();
 			}
-			this.insertCourseScore(courseId, studentId, percentType, stageTotalScore / coucoursePercentTypeStages.size(), teacherId);
+			this.insertCourseScore(courseId, studentId, percentType,
+					stageTotalScore / coucoursePercentTypeStages.size(),
+					teacherId);
 		}
 		return true;
 	}
@@ -387,12 +440,16 @@ public class CourseServiceImpl implements CourseService {
 	 * @return
 	 */
 	private boolean checkIsAllStageFinished(long courseId, long studentId) {
-		List<CoursePercentTypeStage> list = coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId, studentId);
+		List<CoursePercentTypeStage> list = coursePercentTypeStageMapper
+				.getCoursePercentTypeStageListByStudentId(courseId, studentId);
 		if (ListUtils.isEmptyList(list)) {
 			return false;
 		}
-		CourseScorePercent courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, list.get(0).getPercentType());
-		if (courseScorePercent == null || courseScorePercent.getObjectCount() != list.size()) {
+		CourseScorePercent courseScorePercent = courseScorePercentMapper
+				.getCourseScorePercentBypercentType(courseId, list.get(0)
+						.getPercentType());
+		if (courseScorePercent == null
+				|| courseScorePercent.getObjectCount() != list.size()) {
 			return false;
 		}
 		return true;
@@ -405,10 +462,12 @@ public class CourseServiceImpl implements CourseService {
 	 * long, double, long)
 	 */
 	@Override
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId) {
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId,
+			double score, long fromStudentId) {
 
 		CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore = coursePercentTypeGroupStudentScoreMapper
-				.getCoursePercentTypeGroupStudentScore(courseId, groupId, fromStudentId, toStudentId);
+				.getCoursePercentTypeGroupStudentScore(courseId, groupId,
+						fromStudentId, toStudentId);
 		if (coursePercentTypeGroupStudentScore == null) {
 			coursePercentTypeGroupStudentScore = new CoursePercentTypeGroupStudentScore();
 			coursePercentTypeGroupStudentScore.setFromStudentId(fromStudentId);
@@ -416,25 +475,32 @@ public class CourseServiceImpl implements CourseService {
 			coursePercentTypeGroupStudentScore.setGroupId(groupId);
 			coursePercentTypeGroupStudentScore.setScore(score);
 			coursePercentTypeGroupStudentScore.setCourseId(courseId);
-			coursePercentTypeGroupStudentScoreMapper.addCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
+			coursePercentTypeGroupStudentScoreMapper
+					.addCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
 		} else {
 			coursePercentTypeGroupStudentScore.setScore(score);
-			coursePercentTypeGroupStudentScoreMapper.updateCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
+			coursePercentTypeGroupStudentScoreMapper
+					.updateCoursePercentTypeGroupStudentScore(coursePercentTypeGroupStudentScore);
 		}
 		if (this.checkIfGroupScoreFinished(toStudentId, courseId, groupId)) {
 			// 计算分数，然后添加到学生成绩中
 			List<CoursePercentTypeGroupStudentScore> list = coursePercentTypeGroupStudentScoreMapper
-					.getCoursePercentTypeGroupStudentScoreByToStudent(courseId, groupId, toStudentId);
+					.getCoursePercentTypeGroupStudentScoreByToStudent(courseId,
+							groupId, toStudentId);
 
-			CoursePercentTypeGroupStudent toGroupStudent = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupStudentByStudentId(
-					toStudentId, courseId);
-			CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper.getCoursePercentTypeGroup(groupId);
+			CoursePercentTypeGroupStudent toGroupStudent = coursePercentTypeGroupStudentMapper
+					.getCoursePercentTypeGroupStudentByStudentId(toStudentId,
+							courseId);
+			CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper
+					.getCoursePercentTypeGroup(groupId);
 			// 获得总分
 			double totalScore = 0;
 			for (CoursePercentTypeGroupStudentScore studentScore : list) {
 				int needDoubleCount = 1;// 如果是队长，需要双倍加分
-				if (studentScore.getFromStudentId() == studentScore.getToStudentId()) {
-					if (toGroupStudent.getLevel() == GroupLevel.Leader.getValue()) {
+				if (studentScore.getFromStudentId() == studentScore
+						.getToStudentId()) {
+					if (toGroupStudent.getLevel() == GroupLevel.Leader
+							.getValue()) {
 						needDoubleCount = 2;
 					}
 				}
@@ -446,7 +512,8 @@ public class CourseServiceImpl implements CourseService {
 			} else {
 				avgScore = totalScore / (coursePercentTypeGroup.getCount());
 			}
-			this.insertCourseScore(courseId, toStudentId, CoursePercentType.EachStudent.getValue(), avgScore, 0);
+			this.insertCourseScore(courseId, toStudentId,
+					CoursePercentType.EachStudent.getValue(), avgScore, 0);
 
 		}
 		return false;
@@ -458,11 +525,14 @@ public class CourseServiceImpl implements CourseService {
 	 * @auther zyslovely@gmail.com
 	 * @return
 	 */
-	private boolean checkIfGroupScoreFinished(long toStudentId, long courseId, long groupId) {
+	private boolean checkIfGroupScoreFinished(long toStudentId, long courseId,
+			long groupId) {
 
-		List<CoursePercentTypeGroupStudentScore> list = coursePercentTypeGroupStudentScoreMapper.getCoursePercentTypeGroupStudentScoreByToStudent(
-				courseId, groupId, toStudentId);
-		int count = coursePercentTypeGroupStudentMapper.getCoursePercentTypeGroupStudentCountByIds(courseId, groupId);
+		List<CoursePercentTypeGroupStudentScore> list = coursePercentTypeGroupStudentScoreMapper
+				.getCoursePercentTypeGroupStudentScoreByToStudent(courseId,
+						groupId, toStudentId);
+		int count = coursePercentTypeGroupStudentMapper
+				.getCoursePercentTypeGroupStudentCountByIds(courseId, groupId);
 		if (ListUtils.isEmptyList(list) || list.size() < count) {
 			return false;
 		}
@@ -480,13 +550,16 @@ public class CourseServiceImpl implements CourseService {
 		if (course == null) {
 			return -1;
 		}
-		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseStudentsByCourseId(courseId);
-		List<CourseStudentTotalScore> totalScoreList = courseStudentTotalScoreMapper.getCourseStudentTotalScores(courseId);
+		List<CourseStudent> courseStudentList = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
+		List<CourseStudentTotalScore> totalScoreList = courseStudentTotalScoreMapper
+				.getCourseStudentTotalScores(courseId);
 		if (totalScoreList.size() < courseStudentList.size()) {
 			return 2; // 还有学生的成绩没有录入
 		}
 		if (courseMapper.finishedCourse(courseId) > 0) {
-			courseStudentMapper.updateCourseStudentsStatus(courseId, Course.FINISHED);
+			courseStudentMapper.updateCourseStudentsStatus(courseId,
+					Course.FINISHED);
 			return 1;
 		}
 		return -1;
@@ -498,9 +571,12 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#getCourseListByUserId(long)
 	 */
 	@Override
-	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset) {
+	public List<Course> getCourseListByUserId(long userId, int type,
+			long semesterId, int limit, int offset) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByUserId(userId, type, semesterId, limit, offset);
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByUserId(userId, type, semesterId, limit,
+						offset);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -529,8 +605,10 @@ public class CourseServiceImpl implements CourseService {
 	 * int)
 	 */
 	@Override
-	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset) {
-		return coursePercentTypeDemoMapper.getCoursePercentTypeDemos(limit, offset);
+	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit,
+			int offset) {
+		return coursePercentTypeDemoMapper.getCoursePercentTypeDemos(limit,
+				offset);
 	}
 
 	/*
@@ -551,8 +629,10 @@ public class CourseServiceImpl implements CourseService {
 	 * int, long, int, int)
 	 */
 	@Override
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset) {
-		List<Course> list = this.getCourseListByUserId(userId, type, semesterId, limit, offset);
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type,
+			long semesterId, int limit, int offset) {
+		List<Course> list = this.getCourseListByUserId(userId, type,
+				semesterId, limit, offset);
 		if (ListUtils.isEmptyList(list)) {
 			return null;
 		}
@@ -563,20 +643,23 @@ public class CourseServiceImpl implements CourseService {
 			CourseVO courseVO = new CourseVO();
 			courseVO.setCourse(course);
 			courseVO.setUser(userProfile);
-			com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(course.getClassId());
+			com.ruoogle.teach.meta.Class class1 = classMapper
+					.getClassById(course.getClassId());
 			courseVO.setClass1(class1);
 			if (course.getStatus() == Course.FINISHED) {
-				CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper.getCourseStudentTotalScoreByStudentId(course.getId(),
-						userId);
+				CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper
+						.getCourseStudentTotalScoreByStudentId(course.getId(),
+								userId);
 				if (courseStudentTotalScore != null) {
 					courseVO.setScore(courseStudentTotalScore.getScore());
 				}
 			} else {
 				// 判断是否有分组
-				List<CoursePercentTypeGroup> coursePercentTypeGroupList = coursePercentTypeGroupMapper.getCoursePercentTypeGroupByCourseId(course
-						.getId());
+				List<CoursePercentTypeGroup> coursePercentTypeGroupList = coursePercentTypeGroupMapper
+						.getCoursePercentTypeGroupByCourseId(course.getId());
 				if (!ListUtils.isEmptyList(coursePercentTypeGroupList)) {
-					if (!this.checkStudentFinishedScoreGroup(userId, course.getId())) {
+					if (!this.checkStudentFinishedScoreGroup(userId,
+							course.getId())) {
 						courseVO.setHaveGroupToScore(1);
 					}
 				}
@@ -590,22 +673,27 @@ public class CourseServiceImpl implements CourseService {
 	public boolean checkStudentFinishedScoreGroup(long studentId, long courseId) {
 
 		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper
-				.getCoursePercentTypeGroupStudentByStudentId(studentId, courseId);
+				.getCoursePercentTypeGroupStudentByStudentId(studentId,
+						courseId);
 		if (coursePercentTypeGroupStudent == null) {
 			return true;
 		}
-		CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper.getCoursePercentTypeGroup(coursePercentTypeGroupStudent
-				.getGroupId());
+		CoursePercentTypeGroup coursePercentTypeGroup = coursePercentTypeGroupMapper
+				.getCoursePercentTypeGroup(coursePercentTypeGroupStudent
+						.getGroupId());
 		if (coursePercentTypeGroup == null) {
 			return true;
 		}
 		List<CoursePercentTypeGroupStudentScore> coursePercentTypeGroupStudentScores = coursePercentTypeGroupStudentScoreMapper
-				.getCoursePercentTypeGroupStudentScoreByCourseGroupFrom(courseId, coursePercentTypeGroupStudent.getGroupId(), studentId);
+				.getCoursePercentTypeGroupStudentScoreByCourseGroupFrom(
+						courseId, coursePercentTypeGroupStudent.getGroupId(),
+						studentId);
 		if (ListUtils.isEmptyList(coursePercentTypeGroupStudentScores)) {
 			return false;
 		}
 		// 如果数量相同，说明评分完成
-		if (coursePercentTypeGroupStudentScores.size() == coursePercentTypeGroup.getCount()) {
+		if (coursePercentTypeGroupStudentScores.size() == coursePercentTypeGroup
+				.getCount()) {
 			return true;
 		}
 		return false;
@@ -619,13 +707,16 @@ public class CourseServiceImpl implements CourseService {
 	 * (long)
 	 */
 	@Override
-	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId) {
-		List<CourseScorePercent> courseScorePercents = courseScorePercentMapper.getCourseScorePercentListByCourseId(courseId);
+	public List<CourseScorePercent> getCourseScorePercentListByCourseId(
+			long courseId) {
+		List<CourseScorePercent> courseScorePercents = courseScorePercentMapper
+				.getCourseScorePercentListByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseScorePercents)) {
 			return null;
 		}
 		for (CourseScorePercent courseScorePercent : courseScorePercents) {
-			Profile profile = profileMapper.getProfile(courseScorePercent.getTeacherId());
+			Profile profile = profileMapper.getProfile(courseScorePercent
+					.getTeacherId());
 			if (profile != null) {
 				courseScorePercent.setTeacherName(profile.getName());
 			}
@@ -637,8 +728,10 @@ public class CourseServiceImpl implements CourseService {
 	 * 获取课程学生
 	 */
 	@Override
-	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId, long percentType) {
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId,
+			long percentType) {
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -650,11 +743,14 @@ public class CourseServiceImpl implements CourseService {
 			userIds.add(courseStudent.getUserId());
 		}
 		List<Profile> profileList = profileMapper.getProfileListByIds(userIds);
-		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList, "getUserId", Profile.class);
-		List<CourseStudentScore> courseStudentScoreList = courseStudentScoreMapper.getCourseStudentScoreListByCourseIdPercentType(courseId,
-				percentType);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList,
+				"getUserId", Profile.class);
+		List<CourseStudentScore> courseStudentScoreList = courseStudentScoreMapper
+				.getCourseStudentScoreListByCourseIdPercentType(courseId,
+						percentType);
 		Map<Long, CourseStudentScore> courseStudentScoreMap = HashMapMaker
-				.listToMap(courseStudentScoreList, "getStudentId", CourseStudentScore.class);
+				.listToMap(courseStudentScoreList, "getStudentId",
+						CourseStudentScore.class);
 		List<CourseStudentVO> courseStudentVOs = new ArrayList<CourseStudentVO>();
 		for (CourseStudent courseStudent : courseStudents) {
 
@@ -664,7 +760,8 @@ public class CourseServiceImpl implements CourseService {
 			if (profile == null) {
 				continue;
 			}
-			CourseStudentScore courseStudentScore = courseStudentScoreMap.get(profile.getUserId());
+			CourseStudentScore courseStudentScore = courseStudentScoreMap
+					.get(profile.getUserId());
 			if (courseStudentScore != null) {
 				courseStudentVO.setScore(courseStudentScore.getScore());
 			} else {
@@ -685,8 +782,10 @@ public class CourseServiceImpl implements CourseService {
 	 * long)
 	 */
 	@Override
-	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage, long courseId) {
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage,
+			long courseId) {
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -698,11 +797,13 @@ public class CourseServiceImpl implements CourseService {
 			userIds.add(courseStudent.getUserId());
 		}
 		List<Profile> profileList = profileMapper.getProfileListByIds(userIds);
-		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList, "getUserId", Profile.class);
-		List<CoursePercentTypeStage> coursePercentTypeStageList = coursePercentTypeStageMapper.getCoursePercentTypeStageListByCourseIdStage(courseId,
-				stage);
-		Map<Long, CoursePercentTypeStage> courseStudentScoreMap = HashMapMaker.listToMap(coursePercentTypeStageList, "getStudentId",
-				CoursePercentTypeStage.class);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList,
+				"getUserId", Profile.class);
+		List<CoursePercentTypeStage> coursePercentTypeStageList = coursePercentTypeStageMapper
+				.getCoursePercentTypeStageListByCourseIdStage(courseId, stage);
+		Map<Long, CoursePercentTypeStage> courseStudentScoreMap = HashMapMaker
+				.listToMap(coursePercentTypeStageList, "getStudentId",
+						CoursePercentTypeStage.class);
 		List<CourseStudentVO> courseStudentVOs = new ArrayList<CourseStudentVO>();
 		for (CourseStudent courseStudent : courseStudents) {
 
@@ -712,7 +813,8 @@ public class CourseServiceImpl implements CourseService {
 			if (profile == null) {
 				continue;
 			}
-			CoursePercentTypeStage coursePercentTypeStage = courseStudentScoreMap.get(profile.getUserId());
+			CoursePercentTypeStage coursePercentTypeStage = courseStudentScoreMap
+					.get(profile.getUserId());
 			if (coursePercentTypeStage != null) {
 				courseStudentVO.setScore(coursePercentTypeStage.getScore());
 			} else {
@@ -732,9 +834,11 @@ public class CourseServiceImpl implements CourseService {
 	 * getCourseStudentPropertySemesterScoresByStudentId(long, long)
 	 */
 	@Override
-	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(long studentId, long semesterId) {
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(
+			long studentId, long semesterId) {
 
-		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseListBySemesterStudentId(semesterId, studentId);
+		List<CourseStudent> courseStudentList = courseStudentMapper
+				.getCourseListBySemesterStudentId(semesterId, studentId);
 		if (ListUtils.isEmptyList(courseStudentList)) {
 			return null;
 		}
@@ -754,40 +858,53 @@ public class CourseServiceImpl implements CourseService {
 		}
 		if (isAllFinished) {
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseStudentPropertySemesterScoreMapper
-					.getCourseStudentPropertySemesterScoreByStudentIdSemester(semesterId, studentId);
+					.getCourseStudentPropertySemesterScoreByStudentIdSemester(
+							semesterId, studentId);
 			if (ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
 				// 计算一次
 				List<CourseStudentPropertyScore> courseStudentPropertyScores = courseStudentPropertyScoreMapper
-						.getCourseStudentPropertyScoreBySemesterId(studentId, semesterId);
+						.getCourseStudentPropertyScoreBySemesterId(studentId,
+								semesterId);
 				Map<Long, Double> map = new HashMap<Long, Double>();
 				for (CourseStudentPropertyScore courseStudentPropertyScore : courseStudentPropertyScores) {
-					Double scoreDouble = map.get(courseStudentPropertyScore.getPropertyId());
+					Double scoreDouble = map.get(courseStudentPropertyScore
+							.getPropertyId());
 					if (scoreDouble == null) {
 						scoreDouble = courseStudentPropertyScore.getScore();
 					} else {
 						scoreDouble += courseStudentPropertyScore.getScore();
 					}
-					map.put(courseStudentPropertyScore.getPropertyId(), scoreDouble);
+					map.put(courseStudentPropertyScore.getPropertyId(),
+							scoreDouble);
 				}
-				List<CourseProperty> list = coursePropertyMapper.getAllCourseProperties();
+				List<CourseProperty> list = coursePropertyMapper
+						.getAllCourseProperties();
 				for (CourseProperty courseProperty : list) {
 					CourseStudentPropertySemesterScore courseStudentPropertySemesterScore = new CourseStudentPropertySemesterScore();
-					courseStudentPropertySemesterScore.setPropertyId(courseProperty.getId());
+					courseStudentPropertySemesterScore
+							.setPropertyId(courseProperty.getId());
 					Double scoreDouble = map.get(courseProperty.getId());
 					if (scoreDouble != null) {
-						courseStudentPropertySemesterScore.setScore(scoreDouble);
+						courseStudentPropertySemesterScore
+								.setScore(scoreDouble);
 					}
-					courseStudentPropertySemesterScore.setSemesterId(semesterId);
+					courseStudentPropertySemesterScore
+							.setSemesterId(semesterId);
 					courseStudentPropertySemesterScore.setStudentId(studentId);
-					courseStudentPropertySemesterScoreMapper.addCourseStudentPropertySemesterScore(courseStudentPropertySemesterScore);
+					courseStudentPropertySemesterScoreMapper
+							.addCourseStudentPropertySemesterScore(courseStudentPropertySemesterScore);
 
 				}
-				return courseStudentPropertySemesterScoreMapper.getCourseStudentPropertySemesterScoreByStudentIdSemester(semesterId, studentId);
+				return courseStudentPropertySemesterScoreMapper
+						.getCourseStudentPropertySemesterScoreByStudentIdSemester(
+								semesterId, studentId);
 			} else {
 				return courseStudentPropertySemesterScores;
 			}
 		} else {
-			courseStudentPropertySemesterScoreMapper.deleteCourseStudentPropertySemesterScore(studentId, semesterId);
+			courseStudentPropertySemesterScoreMapper
+					.deleteCourseStudentPropertySemesterScore(studentId,
+							semesterId);
 		}
 		return null;
 	}
@@ -799,15 +916,18 @@ public class CourseServiceImpl implements CourseService {
 	 * getCoursePercentTypeGroupStudentScoresFromStudentID(long, long)
 	 */
 	@Override
-	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(long fromStudentId, long courseId) {
+	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(
+			long fromStudentId, long courseId) {
 
 		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper
-				.getCoursePercentTypeGroupStudentByStudentId(fromStudentId, courseId);
+				.getCoursePercentTypeGroupStudentByStudentId(fromStudentId,
+						courseId);
 		if (coursePercentTypeGroupStudent == null) {
 			return null;
 		}
 		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentList = coursePercentTypeGroupStudentMapper
-				.getCoursePercentTypeGroupStudentListByGroupId(courseId, coursePercentTypeGroupStudent.getGroupId());
+				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
+						coursePercentTypeGroupStudent.getGroupId());
 		if (ListUtils.isEmptyList(coursePercentTypeGroupStudentList)) {
 			return null;
 		}
@@ -816,23 +936,31 @@ public class CourseServiceImpl implements CourseService {
 			ids.add(coursePercentTypeGroupStudent2.getStudentId());
 		}
 		List<Profile> profileList = profileMapper.getProfileListByIds(ids);
-		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList, "getUserId", Profile.class);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList,
+				"getUserId", Profile.class);
 		List<CoursePercentTypeGroupStudentVO> coursePercentTypeGroupStudentVOs = new ArrayList<CoursePercentTypeGroupStudentVO>();
 		for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent2 : coursePercentTypeGroupStudentList) {
 			CoursePercentTypeGroupStudentVO coursePercentTypeGroupStudentVO = new CoursePercentTypeGroupStudentVO();
-			coursePercentTypeGroupStudentVO.setGroupId(coursePercentTypeGroupStudent2.getGroupId());
-			coursePercentTypeGroupStudentVO.setUserId(coursePercentTypeGroupStudent2.getStudentId());
-			Profile profile = profileMap.get(coursePercentTypeGroupStudent2.getStudentId());
+			coursePercentTypeGroupStudentVO
+					.setGroupId(coursePercentTypeGroupStudent2.getGroupId());
+			coursePercentTypeGroupStudentVO
+					.setUserId(coursePercentTypeGroupStudent2.getStudentId());
+			Profile profile = profileMap.get(coursePercentTypeGroupStudent2
+					.getStudentId());
 			if (profile != null) {
 				coursePercentTypeGroupStudentVO.setName(profile.getName());
 			}
 			CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore = coursePercentTypeGroupStudentScoreMapper
-					.getCoursePercentTypeGroupStudentScore(courseId, coursePercentTypeGroupStudent2.getGroupId(), fromStudentId,
+					.getCoursePercentTypeGroupStudentScore(courseId,
+							coursePercentTypeGroupStudent2.getGroupId(),
+							fromStudentId,
 							coursePercentTypeGroupStudent2.getStudentId());
 			if (coursePercentTypeGroupStudentScore != null) {
-				coursePercentTypeGroupStudentVO.setScore(coursePercentTypeGroupStudentScore.getScore());
+				coursePercentTypeGroupStudentVO
+						.setScore(coursePercentTypeGroupStudentScore.getScore());
 			}
-			coursePercentTypeGroupStudentVOs.add(coursePercentTypeGroupStudentVO);
+			coursePercentTypeGroupStudentVOs
+					.add(coursePercentTypeGroupStudentVO);
 		}
 		return coursePercentTypeGroupStudentVOs;
 	}
@@ -844,7 +972,8 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public CourseStudent getCourseStudent(long courseId, long studentId) {
-		return courseStudentMapper.getCourseStudentByStudentId(courseId, studentId);
+		return courseStudentMapper.getCourseStudentByStudentId(courseId,
+				studentId);
 	}
 
 	/*
@@ -855,22 +984,27 @@ public class CourseServiceImpl implements CourseService {
 	 * (long)
 	 */
 	@Override
-	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(long courseId) {
+	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(
+			long courseId) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
 		List<CourseStudentScoreVO> list = new ArrayList<CourseStudentScoreVO>();
 		for (CourseStudent courseStudent : courseStudents) {
 			CourseStudentScoreVO courseStudentScoreVO = new CourseStudentScoreVO();
-			List<CourseStudentScore> scoreList = courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, courseStudent
-					.getUserId());
+			List<CourseStudentScore> scoreList = courseStudentScoreMapper
+					.getCourseStudentScoresByCourseIdStudentId(courseId,
+							courseStudent.getUserId());
 			courseStudentScoreVO.setScoreList(scoreList);
-			CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper.getCourseStudentTotalScoreByStudentId(courseId,
-					courseStudent.getUserId());
+			CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper
+					.getCourseStudentTotalScoreByStudentId(courseId,
+							courseStudent.getUserId());
 			courseStudentScoreVO.setTotalScore(courseStudentTotalScore);
-			Profile profile = profileMapper.getProfile(courseStudent.getUserId());
+			Profile profile = profileMapper.getProfile(courseStudent
+					.getUserId());
 			if (profile != null) {
 				courseStudentScoreVO.setName(profile.getName());
 				courseStudentScoreVO.setUserId(profile.getUserId());
@@ -888,9 +1022,11 @@ public class CourseServiceImpl implements CourseService {
 	 * (long)
 	 */
 	@Override
-	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(long courseId) {
+	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(
+			long courseId) {
 
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -900,11 +1036,13 @@ public class CourseServiceImpl implements CourseService {
 		}
 
 		List<Profile> profileList = profileMapper.getProfileListByIds(ids);
-		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList, "getUserId", Profile.class);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profileList,
+				"getUserId", Profile.class);
 		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents = coursePercentTypeGroupStudentMapper
 				.getCoursePercentTypeGroupStudentByCourseId(courseId);
-		Map<Long, CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentMap = HashMapMaker.listToMap(coursePercentTypeGroupStudents,
-				"getStudentId", CoursePercentTypeGroupStudent.class);
+		Map<Long, CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentMap = HashMapMaker
+				.listToMap(coursePercentTypeGroupStudents, "getStudentId",
+						CoursePercentTypeGroupStudent.class);
 		List<CourseGroupStudentVO> courseGroupStudentVOs = new ArrayList<CourseGroupStudentVO>();
 		for (CourseStudent courseStudent : courseStudents) {
 			CourseGroupStudentVO courseGroupStudentVO = new CourseGroupStudentVO();
@@ -912,9 +1050,11 @@ public class CourseServiceImpl implements CourseService {
 			if (profile != null) {
 				courseGroupStudentVO.setProfile(profile);
 			}
-			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMap.get(courseStudent.getUserId());
+			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMap
+					.get(courseStudent.getUserId());
 			if (coursePercentTypeGroupStudent != null) {
-				courseGroupStudentVO.setCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
+				courseGroupStudentVO
+						.setCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
 			}
 			courseGroupStudentVOs.add(courseGroupStudentVO);
 		}
@@ -929,8 +1069,10 @@ public class CourseServiceImpl implements CourseService {
 	 * (long)
 	 */
 	@Override
-	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(long courseId) {
-		return coursePercentTypeGroupMapper.getCoursePercentTypeGroupByCourseId(courseId);
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(
+			long courseId) {
+		return coursePercentTypeGroupMapper
+				.getCoursePercentTypeGroupByCourseId(courseId);
 	}
 
 	/*
@@ -944,7 +1086,8 @@ public class CourseServiceImpl implements CourseService {
 	public boolean deleteCoursePercentTypeGroup(long groupId) {
 
 		if (coursePercentTypeGroupMapper.deleteCoursePercentTypeGroup(groupId) > 0) {
-			return coursePercentTypeGroupStudentMapper.deleteCoursePercentTypeGroupStudent(groupId) > 0;
+			return coursePercentTypeGroupStudentMapper
+					.deleteCoursePercentTypeGroupStudent(groupId) > 0;
 		}
 		return false;
 	}
@@ -956,19 +1099,24 @@ public class CourseServiceImpl implements CourseService {
 	 * long)
 	 */
 	@Override
-	public boolean addNewGroup(List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents, long courseId) {
+	public boolean addNewGroup(
+			List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents,
+			long courseId) {
 
 		Course course = courseMapper.getCourseById(courseId);
 		if (course == null) {
 			return false;
 		}
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseStudentsByCourseId(courseId);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return false;
 		}
-		CourseScorePercent courseScorePercent = courseScorePercentMapper.getCourseScorePercentBypercentType(courseId, CoursePercentType.EachStudent
-				.getValue());
-		int nowCount = coursePercentTypeGroupMapper.getCoursePercentTypeGroupCountById(courseId);
+		CourseScorePercent courseScorePercent = courseScorePercentMapper
+				.getCourseScorePercentBypercentType(courseId,
+						CoursePercentType.EachStudent.getValue());
+		int nowCount = coursePercentTypeGroupMapper
+				.getCoursePercentTypeGroupCountById(courseId);
 		if (nowCount == courseScorePercent.getObjectCount()) {
 			return false;
 		}
@@ -976,12 +1124,15 @@ public class CourseServiceImpl implements CourseService {
 		CoursePercentTypeGroup coursePercentTypeGroup = new CoursePercentTypeGroup();
 		coursePercentTypeGroup.setCount(coursePercentTypeGroupStudents.size());
 		coursePercentTypeGroup.setCourseId(courseId);
-		if (coursePercentTypeGroupMapper.addCoursePercentTypeGroup(coursePercentTypeGroup) > 0) {
+		if (coursePercentTypeGroupMapper
+				.addCoursePercentTypeGroup(coursePercentTypeGroup) > 0) {
 
 			for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudents) {
-				coursePercentTypeGroupStudent.setGroupId(coursePercentTypeGroup.getId());
+				coursePercentTypeGroupStudent.setGroupId(coursePercentTypeGroup
+						.getId());
 				coursePercentTypeGroupStudent.setCourseId(courseId);
-				coursePercentTypeGroupStudentMapper.addCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
+				coursePercentTypeGroupStudentMapper
+						.addCoursePercentTypeGroupStudent(coursePercentTypeGroupStudent);
 			}
 			return true;
 		}
@@ -998,7 +1149,8 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	public int getCourseTotalSemesterCount(long userId, long semesterId) {
 
-		List<CourseStudent> courseStudentList = courseStudentMapper.getCourseListBySemesterStudentId(semesterId, userId);
+		List<CourseStudent> courseStudentList = courseStudentMapper
+				.getCourseListBySemesterStudentId(semesterId, userId);
 		if (ListUtils.isEmptyList(courseStudentList)) {
 			return 0;
 		}
@@ -1031,8 +1183,10 @@ public class CourseServiceImpl implements CourseService {
 	 * int, int)
 	 */
 	@Override
-	public List<Course> getTheCourseListByUserId(long userId, int limit, int offset) {
-		List<CourseStudent> courseStudents = courseStudentMapper.getCourseListByUserId(userId, limit, offset);
+	public List<Course> getTheCourseListByUserId(long userId, int limit,
+			int offset) {
+		List<CourseStudent> courseStudents = courseStudentMapper
+				.getCourseListByUserId(userId, limit, offset);
 		if (ListUtils.isEmptyList(courseStudents)) {
 			return null;
 		}
@@ -1050,24 +1204,29 @@ public class CourseServiceImpl implements CourseService {
 	 * java.util.List)
 	 */
 	@Override
-	public List<SearchProfile> getSearchProfile(long semesterId, long classId, List<SearchProperty> searchProperties) {
+	public List<SearchProfile> getSearchProfile(long semesterId, long classId,
+			List<SearchProperty> searchProperties) {
 
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId, ProfileLevel.Student.getValue(), 0, -1);
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId,
+				ProfileLevel.Student.getValue(), 0, -1);
 		if (ListUtils.isEmptyList(profileList)) {
 			return null;
 		}
 		List<SearchProfile> searchProfiles = new ArrayList<SearchProfile>();
 		for (Profile profile : profileList) {
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseStudentPropertySemesterScoreMapper
-					.getCourseStudentPropertySemesterScoreByStudentIdSemester(semesterId, profile.getUserId());
+					.getCourseStudentPropertySemesterScoreByStudentIdSemester(
+							semesterId, profile.getUserId());
 			if (ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
 				continue;
 			}
 			boolean succ = true;
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
 				for (SearchProperty searchProperty : searchProperties) {
-					if (searchProperty.getPropertyId() == courseStudentPropertySemesterScore.getPropertyId()) {
-						if (searchProperty.getValue() >= courseStudentPropertySemesterScore.getScore()) {
+					if (searchProperty.getPropertyId() == courseStudentPropertySemesterScore
+							.getPropertyId()) {
+						if (searchProperty.getValue() >= courseStudentPropertySemesterScore
+								.getScore()) {
 							succ = false;
 							break;
 						}
@@ -1082,7 +1241,8 @@ public class CourseServiceImpl implements CourseService {
 			}
 			SearchProfile searchProfile = new SearchProfile();
 			searchProfile.setProfile(profile);
-			searchProfile.setCourseStudentPropertySemesterScoreList(courseStudentPropertySemesterScores);
+			searchProfile
+					.setCourseStudentPropertySemesterScoreList(courseStudentPropertySemesterScores);
 			searchProfiles.add(searchProfile);
 		}
 		return searchProfiles;
@@ -1099,25 +1259,31 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScoreList = courseStudentPropertySemesterScoreMapper
 				.getCourseStudentPropertySemesterScoreByStudentId(userId);
 		if (!ListUtils.isEmptyList(courseStudentPropertySemesterScoreList)) {
-			List<CourseProperty> courseProperties = coursePropertyMapper.getAllCourseProperties();
+			List<CourseProperty> courseProperties = coursePropertyMapper
+					.getAllCourseProperties();
 			if (!ListUtils.isEmptyList(courseProperties)) {
 				Map<Long, Double> totalScoreMap = new HashMap<Long, Double>();
 				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScoreList) {
 					for (CourseProperty courseProperty : courseProperties) {
-						if (courseProperty.getId() != courseStudentPropertySemesterScore.getPropertyId()) {
+						if (courseProperty.getId() != courseStudentPropertySemesterScore
+								.getPropertyId()) {
 							continue;
 						}
 						Double score = totalScoreMap.get(courseProperty);
 						if (score != null) {
-							score += courseStudentPropertySemesterScore.getScore();
+							score += courseStudentPropertySemesterScore
+									.getScore();
 						} else {
-							score = courseStudentPropertySemesterScore.getScore();
+							score = courseStudentPropertySemesterScore
+									.getScore();
 						}
 						totalScoreMap.put(courseProperty.getId(), score);
 					}
 				}
-				int semesterCount = courseStudentPropertySemesterScoreMapper.getCourseStudentPropertySemesterCount(userId);
-				Iterator<Long> keySetIterator = totalScoreMap.keySet().iterator();
+				int semesterCount = courseStudentPropertySemesterScoreMapper
+						.getCourseStudentPropertySemesterCount(userId);
+				Iterator<Long> keySetIterator = totalScoreMap.keySet()
+						.iterator();
 				while (keySetIterator.hasNext()) {
 					long propertyId = keySetIterator.next();
 					Double score = totalScoreMap.get(propertyId);
@@ -1144,7 +1310,8 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public long getLastestSemesterId(long userId) {
-		CourseStudent courseStudent = courseStudentMapper.getLastestSemesterId(userId);
+		CourseStudent courseStudent = courseStudentMapper
+				.getLastestSemesterId(userId);
 		if (courseStudent == null) {
 			return 0;
 		}
@@ -1152,13 +1319,17 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(long courseId, long userId) {
+	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(
+			long courseId, long userId) {
 
-		return courseStudentScoreMapper.getCourseStudentScoresByCourseIdStudentId(courseId, userId);
+		return courseStudentScoreMapper
+				.getCourseStudentScoresByCourseIdStudentId(courseId, userId);
 	}
 
 	@Override
-	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(long courseId, long userId) {
-		return coursePercentTypeStageMapper.getCoursePercentTypeStageListByStudentId(courseId, userId);
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(
+			long courseId, long userId) {
+		return coursePercentTypeStageMapper
+				.getCoursePercentTypeStageListByStudentId(courseId, userId);
 	}
 }

@@ -15,12 +15,14 @@ import com.ruoogle.teach.mapper.JournalMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.mapper.SemesterMapper;
 import com.ruoogle.teach.mapper.SpecialtyMapper;
+import com.ruoogle.teach.mapper.TeachMapper;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Journal;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.Teach;
 import com.ruoogle.teach.service.ClassService;
 
 /**
@@ -45,6 +47,9 @@ public class ClassServiceImpl implements ClassService {
 	@Resource
 	private SemesterMapper semesterMapper;
 
+	@Resource
+	private TeachMapper teachMapper;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -52,7 +57,8 @@ public class ClassServiceImpl implements ClassService {
 	 * com.ruoogle.teach.service.ClassService#addSpecialty(java.lang.String,
 	 * java.lang.String, int)
 	 */
-	public boolean addSpecialty(String SpecialtyName, String SpecialtyShortName, int semesterCount) {
+	public boolean addSpecialty(String SpecialtyName,
+			String SpecialtyShortName, int semesterCount) {
 		Specialty specialty = new Specialty();
 		specialty.setSemesterCount(semesterCount);
 		specialty.setSpecialty(SpecialtyName);
@@ -94,12 +100,14 @@ public class ClassServiceImpl implements ClassService {
 		if (class1 == null) {
 			return false;
 		}
-		Specialty specialty = specialtyMapper.getSpecialtyById(class1.getSpecialtyId());
+		Specialty specialty = specialtyMapper.getSpecialtyById(class1
+				.getSpecialtyId());
 		if (specialty == null) {
 			return false;
 		}
 
-		String userName = specialty.getShortSpecialty() + StringUtil.removeZhongWen(class1.getName()) + number;
+		String userName = specialty.getShortSpecialty()
+				+ StringUtil.removeZhongWen(class1.getName()) + number;
 		String passWord = StringUtil.removeZhongWen(class1.getName()) + number;
 		profile.setUserName(userName);
 		profile.setPassword(passWord);
@@ -122,7 +130,8 @@ public class ClassServiceImpl implements ClassService {
 		CoursePercentTypeDemo coursePercentTypeDemo = new CoursePercentTypeDemo();
 		coursePercentTypeDemo.setName(name);
 		coursePercentTypeDemo.setDemoJson(demoJson);
-		return coursePercentTypeDemoMapper.addCoursePercentTypeDemo(coursePercentTypeDemo) > 0;
+		return coursePercentTypeDemoMapper
+				.addCoursePercentTypeDemo(coursePercentTypeDemo) > 0;
 	}
 
 	/*
@@ -149,7 +158,8 @@ public class ClassServiceImpl implements ClassService {
 	 * 
 	 */
 	@Override
-	public boolean addJournal(String content, int type, long courseId, long userId) {
+	public boolean addJournal(String content, int type, long courseId,
+			long userId) {
 		Journal journal = new Journal();
 		journal.setContent(content);
 		journal.setUserId(userId);
@@ -185,7 +195,8 @@ public class ClassServiceImpl implements ClassService {
 	 * @see com.ruoogle.teach.service.ClassService#getClassListBySpecialty(long)
 	 */
 	@Override
-	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(long specialtyId) {
+	public List<com.ruoogle.teach.meta.Class> getClassListBySpecialty(
+			long specialtyId) {
 
 		return classMapper.getClassListBySpecialty(specialtyId);
 	}
@@ -203,7 +214,8 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public boolean updateClassStudentCount(long classId) {
 		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
-		List<Profile> profileList = profileMapper.getProfileByClassId(class1.getId(), ProfileLevel.Student.getValue(), 0, -1);
+		List<Profile> profileList = profileMapper.getProfileByClassId(
+				class1.getId(), ProfileLevel.Student.getValue(), 0, -1);
 		int count = 0;
 		if (!ListUtils.isEmptyList(profileList)) {
 			count = profileList.size();
@@ -220,7 +232,8 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public boolean deleteSpecialty(long id) {
 		if (specialtyMapper.deleteSpecialty(id) > 0) {
-			List<com.ruoogle.teach.meta.Class> classList = classMapper.getClassListBySpecialty(id);
+			List<com.ruoogle.teach.meta.Class> classList = classMapper
+					.getClassListBySpecialty(id);
 			if (ListUtils.isEmptyList(classList)) {
 				for (com.ruoogle.teach.meta.Class aClass : classList) {
 					profileMapper.deleteProfileByClassId(aClass.getId());
@@ -279,5 +292,63 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public boolean deleteSemester(long id) {
 		return semesterMapper.deleteSelemster(id) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#addTeach(java.lang.String,
+	 * long)
+	 */
+	@Override
+	public boolean addTeach(String name, long demoId) {
+		Teach teach = new Teach();
+		teach.setName(name);
+		teach.setDemoId(demoId);
+		return teachMapper.addTeach(teach) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.ClassService#getTeachList(int, int)
+	 */
+	@Override
+	public List<Teach> getTeachList(int limit, int offset) {
+		List<Teach> teachList = teachMapper.getTeachList(limit, offset);
+
+		if (ListUtils.isEmptyList(teachList)) {
+			return null;
+		}
+		List<CoursePercentTypeDemo> coursePercentTypeDemos = coursePercentTypeDemoMapper
+				.getCoursePercentTypeDemos(0, -1);
+		if (!ListUtils.isEmptyList(coursePercentTypeDemos)) {
+			for (Teach teach : teachList) {
+				for (CoursePercentTypeDemo coursePercentTypeDemo : coursePercentTypeDemos) {
+					if (coursePercentTypeDemo.getId() == teach.getDemoId()) {
+						teach.setDemoName(coursePercentTypeDemo.getName());
+						break;
+					}
+				}
+			}
+		}
+		return teachList;
+	}
+
+	@Override
+	public boolean deleteTeach(long id) {
+		return teachMapper.deleteTeach(id) > 0;
+	}
+
+	@Override
+	public CoursePercentTypeDemo getCoursePercentTypeDemoByTeachId(long teachId) {
+
+		Teach teach = teachMapper.getTeachById(teachId);
+		if (teach == null) {
+			return null;
+		}
+		return coursePercentTypeDemoMapper.getCoursePercentTypeDemoById(teach
+				.getDemoId());
+
 	}
 }

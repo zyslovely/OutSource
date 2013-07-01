@@ -27,6 +27,7 @@ typedef enum OSDesignType_ {
 @property (nonatomic,retain) NSMutableArray *texts;
 @property (nonatomic,copy) NSString *thumbnail;
 @property (nonatomic,copy) NSString *screenShotStr;
+@property (nonatomic,copy) NSString *test;
 
 - (id)initWithJSONDic:(NSDictionary *)jsonDic ;
 
