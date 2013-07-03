@@ -34,12 +34,14 @@ $("#newTeacher_Submit").click(function(){
 $(".admin_newTeacher_delete").click(function(){
 	_teacherUserId=$(this).attr("data_id");
 jConfirm('确定要删除么','删除操作',function(_flag){
+	if(_flag){
+		dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteUser',_teacherUserId,function(flag){
+			if(flag){
+				location.href=location.href;
+			}
+		});
+	}
 	
-	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteUser',_teacherUserId,function(flag){
-		if(flag){
-			location.href=location.href;
-		}
-	});
 });
 });
 

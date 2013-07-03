@@ -234,7 +234,7 @@ public class ClassServiceImpl implements ClassService {
 		if (specialtyMapper.deleteSpecialty(id) > 0) {
 			List<com.ruoogle.teach.meta.Class> classList = classMapper
 					.getClassListBySpecialty(id);
-			if (ListUtils.isEmptyList(classList)) {
+			if (!ListUtils.isEmptyList(classList)) {
 				for (com.ruoogle.teach.meta.Class aClass : classList) {
 					profileMapper.deleteProfileByClassId(aClass.getId());
 					classMapper.deleteClassBySpecialty(id);
