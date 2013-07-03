@@ -14,7 +14,7 @@ $("#newCourseType_Create").click(function(){
 		_typeIds=new Array();
 		_percentIds=new Array();
 		_total=0;
-		for(i=0;i<objs.length;i++){
+		for(var i=0;i<objs.length;i++){
 			_typeIds.push(objs[i].val);
 			_percentIds.push(parseInt($(_percentOpt[i]).val()));
 			_total+=parseInt($(_percentOpt[i]).val());
@@ -50,17 +50,19 @@ $("#newCourseType_Create").click(function(){
 
 function deleteCourseType(_id){
 	jConfirm('确定要删除么','删除操作',function(_flag){
-	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_id,function(flag){
-		if(flag){
-			location.href=location.href;
-		}
-	});
+	  if(_flag){
+		  dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_id,function(flag){
+				if(flag){
+					location.href=location.href;
+				}
+			});
+	  }
 	});
 };
 
 function scoreType_select(obj,val){
 	_in=0;
-	for(i=0;i<objs.length;i++){
+	for(var i=0;i<objs.length;i++){
 		if(objs[i].obj==obj){
 			objs[i].val=val;
 			_in=1;

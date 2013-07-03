@@ -16,10 +16,12 @@ $(".admin_newSpecialty_delete").click(function(){
 	
 	jConfirm('确定要删除么','删除操作',function(_flag){
 	
-	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteSpecialty',_specialtyId,function(flag){
-		if(flag){
-			location.href=location.href;
-		}
-	});
+	if(_flag){
+		dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteSpecialty',_specialtyId,function(flag){
+			if(flag){
+				location.href=location.href;
+			}
+		});
+	}
 	});
 });

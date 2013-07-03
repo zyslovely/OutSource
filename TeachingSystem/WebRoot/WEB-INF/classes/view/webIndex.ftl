@@ -31,7 +31,7 @@ if(${error!0}==1){
                  </li>
               </ul>
               <div style="margin-left: 5px; background: url('/img/webIndex/pic_mask.png') no-repeat scroll center top transparent; width: 605px; height: 52px; position: relative; top: -52px; border-radius: 5px 5px 5px 5px;">
-                   <span style="position: absolute; color: white; margin: 10px 0px 0px 40px; font-size: 18px;">教学楼</span>
+                   <span style="position: absolute; color: white; margin: 10px 0px 0px 40px; font-size: 18px;">学生作品</span>
                    <span id="dot_1" style="cursor: pointer;background: url('/img/webIndex/pic_mask_dot_select.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 88%;"></span>
                    <span id="dot_2" style="cursor: pointer;background: url('/img/webIndex/pic_mask_dot.png') no-repeat scroll center top transparent; height: 14px; position: absolute; width: 14px; margin-top: 19px; margin-left: 92%;"></span>
               </div>

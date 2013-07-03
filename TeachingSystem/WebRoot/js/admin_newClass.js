@@ -21,11 +21,13 @@ function newSpecialtyCreateClassChange(obj,val){
 $(".admin_newClass_delete").click(function(){
 	_classId=$(this).attr("data_id");
 	jConfirm('确定要删除么','删除操作',function(_flag){
-    
-	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteClass',_classId,function(flag){
-		if(flag){
-			location.href=location.href;
-		}
-	});
+    if(_flag){
+    	dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteClass',_classId,function(flag){
+    		if(flag){
+    			location.href=location.href;
+    		}
+    	});
+    }
+	
 	});
 });
