@@ -2,7 +2,8 @@
 function saveImage1(){
 $("#uploadFrame_1").ajaxSubmit(function(message) {
 if(message!=''){
-	location.href=location.href
+	
+	alert("操作成功，请刷新下页面");
 }
 });
 return false;
@@ -10,9 +11,9 @@ return false;
 
 
 function saveImage2(){
-$("#uploadFrame2").ajaxSubmit(function(message) {
+$("#uploadFrame_2").ajaxSubmit(function(message) {
 if(message!=''){
-	location.href=location.href
+	alert("操作成功，请刷新下页面");
 }
 });
 return false;

@@ -149,7 +149,10 @@
 			 $('#courseSearch_Semester_select').jgdDropdown({selected: '${classId!-1}',callback: function(obj, val) { courseSearchSemesterChange(obj,val) }});
            
            </script>
+           <!--[if IE]><script type="text/javascript" src="/js/radar/radarc.js"></script><![endif]-->
+    	   <script type="text/javascript" src="/js/radar/radar.js"></script>
    	       <script type="text/javascript" src="/js/courseSearch.js" charset="utf-8"></script>
+   	       
     	<#break>
     	
     </#switch>

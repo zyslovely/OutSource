@@ -44,7 +44,7 @@
 		SELECT *
 		from TB_Profile
 		WHERE level=#{level} order by
-		userId desc
+		userId asc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
 		</if>
@@ -54,7 +54,7 @@
 		SELECT *
 		from TB_Profile
 		WHERE UserId=#{UserId} order by userId
-		desc;
+		asc;
 	</select>
 
 	<select id="getProfileByUserName" resultType="Profile">
@@ -62,7 +62,7 @@
 		from
 		TB_Profile
 		WHERE userName=#{userName} order by userId
-		desc;
+		asc;
 	</select>
 
 	<select id="getProfileByClassId" resultType="Profile">
@@ -95,7 +95,7 @@
 		SELECT *
 		from
 		TB_Profile
-		WHERE classId=#{classId} order by userId desc
+		WHERE classId=#{classId} order by userId asc
 		limit 1;
 	</select>
 	<update id="updateProfilePassword" flushCache="true"
@@ -128,7 +128,7 @@
 			separator="," close=")">
 			#{item} 
 	     </foreach>
-		order by userId desc
+		order by userId asc
 		;
 	</select>
 

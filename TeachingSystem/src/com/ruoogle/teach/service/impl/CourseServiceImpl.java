@@ -1,5 +1,6 @@
 package com.ruoogle.teach.service.impl;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.HashMapMaker;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.mapper.ClassMapper;
@@ -1220,12 +1222,26 @@ public class CourseServiceImpl implements CourseService {
 			if (ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
 				continue;
 			}
+			double maxScore = 0;
+			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+				if (courseStudentPropertySemesterScore.getScore() > maxScore) {
+					maxScore = courseStudentPropertySemesterScore
+							.getScore();
+				}
+			}
+			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+				double endScore = courseStudentPropertySemesterScore
+						.getScore() / maxScore * 10;
+				courseStudentPropertySemesterScore
+						.setScore(DoubleUtil.round(endScore, 2,
+								RoundingMode.HALF_UP.ordinal()));
+			}
 			boolean succ = true;
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
 				for (SearchProperty searchProperty : searchProperties) {
 					if (searchProperty.getPropertyId() == courseStudentPropertySemesterScore
 							.getPropertyId()) {
-						if (searchProperty.getValue() >= courseStudentPropertySemesterScore
+						if (searchProperty.getValue() > courseStudentPropertySemesterScore
 								.getScore()) {
 							succ = false;
 							break;

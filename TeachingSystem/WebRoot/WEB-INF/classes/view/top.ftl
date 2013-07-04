@@ -107,6 +107,7 @@
            <a href="/teach/create/" class="<#if pageName!='teachCreate'>top_li_selected_color<#else>top_li_diselected_color</#if>">创建课程</a>
         </li>
         </#if>
+        
         <#if level==3>
         <li class="top_li" style="<#if pageName=='newSpecialty'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/specialty/list/" class="<#if pageName!='newSpecialty'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加专业</a>
@@ -132,12 +133,19 @@
         <li class="top_li" style="<#if pageName=='newTeach'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/teach/list/" class="<#if pageName!='newTeach'>top_li_selected_color<#else>top_li_diselected_color</#if>">课程模板</a>
         </li>
+       
         
         <#--
         <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学校学院信息</a>
         </li>
         -->
+        </#if>
+        <#if level==1||level==2>
+        
+         <li class="top_li" style="<#if pageName=='courseSearch'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
+           <a href="/teach/search/" class="<#if pageName!='courseSearch'>top_li_selected_color<#else>top_li_diselected_color</#if>">学生搜索</a>
+        </li>
         </#if>
      </ul>
      </div>

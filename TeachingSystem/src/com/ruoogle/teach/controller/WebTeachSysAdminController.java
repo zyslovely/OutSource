@@ -374,7 +374,8 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 						}
 
 						fileItem.write(file);
-						mv.addObject("imageUrl", "/" + path);
+
+						mv.addObject("imageUrl", path);
 
 					} else {
 						logger.error("文件没有选择 或 文件内容为空");

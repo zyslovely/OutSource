@@ -17,7 +17,7 @@ body{min-width:1024px;min-height:600px}
        <ul>
           <li style="float: left; margin-left: 80px;">
              <p style="font-size: 18px; color: rgb(106, 106, 106);">第一张图(尺寸387px*605px)</p>
-             <form onsubmit="return saveReport();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/admin/update/head/?type=1" id="uploadFrame_1">
+             <form onsubmit="return saveImage1();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/admin/update/head/?type=1" id="uploadFrame_1">
                  <input type="file" class="t file l " size="37" name="file" value="浏览">
                  <input type="submit" value="上传图片">
              </form>
@@ -27,7 +27,7 @@ body{min-width:1024px;min-height:600px}
           </li>
           <li style="float: left; margin-left: 80px;">
              <p style="font-size: 18px; color: rgb(106, 106, 106);">第二张图(尺寸387px*605px)</p>
-             <form onsubmit="return saveReport();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/admin/update/head/?type=2" id="uploadFrame_2">
+             <form onsubmit="return saveImage2();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/admin/update/head/?type=2" id="uploadFrame_2">
                  <input type="file" class="t file l " size="37" name="file" value="浏览">
                  <input type="submit" value="上传图片">
              </form>

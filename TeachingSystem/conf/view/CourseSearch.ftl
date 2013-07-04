@@ -61,7 +61,7 @@ body{min-width:1024px;min-height:600px}
                   <#list courseProperties as property>
                   <div class="select-wrapper wide" style="margin-top: 8px; margin-left: 8px;">
                           <span>${property.name!""}</span>
-                          <span>大于</span>
+                          <span>大于等于</span>
                           <input type="text" style="width:20px;height:15px;" class="courseSearch_property_input" data_id="${property.id!0}"/>
                   </div>
                   </#list>
@@ -78,11 +78,11 @@ body{min-width:1024px;min-height:600px}
    <#if seachProfileList?exists>
 
    
-   <table cellspacing="0" style="float: left; margin-left: 80px; width: 500px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
+   <table cellspacing="0" style="float: left; margin-left: 80px; width: 800px; margin-top: 20px; font-size: 20px;cellspacing:0px;">
        <thead style="height:60px;">
             <tr>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">姓名</th>
-               <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">属性成绩</th>
+               <th class="f2" style="color: rgb(94, 94, 94);width:300px;border-bottom: 1px solid rgb(224, 224, 224);">属性成绩</th>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">查看</th>
             </tr>
        </thead>
@@ -90,20 +90,16 @@ body{min-width:1024px;min-height:600px}
             <#list seachProfileList as seachProfile>
             <tr style="height: 40px;">
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><#if seachProfile.profile?exists>${seachProfile.profile.name!""}</#if></th>
-               <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">
-               <#if seachProfile.courseStudentPropertySemesterScoreList?exists>
-                  <#list seachProfile.courseStudentPropertySemesterScoreList as score>
-                  <div class="select-wrapper wide" style="margin-top: 8px; margin-left: 8px;">
-                          <#if courseProperties?exists>
-                          <#list courseProperties as property>
-                          <#if property.id==score.propertyId><span>${property.name!""}</span></#if>
-                          </#list>
-                          </#if>
-                          <span>${score.score!0}</span>
-                  </div>
-                  </#list>
+               <th class="f3" style="color: rgb(139, 139, 139);width:300px;border-bottom: 1px solid rgb(224, 224, 224);">
+               
+                  <#if seachProfile.courseStudentPropertySemesterScoreList?exists>
+                    <div style="width:300px;">
+                    <canvas width="300px" height="300px" style="border:0px" id="sample_${seachProfile.profile.userId}"></canvas>
+             
+                    </div>
                   </#if>
                </th>
+               
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);"><a target="_blank" href="/teach/index/?semesterId=${semesterId!0}&userId=${seachProfile.profile.userId!0}">成绩查看</a></th>
             </tr>
             </#list>
@@ -121,3 +117,36 @@ var _classId=${classId!0};
 var _semesterId=${semesterId!0};
 </script>
 <#include "js.ftl">
+<script type="text/javascript">
+<#if seachProfileList?exists>
+
+window.onload = function() {
+    <#list seachProfileList as profile>
+	var rc = new html5jp.graph.radar("sample_${profile.profile.userId}");
+	if( ! rc ) { return; }
+	var items = [
+		["属性值", 
+		<#list profile.courseStudentPropertySemesterScoreList as propertyScore>
+		<#if propertyScore_index !=0 >,</#if>
+		${propertyScore.score!0}
+		</#list>
+		]
+	];
+	var params = {
+		aCap: [
+		<#list courseProperties as property>
+		<#list profile.courseStudentPropertySemesterScoreList as propertyScore>
+		    <#if propertyScore.propertyId == property.id>
+		    <#if property_index != 0>,</#if>
+		    "${property.name!""}"
+		    </#if>
+		</#list>
+		</#list>
+		]
+	}
+	rc.draw(items, params);
+	</#list>
+};
+
+</#if>
+</script>
