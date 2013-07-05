@@ -1233,12 +1233,14 @@ public class CourseServiceImpl implements CourseService {
 		}
 		List<SearchProfile> searchProfiles = new ArrayList<SearchProfile>();
 		for (Profile profile : profileList) {
+			
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseStudentPropertySemesterScoreMapper
 					.getCourseStudentPropertySemesterScoreByStudentIdSemester(
 							semesterId, profile.getUserId());
 			if (ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
 				continue;
 			}
+			logger.info(profile.getUserId());
 			double maxScore = 0;
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
 				if (courseStudentPropertySemesterScore.getScore() > maxScore) {
