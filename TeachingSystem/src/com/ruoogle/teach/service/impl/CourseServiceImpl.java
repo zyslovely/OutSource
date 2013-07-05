@@ -1207,10 +1207,27 @@ public class CourseServiceImpl implements CourseService {
 	 */
 	@Override
 	public List<SearchProfile> getSearchProfile(long semesterId, long classId,
-			List<SearchProperty> searchProperties) {
+			long specialtyId, List<SearchProperty> searchProperties) {
+		List<Profile> profileList;
+		if (classId <= 0) {
+			profileList = new ArrayList<Profile>();
+			List<com.ruoogle.teach.meta.Class> classList = classMapper
+					.getClassListBySpecialty(specialtyId);
+			if (!ListUtils.isEmptyList(classList)) {
+				for (com.ruoogle.teach.meta.Class class1 : classList) {
+					List<Profile> aProfileList = profileMapper
+							.getProfileByClassId(class1.getId(),
+									ProfileLevel.Student.getValue(), 0, -1);
+					if (!ListUtils.isEmptyList(aProfileList)) {
+						profileList.addAll(aProfileList);
+					}
+				}
+			}
+		} else {
+			profileList = profileMapper.getProfileByClassId(classId,
+					ProfileLevel.Student.getValue(), 0, -1);
+		}
 
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId,
-				ProfileLevel.Student.getValue(), 0, -1);
 		if (ListUtils.isEmptyList(profileList)) {
 			return null;
 		}
@@ -1225,16 +1242,14 @@ public class CourseServiceImpl implements CourseService {
 			double maxScore = 0;
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
 				if (courseStudentPropertySemesterScore.getScore() > maxScore) {
-					maxScore = courseStudentPropertySemesterScore
-							.getScore();
+					maxScore = courseStudentPropertySemesterScore.getScore();
 				}
 			}
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
-				double endScore = courseStudentPropertySemesterScore
-						.getScore() / maxScore * 10;
-				courseStudentPropertySemesterScore
-						.setScore(DoubleUtil.round(endScore, 2,
-								RoundingMode.HALF_UP.ordinal()));
+				double endScore = courseStudentPropertySemesterScore.getScore()
+						/ maxScore * 10;
+				courseStudentPropertySemesterScore.setScore(DoubleUtil.round(
+						endScore, 2, RoundingMode.HALF_UP.ordinal()));
 			}
 			boolean succ = true;
 			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {

@@ -615,6 +615,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 		String properties = ServletRequestUtils.getStringParameter(request,
 				"properties", null);
+
 		if (!StringUtils.isEmpty(properties)) {
 			String[] onePropertiesList = properties.split(";");
 			if (!ArrayUtils.isEmpty(onePropertiesList)) {
@@ -637,7 +638,7 @@ public class WebTeachSysController extends AbstractBaseController {
 				}
 				if (!ListUtils.isEmptyList(searchProperties)) {
 					List<SearchProfile> seachProfileList = courseService
-							.getSearchProfile(semesterId, classId,
+							.getSearchProfile(semesterId, classId, specialtyId,
 									searchProperties);
 					if (!ListUtils.isEmptyList(seachProfileList)) {
 						mv.addObject("seachProfileList", seachProfileList);

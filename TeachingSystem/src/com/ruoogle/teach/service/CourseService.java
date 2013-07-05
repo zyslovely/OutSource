@@ -39,8 +39,10 @@ public interface CourseService {
 	 * @param teacherId
 	 * @return
 	 */
-	public boolean addNewCourse(List<CourseScorePercentProperty> courseScorePercentProperties,long teachId,
-			List<CourseScorePercent> CourseScorePercents, long classId, long teacherId, long semesterId, String desc);
+	public boolean addNewCourse(
+			List<CourseScorePercentProperty> courseScorePercentProperties,
+			long teachId, List<CourseScorePercent> CourseScorePercents,
+			long classId, long teacherId, long semesterId, String desc);
 
 	/**
 	 * 添加学生分类分数
@@ -50,7 +52,8 @@ public interface CourseService {
 	 * @param teacherId
 	 * @return
 	 */
-	public boolean insertCourseScore(long courseId, long studentId, long percentType, double score, long teacherId);
+	public boolean insertCourseScore(long courseId, long studentId,
+			long percentType, double score, long teacherId);
 
 	/**
 	 * 判断这个学生的分数是不是都出来了
@@ -82,7 +85,8 @@ public interface CourseService {
 	 * @param teacherId
 	 * @return
 	 */
-	public boolean insertCourseStageScore(long courseId, int stage, double score, long studentId, long teacherId);
+	public boolean insertCourseStageScore(long courseId, int stage,
+			double score, long studentId, long teacherId);
 
 	/**
 	 * 添加分组分数
@@ -95,7 +99,8 @@ public interface CourseService {
 	 * @param fromStudentId
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score, long fromStudentId);
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId,
+			double score, long fromStudentId);
 
 	/**
 	 * 完成课程
@@ -114,7 +119,8 @@ public interface CourseService {
 	 * @param userId
 	 * @return
 	 */
-	public List<Course> getCourseListByUserId(long userId, int type, long semesterId, int limit, int offset);
+	public List<Course> getCourseListByUserId(long userId, int type,
+			long semesterId, int limit, int offset);
 
 	/**
 	 * 
@@ -124,7 +130,8 @@ public interface CourseService {
 	 * @param offset
 	 * @return
 	 */
-	public List<Course> getTheCourseListByUserId(long userId, int limit, int offset);
+	public List<Course> getTheCourseListByUserId(long userId, int limit,
+			int offset);
 
 	/**
 	 * 
@@ -136,7 +143,8 @@ public interface CourseService {
 	 * @param offset
 	 * @return
 	 */
-	public List<CourseVO> getCourseVOListByUserId(long userId, int type, long semesterId, int limit, int offset);
+	public List<CourseVO> getCourseVOListByUserId(long userId, int type,
+			long semesterId, int limit, int offset);
 
 	/**
 	 * 获取课程
@@ -154,7 +162,8 @@ public interface CourseService {
 	 * @param offset
 	 * @return
 	 */
-	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit, int offset);
+	public List<CoursePercentTypeDemo> getCoursePercentTypeDemos(int limit,
+			int offset);
 
 	public List<CourseProperty> getAllCourseProperties();
 
@@ -165,7 +174,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseScorePercent> getCourseScorePercentListByCourseId(long courseId);
+	public List<CourseScorePercent> getCourseScorePercentListByCourseId(
+			long courseId);
 
 	/**
 	 * 得到这门课的学生列表，以及分数
@@ -174,7 +184,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId, long percentType);
+	public List<CourseStudentVO> getCourseStudentVOsByCourseId(long courseId,
+			long percentType);
 
 	/**
 	 * 根据stage获取课程分数
@@ -184,7 +195,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage, long courseId);
+	public List<CourseStudentVO> getCourseStudentVOsFromStage(int stage,
+			long courseId);
 
 	/**
 	 * 获得这个学生这个学期的属性
@@ -194,7 +206,8 @@ public interface CourseService {
 	 * @param semesterId
 	 * @return
 	 */
-	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(long studentId, long semesterId);
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoresByStudentId(
+			long studentId, long semesterId);
 
 	/**
 	 * 获取互评学生列表
@@ -204,7 +217,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(long fromStudentId, long courseId);
+	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(
+			long fromStudentId, long courseId);
 
 	public CourseStudent getCourseStudent(long courseId, long studentId);
 
@@ -215,7 +229,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(long courseId);
+	public List<CourseStudentScoreVO> getCourseStudentScoreVOsByCourseId(
+			long courseId);
 
 	/**
 	 * 获得课程学生分组
@@ -224,7 +239,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(long courseId);
+	public List<CourseGroupStudentVO> getCourseGroupStudentVOByCourseId(
+			long courseId);
 
 	/**
 	 * 获取分组列表
@@ -233,7 +249,8 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(long courseId);
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupsByCourseId(
+			long courseId);
 
 	/**
 	 * 删除分组
@@ -248,7 +265,9 @@ public interface CourseService {
 	 * @param courseId
 	 * @return
 	 */
-	public boolean addNewGroup(List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents, long courseId);
+	public boolean addNewGroup(
+			List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudents,
+			long courseId);
 
 	/**
 	 * 得到某个学期课程总数
@@ -278,7 +297,8 @@ public interface CourseService {
 	 * @param searchProperties
 	 * @return
 	 */
-	public List<SearchProfile> getSearchProfile(long semesterId, long classId, List<SearchProperty> searchProperties);
+	public List<SearchProfile> getSearchProfile(long semesterId, long classId,
+			long specialtyId, List<SearchProperty> searchProperties);
 
 	/**
 	 * 结束学业
@@ -306,7 +326,9 @@ public interface CourseService {
 	 * @param userId
 	 * @return
 	 */
-	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(long courseId, long userId);
+	public List<CourseStudentScore> getCourseStudentScoresByUserIdCourseId(
+			long courseId, long userId);
 
-	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(long courseId, long userId);
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(
+			long courseId, long userId);
 }
