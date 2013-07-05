@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg936\cocoartf1187\cocoasubrtf390
+{\fonttbl\f0\fnil\fcharset134 STHeitiSC-Light;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10380\viewh7200\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 VirtualHost *:80>\
+    ServerName teach.zys-wings.com\
+    DocumentRoot /home/ubuntu/server/tomcat6_1/webapps/TeachSys/\
+JkMount /*.do teachsys\
+JkMount /*dwr/*.dwr teachsys\
+JkLogLevel info\
+<IfModule mod_rewrite.c>\
+RewriteEngine On\
+\
+RewriteRule ^/?$                         /TeachSys/webTeachPub.do?action=showIndexView&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/login/?$                   /TeachSys/webTeachPub.do?action=doLogin&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/logout/?$                  /TeachSys/webTeach.do?action=logout&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/index/?$             /TeachSys/webTeach.do?action=teachIndex&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/download/addScore/?$  /TeachSys/webExcel.do?action=downLoadAddScoreExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/upload/addScore/?$    /TeachSys/webExcel.do?action=readScoreFromExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/download/addStudent/?$  /TeachSys/webExcel.do?action=downLoadStudentProfileExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/upload/addStudent/?$   /TeachSys/webExcel.do?action=upLoadStudentProfileExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/download/score/?$   /TeachSys/webExcel.do?action=downLoadCourseStudentScoreExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/download/addTeacher/?$  /TeachSys/webExcel.do?action=downLoadTeacherProfileExcel&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/teacher/upload/addTeacher/?$   /TeachSys/webExcel.do?action=upLoadTeacherProfileExcel&%\{QUERY_STRING\} [PT,L]\
+\
+RewriteRule ^/teach/api/login/?$   /TeachSys/apiTeachPub.do?action=doLogin&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/api/schoolInfo/list/?$  /TeachSys/apiTeachPub.do?action=showSchoolInfoList&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/create/?$      /TeachSys/webTeach.do?action=teachCreate&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/score/?$      /TeachSys/webTeach.do?action=showCourseScore&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/course/(\\d+)/eachStudent/?$      /TeachSys/webTeach.do?action=showEachStudentView&courseId=$1&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/eachStudent/score/?$      /TeachSys/webTeach.do?action=showEachStudentScoreView&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/feedback/(\\d+)/?$      /TeachSys/webTeach.do?action=showAFeedBackView&feedbackId=$1&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/feedback/?$      /TeachSys/webTeach.do?action=showFeedBackView&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/course/(\\d+)/group/create/?$      /TeachSys/webTeach.do?action=showCourseCreateGroupView&courseId=$1&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/course/(\\d+)/    /TeachSys/webTeach.do?action=showCourseView&courseId=$1&%\{QUERY_STRING\} [PT,L]\
+\
+RewriteRule ^/teach/admin/specialty/list/?$ /TeachSys/webAdminTeach.do?action=showAddSpecialty&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/class/list/?$ /TeachSys/webAdminTeach.do?action=showAddClass&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/course/type/list/ /TeachSys/webAdminTeach.do?action=showAddCourseType&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/teacher/list/ /TeachSys/webAdminTeach.do?action=showAddTeacher&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/student/list/ /TeachSys/webAdminTeach.do?action=showAddStudent&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/schoolInfo/list/  /TeachSys/webAdminTeach.do?action=showAddSchoolInfo&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/user/interactive/  /TeachSys/webTeach.do?action=showInteractive&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/user/profile/    /TeachSys/webTeach.do?action=showUserProfile&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/search/     /TeachSys/webTeach.do?action=showSearch&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/semester/list/ /TeachSys/webAdminTeach.do?action=showAddSemester&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/head/  /TeachSys/webAdminTeach.do?action=updateShowHeadImage&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/update/head/  /TeachSys/webAdminTeach.do?action=authUpload&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/admin/teach/list/  /TeachSys/webAdminTeach.do?action=showTeachView&%\{QUERY_STRING\} [PT,L]\
+RewriteRule ^/teach/api/login/?$   /TeachSys/apiTeachPub.do?action=doLogin&%\{QUERY_STRING\} [PT,L]\
+</IfModule>\
+</VirtualHost>\
+}
