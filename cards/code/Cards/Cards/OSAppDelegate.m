@@ -45,10 +45,6 @@
   
   OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
   _menuController.leftViewController = leftController;
-
-  NSString *path = [applicationDocumentsDirectory() stringByAppendingPathComponent:@"Exception.txt"];
-  NSLog(@"%@",path);
-  [OSUncaughtExceptionHandler setDefaultHandler];
   
   NSArray *array = [NSArray arrayWithObject:@"there is only one objective in this arary,call index one, app will crash and throw an exception!"];
   
