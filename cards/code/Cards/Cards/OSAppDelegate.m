@@ -46,9 +46,6 @@
   OSLeftViewController *leftController = [[OSLeftViewController alloc] init];
   _menuController.leftViewController = leftController;
   
-  NSArray *array = [NSArray arrayWithObject:@"there is only one objective in this arary,call index one, app will crash and throw an exception!"];
-  
-  NSLog(@"%@", [array objectAtIndex:1]);
   
   self.window.rootViewController = _menuController;
   [self.window makeKeyAndVisible];

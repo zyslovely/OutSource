@@ -78,7 +78,14 @@ body{min-width:1024px;min-height:600px}
                            <#if (courseScorePercent.teacherId == visitUserId||visitUserId==course.teacherId)&&courseScorePercent.percentType!=4&&course.status=0>
                            
                            <a class="w-btn" style="display: block; text-align: center; color: white; margin:10px auto 0; background: url('/img/courseInfo/button_bg_small.png') no-repeat scroll 0px 0px transparent; height: 45px; width: 135px; line-height: 33px; " href="/teach/score/?percentTypeId=${courseScorePercent.percentType!0}&courseId=${courseScorePercent.courseId!0}">打分</a>
-                           
+                           <#elseif level==0>
+                           <#if courseStudentScores?exists>
+                           <#list courseStudentScores as score>
+                           <#if courseScorePercent.percentType==score.percentType>
+                           <p style="color: rgb(139, 139, 139);">${score.score!0}</p>
+                           </#if>
+                           </#list>
+                           </#if>
                            </#if>
                         </th>
                      </tr>

@@ -13,6 +13,8 @@ public class SearchProfile {
 
 	private List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScoreList;
 
+	private double totalScore;
+
 	public Profile getProfile() {
 		return profile;
 	}
@@ -25,8 +27,17 @@ public class SearchProfile {
 		return courseStudentPropertySemesterScoreList;
 	}
 
-	public void setCourseStudentPropertySemesterScoreList(List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScoreList) {
+	public void setCourseStudentPropertySemesterScoreList(
+			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScoreList) {
 		this.courseStudentPropertySemesterScoreList = courseStudentPropertySemesterScoreList;
+	}
+
+	public double getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(double totalScore) {
+		this.totalScore = totalScore;
 	}
 
 }

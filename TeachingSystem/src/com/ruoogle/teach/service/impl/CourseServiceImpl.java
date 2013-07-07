@@ -562,6 +562,13 @@ public class CourseServiceImpl implements CourseService {
 		if (courseMapper.finishedCourse(courseId) > 0) {
 			courseStudentMapper.updateCourseStudentsStatus(courseId,
 					Course.FINISHED);
+			if (!ListUtils.isEmptyList(courseStudentList)) {
+				for (CourseStudent courseStudent : courseStudentList) {
+					this.getCourseStudentPropertySemesterScoresByStudentId(
+							courseStudent.getUserId(), course.getSemester());
+				}
+			}
+
 			return 1;
 		}
 		return -1;
@@ -842,14 +849,6 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseStudent> courseStudentList = courseStudentMapper
 				.getCourseListBySemesterStudentId(semesterId, studentId);
 		if (ListUtils.isEmptyList(courseStudentList)) {
-			return null;
-		}
-		List<Long> ids = new ArrayList<Long>();
-		for (CourseStudent courseStudent : courseStudentList) {
-			ids.add(courseStudent.getCourseId());
-		}
-		List<Course> courseList = courseMapper.getCourseListByIds(ids);
-		if (ListUtils.isEmptyList(courseList)) {
 			return null;
 		}
 		boolean isAllFinished = true;
@@ -1194,7 +1193,13 @@ public class CourseServiceImpl implements CourseService {
 		}
 		List<Long> courseIds = new ArrayList<Long>(courseStudents.size());
 		for (CourseStudent courseStudent : courseStudents) {
-			courseIds.add(courseStudent.getCourseId());
+			if (courseStudent.getStatus() == Course.VALID) {
+				courseIds.add(courseStudent.getCourseId());
+			}
+
+		}
+		if (ListUtils.isEmptyList(courseIds)) {
+			return null;
 		}
 		return courseMapper.getCourseListByIds(courseIds);
 	}
@@ -1233,7 +1238,7 @@ public class CourseServiceImpl implements CourseService {
 		}
 		List<SearchProfile> searchProfiles = new ArrayList<SearchProfile>();
 		for (Profile profile : profileList) {
-			
+
 			List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = courseStudentPropertySemesterScoreMapper
 					.getCourseStudentPropertySemesterScoreByStudentIdSemester(
 							semesterId, profile.getUserId());
@@ -1272,13 +1277,46 @@ public class CourseServiceImpl implements CourseService {
 			if (!succ) {
 				continue;
 			}
+			double totalScore = 0;
+			for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+				totalScore += courseStudentPropertySemesterScore.getScore();
+			}
 			SearchProfile searchProfile = new SearchProfile();
 			searchProfile.setProfile(profile);
 			searchProfile
 					.setCourseStudentPropertySemesterScoreList(courseStudentPropertySemesterScores);
+			searchProfile.setTotalScore(totalScore);
 			searchProfiles.add(searchProfile);
 		}
-		return searchProfiles;
+		
+		return this.sortSearchByTotalScore(searchProfiles);
+	}
+
+	public List<SearchProfile> sortSearchByTotalScore(
+			List<SearchProfile> searchProfiles) {
+		int size = searchProfiles.size();
+		if (size <= 1) {
+			return searchProfiles;
+		}
+		List<SearchProfile> list = new ArrayList<SearchProfile>(size);
+		while (size > 0) {
+			SearchProfile bigestProfile = null;
+			for (int i = 0; i < size; i++) {
+				SearchProfile searchProfile = searchProfiles.get(i);
+				if (bigestProfile == null) {
+					bigestProfile = searchProfile;
+					continue;
+				}
+				if (searchProfile.getTotalScore() > bigestProfile
+						.getTotalScore()) {
+					bigestProfile = searchProfile;
+				}
+			}
+			list.add(bigestProfile);
+			searchProfiles.remove(bigestProfile);
+			size--;
+		}
+		return list;
 	}
 
 	/*

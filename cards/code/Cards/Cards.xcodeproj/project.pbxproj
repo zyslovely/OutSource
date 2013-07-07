@@ -16,6 +16,7 @@
 		18AC7A761742284900EAE5FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC7A751742284900EAE5FA /* Default.png */; };
 		18AC7A781742284900EAE5FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC7A771742284900EAE5FA /* Default@2x.png */; };
 		18AC7A7A1742284900EAE5FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AC7A791742284900EAE5FA /* Default-568h@2x.png */; };
+		3811A2B6178873B0005C3EFA /* OSPinchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3811A2B5178873B0005C3EFA /* OSPinchGestureRecognizer.m */; };
 		38466C5F1778A5FB007E88DC /* OSFeedViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38466C5E1778A5FB007E88DC /* OSFeedViewCell.m */; };
 		38466C611778A612007E88DC /* OSFeedViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38466C601778A612007E88DC /* OSFeedViewCell.xib */; };
 		38466C681778A8DB007E88DC /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 38466C671778A8D0007E88DC /* Utilities.m */; };
@@ -135,6 +136,8 @@
 		18AC7A751742284900EAE5FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		18AC7A771742284900EAE5FA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		18AC7A791742284900EAE5FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3811A2B4178873B0005C3EFA /* OSPinchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSPinchGestureRecognizer.h; sourceTree = "<group>"; };
+		3811A2B5178873B0005C3EFA /* OSPinchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSPinchGestureRecognizer.m; sourceTree = "<group>"; };
 		38466C5D1778A5FB007E88DC /* OSFeedViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSFeedViewCell.h; sourceTree = "<group>"; };
 		38466C5E1778A5FB007E88DC /* OSFeedViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSFeedViewCell.m; sourceTree = "<group>"; };
 		38466C601778A612007E88DC /* OSFeedViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSFeedViewCell.xib; sourceTree = "<group>"; };
@@ -389,6 +392,8 @@
 				18AC7A6A1742284900EAE5FA /* Supporting Files */,
 				3882E642177FDD120063CD1C /* OSUncaughtExceptionHandler.h */,
 				3882E643177FDD120063CD1C /* OSUncaughtExceptionHandler.m */,
+				3811A2B4178873B0005C3EFA /* OSPinchGestureRecognizer.h */,
+				3811A2B5178873B0005C3EFA /* OSPinchGestureRecognizer.m */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -722,6 +727,7 @@
 				38466C5F1778A5FB007E88DC /* OSFeedViewCell.m in Sources */,
 				38466C681778A8DB007E88DC /* Utilities.m in Sources */,
 				3882E644177FDD120063CD1C /* OSUncaughtExceptionHandler.m in Sources */,
+				3811A2B6178873B0005C3EFA /* OSPinchGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +804,7 @@
 		18AC7A871742284900EAE5FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer: zheng yisheng (F286NP9S62)";
@@ -826,6 +833,7 @@
 		18AC7A881742284900EAE5FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer: zheng yisheng (F286NP9S62)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: zheng yisheng (F286NP9S62)";

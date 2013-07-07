@@ -11,12 +11,14 @@
 #import "OSSubImage.h"
 #import "Utilities.h"
 #import "OSSubText.h"
+#import "OSPinchGestureRecognizer.h"
 #import <QuartzCore/QuartzCore.h>
 @interface OSSingleViewController (){
   OSImage *_image;
   UIImagePickerController *_imagePicker;
   UIButton *_selectedBtn;
   UITextField *_selectedTextField;
+  CGFloat _lastScaleFactor;
 }
 @end
 
@@ -33,14 +35,23 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  _lastScaleFactor=1;
   self.view.backgroundColor=[UIColor colorWithPatternImage:UIIMAGE_FROMPNG(@"total_bg-568h@2x")];
   
   _ibImageView.frame=CGRectMake((SCREEN_WIDTH-_image.size_width)/2, (SCREEN_HEIGHT_WITHOUT_STATUS_BAR-_image.size_height)/2, _image.size_width, _image.size_height);
   _ibImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:_image.thumbnail]];
 
+  UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(viewTap:)];
+  [_ibImageView addGestureRecognizer:tapGesture];
+  [tapGesture release];
+  OSPinchGestureRecognizer *pinchGesture=[[OSPinchGestureRecognizer alloc]initWithTarget:self action:@selector(pinchGesture:)];
+  [_ibImageView addGestureRecognizer:pinchGesture];
+  [pinchGesture release];
   
   for(OSSubImage *subImage in _image.images){
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    
+    
     btn.frame=CGRectMake(_ibImageView.frame.origin.x+subImage.ori_x, _ibImageView.frame.origin.y+subImage.ori_y, subImage.ori_width, subImage.ori_height);
     btn.tag=1;
     [btn setEnabled:YES];
@@ -91,6 +102,9 @@
   [_selectedBtn release];
   [super dealloc];
 }
+
+
+
 
 - (IBAction)backBtnClick:(id)sender{
   
@@ -147,61 +161,86 @@
   }
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)pinchGesture:(OSPinchGestureRecognizer*)gesture{
   
-  UITouch *touch = [touches anyObject];
-  NSInteger numTaps=[touch tapCount];
-  if(numTaps==1){
-    
-    CGPoint previousPoint = [touch previousLocationInView:self.view];
-    NSLog(@"%f,%f",previousPoint.x,previousPoint.y);
-    NSArray *subViews=[self.view subviews];
-    BOOL foundLabel=NO;
-    BOOL foundBtn=NO;
-    for(UIView *view in subViews){
-      if([view isMemberOfClass:[UITextField class]]){
-        UITextField *textField=(UITextField*)view;
-        if(textField.tag!=2){
-          continue;
-        }
-        if((textField.frame.origin.x<previousPoint.x&&textField.frame.origin.x+textField.frame.size.width>previousPoint.x)&&(textField.frame.origin.y<previousPoint.y&&textField.frame.origin.y+textField.frame.size.height>previousPoint.y)){
-          
-          SAFECHECK_RELEASE(_selectedTextField);
-          _selectedTextField=[textField retain];
-          [self choiceLabel:_selectedTextField];
-          foundLabel=YES;
+  UITouch *touch1=[gesture oneTouchs];
+  UITouch *touch2=[gesture twoTouchs];
+  CGPoint point1=[touch1 locationInView:self.view];
+  CGPoint point2=[touch2 locationInView:self.view];
+  NSArray *subViews=[self.view subviews];
+  CGFloat factor=[gesture scale];
+  for(UIView *view in subViews){
+    if([view isMemberOfClass:[UIButton class]]){
+      UIButton *btn=(UIButton*)view;
+      if(btn.tag!=1){
+        continue;
+      }
+      
+      if([self pointInView:point1 view:btn]&&[self pointInView:point2 view:btn]){
+        if(factor>1){
+          btn.transform=CGAffineTransformMakeScale(_lastScaleFactor+(factor-1), (_lastScaleFactor+(factor-1)));
+        }else{
+          btn.transform=CGAffineTransformMakeScale(_lastScaleFactor*factor, _lastScaleFactor*factor);
         }
       }
+      
     }
-    if(foundLabel){
-      return;
-    }
-    if(_selectedTextField){
-      [_selectedTextField resignFirstResponder];
-
-    }
-    for(UIView *view in subViews){
-      if([view isMemberOfClass:[UIButton class]]){
-        UIButton *btn=(UIButton*)view;
-        if(btn.tag!=1){
-          continue;
-        }
-        
-        if((btn.frame.origin.x<previousPoint.x&&btn.frame.origin.x+btn.frame.size.width>previousPoint.x)&&(btn.frame.origin.y<previousPoint.y&&btn.frame.origin.y+btn.frame.size.height>previousPoint.y)){
-          
-          SAFECHECK_RELEASE(_selectedBtn);
-          _selectedBtn=[btn retain];
-          [self choiceImage:_selectedBtn];
-          foundBtn=YES;
-        }
-        
-      }
-    }
-
   }
   
-  
 }
+
+- (BOOL)pointInView:(CGPoint)point view:(UIView *)view{
+  return (view.frame.origin.x<point.x&&view.frame.origin.x+view.frame.size.width>point.x)&&(view.frame.origin.y<point.y&&view.frame.origin.y+view.frame.size.height>point.y);
+}
+
+- (void)viewTap:(UITapGestureRecognizer*)gesture{
+  
+  CGPoint previousPoint = [gesture locationInView:self.view];
+  NSLog(@"%f,%f",previousPoint.x,previousPoint.y);
+  NSArray *subViews=[self.view subviews];
+  BOOL foundLabel=NO;
+  BOOL foundBtn=NO;
+  for(UIView *view in subViews){
+    if([view isMemberOfClass:[UITextField class]]){
+      UITextField *textField=(UITextField*)view;
+      if(textField.tag!=2){
+        continue;
+      }
+      if([self pointInView:previousPoint view:textField]){
+        
+        SAFECHECK_RELEASE(_selectedTextField);
+        _selectedTextField=[textField retain];
+        [self choiceLabel:_selectedTextField];
+        foundLabel=YES;
+      }
+    }
+  }
+  if(foundLabel){
+    return;
+  }
+  if(_selectedTextField){
+    [_selectedTextField resignFirstResponder];
+    
+  }
+  for(UIView *view in subViews){
+    if([view isMemberOfClass:[UIButton class]]){
+      UIButton *btn=(UIButton*)view;
+      if(btn.tag!=1){
+        continue;
+      }
+      
+      if([self pointInView:previousPoint view:btn]){
+        
+        SAFECHECK_RELEASE(_selectedBtn);
+        _selectedBtn=[btn retain];
+        [self choiceImage:_selectedBtn];
+        foundBtn=YES;
+      }
+      
+    }
+  }
+}
+
 
 - (void)choiceLabel:(id)sender{
   
