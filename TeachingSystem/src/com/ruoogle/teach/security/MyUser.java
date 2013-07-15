@@ -81,7 +81,11 @@ public class MyUser {
 	 * @return
 	 */
 	public static long getMyUserFromToken(HttpServletRequest request) {
-		String token = ServletRequestUtils.getStringParameter(request, "token", null);
+		String token = ServletRequestUtils.getStringParameter(request, "token",
+				null);
+		if (token == null) {
+			return -1;
+		}
 		String[] tokens = MyUser.getTokens(token);
 		return Long.valueOf(tokens[0]);
 
@@ -89,12 +93,14 @@ public class MyUser {
 
 	/**
 	 * 生成token
+	 * 
 	 * @auther zyslovely@gmail.com
 	 * @param userId
 	 * @return
 	 */
 	public static String genToken(long userId) {
-		String encodeString = String.valueOf(userId) + CODECHAR_STRING + new Date().getTime();
+		String encodeString = String.valueOf(userId) + CODECHAR_STRING
+				+ new Date().getTime();
 		DesUtil desUtil = new DesUtil(TOKENAUTH);
 		return desUtil.getEncString(encodeString);
 	}

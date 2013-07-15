@@ -9,15 +9,20 @@ public class SchoolInfo implements Serializable {
 	private String content;
 	private long CreateTime;
 	private int type;
-	private int infoType;
-	private String imgUrl;
+	private int infoType; // 0普通，1参加
+	private String sImgUrl;
+	private String bImgUrl;
+	private int joined;// 0未参加,1参加
 
+	public static final String KSchoolInfo_id = "id";
 	public static final String KSchoolInfo_title = "title";
 	public static final String KSchoolInfo_content = "content";
 	public static final String KSchoolInfo_createTime = "createTime";
 	public static final String KSchoolInfo_type = "type";
 	public static final String KSchoolInfo_infoType = "infoType";
-	public static final String KSchoolInfo_imgUrl = "imgUrl";
+	public static final String KSchoolInfo_sImgUrl = "sImgUrl";
+	public static final String KSchoolInfo_bImgUrl = "bImgUrl";
+	public static final String KSchoolInfo_joined = "joined";
 
 	public enum SchoolInfoType {
 		/**
@@ -97,12 +102,28 @@ public class SchoolInfo implements Serializable {
 		this.infoType = infoType;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getsImgUrl() {
+		return sImgUrl;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setsImgUrl(String sImgUrl) {
+		this.sImgUrl = sImgUrl;
+	}
+
+	public String getbImgUrl() {
+		return bImgUrl;
+	}
+
+	public void setbImgUrl(String bImgUrl) {
+		this.bImgUrl = bImgUrl;
+	}
+
+	public int getJoined() {
+		return joined;
+	}
+
+	public void setJoined(int joined) {
+		this.joined = joined;
 	}
 
 }

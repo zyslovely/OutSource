@@ -23,6 +23,7 @@ import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
+import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -31,11 +32,14 @@ import com.ruoogle.teach.service.CourseService;
  */
 @Controller("apiTeachSysController")
 public class ApiTeachSysController extends AbstractBaseController {
-	private static final Logger logger = Logger.getLogger(ApiTeachSysController.class);
+	private static final Logger logger = Logger
+			.getLogger(ApiTeachSysController.class);
 	@Resource
 	private CourseService courseService;
 	@Resource
 	private ClassService classService;
+	@Resource
+	private SchoolInfoService schoolInfoService;
 
 	/**
 	 * 课程列表
@@ -45,34 +49,43 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showCourseList(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showCourseList(HttpServletRequest request,
+			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 		long userId = MyUser.getMyUserFromToken(request);
 		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
-		int semesterId = ServletRequestUtils.getIntParameter(request, "semesterId", 0);
+		int semesterId = ServletRequestUtils.getIntParameter(request,
+				"semesterId", 0);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		if (userId < 0) {
-			returnObject.put(BasicObjectConstant.kReturnObject_Code, ReturnCodeConstant.FAILED);
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
 			return modelAndView;
 		}
 		Profile profile = profileService.getProfile(userId);
-		List<CourseVO> courseList = courseService.getCourseVOListByUserId(userId, profile.getLevel(), semesterId, limit, offset);
+		List<CourseVO> courseList = courseService.getCourseVOListByUserId(
+				userId, profile.getLevel(), semesterId, limit, offset);
 		JSONObject dataObject = new JSONObject();
 		JSONArray courseArray = new JSONArray();
 		if (!ListUtils.isEmptyList(courseList)) {
 			for (CourseVO course : courseList) {
 				JSONObject courseObject = new JSONObject();
-				courseObject.put(CourseVO.KCourse_title, course.getCourse().getName());
-				courseObject.put(CourseVO.KCoursec_className, course.getClass1().getName());
-				courseObject.put(CourseVO.KCoursec_courseId, course.getCourse().getId());
+				courseObject.put(CourseVO.KCourse_title, course.getCourse()
+						.getName());
+				courseObject.put(CourseVO.KCoursec_className, course
+						.getClass1().getName());
+				courseObject.put(CourseVO.KCoursec_courseId, course.getCourse()
+						.getId());
 				courseArray.add(courseObject);
 			}
 		}
 		dataObject.put("courseList", courseArray.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, dataObject.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Code, ReturnCodeConstant.SUCCESS);
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;
@@ -86,15 +99,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showStudentList(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showStudentList(HttpServletRequest request,
+			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 
 		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
-		int classId = ServletRequestUtils.getIntParameter(request, "classId", 0);
+		int classId = ServletRequestUtils
+				.getIntParameter(request, "classId", 0);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		List<Profile> profileList = profileService.getProfileListByClassId(ProfileLevel.Student.getValue(), limit, offset, classId);
+		List<Profile> profileList = profileService.getProfileListByClassId(
+				ProfileLevel.Student.getValue(), limit, offset, classId);
 
 		JSONObject dataObject = new JSONObject();
 		JSONArray courseArray = new JSONArray();
@@ -107,8 +123,95 @@ public class ApiTeachSysController extends AbstractBaseController {
 			}
 		}
 		dataObject.put("profileList", courseArray.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, dataObject.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Code, ReturnCodeConstant.SUCCESS);
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+
+	/**
+	 * 加入校园信息活动
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView joinSchoolInfo(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		long infoId = ServletRequestUtils.getLongParameter(request, "infoId",
+				-1L);
+		long userId = MyUser.getMyUserFromToken(request);
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		if (userId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+		boolean succ = schoolInfoService.joinSchoolInfo(userId, infoId);
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+
+	/**
+	 * 显示参加活动的学生信息(老师)
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSchoolInfoUsers(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
+		long infoId = ServletRequestUtils.getLongParameter(request, "infoId",
+				-1L);
+		long userId = MyUser.getMyUserFromToken(request);
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		Profile teachProfile = profileService.getProfile(userId);
+		if (teachProfile.getLevel() == ProfileLevel.Student.getValue()) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+
+		List<Profile> profileList = schoolInfoService
+				.getJoinedSchoolInfoUserList(limit, offset, infoId);
+
+		JSONObject dataObject = new JSONObject();
+		JSONArray courseArray = new JSONArray();
+		if (!ListUtils.isEmptyList(profileList)) {
+			for (Profile profile : profileList) {
+				JSONObject courseObject = new JSONObject();
+				courseObject.put(Profile.KProfile_Name, profile.getName());
+				courseObject.put(Profile.KProfile_userId, profile.getUserId());
+				courseArray.add((Object) courseObject);
+			}
+		}
+		dataObject.put("profileList", courseArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;

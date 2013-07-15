@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoogle.teach.mapper.SchoolInfoJoinMapper">
+	<resultMap type="SchoolInfoJoin" id="schoolInfoJoinMap ">
+		<id property="id" column="id" />
+		<result property="infoId" column="infoId" />
+		<result property="userId" column="userId" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	<insert id="addSchoolInfoJoin" parameterType="SchoolInfoJoin">
+		INSERT INTO TB_School_Info_Join
+		(
+		infoId,userId,createTime
+		)VALUES(
+		#{infoId},#{userId},#{createTime}
+		)
+		<selectKey keyProperty="id" resultType="long">
+			SELECT
+			LAST_INSERT_ID() AS VALUE
+		</selectKey>
+	</insert>
+
+	<select id="getSchoolInfoJoinList" resultType="SchoolInfoJoin">
+		SELECT *
+		from
+		TB_School_Info_Join
+		WHERE infoId=#{infoId} order by id desc
+		<if test="offset >=0 ">
+			limit #{limit} offset #{offset};
+		</if>
+		;
+	</select>
+
+	<select id="getSchoolInfoJoinByUser" resultType="SchoolInfoJoin">
+		SELECT *
+		from
+		TB_School_Info_Join
+		WHERE infoId=#{infoId} and userId=#{userId}
+		;
+	</select>
+
+
+</mapper>

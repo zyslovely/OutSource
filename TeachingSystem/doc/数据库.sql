@@ -268,10 +268,19 @@ CREATE TABLE `TB_School_Info` (
   `CreateTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `type` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0校园信息,1学院信息',
   `infoType` tinyint(4) NOT NULL DEFAULT '0' COMMENT '信息类型,0常规,1可以参加的类型',
-  `imgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '图片url',
+  `bImgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '大图片url',
+  `sImgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '小图片url',
   
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息';    
+
+CREATE TABLE `TB_School_Info_Join`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `infoId` bigint(20) NOT NULL DEFAULT '0' COMMENT '校园信息id',
+  `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息参与表';    
 
 
 

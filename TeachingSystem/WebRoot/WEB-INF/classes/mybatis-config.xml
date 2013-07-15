@@ -37,6 +37,7 @@
 		<typeAlias alias="ProfileProperty" type="com.ruoogle.teach.meta.ProfileProperty" />
 		<typeAlias alias="InteractiveBack" type="com.ruoogle.teach.meta.InteractiveBack" />
 		<typeAlias alias="Teach" type="com.ruoogle.teach.meta.Teach" />
+		<typeAlias alias="SchoolInfoJoin" type="com.ruoogle.teach.meta.SchoolInfoJoin" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/ruoogle/teach/mapper/xml/ClassMapper.xml" />
@@ -74,6 +75,7 @@
 		<mapper resource="com/ruoogle/teach/mapper/xml/ProfilePropertyMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/InteractiveBackMapper.xml" />
 		<mapper resource="com/ruoogle/teach/mapper/xml/TeachMapper.xml" />
+		<mapper resource="com/ruoogle/teach/mapper/xml/SchoolInfoJoinMapper.xml" />
 
 	</mappers>
 </configuration>

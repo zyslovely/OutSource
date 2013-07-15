@@ -22,26 +22,30 @@ public class Test {
 		String metaJavaPackage = "com.ruoogle.teach.meta";
 		String mapperJavaPackage = "com.ruoogle.teach.mapper";
 
-		String functionName = "Teach";
-		String firstLowerCaseName = "teach";
-		String tableName = "TB_Teach";
+		String functionName = "SchoolInfoJoin";
+		String firstLowerCaseName = "schoolInfoJoin";
+		String tableName = "TB_School_Info_Join";
 
 		List<String> metaNameList = new ArrayList<String>();
 		metaNameList.add("id");
-		metaNameList.add("name");
-		metaNameList.add("demoId");
+		metaNameList.add("infoId");
+		metaNameList.add("userId");
+		metaNameList.add("createTime");
 
 		List<String> metaTypeList = new ArrayList<String>();
 		metaTypeList.add("long");
-		metaTypeList.add("String");
 		metaTypeList.add("long");
-		
+		metaTypeList.add("long");
+		metaTypeList.add("long");
 
-		String code = "package " + metaJavaPackage + "; import java.io.Serializable; public class " + functionName + " implements Serializable {"
+		String code = "package " + metaJavaPackage
+				+ "; import java.io.Serializable; public class " + functionName
+				+ " implements Serializable {"
 				+ " private static final long serialVersionUID = 6L;";
 		int index = 0;
 		for (String str : metaNameList) {
-			code = code + " private " + " " + metaTypeList.get(index) + " " + str + " ;";
+			code = code + " private " + " " + metaTypeList.get(index) + " "
+					+ str + " ;";
 			index++;
 		}
 		code = code + " }";
@@ -65,13 +69,14 @@ public class Test {
 				+ functionName
 				+ "Mapper\"> <resultMap type=\""
 				+ functionName
-				+ "\" id=\""
-				+ firstLowerCaseName + "Map \"> ";
+				+ "\" id=\"" + firstLowerCaseName + "Map \"> ";
 		for (String str : metaNameList) {
-			code = code + " <result property=\"" + str + "\" column=\"" + str + "\" /> ";
+			code = code + " <result property=\"" + str + "\" column=\"" + str
+					+ "\" /> ";
 		}
 		code = code + " </resultMap>";
-		code = code + " <insert id=\"add" + functionName + "\" parameterType=\"" + functionName + "\">";
+		code = code + " <insert id=\"add" + functionName
+				+ "\" parameterType=\"" + functionName + "\">";
 		code = code + " INSERT INTO " + tableName + " (";
 		index = 0;
 		for (String str : metaNameList) {
@@ -106,8 +111,10 @@ public class Test {
 			// TODO: handle exception
 		}
 
-		code = "package " + mapperJavaPackage + ";" + " import " + metaJavaPackage + "." + functionName + "; public interface " + functionName
-				+ "Mapper { " + "public int add" + functionName + "(" + functionName + " " + firstLowerCaseName + ");";
+		code = "package " + mapperJavaPackage + ";" + " import "
+				+ metaJavaPackage + "." + functionName + "; public interface "
+				+ functionName + "Mapper { " + "public int add" + functionName
+				+ "(" + functionName + " " + firstLowerCaseName + ");";
 
 		code += " }";
 

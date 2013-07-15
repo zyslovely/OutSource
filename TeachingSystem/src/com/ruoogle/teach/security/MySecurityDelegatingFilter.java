@@ -34,14 +34,18 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
 	private static final String[] noAuthURIConfig = { "/**/webTeachPub.do" };
 
-	private static final String[] noAdminURIConfig = { "/**/webTeach.do", "/**/webExcel.do", "/**/webUpload.do", "/**/webAdminTeach.do", "/**/*.dwr" };
+	private static final String[] noAdminURIConfig = { "/**/webTeach.do",
+			"/**/webExcel.do", "/**/webUpload.do", "/**/webAdminTeach.do",
+			"/**/*.dwr" };
 
-	private static final String[] noAuthApiURIConfig = { "/**/apiTeachPub.do" };
-	private static final String[] noAdminApiURIConfig = { "/**/apiTeach.do", };
+	private static final String[] noAuthApiURIConfig = { "/**/apiTeachPub.do",
+			"/**/apiTeach.do" };
+	private static final String[] noAdminApiURIConfig = {};
 
 	private static final PathMatcher urlMatcher = new AntPathMatcher();
 
-	private static final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-teachcore-dao.xml");
+	private static final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
+			"applicationContext-teachcore-dao.xml");
 
 	public static ConcurrentHashMap<Long, MyUser> userMap = new ConcurrentHashMap<Long, MyUser>();
 
@@ -52,7 +56,8 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = Logger.getLogger(MySecurityDelegatingFilter.class);
+	private static final Logger logger = Logger
+			.getLogger(MySecurityDelegatingFilter.class);
 
 	@Override
 	public void destroy() {
@@ -61,13 +66,15 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain arg2) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain arg2) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		logger.info("in MySecurityDelegatingFilter");
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String uri = httpRequest.getRequestURI();
-		if (this.noNeedAuthConfig(uri, httpRequest) && this.noNeedAdminConfig(uri, httpRequest)) {
+		if (this.noNeedAuthConfig(uri, httpRequest)
+				&& this.noNeedAdminConfig(uri, httpRequest)) {
 			throw new ServletException();
 		}
 		try {
@@ -92,16 +99,21 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 
 	}
 
-	private void dealRequestFromApi(ServletRequest request, ServletResponse response, FilterChain arg2) throws Exception {
+	private void dealRequestFromApi(ServletRequest request,
+			ServletResponse response, FilterChain arg2) throws Exception {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String uri = httpRequest.getRequestURI();
 		if (this.noNeedAuthConfig(uri, httpRequest)) {
-			String actionName = ServletRequestUtils.getStringParameter(httpRequest, "action", "null");
+			String actionName = ServletRequestUtils.getStringParameter(
+					httpRequest, "action", "null");
 			if (actionName != null && actionName.equals("doLogin")) {
-				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
-				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
-				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
+				String userName = ServletRequestUtils.getStringParameter(
+						httpRequest, "username", null);
+				String passWord = ServletRequestUtils.getStringParameter(
+						httpRequest, "password", null);
+				ProfileMapper profileMapper = (ProfileMapper) ctx
+						.getBean("profileMapper");
 				Profile profile = profileMapper.getProfileByUserName(userName);
 				if (profile != null && profile.getPassword().equals(passWord)) {
 					MyUser myUser = new MyUser();
@@ -119,9 +131,12 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 			}
 		}
 		// 如果需要认证
-		if (this.noNeedAdminConfig(uri, httpRequest) && !this.noNeedAuthConfig(uri, httpRequest)) {
-			String token = ServletRequestUtils.getStringParameter(httpRequest, "token", null);
-			Long userId = ServletRequestUtils.getLongParameter(httpRequest, "userid", -1L);
+		if (this.noNeedAdminConfig(uri, httpRequest)
+				&& !this.noNeedAuthConfig(uri, httpRequest)) {
+			String token = ServletRequestUtils.getStringParameter(httpRequest,
+					"token", null);
+			Long userId = ServletRequestUtils.getLongParameter(httpRequest,
+					"userid", -1L);
 			if (!MyUser.checkToken(token, userId)) {
 				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
 				httpResponse.sendRedirect("/");
@@ -140,33 +155,45 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 	 * @param arg2
 	 * @throws Exception
 	 */
-	private void dealRequestFromWeb(ServletRequest request, ServletResponse response, FilterChain arg2) throws Exception {
+	private void dealRequestFromWeb(ServletRequest request,
+			ServletResponse response, FilterChain arg2) throws Exception {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String uri = httpRequest.getRequestURI();
 		if (this.noNeedAuthConfig(uri, httpRequest)) {
-			String actionName = ServletRequestUtils.getStringParameter(httpRequest, "action", "null");
+			String actionName = ServletRequestUtils.getStringParameter(
+					httpRequest, "action", "null");
 			if (actionName != null && actionName.equals("doLogin")) {
-				String userName = ServletRequestUtils.getStringParameter(httpRequest, "username", null);
+				String userName = ServletRequestUtils.getStringParameter(
+						httpRequest, "username", null);
 				userName = new String(userName.getBytes("iso-8859-1"), "UTF-8");
-				String passWord = ServletRequestUtils.getStringParameter(httpRequest, "password", null);
+				String passWord = ServletRequestUtils.getStringParameter(
+						httpRequest, "password", null);
 				passWord = new String(passWord.getBytes("iso-8859-1"), "UTF-8");
-				int rememberMe = ServletRequestUtils.getIntParameter(httpRequest, "remember", 0);
-				ProfileMapper profileMapper = (ProfileMapper) ctx.getBean("profileMapper");
+				int rememberMe = ServletRequestUtils.getIntParameter(
+						httpRequest, "remember", 0);
+				ProfileMapper profileMapper = (ProfileMapper) ctx
+						.getBean("profileMapper");
 				Profile profile = profileMapper.getProfileByUserName(userName);
 				if (profile != null && profile.getPassword().equals(passWord)) {
 					MyUser myUser = new MyUser();
 					myUser.setUserId(profile.getUserId());
 					myUser.setSessionStr(httpRequest.getSession().getId());
-					httpRequest.getSession().setMaxInactiveInterval(1000 * 60 * 60 * 24);
+					httpRequest.getSession().setMaxInactiveInterval(
+							1000 * 60 * 60 * 24);
 					myUser.setLevel(profile.getLevel());
 					userMap.put(myUser.getUserId(), myUser);
-					logger.info("try to login session=" + httpRequest.getSession().getId());
+					logger.info("try to login session="
+							+ httpRequest.getSession().getId());
 					if (rememberMe == 1) {
-						CookieUtil.setCookie(httpResponse, CookieUtil.PARA_LOGIN_COOKIE, httpRequest.getSession().getId(), 1000 * 60 * 60 * 24);
+						CookieUtil.setCookie(httpResponse,
+								CookieUtil.PARA_LOGIN_COOKIE, httpRequest
+										.getSession().getId(),
+								1000 * 60 * 60 * 24);
 					}
 					httpRequest.getSession().setAttribute("login", true);
-					httpRequest.getSession().setAttribute("userId", myUser.getUserId());
+					httpRequest.getSession().setAttribute("userId",
+							myUser.getUserId());
 					arg2.doFilter(request, response);
 					return;
 				} else {
@@ -178,12 +205,14 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		}
 
 		// 如果需要认证
-		if (this.noNeedAdminConfig(uri, httpRequest) && !this.noNeedAuthConfig(uri, httpRequest)) {
+		if (this.noNeedAdminConfig(uri, httpRequest)
+				&& !this.noNeedAuthConfig(uri, httpRequest)) {
 			Long userId = MyUser.getMyUser(httpRequest);
 			logger.info("logined session=" + httpRequest.getSession().getId());
 			logger.info("logined userId=" + userId);
 			MyUser myUser = userMap.get(userId);
-			Cookie cookie = CookieUtil.getCookie(httpRequest, CookieUtil.PARA_LOGIN_COOKIE);
+			Cookie cookie = CookieUtil.getCookie(httpRequest,
+					CookieUtil.PARA_LOGIN_COOKIE);
 			if (myUser == null) {
 				logger.error("找不到用户，说明用户不没登陆，返回到最初页面");
 				httpResponse.sendRedirect("/");

@@ -238,7 +238,7 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 
 		}
 		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(0,
-				-1, SchoolInfoType.school.getValue());
+				-1, SchoolInfoType.school.getValue(), -1);
 		mv.addObject("schoolInfos", schoolInfos);
 		this.setUD(mv, request);
 		return mv;

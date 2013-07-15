@@ -16,6 +16,15 @@ public interface SchoolInfoMapper {
 	 * @param offset
 	 * @return
 	 */
-	public List<SchoolInfo> getSchoolInfoList(@Param(value = "limit") int limit, @Param(value = "offset") int offset, @Param("type") int type);
+	public List<SchoolInfo> getSchoolInfoList(
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset, @Param("type") int type);
 
+	/**
+	 * 获取单个
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public SchoolInfo getSchoolInfoById(@Param(value = "id") long id);
 }

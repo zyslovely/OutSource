@@ -2,6 +2,7 @@ package com.ruoogle.teach.service;
 
 import java.util.List;
 
+import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
 
 /**
@@ -17,7 +18,16 @@ public interface SchoolInfoService {
 	 * @param schoolInfo
 	 * @return
 	 */
-	public boolean addSchoolInfo(String title, String content, int type, int infoType);
+	public boolean addSchoolInfo(String title, String content, int type,
+			int infoType);
 
-	public List<SchoolInfo> getSchoolInfoList(int limit, int offset,int type);
+	public List<SchoolInfo> getSchoolInfoList(int limit, int offset, int type,
+			long userId);
+
+	public boolean joinSchoolInfo(long userId, long infoId);
+
+	public List<Profile> getJoinedSchoolInfoUserList(int limit, int offset,
+			long infoId);
+
+	public SchoolInfo getSchoolInfo(long id, long userId);
 }

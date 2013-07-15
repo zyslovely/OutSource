@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoogle.teach.mapper.SchoolInfoMapper">
 	<resultMap type="SchoolInfo" id="schoolInfoMap ">
-		<result property="id" column="id" />
+		<id property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
 		<result property="CreateTime" column="CreateTime" />
 		<result property="type" column="type" />
 		<result property="infoType" column="infoType" />
-		<result property="imgUrl" column="imgUrl" />
+		<result property="sImgUrl" column="sImgUrl" />
+		<result property="bImgUrl" column="bImgUrl" />
 
 	</resultMap>
 
 	<insert id="addSchoolInfo" parameterType="SchoolInfo">
 		INSERT INTO TB_School_Info
 		(
-		title,content,CreateTime,type,infoType,imgUrl
+		title,content,CreateTime,type,infoType,sImgUrl,bImgUrl
 		)VALUES(
-		#{title},#{content},#{CreateTime},#{type},#{infoType},#{imgUrl}
+		#{title},#{content},#{CreateTime},#{type},#{infoType},#{sImgUrl},#{bImgUrl}
 		)
-		<selectKey keyProperty="userId" resultType="long">
+		<selectKey keyProperty="id" resultType="long">
 			SELECT
 			LAST_INSERT_ID() AS VALUE
 		</selectKey>
@@ -28,9 +29,18 @@
 		SELECT *
 		from
 		TB_School_Info
-		WHERE type=#{type}
+		WHERE type=#{type} order by id desc
 		<if test="offset >=0 ">
 			limit #{limit} offset #{offset};
-		</if> ;
+		</if>
+		;
+	</select>
+
+	<select id="getSchoolInfoById" resultType="SchoolInfo">
+		SELECT *
+		from
+		TB_School_Info
+		WHERE id=#{id}
+		;
 	</select>
 </mapper>

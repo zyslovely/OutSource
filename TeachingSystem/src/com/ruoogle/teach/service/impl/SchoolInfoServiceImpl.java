@@ -1,13 +1,20 @@
 package com.ruoogle.teach.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.ProfileMapper;
+import com.ruoogle.teach.mapper.SchoolInfoJoinMapper;
 import com.ruoogle.teach.mapper.SchoolInfoMapper;
+import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.SchoolInfoJoin;
 import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
@@ -20,6 +27,12 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	@Resource
 	private SchoolInfoMapper schoolInfoMapper;
 
+	@Resource
+	private SchoolInfoJoinMapper schoolInfoJoinMapper;
+
+	@Resource
+	private ProfileMapper profileMapper;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -27,8 +40,47 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	 * int)
 	 */
 	@Override
-	public List<SchoolInfo> getSchoolInfoList(int limit, int offset, int type) {
-		return schoolInfoMapper.getSchoolInfoList(limit, offset, type);
+	public List<SchoolInfo> getSchoolInfoList(int limit, int offset, int type,
+			long userId) {
+		List<SchoolInfo> schoolInfos = schoolInfoMapper.getSchoolInfoList(
+				limit, offset, type);
+		if (ListUtils.isEmptyList(schoolInfos)) {
+			return null;
+		}
+		if (userId < 0) {
+			return schoolInfos;
+		}
+		for (SchoolInfo schoolInfo : schoolInfos) {
+			SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+					.getSchoolInfoJoinByUser(schoolInfo.getId(), userId);
+			if (schoolInfoJoin != null) {
+				schoolInfo.setJoined(1);
+			}
+		}
+		return schoolInfos;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.SchoolInfoService#getSchoolInfo(long,
+	 * long)
+	 */
+	public SchoolInfo getSchoolInfo(long id, long userId) {
+
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(id);
+		if (schoolInfo == null) {
+			return null;
+		}
+		if (userId < 0) {
+			return schoolInfo;
+		}
+		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+				.getSchoolInfoJoinByUser(id, userId);
+		if (schoolInfoJoin != null) {
+			schoolInfo.setJoined(1);
+		}
+		return schoolInfo;
 	}
 
 	/*
@@ -39,13 +91,63 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	 * , java.lang.String, int, int)
 	 */
 	@Override
-	public boolean addSchoolInfo(String title, String content, int type, int infoType) {
+	public boolean addSchoolInfo(String title, String content, int type,
+			int infoType) {
 		SchoolInfo schoolInfo = new SchoolInfo();
 		schoolInfo.setContent(content);
 		schoolInfo.setTitle(title);
 		schoolInfo.setType(type);
 		schoolInfo.setInfoType(infoType);
 		return schoolInfoMapper.addSchoolInfo(schoolInfo) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.SchoolInfoService#joinSchoolInfo(long,
+	 * long)
+	 */
+	@Override
+	public boolean joinSchoolInfo(long userId, long infoId) {
+
+		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+				.getSchoolInfoJoinByUser(infoId, userId);
+		if (schoolInfoJoin != null) {
+			return true;
+		}
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		// 判断是否可以加入
+		if (schoolInfo.getInfoType() == 0) {
+			return false;
+		}
+		schoolInfoJoin = new SchoolInfoJoin();
+		schoolInfoJoin.setCreateTime(new Date().getTime());
+		schoolInfoJoin.setUserId(userId);
+		schoolInfoJoin.setInfoId(infoId);
+		return schoolInfoJoinMapper.addSchoolInfoJoin(schoolInfoJoin) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.SchoolInfoService#getJoinedSchoolInfoUserList
+	 * (int, int, int)
+	 */
+	@Override
+	public List<Profile> getJoinedSchoolInfoUserList(int limit, int offset,
+			long infoId) {
+
+		List<SchoolInfoJoin> schoolInfoJoins = schoolInfoJoinMapper
+				.getSchoolInfoJoinList(infoId, limit, offset);
+		if (ListUtils.isEmptyList(schoolInfoJoins)) {
+			return null;
+		}
+		List<Long> userIds = new ArrayList<Long>();
+		for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+			userIds.add(schoolInfoJoin.getUserId());
+		}
+		return profileMapper.getProfileListByIds(userIds);
 	}
 
 }
