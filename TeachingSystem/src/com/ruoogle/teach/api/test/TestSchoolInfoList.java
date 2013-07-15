@@ -9,7 +9,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
  */
 public class TestSchoolInfoList {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/list/?type=0&limit=10&offset=0&token=XPZnlwnzVXzyDXBb3%2BTTogIW3iJTiZWd";
+		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/list/?type=0&limit=10&offset=0&token=XPZnlwnzVXxUufgEpTBj7EOrUoU96ZQX";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

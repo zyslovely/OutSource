@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 
@@ -87,6 +88,9 @@ public class MyUser {
 			return -1;
 		}
 		String[] tokens = MyUser.getTokens(token);
+		if(ArrayUtils.isEmpty(tokens)){
+			return -1;
+		}
 		return Long.valueOf(tokens[0]);
 
 	}

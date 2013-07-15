@@ -187,12 +187,12 @@ public class ApiTeachSysController extends AbstractBaseController {
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		Profile teachProfile = profileService.getProfile(userId);
-		if (teachProfile.getLevel() == ProfileLevel.Student.getValue()) {
-			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-					ReturnCodeConstant.FAILED);
-			modelAndView.addObject("returnObject", returnObject.toString());
-			return modelAndView;
-		}
+//		if (teachProfile.getLevel() == ProfileLevel.Student.getValue()) {
+//			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+//					ReturnCodeConstant.FAILED);
+//			modelAndView.addObject("returnObject", returnObject.toString());
+//			return modelAndView;
+//		}
 
 		List<Profile> profileList = schoolInfoService
 				.getJoinedSchoolInfoUserList(limit, offset, infoId);
