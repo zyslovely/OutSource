@@ -2,7 +2,11 @@ package com.ruoogle.teach.api.test;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
-
+/**
+ * 单个校园信息
+ * @author zhengeason
+ *
+ */
 public class TestSchoolInfo {
 	public static void main(String[] args) {
 		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/get/?infoId=2&token=XPZnlwnzVXzyDXBb3%2BTTogIW3iJTiZWd";

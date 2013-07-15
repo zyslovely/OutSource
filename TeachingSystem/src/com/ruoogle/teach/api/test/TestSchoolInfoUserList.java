@@ -3,6 +3,12 @@ package com.ruoogle.teach.api.test;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
+/**
+ * 校园信息活动参加用户列表
+ * 
+ * @author zhengeason
+ * 
+ */
 public class TestSchoolInfoUserList {
 	public static void main(String[] args) {
 		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/userlist/?infoId=2&limit=10&offset=0&token=XPZnlwnzVXzXQMIuVza%2B5DHZZ7C7N6FQ";
