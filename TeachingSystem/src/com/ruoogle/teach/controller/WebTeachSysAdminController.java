@@ -362,9 +362,9 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 						String oriPath = request.getSession()
 								.getServletContext().getRealPath("/");
 						if (type == 1) {
-							path = oriPath + "img/webIndex/pic1.png";
+							path = oriPath + "img/webIndex/pic1.jpg";
 						} else if (type == 2) {
-							path = oriPath + "img/webIndex/pic2.png";
+							path = oriPath + "img/webIndex/pic2.jpg";
 						} else {
 							break;
 						}

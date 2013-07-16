@@ -24,10 +24,10 @@ if(${error!0}==1){
           <div style="float:left;width: 615px; height: 398px; background: url('/img/webIndex/pic_bg.png') no-repeat scroll center top transparent; ">
               <ul style="height: 387px; width: 605px; margin-left: 5px; margin-top: 5px;">
                  <li id="img_1" style="position: absolute;"> 
-                    <img src="/img/webIndex/pic1.png" style=""/>
+                    <img src="/img/webIndex/pic1.jpg" style=""/>
                  </li>
                  <li id="img_2" style="position: absolute;display:none;">
-                    <img src="/img/webIndex/pic2.png" style=""/>
+                    <img src="/img/webIndex/pic2.jpg" style=""/>
                  </li>
               </ul>
               <div style="margin-left: 5px; background: url('/img/webIndex/pic_mask.png') no-repeat scroll center top transparent; width: 605px; height: 52px; position: relative; top: -52px; border-radius: 5px 5px 5px 5px;">
