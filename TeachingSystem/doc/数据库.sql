@@ -295,3 +295,4 @@ insert into TB_Course_Property (name) values ('团队协作');
 insert into TB_Course_Property (name) values ('理解能力');
 
 
+

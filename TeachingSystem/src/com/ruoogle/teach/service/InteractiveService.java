@@ -20,9 +20,11 @@ public interface InteractiveService {
 	 * @param photoUrl
 	 * @return
 	 */
-	public boolean addInteractive(long userId, String content, long courseId, int status, String photoUrl, long forwardId);
+	public boolean addInteractive(long userId, String content, long courseId,
+			int status, String photoUrl, long forwardId);
 
-	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset);
+	public List<Interactive> getInteractiveByUserId(long userId, int limit,
+			int offset);
 
 	public int getInteractiveCountByUserId(long userId);
 
@@ -34,5 +36,6 @@ public interface InteractiveService {
 
 	public boolean deleteInteractiveBack(long id);
 
-	
+	public List<Interactive> getInteractiveByCourseId(long courseId, long userId);
+
 }

@@ -154,6 +154,16 @@
    	       <script type="text/javascript" src="/js/courseSearch.js" charset="utf-8"></script>
    	       
     	<#break>
+    	<#case "newSchoolInfo">
+    	   <script type="text/javascript">
+			 $('#schoolInfo_type_select').jgdDropdown({selected: '${type!-1}',callback: function(obj, val) { schoolInfoTypeChange(obj,val) }});
+			 $('#newschoolInfo_type_select').jgdDropdown({callback: function(obj, val) { newschoolInfoTypeChange(obj,val) }});
+			 $('#newschoolInfo_infoType_select').jgdDropdown({callback: function(obj, val) { newschoolInfoInfoTypeChange(obj,val) }});
+			
+           </script>
+   	       <script type="text/javascript" src="/js/admin_newSchoolInfo.js" charset="utf-8"></script>
+   	       
+    	<#break>
     	
     </#switch>
 </#if>

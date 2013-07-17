@@ -56,39 +56,50 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * java.lang.String, long, int, java.lang.String, long)
 	 */
 	@Override
-	public boolean addInteractive(long userId, String content, long courseId, int status, String photoUrl, long forwardId) {
+	public boolean addInteractive(long userId, String content, long courseId,
+			int status, String photoUrl, long forwardId) {
 		Profile profile = profileMapper.getProfile(userId);
 		if (profile == null) {
 			return false;
 		}
-		long oriid = this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, userId, 0);
+		long oriid = this.addOneInteractive(content, courseId, status,
+				photoUrl, forwardId, userId, userId, 0);
 		// 管理员收到所有内容
-		List<Profile> adminProfileList = profileMapper.getProfileListByLevel(ProfileLevel.Admin.getValue(), 0, -1);
+		List<Profile> adminProfileList = profileMapper.getProfileListByLevel(
+				ProfileLevel.Admin.getValue(), 0, -1);
 		if (!ListUtils.isEmptyList(adminProfileList)) {
 			for (Profile adminProfile : adminProfileList) {
-				this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, adminProfile.getUserId(), oriid);
+				this.addOneInteractive(content, courseId, status, photoUrl,
+						forwardId, userId, adminProfile.getUserId(), oriid);
 			}
 		}
 		// 如果是保密的
 		if (status == 1) {
 			return true;
 		}
-		if (profile.getLevel() == ProfileLevel.Teacher.getValue() || profile.getLevel() == ProfileLevel.CompanyLeader.getValue()) {
+		if (profile.getLevel() == ProfileLevel.Teacher.getValue()
+				|| profile.getLevel() == ProfileLevel.CompanyLeader.getValue()) {
 			if (courseId > 0) {
-				List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+				List<CourseStudent> courseStudents = courseStudentMapper
+						.getCourseStudentsByCourseId(courseId);
 				if (!ListUtils.isEmptyList(courseStudents)) {
 					for (CourseStudent courseStudent : courseStudents) {
 						if (courseStudent.getUserId() != userId) {
-							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+							this.addOneInteractive(content, courseId, status,
+									photoUrl, forwardId, userId,
+									courseStudent.getUserId(), oriid);
 						}
 
 					}
 				}
-				List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+				List<CourseStudent> courseTeachers = courseStudentMapper
+						.getCourseTeacherByCourseId(courseId);
 				if (!ListUtils.isEmptyList(courseTeachers)) {
 					for (CourseStudent courseStudent : courseTeachers) {
 						if (courseStudent.getUserId() != userId) {
-							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+							this.addOneInteractive(content, courseId, status,
+									photoUrl, forwardId, userId,
+									courseStudent.getUserId(), oriid);
 						}
 					}
 				}
@@ -96,27 +107,37 @@ public class InteractiveServiceImpl implements InteractiveService {
 		} else if (profile.getLevel() == ProfileLevel.Student.getValue()) {
 			Course course = courseMapper.getCourseById(courseId);
 			if (course != null) {
-				List<CourseStudent> courseStudents = courseStudentMapper.getCourseStudentsByCourseId(courseId);
+				List<CourseStudent> courseStudents = courseStudentMapper
+						.getCourseStudentsByCourseId(courseId);
 				for (CourseStudent courseStudent : courseStudents) {
 					if (courseStudent.getUserId() != userId) {
-						this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+						this.addOneInteractive(content, courseId, status,
+								photoUrl, forwardId, userId,
+								courseStudent.getUserId(), oriid);
 					}
 
 				}
-				List<CourseStudent> courseTeachers = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+				List<CourseStudent> courseTeachers = courseStudentMapper
+						.getCourseTeacherByCourseId(courseId);
 				if (!ListUtils.isEmptyList(courseTeachers)) {
 					for (CourseStudent courseStudent : courseTeachers) {
 						if (courseStudent.getUserId() != userId) {
-							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, courseStudent.getUserId(), oriid);
+							this.addOneInteractive(content, courseId, status,
+									photoUrl, forwardId, userId,
+									courseStudent.getUserId(), oriid);
 						}
 					}
 				}
 			} else {
-				List<Profile> profileList = profileMapper.getProfileByClassId(profile.getClassId(), ProfileLevel.Student.getValue(), 0, -1);
+				List<Profile> profileList = profileMapper.getProfileByClassId(
+						profile.getClassId(), ProfileLevel.Student.getValue(),
+						0, -1);
 				if (!ListUtils.isEmptyList(profileList)) {
 					for (Profile profile2 : profileList) {
 						if (profile2.getUserId() != userId) {
-							this.addOneInteractive(content, courseId, status, photoUrl, forwardId, userId, profile2.getUserId(), oriid);
+							this.addOneInteractive(content, courseId, status,
+									photoUrl, forwardId, userId,
+									profile2.getUserId(), oriid);
 						}
 					}
 				}
@@ -138,7 +159,8 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * @param showUserId
 	 * @return
 	 */
-	private long addOneInteractive(String content, long courseId, int status, String photoUrl, long forwardId, long userId, long showUserId,
+	private long addOneInteractive(String content, long courseId, int status,
+			String photoUrl, long forwardId, long userId, long showUserId,
 			long oriid) {
 		Interactive interactive = new Interactive();
 		interactive.setUserId(userId);
@@ -172,9 +194,11 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * @return
 	 */
 	@Override
-	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset) {
+	public List<Interactive> getInteractiveByUserId(long userId, int limit,
+			int offset) {
 
-		List<Interactive> interactives = interactiveMapper.getInteractiveListByShowUserId(userId, limit, offset);
+		List<Interactive> interactives = interactiveMapper
+				.getInteractiveListByShowUserId(userId, limit, offset);
 		if (ListUtils.isEmptyList(interactives)) {
 			return null;
 		}
@@ -185,9 +209,11 @@ public class InteractiveServiceImpl implements InteractiveService {
 			courseIds.add(interactive.getCourseId());
 		}
 		List<Profile> profiles = profileMapper.getProfileListByIds(ids);
-		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profiles, "getUserId", Profile.class);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profiles,
+				"getUserId", Profile.class);
 		List<Course> courseList = courseMapper.getCourseListByIds(courseIds);
-		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList, "getId", Course.class);
+		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList,
+				"getId", Course.class);
 		for (Interactive interactive : interactives) {
 			Profile profile = profileMap.get(interactive.getUserId());
 			if (profile != null) {
@@ -200,9 +226,11 @@ public class InteractiveServiceImpl implements InteractiveService {
 				}
 			}
 			if (interactive.getForwardId() > 0) {
-				Interactive interactive2 = interactiveMapper.getInteractive(interactive.getForwardId());
+				Interactive interactive2 = interactiveMapper
+						.getInteractive(interactive.getForwardId());
 				if (interactive2 != null) {
-					Profile profile2 = profileMapper.getProfile(interactive2.getUserId());
+					Profile profile2 = profileMapper.getProfile(interactive2
+							.getUserId());
 					interactive.setForwardFromStr("转发自:" + profile2.getName());
 				}
 			}
@@ -212,7 +240,8 @@ public class InteractiveServiceImpl implements InteractiveService {
 			} else {
 				backId = interactive.getOriid();
 			}
-			List<InteractiveBack> interactiveBackList = interactiveBackMapper.getInteractiveBack(backId);
+			List<InteractiveBack> interactiveBackList = interactiveBackMapper
+					.getInteractiveBack(backId);
 			if (!ListUtils.isEmptyList(interactiveBackList)) {
 				interactive.setSubInteractiveBackList(interactiveBackList);
 			}
@@ -244,7 +273,8 @@ public class InteractiveServiceImpl implements InteractiveService {
 		if (interactive == null) {
 			return false;
 		}
-		return this.addInteractive(userId, content, interactive.getCourseId(), 0, "", id);
+		return this.addInteractive(userId, content, interactive.getCourseId(),
+				0, "", id);
 	}
 
 	/*
@@ -286,7 +316,8 @@ public class InteractiveServiceImpl implements InteractiveService {
 		}
 		if (interactiveMapper.deleteInteractive(id) > 0) {
 			if (interactive.getOriid() != 0) {
-				interactiveMapper.deleteInteractiveByOriId(interactive.getOriid());
+				interactiveMapper.deleteInteractiveByOriId(interactive
+						.getOriid());
 				interactiveMapper.deleteInteractive(interactive.getOriid());
 			} else {
 				interactiveMapper.deleteInteractiveByOriId(id);
@@ -306,5 +337,18 @@ public class InteractiveServiceImpl implements InteractiveService {
 	@Override
 	public boolean deleteInteractiveBack(long id) {
 		return interactiveBackMapper.deleteInteractiveBack(id) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.InteractiveService#getInteractiveByCourseId
+	 * (long, long)
+	 */
+	@Override
+	public List<Interactive> getInteractiveByCourseId(long courseId, long userId) {
+		return interactiveMapper.getInteractiveByCourseIdUserId(courseId,
+				userId);
 	}
 }

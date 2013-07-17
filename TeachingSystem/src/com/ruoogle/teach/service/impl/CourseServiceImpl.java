@@ -1291,7 +1291,7 @@ public class CourseServiceImpl implements CourseService {
 			searchProfile.setTotalScore(totalScore);
 			searchProfiles.add(searchProfile);
 		}
-		
+
 		return this.sortSearchByTotalScore(searchProfiles);
 	}
 
@@ -1405,5 +1405,16 @@ public class CourseServiceImpl implements CourseService {
 			long courseId, long userId) {
 		return coursePercentTypeStageMapper
 				.getCoursePercentTypeStageListByStudentId(courseId, userId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.CourseService#getCourseStudentByCourseId(long)
+	 */
+	@Override
+	public List<CourseStudent> getCourseStudentByCourseId(long courseId) {
+		return courseStudentMapper.getCourseStudentsByCourseId(courseId);
 	}
 }

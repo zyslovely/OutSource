@@ -1,13 +1,17 @@
 var _isEdit=false;
-var objs=new Array();
-$("#newCourseType_newPercent").click(function(){
+var _type=0;
+var _infoType=0;
+function schoolInfoTypeChange(obj,val){
 	
+	location.href="/teach/admin/schoolInfo/list/?type="+val;
 	
-});
+};
 
-$("#newCourseType_Create").click(function(){
+
+$("#newSchoolInfo_Create").click(function(){
 	
 	if(_isEdit){
+	
 		_isEdit=false;
 		_name=$("#newCourseType_name").val();
 		_percentOpt=$(".newCourseType_scoreType_percent");
@@ -38,44 +42,26 @@ $("#newCourseType_Create").click(function(){
 			}
 			
 		});
-	}else{
 		
-		$("#create_newCourseType").css("display","block");
-		$("#create_newCourseType_list").css("display","none");
-		_isEdit=true;
-		$("#newCourseType_Create").text("保存");
+	}else{
+		$("#create_newCourseType_list").hide();
+		$("#newSchoolInfo_select").hide();
+		$("#create_newSchoolInfo").show();
+		$("#newSchoolInfo_Create").text("保存");
 	}
-	
 });
 
-function deleteCourseType(_id){
-	jConfirm('确定要删除么','删除操作',function(_flag){
-	  if(_flag){
-		  dwr.engine._execute(_cfg_host+"/dwr", 'TeachSysAdminBean', 'deleteCourseType',_id,function(flag){
-				if(flag){
-					location.href=location.href;
-				}
-			});
-	  }
-	});
+function newschoolInfoTypeChange(obj,val){
+	
+
+	_type=val;
 };
 
-function scoreType_select(obj,val){
-	_in=0;
-	for(var i=0;i<objs.length;i++){
-		if(objs[i].obj==obj){
-			objs[i].val=val;
-			_in=1;
-			break;
-		}
-	}
-	if(_in==0){
-	  objs.push({
-		"obj":obj,
-		"val":val
-	  });
-	}
 
+function newschoolInfoInfoTypeChange(obj,val){
+	
+	
+	_infoType=val;
 };
 
 

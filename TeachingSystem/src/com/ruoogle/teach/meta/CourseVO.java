@@ -20,7 +20,8 @@ public class CourseVO {
 	public static final String KCourse_title = "title";
 	public static final String KCoursec_className = "className";
 	public static final String KCoursec_courseId = "courseId";
-
+	public static final String KCoursec_score = "score";
+	
 	public Course getCourse() {
 		return course;
 	}

@@ -24,12 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.eason.web.util.ExcelTemplate;
 import com.eason.web.util.ListUtils;
+import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseScorePercent;
+import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentScoreVO;
 import com.ruoogle.teach.meta.CourseStudentVO;
+import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -37,6 +40,7 @@ import com.ruoogle.teach.security.MySecurityDelegatingFilter;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
+import com.ruoogle.teach.service.InteractiveService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -45,13 +49,17 @@ import com.ruoogle.teach.service.CourseService;
  */
 @Controller("webExcelController")
 public class WebExcelController extends AbstractBaseController {
-	private static final Logger logger = Logger.getLogger(WebExcelController.class);
+	private static final Logger logger = Logger
+			.getLogger(WebExcelController.class);
 	@Resource
 	private ClassService classService;
 	@Resource
 	private ProfileMapper profileMapper;
 	@Resource
 	private CourseService courseService;
+
+	@Resource
+	private InteractiveService interactiveService;
 
 	/**
 	 * 下载添加分数excel表格
@@ -61,10 +69,13 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView downLoadAddScoreExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downLoadAddScoreExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
-		long percentType = ServletRequestUtils.getLongParameter(request, "percentTypeId", -1L);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		long percentType = ServletRequestUtils.getLongParameter(request,
+				"percentTypeId", -1L);
 
 		if (courseId < 0 || percentType < 0) {
 			return null;
@@ -73,9 +84,11 @@ public class WebExcelController extends AbstractBaseController {
 		if (course == null) {
 			return null;
 		}
-		List<CourseStudentVO> courseStudentVOs = courseService.getCourseStudentVOsByCourseId(courseId, percentType);
+		List<CourseStudentVO> courseStudentVOs = courseService
+				.getCourseStudentVOsByCourseId(courseId, percentType);
 
-		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
 		template.createRow(0);
 
 		template.createCell("课程名称");
@@ -90,7 +103,8 @@ public class WebExcelController extends AbstractBaseController {
 			template.createRow(index);
 			// 创建列
 			template.createCell(course.getName());
-			template.createCell(CoursePercentType.genCoursePercentType(percentType).getName());
+			template.createCell(CoursePercentType.genCoursePercentType(
+					percentType).getName());
 			template.createCell(String.valueOf(courseStudentVO.getUserId()));
 			template.createCell(courseStudentVO.getName());
 			template.createCell(String.valueOf(courseStudentVO.getScore()));
@@ -98,7 +112,8 @@ public class WebExcelController extends AbstractBaseController {
 		}
 		response.reset();
 		response.setContentType("application/x-download;charset=GBK");
-		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");
+		response.setHeader("Content-Disposition", "attachment;filename=Book_"
+				+ System.currentTimeMillis() + ".xls");
 		try {
 			template.getWorkbook().write(response.getOutputStream());
 		} catch (IOException e) {
@@ -115,9 +130,12 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView readScoreFromExcel(HttpServletRequest request, HttpServletResponse response) {
-		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
-		long percentType = ServletRequestUtils.getLongParameter(request, "percentTypeId", -1L);
+	public ModelAndView readScoreFromExcel(HttpServletRequest request,
+			HttpServletResponse response) {
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		long percentType = ServletRequestUtils.getLongParameter(request,
+				"percentTypeId", -1L);
 		int stage = ServletRequestUtils.getIntParameter(request, "stage", -1);
 		if (courseId < 0 || percentType < 0) {
 			return null;
@@ -149,14 +167,20 @@ public class WebExcelController extends AbstractBaseController {
 						if (cell4 != null) {
 							cell4.setCellType(Cell.CELL_TYPE_STRING);
 						}
-						if (cell2 == null || StringUtils.isEmpty(cell2.getRichStringCellValue().getString())) {
+						if (cell2 == null
+								|| StringUtils.isEmpty(cell2
+										.getRichStringCellValue().getString())) {
 							continue;
 						}
-						if (cell4 == null || StringUtils.isEmpty(cell4.getRichStringCellValue().getString())) {
+						if (cell4 == null
+								|| StringUtils.isEmpty(cell4
+										.getRichStringCellValue().getString())) {
 							continue;
 						}
-						long userId = Long.valueOf(cell2.getRichStringCellValue().getString());
-						double score = Double.valueOf(cell4.getRichStringCellValue().getString());
+						long userId = Long.valueOf(cell2
+								.getRichStringCellValue().getString());
+						double score = Double.valueOf(cell4
+								.getRichStringCellValue().getString());
 						if (score < 0) {
 							continue;
 						}
@@ -165,9 +189,11 @@ public class WebExcelController extends AbstractBaseController {
 								logger.error("分期给分的stage为空");
 								break;
 							}
-							courseService.insertCourseStageScore(courseId, stage, score, userId, teacher);
+							courseService.insertCourseStageScore(courseId,
+									stage, score, userId, teacher);
 						} else {
-							courseService.insertCourseScore(courseId, userId, percentType, score, teacher);
+							courseService.insertCourseScore(courseId, userId,
+									percentType, score, teacher);
 						}
 					}
 				}
@@ -194,20 +220,24 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView downLoadStudentProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downLoadStudentProfileExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
+		long classId = ServletRequestUtils.getLongParameter(request, "classId",
+				-1L);
 		if (classId < 0) {
 			logger.error("没有班级id");
 			return null;
 		}
-		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
 		template.createRow(0);
 
 		template.createCell("姓名");
 		template.createCell("用户名");
 		template.createCell("密码");
-		List<Profile> profileList = classService.getProfilesByClassId(classId, ProfileLevel.Student.getValue());
+		List<Profile> profileList = classService.getProfilesByClassId(classId,
+				ProfileLevel.Student.getValue());
 		if (!ListUtils.isEmptyList(profileList)) {
 			for (int i = 0; i < profileList.size(); i++) {
 				template.createRow(i + 1);
@@ -221,7 +251,8 @@ public class WebExcelController extends AbstractBaseController {
 
 		response.reset();
 		response.setContentType("application/x-download;charset=GBK");
-		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");
+		response.setHeader("Content-Disposition", "attachment;filename=Book_"
+				+ System.currentTimeMillis() + ".xls");
 		try {
 			template.getWorkbook().write(response.getOutputStream());
 		} catch (IOException e) {
@@ -238,13 +269,16 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView upLoadStudentProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView upLoadStudentProfileExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		long classId = ServletRequestUtils.getLongParameter(request, "classId", -1L);
+		long classId = ServletRequestUtils.getLongParameter(request, "classId",
+				-1L);
 		if (classId < 0) {
 			return null;
 		}
-		com.ruoogle.teach.meta.Class class1 = classService.getClassById(classId);
+		com.ruoogle.teach.meta.Class class1 = classService
+				.getClassById(classId);
 		if (class1 == null) {
 			return null;
 		}
@@ -259,7 +293,8 @@ public class WebExcelController extends AbstractBaseController {
 					HSSFSheet sheet = workbook.getSheetAt(0);
 					int totalRow = sheet.getLastRowNum();
 
-					Profile maxProfile = profileMapper.getMaxProfileByNumber(classId);
+					Profile maxProfile = profileMapper
+							.getMaxProfileByNumber(classId);
 					long maxNumber = 0;
 					if (maxProfile != null) {
 						maxNumber = maxProfile.getNumber() + 1;
@@ -279,18 +314,26 @@ public class WebExcelController extends AbstractBaseController {
 							cell3.setCellType(Cell.CELL_TYPE_STRING);
 						}
 
-						if (cell1.getRichStringCellValue().getString().trim().isEmpty()
-								&& cell2.getRichStringCellValue().getString().trim().isEmpty()
-								&& cell3.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell1.getRichStringCellValue().getString().trim()
+								.isEmpty()
+								&& cell2.getRichStringCellValue().getString()
+										.trim().isEmpty()
+								&& cell3.getRichStringCellValue().getString()
+										.trim().isEmpty()) {
 							break;
 						}
-						if (cell1.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell1.getRichStringCellValue().getString().trim()
+								.isEmpty()) {
 							throw new java.lang.Exception();
 
 						}
-						if (cell2 == null || cell2.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell2 == null
+								|| cell2.getRichStringCellValue().getString()
+										.trim().isEmpty()) {
 
-							classService.addStudentProfile(classId, maxNumber++, cell1.getRichStringCellValue().getString().trim());
+							classService.addStudentProfile(classId,
+									maxNumber++, cell1.getRichStringCellValue()
+											.getString().trim());
 
 						}
 
@@ -312,9 +355,11 @@ public class WebExcelController extends AbstractBaseController {
 		return null;
 	}
 
-	public ModelAndView downLoadTeacherProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downLoadTeacherProfileExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
 		template.createRow(0);
 
 		template.createCell("姓名");
@@ -323,7 +368,8 @@ public class WebExcelController extends AbstractBaseController {
 		template.createCell("类型(0普通教师,1企业教师)");
 		response.reset();
 		response.setContentType("application/x-download;charset=GBK");
-		response.setHeader("Content-Disposition", "attachment;filename=Book_" + System.currentTimeMillis() + ".xls");
+		response.setHeader("Content-Disposition", "attachment;filename=Book_"
+				+ System.currentTimeMillis() + ".xls");
 		try {
 			template.getWorkbook().write(response.getOutputStream());
 		} catch (IOException e) {
@@ -332,7 +378,8 @@ public class WebExcelController extends AbstractBaseController {
 		return null;
 	}
 
-	public ModelAndView upLoadTeacherProfileExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView upLoadTeacherProfileExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		response.setContentType("text/html;charset=utf-8");
 		try {
@@ -364,22 +411,31 @@ public class WebExcelController extends AbstractBaseController {
 							cell4.setCellType(Cell.CELL_TYPE_STRING);
 						}
 
-						if (cell1.getRichStringCellValue().getString().trim().isEmpty()
-								|| cell2.getRichStringCellValue().getString().trim().isEmpty()
-								|| cell3.getRichStringCellValue().getString().trim().isEmpty()
-								|| cell4.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell1.getRichStringCellValue().getString().trim()
+								.isEmpty()
+								|| cell2.getRichStringCellValue().getString()
+										.trim().isEmpty()
+								|| cell3.getRichStringCellValue().getString()
+										.trim().isEmpty()
+								|| cell4.getRichStringCellValue().getString()
+										.trim().isEmpty()) {
 							break;
 						}
 						int level = 0;
-						if (cell4.getRichStringCellValue().getString().trim().equals("1")) {
+						if (cell4.getRichStringCellValue().getString().trim()
+								.equals("1")) {
 							level = ProfileLevel.CompanyLeader.getValue();
-						} else if (cell4.getRichStringCellValue().getString().trim().equals("0")) {
+						} else if (cell4.getRichStringCellValue().getString()
+								.trim().equals("0")) {
 							level = ProfileLevel.Teacher.getValue();
 						} else {
 							break;
 						}
-						profileService.addProfile(cell1.getRichStringCellValue().getString().trim(), cell2.getRichStringCellValue().getString()
-								.trim(), cell3.getRichStringCellValue().getString().trim(), level);
+						profileService.addProfile(cell1
+								.getRichStringCellValue().getString().trim(),
+								cell2.getRichStringCellValue().getString()
+										.trim(), cell3.getRichStringCellValue()
+										.getString().trim(), level);
 					}
 				}
 			}
@@ -405,9 +461,11 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView downLoadCourseStudentScoreExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downLoadCourseStudentScoreExcel(
+			HttpServletRequest request, HttpServletResponse response) {
 
-		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
 
 		if (courseId < 0) {
 			logger.error("没有课程id");
@@ -419,11 +477,13 @@ public class WebExcelController extends AbstractBaseController {
 			logger.error("没有MyUser");
 			return null;
 		}
-		if (myUser.getLevel() != ProfileLevel.Teacher.getValue() && myUser.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
+		if (myUser.getLevel() != ProfileLevel.Teacher.getValue()
+				&& myUser.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
 			logger.error("不是教师");
 			return null;
 		}
-		ExcelTemplate template = ExcelTemplate.newInstance("excelTemp/excel.xls");
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
 		template.createRow(0);
 
 		Course course = courseService.getCourseById(courseId);
@@ -431,31 +491,39 @@ public class WebExcelController extends AbstractBaseController {
 			logger.error("没有这门课");
 			return null;
 		}
-		List<CourseScorePercent> courseScorePercents = courseService.getCourseScorePercentListByCourseId(courseId);
+		List<CourseScorePercent> courseScorePercents = courseService
+				.getCourseScorePercentListByCourseId(courseId);
 
 		template.createCell("id");
 		template.createCell("姓名");
 		int cellCount = courseScorePercents.size();
 		for (CourseScorePercent courseScorePercent : courseScorePercents) {
-			CoursePercentType coursePercentType = CoursePercentType.genCoursePercentType(courseScorePercent.getPercentType());
+			CoursePercentType coursePercentType = CoursePercentType
+					.genCoursePercentType(courseScorePercent.getPercentType());
 			template.createCell(coursePercentType.getName());
 		}
-		
+
 		template.createCell("总成绩");
-		List<CourseStudentScoreVO> courseStudentScoreVOList = courseService.getCourseStudentScoreVOsByCourseId(courseId);
+		List<CourseStudentScoreVO> courseStudentScoreVOList = courseService
+				.getCourseStudentScoreVOsByCourseId(courseId);
 		if (!ListUtils.isEmptyList(courseStudentScoreVOList)) {
 			for (int i = 0; i < courseStudentScoreVOList.size(); i++) {
 				template.createRow(i + 1);
-				CourseStudentScoreVO courseStudentScoreVO = courseStudentScoreVOList.get(i);
+				CourseStudentScoreVO courseStudentScoreVO = courseStudentScoreVOList
+						.get(i);
 
-				template.createCell(String.valueOf(courseStudentScoreVO.getUserId()));
+				template.createCell(String.valueOf(courseStudentScoreVO
+						.getUserId()));
 				template.createCell(courseStudentScoreVO.getName());
 				if (!ListUtils.isEmptyList(courseStudentScoreVO.getScoreList())) {
 					for (CourseScorePercent courseScorePercent : courseScorePercents) {
 						boolean succ = false;
-						for (CourseStudentScore courseStudentScore : courseStudentScoreVO.getScoreList()) {
-							if (courseScorePercent.getPercentType() == courseStudentScore.getPercentType()) {
-								template.createCell(String.valueOf(courseStudentScore.getScore()));
+						for (CourseStudentScore courseStudentScore : courseStudentScoreVO
+								.getScoreList()) {
+							if (courseScorePercent.getPercentType() == courseStudentScore
+									.getPercentType()) {
+								template.createCell(String
+										.valueOf(courseStudentScore.getScore()));
 								succ = true;
 							}
 						}
@@ -469,14 +537,16 @@ public class WebExcelController extends AbstractBaseController {
 					}
 				}
 				if (courseStudentScoreVO.getTotalScore() != null) {
-					template.createCell(String.valueOf(courseStudentScoreVO.getTotalScore().getScore()));
+					template.createCell(String.valueOf(courseStudentScoreVO
+							.getTotalScore().getScore()));
 				}
 
 			}
 		}
 		response.reset();
 		response.setContentType("application/x-download;charset=GBK");
-		response.setHeader("Content-Disposition", "attachment;filename=totalScore_student.xls");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=totalScore_student.xls");
 		try {
 			template.getWorkbook().write(response.getOutputStream());
 		} catch (IOException e) {
@@ -493,10 +563,13 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView upLoadCourseStudentExcel(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView upLoadCourseStudentExcel(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		long courseId = ServletRequestUtils.getLongParameter(request, "courseId", -1L);
-		int percentType = ServletRequestUtils.getIntParameter(request, "percentType", -1);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		int percentType = ServletRequestUtils.getIntParameter(request,
+				"percentType", -1);
 		int stage = ServletRequestUtils.getIntParameter(request, "stage", -1);
 		if (courseId < 0 || percentType < 0) {
 			return null;
@@ -516,27 +589,35 @@ public class WebExcelController extends AbstractBaseController {
 					int totalRow = sheet.getLastRowNum();
 					Course course = courseService.getCourseById(courseId);
 					if (course == null) {
-						logger.error("WebExcelController upLoadStudentProfileExcel error where course==null where id=" + courseId);
+						logger.error("WebExcelController upLoadStudentProfileExcel error where course==null where id="
+								+ courseId);
 						throw new Exception();
 					}
 					for (int i = 0; i <= totalRow; i++) {
 						HSSFRow row = sheet.getRow(i);
 						HSSFCell cell1 = row.getCell(0);
 						HSSFCell cell3 = row.getCell(2);
-						if (cell1.getRichStringCellValue().getString().trim().isEmpty()) {
+						if (cell1.getRichStringCellValue().getString().trim()
+								.isEmpty()) {
 							break;
 						}
-						long studentId = Long.valueOf(cell1.getRichStringCellValue().getString());
-						if (!cell3.getRichStringCellValue().getString().trim().isEmpty()) {
-							double score = Double.valueOf(cell3.getRichStringCellValue().getString());
+						long studentId = Long.valueOf(cell1
+								.getRichStringCellValue().getString());
+						if (!cell3.getRichStringCellValue().getString().trim()
+								.isEmpty()) {
+							double score = Double.valueOf(cell3
+									.getRichStringCellValue().getString());
 							if (CoursePercentType.AvgGrading.getValue() == percentType) {
 								if (stage < 0) {
 									logger.error("分期给分的stage为空");
 									break;
 								}
-								courseService.insertCourseStageScore(courseId, stage, score, studentId, teacherId);
+								courseService.insertCourseStageScore(courseId,
+										stage, score, studentId, teacherId);
 							} else {
-								courseService.insertCourseScore(courseId, studentId, percentType, score, teacherId);
+								courseService.insertCourseScore(courseId,
+										studentId, percentType, score,
+										teacherId);
 							}
 						}
 
@@ -561,9 +642,66 @@ public class WebExcelController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView downLoadStudentJournal(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView downLoadStudentJournal(HttpServletRequest request,
+			HttpServletResponse response) {
 
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+
+		if (courseId < 0) {
+			logger.error("没有课程id");
+			return null;
+		}
+		long userId = MyUser.getMyUser(request);
+		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
+		if (myUser == null) {
+			logger.error("没有MyUser");
+			return null;
+		}
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
+		template.createRow(0);
+
+		Course course = courseService.getCourseById(courseId);
+		if (course == null) {
+			logger.error("没有这门课");
+			return null;
+		}
+		template.createCell("姓名");
+		template.createCell("内容");
+		template.createCell("发布日期");
+		List<CourseStudent> courseStudents = courseService
+				.getCourseStudentByCourseId(courseId);
+		if (!ListUtils.isEmptyList(courseStudents)) {
+			int index = 1;
+			for (CourseStudent courseStudent : courseStudents) {
+				List<Interactive> interactives = interactiveService
+						.getInteractiveByCourseId(courseId,
+								courseStudent.getUserId());
+				if (!ListUtils.isEmptyList(interactives)) {
+					Profile profile = profileService.getProfile(courseStudent
+							.getUserId());
+					template.createRow(index++);
+					template.createCell(profile.getName());
+					for (Interactive interactive : interactives) {
+						template.createRow(index++);
+						template.createCell("");
+						template.createCell(interactive.getContent());
+						template.createCell(TimeUtil.getFormatTime(interactive
+								.getCreateTime()));
+					}
+				}
+			}
+		}
+		response.reset();
+		response.setContentType("application/x-download;charset=GBK");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=interactive.xls");
+		try {
+			template.getWorkbook().write(response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
-
 }

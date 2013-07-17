@@ -1,5 +1,6 @@
 package com.ruoogle.teach.controller;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,13 +15,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
+<<<<<<< HEAD
 import com.ruoogle.teach.meta.Course;
+=======
+import com.ruoogle.teach.meta.CourseProperty;
+import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+>>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
@@ -58,8 +66,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
-		int semesterId = ServletRequestUtils.getIntParameter(request,
-				"semesterId", 0);
+		long semesterId = ServletRequestUtils.getLongParameter(request,
+				"semesterId", -1L);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		if (userId < 0) {
@@ -67,24 +75,42 @@ public class ApiTeachSysController extends AbstractBaseController {
 					ReturnCodeConstant.FAILED);
 			return modelAndView;
 		}
+		if (semesterId < 0) {
+			semesterId = courseService.getLastestSemesterId(userId);
+		}
 		Profile profile = profileService.getProfile(userId);
 		List<CourseVO> courseList = courseService.getCourseVOListByUserId(
 				userId, profile.getLevel(), semesterId, limit, offset);
 		JSONObject dataObject = new JSONObject();
-		JSONArray courseArray = new JSONArray();
-		if (!ListUtils.isEmptyList(courseList)) {
-			for (CourseVO course : courseList) {
-				JSONObject courseObject = new JSONObject();
-				courseObject.put(CourseVO.KCourse_title, course.getCourse()
-						.getName());
-				courseObject.put(CourseVO.KCoursec_className, course
-						.getClass1().getName());
-				courseObject.put(CourseVO.KCoursec_courseId, course.getCourse()
-						.getId());
-				courseArray.add(courseObject);
+		List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = null;
+		List<CourseProperty> coursePropertieList = null;
+		// 传入雷达图信息
+		if (profile.getLevel() == ProfileLevel.Student.getValue()
+				&& offset <= 0) {
+			courseStudentPropertySemesterScores = courseService
+					.getCourseStudentPropertySemesterScoresByStudentId(
+							profile.getUserId(), semesterId);
+			if (!ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
+				double maxScore = 0;
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					if (courseStudentPropertySemesterScore.getScore() > maxScore) {
+						maxScore = courseStudentPropertySemesterScore
+								.getScore();
+					}
+				}
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					double endScore = courseStudentPropertySemesterScore
+							.getScore() / maxScore * 10;
+					courseStudentPropertySemesterScore
+							.setScore(DoubleUtil.round(endScore, 2,
+									RoundingMode.HALF_UP.ordinal()));
+				}
+				coursePropertieList = courseService.getAllCourseProperties();
 			}
 		}
-		dataObject.put("courseList", courseArray.toString());
+		HttpReturn.returnShowCourseList(courseList,
+				courseStudentPropertySemesterScores, coursePropertieList,
+				dataObject);
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -162,6 +188,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 				.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
 		}
 		boolean succ;
 		long phoneNum = ServletRequestUtils.getLongParameter(request,
@@ -214,12 +242,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		Profile teachProfile = profileService.getProfile(userId);
-		// if (teachProfile.getLevel() == ProfileLevel.Student.getValue()) {
-		// returnObject.put(BasicObjectConstant.kReturnObject_Code,
-		// ReturnCodeConstant.FAILED);
-		// modelAndView.addObject("returnObject", returnObject.toString());
-		// return modelAndView;
-		// }
+
+		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
 
 		List<Profile> profileList = schoolInfoService
 				.getJoinedSchoolInfoUserList(limit, offset, infoId);
@@ -271,7 +300,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 			return modelAndView;
 		}
 
-		// boolean succ = schoolInfoService.joinSchoolInfo(userId, infoId);
 		boolean succ = schoolInfoService.removeSchoolInfo(userId, infoId,
 				adminId);
 
@@ -288,6 +316,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return modelAndView;
 	}
 
+<<<<<<< HEAD
 	public ModelAndView getFeedBackList(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -324,6 +353,33 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 
 		dataObject.put("profileList", feedBackArray.toString());
+=======
+	/**
+	 * 学期列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSemesterList(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		List<Semester> semesterList = classService.getAllSemesters();
+		JSONObject dataObject = new JSONObject();
+		JSONArray semesterArray = new JSONArray();
+		if (!ListUtils.isEmptyList(semesterList)) {
+			for (Semester semester : semesterList) {
+				JSONObject semesterObject = new JSONObject();
+				semesterObject.put(Semester.KSemester_id, semester.getId());
+				semesterObject.put(Semester.KSemester_name, semester.getName());
+				semesterArray.add(semesterObject);
+			}
+		}
+		dataObject.put("semesterList", semesterArray.toString());
+>>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -332,4 +388,9 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return modelAndView;
 	}
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 }

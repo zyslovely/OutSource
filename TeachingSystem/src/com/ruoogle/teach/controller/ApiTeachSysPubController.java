@@ -196,37 +196,5 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		return modelAndView;
 	}
 
-	/**
-	 * 学期列表
-	 * 
-	 * @auther zyslovely@gmail.com
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	public ModelAndView showSemesterList(HttpServletRequest request,
-			HttpServletResponse response) {
-		logger.info(request.getSession().getId());
-		ModelAndView modelAndView = new ModelAndView("return");
-		JSONObject returnObject = new JSONObject();
-		List<Semester> semesterList = classService.getAllSemesters();
-		JSONObject dataObject = new JSONObject();
-		JSONArray semesterArray = new JSONArray();
-		if (!ListUtils.isEmptyList(semesterList)) {
-			for (Semester semester : semesterList) {
-				JSONObject semesterObject = new JSONObject();
-				semesterObject.put(Semester.KSemester_id, semester.getId());
-				semesterObject.put(Semester.KSemester_name, semester.getName());
-				semesterArray.add(semesterObject);
-			}
-		}
-		dataObject.put("semesterList", semesterArray.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Data,
-				dataObject.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Code,
-				ReturnCodeConstant.SUCCESS);
-		modelAndView.addObject("returnObject", returnObject.toString());
-		logger.info(returnObject.toString());
-		return modelAndView;
-	}
+	
 }

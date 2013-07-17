@@ -27,7 +27,6 @@ import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SchoolInfo;
-import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Teach;
@@ -233,13 +232,30 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	public ModelAndView showAddSchoolInfo(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin_newSchoolInfo");
-		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
-		if (type < 0) {
-
+		int limit = 10;
+		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
+		if (page <= 0) {
+			page = 1;
 		}
-		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(0,
-				-1, SchoolInfoType.school.getValue(), -1);
-		mv.addObject("schoolInfos", schoolInfos);
+		int type = ServletRequestUtils.getIntParameter(request, "type", 0); // 校园信息还是学院信息
+		mv.addObject("page", page);
+		mv.addObject("limit", limit);
+		mv.addObject("type", type);
+		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(
+				limit, (page - 1) * limit, type, -1);
+		if (!ListUtils.isEmptyList(schoolInfos)) {
+			mv.addObject("schoolInfos", schoolInfos);
+		}
+
+		List<SchoolInfo> totalSchoolInfos = schoolInfoService
+				.getSchoolInfoList(0, -1, type, -1);
+		int totalCount = ListUtils.isEmptyList(totalSchoolInfos) ? 0
+				: totalSchoolInfos.size();
+		if (totalCount % limit == 0) {
+			mv.addObject("totalCount", totalCount / limit);
+		} else {
+			mv.addObject("totalCount", totalCount / limit + 1);
+		}
 		this.setUD(mv, request);
 		return mv;
 	}
@@ -385,4 +401,5 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 		}
 		return mv;
 	}
+
 }

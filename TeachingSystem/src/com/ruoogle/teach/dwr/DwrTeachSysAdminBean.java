@@ -184,6 +184,12 @@ public class DwrTeachSysAdminBean {
 		return classService.deleteTeach(id);
 	}
 
+	/**
+	 * 完成校园信息
+	 * 
+	 * @param infoId
+	 * @return
+	 */
 	public boolean finishSchoolInfo(long infoId) {
 		WebContext ctx = WebContextFactory.get();
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
