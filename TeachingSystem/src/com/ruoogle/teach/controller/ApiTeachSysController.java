@@ -183,6 +183,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 				.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
 		}
 		boolean succ;
 		long phoneNum = ServletRequestUtils.getLongParameter(request,
