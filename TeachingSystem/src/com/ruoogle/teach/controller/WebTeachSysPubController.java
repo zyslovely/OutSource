@@ -22,7 +22,8 @@ import com.ruoogle.teach.security.MyUser;
 @Controller("webTeachSysPubController")
 public class WebTeachSysPubController extends AbstractBaseController {
 
-	private static final Logger logger = Logger.getLogger(WebTeachSysPubController.class);
+	private static final Logger logger = Logger
+			.getLogger(WebTeachSysPubController.class);
 
 	/**
 	 * 首页
@@ -32,7 +33,8 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView showIndexView(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showIndexView(HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("webIndex");
 
 		int error = ServletRequestUtils.getIntParameter(request, "error", 0);
@@ -48,7 +50,8 @@ public class WebTeachSysPubController extends AbstractBaseController {
 	 * @param response
 	 * @return
 	 */
-	public ModelAndView doLogin(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView doLogin(HttpServletRequest request,
+			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
 		Long userId = MyUser.getMyUser(request);
 		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
@@ -56,8 +59,7 @@ public class WebTeachSysPubController extends AbstractBaseController {
 		try {
 			if (myUser == null) {
 				response.sendRedirect("/");
-			}
-			if (myUser.getLevel() == ProfileLevel.Admin.getValue()) {
+			} else if (myUser.getLevel() == ProfileLevel.Admin.getValue()) {
 				response.sendRedirect("/teach/admin/specialty/list/");
 			} else {
 				response.sendRedirect("/teach/index/");

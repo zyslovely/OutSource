@@ -1,5 +1,6 @@
 package com.ruoogle.teach.controller;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
+import com.ruoogle.teach.meta.CourseProperty;
+import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -68,20 +72,35 @@ public class ApiTeachSysController extends AbstractBaseController {
 		List<CourseVO> courseList = courseService.getCourseVOListByUserId(
 				userId, profile.getLevel(), semesterId, limit, offset);
 		JSONObject dataObject = new JSONObject();
-		JSONArray courseArray = new JSONArray();
-		if (!ListUtils.isEmptyList(courseList)) {
-			for (CourseVO course : courseList) {
-				JSONObject courseObject = new JSONObject();
-				courseObject.put(CourseVO.KCourse_title, course.getCourse()
-						.getName());
-				courseObject.put(CourseVO.KCoursec_className, course
-						.getClass1().getName());
-				courseObject.put(CourseVO.KCoursec_courseId, course.getCourse()
-						.getId());
-				courseArray.add(courseObject);
+		List<CourseStudentPropertySemesterScore> courseStudentPropertySemesterScores = null;
+		List<CourseProperty> coursePropertieList = null;
+		// 传入雷达图信息
+		if (profile.getLevel() == ProfileLevel.Student.getValue()
+				&& offset <= 0) {
+			courseStudentPropertySemesterScores = courseService
+					.getCourseStudentPropertySemesterScoresByStudentId(
+							profile.getUserId(), semesterId);
+			if (!ListUtils.isEmptyList(courseStudentPropertySemesterScores)) {
+				double maxScore = 0;
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					if (courseStudentPropertySemesterScore.getScore() > maxScore) {
+						maxScore = courseStudentPropertySemesterScore
+								.getScore();
+					}
+				}
+				for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : courseStudentPropertySemesterScores) {
+					double endScore = courseStudentPropertySemesterScore
+							.getScore() / maxScore * 10;
+					courseStudentPropertySemesterScore
+							.setScore(DoubleUtil.round(endScore, 2,
+									RoundingMode.HALF_UP.ordinal()));
+				}
+				coursePropertieList = courseService.getAllCourseProperties();
 			}
 		}
-		dataObject.put("courseList", courseArray.toString());
+		HttpReturn.returnShowCourseList(courseList,
+				courseStudentPropertySemesterScores, coursePropertieList,
+				dataObject);
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -245,7 +264,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 			return modelAndView;
 		}
 
-		// boolean succ = schoolInfoService.joinSchoolInfo(userId, infoId);
 		boolean succ = schoolInfoService.removeSchoolInfo(userId, infoId,
 				adminId);
 
@@ -261,4 +279,5 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return modelAndView;
 	}
+
 }

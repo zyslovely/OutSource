@@ -68,11 +68,16 @@ public class MyUser {
 	 * @return
 	 */
 	public static long getMyUser(HttpServletRequest request) {
-		String cookieUser = CookieUtil.getCookieValue(request, CookieUtil.USER_COOKIE_STRING, null);
-		if (cookieUser == null) {
-			return -1;
+		Object obj = request.getSession().getAttribute("userId");
+		if (obj == null) {
+			String cookieUser = CookieUtil.getCookieValue(request,
+					CookieUtil.USER_COOKIE_STRING, null);
+			if (cookieUser == null) {
+				return -1;
+			}
+			return Long.valueOf(cookieUser);
 		}
-		return Long.valueOf(cookieUser);
+		return Long.valueOf(obj.toString());
 
 	}
 
