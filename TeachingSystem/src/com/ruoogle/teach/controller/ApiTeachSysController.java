@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
+import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseVO;
+import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
@@ -281,6 +283,51 @@ public class ApiTeachSysController extends AbstractBaseController {
 					ReturnCodeConstant.FAILED);
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+
+	public ModelAndView getFeedBackList(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
+
+		List<FeedBack> feedBackList = feedBackService.getFeedBackList(userId,
+				limit, offset, 0);
+		JSONObject dataObject = new JSONObject();
+		JSONArray feedBackArray = new JSONArray();
+		if (!ListUtils.isEmptyList(feedBackList)) {
+			for (FeedBack feedBack : feedBackList) {
+				JSONObject feedBackObject = new JSONObject();
+				feedBackObject.put("id", feedBack.getId());
+				feedBackObject.put("fromUserId", feedBack.getFromUserId());
+				feedBackObject.put("toUserId", feedBack.getToUserId());
+				feedBackObject.put("content", feedBack.getContent());
+				feedBackObject.put("createTime", feedBack.getCreateTime());
+				feedBackObject.put("courseId", feedBack.getCourseId());
+				feedBackObject.put("status", feedBack.getStatus());
+				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
+				feedBackObject.put("fromName", feedBack.getFromName());
+				feedBackObject.put("toName", feedBack.getToName());
+				feedBackObject
+						.put("createTimeStr", feedBack.getCreateTimeStr());
+				feedBackObject.put("course", feedBack.getCourse());
+				feedBackArray.add(feedBackObject);
+			}
+		}
+
+		dataObject.put("profileList", feedBackArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;

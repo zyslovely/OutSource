@@ -11,6 +11,7 @@ import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -187,5 +188,27 @@ public class DwrTeachSysAdminBean {
 		WebContext ctx = WebContextFactory.get();
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		return schoolInfoService.finishSchoolInfo(infoId, userId);
+	}
+
+	public boolean addSchoolInfo(String title, String content, String bImgUrl,
+			String sImgUrl, int type, int infoType) {
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		Profile profile = profileService.getProfile(userId);
+		if (profile.getLevel() != Profile.ProfileLevel.Admin.getValue()) {
+			return false;
+		}
+		return schoolInfoService.addSchoolInfo(title, content, type, infoType,
+				bImgUrl, sImgUrl);
+	}
+
+	public boolean deleteSchoolInfo(long infoId) {
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		Profile profile = profileService.getProfile(userId);
+		if (profile.getLevel() != Profile.ProfileLevel.Admin.getValue()) {
+			return false;
+		}
+		return schoolInfoService.deleteSchoolInfo(infoId);
 	}
 }

@@ -37,4 +37,9 @@ public interface SchoolInfoService {
 
 	public boolean joinSchoolInfo(long infoId, String name, String origin,
 			long phoneNum, String graduateSch);
+
+	public boolean addSchoolInfo(String title, String content, int type,
+			int infoType, String bimgurl, String simgurl);
+
+	public boolean deleteSchoolInfo(long infoId);
 }
