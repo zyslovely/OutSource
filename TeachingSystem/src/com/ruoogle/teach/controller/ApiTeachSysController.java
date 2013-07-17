@@ -390,4 +390,44 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return modelAndView;
 	}
+
+	public ModelAndView addFeedBack(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		long toUserId = ServletRequestUtils.getLongParameter(request,
+				"toUserId", -1L);
+		long feedbackId = ServletRequestUtils.getLongParameter(request,
+				"feedbackId", -1L);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		long fromUserId = MyUser.getMyUserFromToken(request);
+
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+
+		if (toUserId < 0 || feedbackId < 0 || content == null || courseId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+
+		boolean succ = feedBackService.addFeedBack(toUserId, feedbackId,
+				content, courseId, fromUserId);
+
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
 }
