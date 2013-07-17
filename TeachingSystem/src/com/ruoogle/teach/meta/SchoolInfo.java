@@ -13,6 +13,7 @@ public class SchoolInfo implements Serializable {
 	private String sImgUrl;
 	private String bImgUrl;
 	private int joined;// 0未参加,1参加
+	private int status;// 0进行中,1已结束
 
 	public static final String KSchoolInfo_id = "id";
 	public static final String KSchoolInfo_title = "title";
@@ -23,6 +24,7 @@ public class SchoolInfo implements Serializable {
 	public static final String KSchoolInfo_sImgUrl = "sImgUrl";
 	public static final String KSchoolInfo_bImgUrl = "bImgUrl";
 	public static final String KSchoolInfo_joined = "joined";
+	public static final String KSchoolInfo_status = "status";
 
 	public enum SchoolInfoType {
 		/**
@@ -49,6 +51,36 @@ public class SchoolInfo implements Serializable {
 			for (SchoolInfoType type : SchoolInfoType.values()) {
 				if (type.getValue() == t)
 					return type;
+			}
+			return null;
+		}
+	}
+	
+	public enum SchoolInfoStatus {
+		/**
+		 * 学校
+		 */
+		ongoing {
+			@Override
+			public int getValue() {
+				return 0;
+			}
+		},
+		/**
+		 * 学院
+		 */
+		finished {
+			@Override
+			public int getValue() {
+				return 1;
+			}
+		};
+		public abstract int getValue();
+
+		public static SchoolInfoStatus genSchoolInfoStatus(int t) {
+			for (SchoolInfoStatus status : SchoolInfoStatus.values()) {
+				if (status.getValue() == t)
+					return status;
 			}
 			return null;
 		}
@@ -124,6 +156,14 @@ public class SchoolInfo implements Serializable {
 
 	public void setJoined(int joined) {
 		this.joined = joined;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public int getStatus() {
+		return status;
 	}
 
 }

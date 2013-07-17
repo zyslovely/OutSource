@@ -6,12 +6,16 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.springframework.stereotype.Service;
 
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
 import com.ruoogle.teach.service.ProfileService;
+import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -26,6 +30,8 @@ public class DwrTeachSysAdminBean {
 	private ClassService classService;
 	@Resource
 	private ProfileService profileService;
+	@Resource
+	private SchoolInfoService schoolInfoService;
 
 	/**
 	 * 添加专业
@@ -175,5 +181,11 @@ public class DwrTeachSysAdminBean {
 
 	public boolean deleteNewTeach(long id) {
 		return classService.deleteTeach(id);
+	}
+
+	public boolean finishSchoolInfo(long infoId) {
+		WebContext ctx = WebContextFactory.get();
+		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
+		return schoolInfoService.finishSchoolInfo(infoId, userId);
 	}
 }

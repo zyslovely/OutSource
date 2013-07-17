@@ -57,6 +57,7 @@ public class ClassServiceImpl implements ClassService {
 	 * com.ruoogle.teach.service.ClassService#addSpecialty(java.lang.String,
 	 * java.lang.String, int)
 	 */
+	@Override
 	public boolean addSpecialty(String SpecialtyName,
 			String SpecialtyShortName, int semesterCount) {
 		Specialty specialty = new Specialty();
@@ -73,6 +74,7 @@ public class ClassServiceImpl implements ClassService {
 	 * com.ruoogle.teach.service.ClassService#addClassRoom(java.lang.String,
 	 * int)
 	 */
+	@Override
 	public boolean addClassRoom(String name, int year, long specialtyId) {
 		Specialty specialty = specialtyMapper.getSpecialtyById(specialtyId);
 		if (specialty == null) {
@@ -93,6 +95,7 @@ public class ClassServiceImpl implements ClassService {
 	 * 
 	 * @see com.ruoogle.teach.service.ClassService#addStudentProfile(long, int)
 	 */
+	@Override
 	public boolean addStudentProfile(long classId, long number, String name) {
 		Profile profile = new Profile();
 		profile.setCreateTime(new Date().getTime());
@@ -250,6 +253,7 @@ public class ClassServiceImpl implements ClassService {
 	 * 
 	 * @see com.ruoogle.teach.service.ClassService#deleteClass(long)
 	 */
+	@Override
 	public boolean deleteClass(long classId) {
 		if (classMapper.deleteClassById(classId) > 0) {
 			profileMapper.deleteProfileByClassId(classId);
@@ -263,6 +267,7 @@ public class ClassServiceImpl implements ClassService {
 	 * 
 	 * @see com.ruoogle.teach.service.ClassService#deleteProfile(long)
 	 */
+	@Override
 	public boolean deleteProfile(long userId) {
 		return profileMapper.deleteProfileByUserId(userId) > 0;
 	}

@@ -171,6 +171,7 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * @param offset
 	 * @return
 	 */
+	@Override
 	public List<Interactive> getInteractiveByUserId(long userId, int limit, int offset) {
 
 		List<Interactive> interactives = interactiveMapper.getInteractiveListByShowUserId(userId, limit, offset);
@@ -226,6 +227,7 @@ public class InteractiveServiceImpl implements InteractiveService {
 	 * com.ruoogle.teach.service.InteractiveService#getInteractiveCountByUserId
 	 * (long)
 	 */
+	@Override
 	public int getInteractiveCountByUserId(long userId) {
 		return interactiveMapper.getInteractieTotalCount(userId);
 	}

@@ -204,7 +204,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				JSONObject courseObject = new JSONObject();
 				courseObject.put(Profile.KProfile_Name, profile.getName());
 				courseObject.put(Profile.KProfile_userId, profile.getUserId());
-				courseArray.add((Object) courseObject);
+				courseArray.add(courseObject);
 			}
 		}
 		dataObject.put("profileList", courseArray.toString());
@@ -218,7 +218,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-	 * 取消加入校园信息活动Not Finished
+	 * 取消加入校园信息活动
 	 * 
 	 * @param request
 	 * @param response

@@ -66,6 +66,7 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	 * @see com.ruoogle.teach.service.SchoolInfoService#getSchoolInfo(long,
 	 * long)
 	 */
+	@Override
 	public SchoolInfo getSchoolInfo(long id, long userId) {
 
 		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(id);
@@ -98,6 +99,7 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		schoolInfo.setTitle(title);
 		schoolInfo.setType(type);
 		schoolInfo.setInfoType(infoType);
+		schoolInfo.setStatus(SchoolInfo.SchoolInfoStatus.ongoing.getValue());
 		return schoolInfoMapper.addSchoolInfo(schoolInfo) > 0;
 	}
 
@@ -163,5 +165,15 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 			return false;
 		}
 		return schoolInfoJoinMapper.removeSchoolInfoJoinByUser(userId, infoId) > 0;
+	}
+
+	@Override
+	public boolean finishSchoolInfo(long infoId, long userId) {
+		Profile profile = profileMapper.getProfile(userId);
+		if (profile.getLevel() != Profile.ProfileLevel.Admin.getValue()) {
+			return false;
+		}
+		int status = SchoolInfo.SchoolInfoStatus.finished.getValue();
+		return schoolInfoMapper.finishSchoolInfo(infoId,status) > 0;
 	}
 }

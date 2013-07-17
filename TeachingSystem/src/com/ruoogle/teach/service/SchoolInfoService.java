@@ -32,4 +32,6 @@ public interface SchoolInfoService {
 	public SchoolInfo getSchoolInfo(long id, long userId);
 
 	public boolean removeSchoolInfo(long userId, long infoId, long adminId);
+
+	public boolean finishSchoolInfo(long infoId, long userId);
 }
