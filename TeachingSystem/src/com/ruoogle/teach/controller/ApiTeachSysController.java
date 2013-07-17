@@ -465,7 +465,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	public ModelAndView showSearch(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
-		ModelAndView mv = new ModelAndView("CourseSearch");
+		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 
 		long specialtyId = ServletRequestUtils.getLongParameter(request,
@@ -523,9 +523,17 @@ public class ApiTeachSysController extends AbstractBaseController {
 									cSPSSObject.put("score",
 											courseStudentPropertySemesterScore
 													.getScore());
-									cSPSSObject.put("name",
-											courseStudentPropertySemesterScore
-													.getName());
+									List<CourseProperty> courseProperties = courseService
+											.getAllCourseProperties();
+									for (CourseProperty courseProperty : courseProperties) {
+										if (courseProperty.getId() == courseStudentPropertySemesterScore
+												.getPropertyId()) {
+											cSPSSObject.put("name",
+													courseProperty.getName());
+											break;
+										}
+									}
+
 									cSPSSArray.add(cSPSSObject);
 								}
 							}
