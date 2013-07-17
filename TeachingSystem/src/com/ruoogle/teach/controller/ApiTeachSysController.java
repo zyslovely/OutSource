@@ -24,6 +24,7 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Semester;
+import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
@@ -177,7 +178,31 @@ public class ApiTeachSysController extends AbstractBaseController {
 			modelAndView.addObject("returnObject", returnObject.toString());
 			return modelAndView;
 		}
-		boolean succ = schoolInfoService.joinSchoolInfo(userId, infoId);
+		SchoolInfo schoolInfo = schoolInfoService.getSchoolInfo(infoId, userId);
+		if (schoolInfo.getStatus() != SchoolInfo.SchoolInfoStatus.ongoing
+				.getValue()) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		boolean succ;
+		long phoneNum = ServletRequestUtils.getLongParameter(request,
+				"phoneNum", -1L);
+		if (schoolInfo.getType() == SchoolInfo.SchoolInfoType.specialty
+				.getValue()) {
+			succ = schoolInfoService.joinSchoolInfo(userId, infoId, phoneNum);
+		} else if (schoolInfo.getType() == SchoolInfo.SchoolInfoType.school
+				.getValue()) {
+			String name = ServletRequestUtils.getStringParameter(request,
+					"name", "");
+			String origin = ServletRequestUtils.getStringParameter(request,
+					"origin", "");
+			String graduateSch = ServletRequestUtils.getStringParameter(
+					request, "graduateSch", "");
+			succ = schoolInfoService.joinSchoolInfo(infoId, name, origin,
+					phoneNum, graduateSch);
+		} else {
+			succ = false;
+		}
 		if (succ) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.SUCCESS);

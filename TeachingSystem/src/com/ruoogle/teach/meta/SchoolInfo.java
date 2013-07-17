@@ -55,7 +55,7 @@ public class SchoolInfo implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public enum SchoolInfoStatus {
 		/**
 		 * 进行中
@@ -67,7 +67,11 @@ public class SchoolInfo implements Serializable {
 			}
 		},
 		/**
+<<<<<<< HEAD
 		 * 结束 
+=======
+		 * 已结束
+>>>>>>> 803e3a49a1fc7c27bc2ac846c427bf37e154784d
 		 */
 		finished {
 			@Override
