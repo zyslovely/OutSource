@@ -41,4 +41,9 @@ public interface SchoolInfoService {
 
 	public List<SchoolInfoJoin> getSchoolInfoJoinsByInfoId(long infoId,
 			int limit, int offset);
+
+	public boolean addSchoolInfo(String title, String content, int type,
+			int infoType, String bimgurl, String simgurl);
+
+	public boolean deleteSchoolInfo(long infoId);
 }

@@ -44,7 +44,8 @@
 		;
 	</select>
 
-	<update id="finishSchoolInfo" flushCache="true" statementType="PREPARED">
+	<update id="finishSchoolInfo" flushCache="true" parameterType="Long"
+		statementType="PREPARED">
 		UPDATE
 		TB_School_Info
 		set
@@ -52,4 +53,9 @@
 		WHERE
 		id =#{id};
 	</update>
+
+	<delete id="deleteSchoolInfo" flushCache="true" statementType="PREPARED">
+		DELETE from TB_School_Info
+		Where id=#{id};
+	</delete>
 </mapper>

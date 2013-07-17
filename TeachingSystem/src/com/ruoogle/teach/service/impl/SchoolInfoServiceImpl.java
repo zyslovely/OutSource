@@ -249,6 +249,31 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 			}
 			return schoolInfoJoins;
 		}
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.SchoolInfoService#addSchoolInfo(java.lang.String
+	 * , java.lang.String, int, int, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean addSchoolInfo(String title, String content, int type,
+			int infoType, String bImgUrl, String sImgUrl) {
+		SchoolInfo schoolInfo = new SchoolInfo();
+		schoolInfo.setContent(content);
+		schoolInfo.setTitle(title);
+		schoolInfo.setType(type);
+		schoolInfo.setInfoType(infoType);
+		schoolInfo.setbImgUrl(bImgUrl);
+		schoolInfo.setsImgUrl(sImgUrl);
+		schoolInfo.setStatus(SchoolInfo.SchoolInfoStatus.ongoing.getValue());
+		return schoolInfoMapper.addSchoolInfo(schoolInfo) > 0;
+	}
+
+	@Override
+	public boolean deleteSchoolInfo(long infoId) {
+		return schoolInfoMapper.deleteSchoolInfo(infoId) > 0;
 	}
 }

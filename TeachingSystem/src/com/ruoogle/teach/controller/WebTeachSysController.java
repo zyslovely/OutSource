@@ -640,8 +640,7 @@ public class WebTeachSysController extends AbstractBaseController {
 					List<SearchProfile> seachProfileList = courseService
 							.getSearchProfile(semesterId, classId, specialtyId,
 									searchProperties);
-					
-					
+
 					if (!ListUtils.isEmptyList(seachProfileList)) {
 						mv.addObject("seachProfileList", seachProfileList);
 					}
@@ -689,5 +688,4 @@ public class WebTeachSysController extends AbstractBaseController {
 		this.setUD(mv, request);
 		return mv;
 	}
-
 }

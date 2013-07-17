@@ -36,4 +36,6 @@ public interface SchoolInfoMapper {
 	 */
 	public int finishSchoolInfo(@Param(value = "id") long id,
 			@Param(value = "status") long status);
+
+	public int deleteSchoolInfo(@Param(value = "id") long id);
 }
