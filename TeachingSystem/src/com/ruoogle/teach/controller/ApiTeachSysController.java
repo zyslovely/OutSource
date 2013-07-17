@@ -342,19 +342,23 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedBackObject.put("toUserId", feedBack.getToUserId());
 				feedBackObject.put("content", feedBack.getContent());
 				feedBackObject.put("createTime", feedBack.getCreateTime());
-				feedBackObject.put("courseId", feedBack.getCourseId());
+				if (feedBack.getCourse() != null) {
+					feedBackObject.put("courseName", feedBack.getCourse()
+							.getName());
+					feedBackObject
+							.put("courseId", feedBack.getCourse().getId());
+				}
 				feedBackObject.put("status", feedBack.getStatus());
 				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
 				feedBackObject.put("fromName", feedBack.getFromName());
 				feedBackObject.put("toName", feedBack.getToName());
 				feedBackObject
 						.put("createTimeStr", feedBack.getCreateTimeStr());
-				feedBackObject.put("course", feedBack.getCourse());
 				feedBackArray.add(feedBackObject);
 			}
 		}
 
-		dataObject.put("profileList", feedBackArray.toString());
+		dataObject.put("feedbackList", feedBackArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
