@@ -270,7 +270,7 @@ CREATE TABLE `TB_School_Info` (
   `infoType` tinyint(4) NOT NULL DEFAULT '0' COMMENT '信息类型,0常规,1可以参加的类型',
   `bImgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '大图片url',
   `sImgUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '小图片url',
-  
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0进行中,1已结束',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息';    
 
@@ -278,11 +278,13 @@ CREATE TABLE `TB_School_Info_Join`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `infoId` bigint(20) NOT NULL DEFAULT '0' COMMENT '校园信息id',
   `userId` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `name` varchar(127) NOT NULL DEFAULT '' COMMENT '姓名',
+  `origin` varchar(255) NOT NULL DEFAULT '' COMMENT '籍贯',
+  `graduateSch` varchar(255) NOT NULL DEFAULT '' COMMENT '初中毕业学校',
+  `phoneNum` bigint(20) NOT NULL DEFAULT '0' COMMENT '用户手机',
   `createTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='校园信息参与表';    
-
-
 
 insert into TB_Profile (userName,password,name,level) values ('admin','admin','admin',3);
 insert into TB_Profile (userName,password,name,level) values ('teacher','teacher','teacher',1);
