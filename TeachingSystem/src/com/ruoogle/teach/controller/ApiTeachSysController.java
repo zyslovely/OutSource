@@ -1,6 +1,7 @@
 package com.ruoogle.teach.controller;
 
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
@@ -24,8 +27,11 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.SearchProfile;
+import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
@@ -447,5 +453,102 @@ public class ApiTeachSysController extends AbstractBaseController {
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;
+	}
+
+	/**
+	 * 显示搜索
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSearch(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView mv = new ModelAndView("CourseSearch");
+		JSONObject returnObject = new JSONObject();
+
+		long specialtyId = ServletRequestUtils.getLongParameter(request,
+				"specialtyId", -1L);
+		long classId = ServletRequestUtils.getLongParameter(request, "classId",
+				-1L);
+		long semesterId = ServletRequestUtils.getLongParameter(request,
+				"semesterId", -1L);
+		String properties = ServletRequestUtils.getStringParameter(request,
+				"properties", null);
+
+		if (!StringUtils.isEmpty(properties)) {
+			String[] onePropertiesList = properties.split(";");
+			if (!ArrayUtils.isEmpty(onePropertiesList)) {
+				List<SearchProperty> searchProperties = new ArrayList<SearchProperty>();
+				for (String str : onePropertiesList) {
+					SearchProperty searchProperty = new SearchProperty();
+					String[] propertyIdValue = str.split(",");
+					if (ArrayUtils.isEmpty(onePropertiesList)) {
+						continue;
+					}
+					if (propertyIdValue.length < 2
+							|| StringUtils.isEmpty(propertyIdValue[0])
+							|| StringUtils.isEmpty(propertyIdValue[1])) {
+						continue;
+					}
+					searchProperty.setPropertyId(Long
+							.valueOf(propertyIdValue[0]));
+					searchProperty.setValue(Double.valueOf(propertyIdValue[1]));
+					searchProperties.add(searchProperty);
+				}
+				if (!ListUtils.isEmptyList(searchProperties)) {
+					List<SearchProfile> searchProfileList = courseService
+							.getSearchProfile(semesterId, classId, specialtyId,
+									searchProperties);
+					JSONObject dataObject = new JSONObject();
+					JSONArray searchProfileArray = new JSONArray();
+					if (!ListUtils.isEmptyList(searchProfileList)) {
+						for (SearchProfile searchProfile : searchProfileList) {
+							JSONObject searchProfileObject = new JSONObject();
+							if (searchProfile.getProfile() != null) {
+								searchProfileObject.put(
+										Profile.KProfile_userId, searchProfile
+												.getProfile().getUserId());
+								searchProfileObject.put(Profile.KProfile_Name,
+										searchProfile.getProfile().getName());
+							}
+							JSONArray cSPSSArray = new JSONArray();
+							if (!ListUtils
+									.isEmptyList(searchProfile
+											.getCourseStudentPropertySemesterScoreList())) {
+								for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : searchProfile
+										.getCourseStudentPropertySemesterScoreList()) {
+									JSONObject cSPSSObject = new JSONObject();
+									cSPSSObject.put("score",
+											courseStudentPropertySemesterScore
+													.getScore());
+									cSPSSObject.put("name",
+											courseStudentPropertySemesterScore
+													.getName());
+									cSPSSArray.add(cSPSSObject);
+								}
+							}
+							searchProfileObject.put(
+									"courseStudentPropertySemesterScoreList",
+									cSPSSArray.toString());
+							searchProfileObject.put("totalScore",
+									searchProfile.getTotalScore());
+							searchProfileArray.add(searchProfileObject);
+						}
+					}
+					dataObject.put("searchProfileList",
+							searchProfileArray.toString());
+					returnObject.put(BasicObjectConstant.kReturnObject_Data,
+							dataObject.toString());
+					returnObject.put(BasicObjectConstant.kReturnObject_Code,
+							ReturnCodeConstant.SUCCESS);
+					mv.addObject("returnObject", returnObject.toString());
+					logger.info(returnObject.toString());
+					return mv;
+				}
+			}
+		}
+		return mv;
 	}
 }
