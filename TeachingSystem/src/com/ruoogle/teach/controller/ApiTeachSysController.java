@@ -544,4 +544,42 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		return mv;
 	}
+
+	/**
+	 * @Title: getAllSpecialty
+	 * @Description: 获取所有专业
+	 * @Auther: yunshang_734@163.com
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView getAllSpecialty(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONObject dataObject = new JSONObject();
+		JSONArray specialtyArray = new JSONArray();
+		List<Specialty> specialtyList = classService.getSpecialties();
+		if (!ListUtils.isEmptyList(specialtyList)) {
+			for (Specialty specialty : specialtyList) {
+				JSONObject specialtyObject = new JSONObject();
+				specialtyObject.put("specialty", specialty.getSpecialty());
+				specialtyObject.put("shortSpecialty",
+						specialty.getShortSpecialty());
+				specialtyArray.add(specialtyObject);
+			}
+			logger.info(specialtyArray.toString());
+		}
+		dataObject.put("specialtyList", specialtyArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
 }

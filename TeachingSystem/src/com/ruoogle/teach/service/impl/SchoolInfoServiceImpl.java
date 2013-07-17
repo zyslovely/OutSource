@@ -213,6 +213,7 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	 * com.ruoogle.teach.service.SchoolInfoService#getSchoolInfoJoinsByInfoId
 	 * (long, int, int)
 	 */
+	@Override
 	public List<SchoolInfoJoin> getSchoolInfoJoinsByInfoId(long infoId,
 			int limit, int offset) {
 		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
