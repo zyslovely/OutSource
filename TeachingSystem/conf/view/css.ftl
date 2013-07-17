@@ -60,6 +60,10 @@
     	
     	      <link type="text/css" rel="stylesheet" href="/css/courseSearch.css"/>
     	<#break>
+    	<#case "newSchoolInfo"> 
+    	
+    	      <link type="text/css" rel="stylesheet" href="/css/admin_newSchoolInfo.css"/>
+    	<#break>
     	
     </#switch>
 </#if>

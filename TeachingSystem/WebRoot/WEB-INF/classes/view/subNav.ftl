@@ -34,6 +34,8 @@
      首页头图
      <#elseif pageName = "newTeach">
      课程模板
+     <#elseif pageName = "newSchoolInfo">
+     校园信息
      </#if>
 
      </p>
@@ -53,6 +55,10 @@
      <#else>
      <div style="float: right; margin-top: 26px; margin-right: 20px; width: 143px;">
            <a class="w-btn" href="/teach/teacher/download/score/?courseId=${courseId!0}" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">成绩单下载</a>
+          
+     </div>
+     <div style="float: right; margin-top: 26px; margin-right: 20px; width: 143px;">
+           <a class="w-btn" href="/teach/teacher/download/course/students/?courseId=${courseId!0}" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">学习日志下载</a>
      </div>
      </#if>
      <#elseif pageName = "courseScore">
@@ -103,10 +109,20 @@
       <div style="width: 145px; margin-top: 23px; float: right; ">
                  <a class="w-btn" id="newCourseType_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">添加课程类型</a>
       </div>
+      <#elseif pageName="newSchoolInfo">
+      <div style="width: 145px; margin-top: 23px; float: right; ">
+                 <a class="w-btn" id="newSchoolInfo_Create" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">添加信息</a>
+      </div>
+      <div style="float: right;  margin-top: 28px; margin-right: 22px;"  id="newSchoolInfo_select">
       
-     <#elseif pageName="newStudent">
+           <select id="schoolInfo_type_select">
+                 <option value="0" <#if type ==0>selected="selected"</#if>>学校信息</option>
+                 <option value="1" <#if type ==1>selected="selected"</#if>>学院信息</option>
+           </select>  
+      </div>
+      <#elseif pageName="newStudent">
 
-     <div style=" margin-top: 23px; float: right; ">
+      <div style=" margin-top: 23px; float: right; ">
          <div class="w-filebtn" style="float:left;width: 145px;cursor: pointer;">
                  <a class="w-btn" id="newStudent_download" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">下载名单模版</a>
          </div>

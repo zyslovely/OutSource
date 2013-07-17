@@ -82,7 +82,15 @@
 		where
 		oriid=#{oriid};
 	</delete>
-
+	<select id="getInteractiveByCourseIdUserId" parameterType="long"
+		resultType="Interactive">
+		SELECT *
+		from TB_Interactive
+		WHERE courseId=#{courseId} and
+		oriid=0 and userId=#{userId} order
+		by createTime desc
+		;
+	</select>
 
 
 </mapper>

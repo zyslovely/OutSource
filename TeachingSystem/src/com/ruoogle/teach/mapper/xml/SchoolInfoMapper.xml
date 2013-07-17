@@ -44,13 +44,12 @@
 		;
 	</select>
 
-	<update id="finishSchoolInfo" flushCache="true"
-		parameterType="CourseStudentPropertySemesterScore" statementType="PREPARED">
+	<update id="finishSchoolInfo" flushCache="true" statementType="PREPARED">
 		UPDATE
 		TB_School_Info
 		set
 		status=#{status}
 		WHERE
 		id =#{id};
-		</update>
+	</update>
 </mapper>

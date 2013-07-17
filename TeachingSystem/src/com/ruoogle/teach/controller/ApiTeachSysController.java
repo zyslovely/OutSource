@@ -23,6 +23,7 @@ import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
@@ -59,14 +60,17 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		int limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
 		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
-		int semesterId = ServletRequestUtils.getIntParameter(request,
-				"semesterId", 0);
+		long semesterId = ServletRequestUtils.getLongParameter(request,
+				"semesterId", -1L);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		if (userId < 0) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			return modelAndView;
+		}
+		if (semesterId < 0) {
+			semesterId = courseService.getLastestSemesterId(userId);
 		}
 		Profile profile = profileService.getProfile(userId);
 		List<CourseVO> courseList = courseService.getCourseVOListByUserId(
@@ -280,4 +284,39 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return modelAndView;
 	}
 
+	/**
+	 * 学期列表
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSemesterList(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		List<Semester> semesterList = classService.getAllSemesters();
+		JSONObject dataObject = new JSONObject();
+		JSONArray semesterArray = new JSONArray();
+		if (!ListUtils.isEmptyList(semesterList)) {
+			for (Semester semester : semesterList) {
+				JSONObject semesterObject = new JSONObject();
+				semesterObject.put(Semester.KSemester_id, semester.getId());
+				semesterObject.put(Semester.KSemester_name, semester.getName());
+				semesterArray.add(semesterObject);
+			}
+		}
+		dataObject.put("semesterList", semesterArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+	
+	
 }

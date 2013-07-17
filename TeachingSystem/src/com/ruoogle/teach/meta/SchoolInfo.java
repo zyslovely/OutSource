@@ -58,7 +58,7 @@ public class SchoolInfo implements Serializable {
 	
 	public enum SchoolInfoStatus {
 		/**
-		 * 学校
+		 * 进行中
 		 */
 		ongoing {
 			@Override
@@ -67,7 +67,7 @@ public class SchoolInfo implements Serializable {
 			}
 		},
 		/**
-		 * 学院
+		 * 结束 
 		 */
 		finished {
 			@Override

@@ -89,7 +89,7 @@
    </div>
    <#if pageName!="interactive">
    <div style="display: inline-block; width: 100%;  height: 39px; margin-top: 21px;">
-     <div style="width:1024px;margin:auto;">
+     <div style="width:1144px;margin:auto;">
      <ul style="margin-left:5%;">
         <#if level!=3>
         <#if isVisitor?exists&&isVisitor==1>
@@ -133,13 +133,10 @@
         <li class="top_li" style="<#if pageName=='newTeach'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
            <a href="/teach/admin/teach/list/" class="<#if pageName!='newTeach'>top_li_selected_color<#else>top_li_diselected_color</#if>">课程模板</a>
         </li>
-       
-        
-        <#--
         <li class="top_li" style="<#if pageName=='newSchoolInfo'>background: url('/img/webIndex/tab_select.png') no-repeat scroll center top transparent;height:24px;</#if>">
-           <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">添加学校学院信息</a>
+           <a href="/teach/admin/schoolInfo/list/" class="<#if pageName!='newSchoolInfo'>top_li_selected_color<#else>top_li_diselected_color</#if>">校园信息</a>
         </li>
-        -->
+       
         </#if>
         <#if level==1||level==2>
         

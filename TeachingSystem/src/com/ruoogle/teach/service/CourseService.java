@@ -331,4 +331,6 @@ public interface CourseService {
 
 	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseId(
 			long courseId, long userId);
+
+	public List<CourseStudent> getCourseStudentByCourseId(long courseId);
 }

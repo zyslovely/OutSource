@@ -17,7 +17,9 @@ public interface InteractiveMapper {
 	 * @param userId
 	 * @return
 	 */
-	public List<Interactive> getInteractiveListByShowUserId(@Param(value = "showUserId") long userId, @Param(value = "limit") int limit,
+	public List<Interactive> getInteractiveListByShowUserId(
+			@Param(value = "showUserId") long userId,
+			@Param(value = "limit") int limit,
 			@Param(value = "offset") int offset);
 
 	/**
@@ -46,8 +48,11 @@ public interface InteractiveMapper {
 	 * @param forwardId
 	 * @return
 	 */
-	public List<Interactive> getInteractiveListByShowUserIdForwardId(@Param(value = "showUserId") long userId, @Param(value = "limit") int limit,
-			@Param(value = "offset") int offset, @Param(value = "forwardId") long forwardId);
+	public List<Interactive> getInteractiveListByShowUserIdForwardId(
+			@Param(value = "showUserId") long userId,
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset,
+			@Param(value = "forwardId") long forwardId);
 
 	/**
 	 * 删除
@@ -59,5 +64,9 @@ public interface InteractiveMapper {
 	public int deleteInteractive(@Param(value = "id") long id);
 
 	public int deleteInteractiveByOriId(@Param(value = "oriid") long oriid);
+
+	public List<Interactive> getInteractiveByCourseIdUserId(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "userId") long userId);
 
 }
