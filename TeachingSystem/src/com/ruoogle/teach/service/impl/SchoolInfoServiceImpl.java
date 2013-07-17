@@ -150,4 +150,18 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		return profileMapper.getProfileListByIds(userIds);
 	}
 
+	@Override
+	// Not Finished
+	public boolean removeSchoolInfo(long userId, long infoId, long adminId) {
+		Profile profile = profileMapper.getProfile(adminId);
+		if (profile.getLevel() != Profile.ProfileLevel.Admin.getValue()) {
+			return false;
+		}
+		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+				.getSchoolInfoJoinByUser(infoId, userId);
+		if (schoolInfoJoin == null) {
+			return false;
+		}
+		return schoolInfoJoinMapper.removeSchoolInfoJoinByUser(userId, infoId) > 0;
+	}
 }

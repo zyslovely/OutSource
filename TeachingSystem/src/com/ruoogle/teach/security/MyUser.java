@@ -2,12 +2,14 @@ package com.ruoogle.teach.security;
 
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 
+import com.eason.web.util.CookieUtil;
 import com.eason.web.util.DesUtil;
 
 /**
@@ -66,11 +68,11 @@ public class MyUser {
 	 * @return
 	 */
 	public static long getMyUser(HttpServletRequest request) {
-		Object obj = request.getSession().getAttribute("userId");
-		if (obj == null) {
-			return 0;
+		String cookieUser = CookieUtil.getCookieValue(request, CookieUtil.USER_COOKIE_STRING, null);
+		if (cookieUser == null) {
+			return -1;
 		}
-		return Long.valueOf(obj.toString());
+		return Long.valueOf(cookieUser);
 
 	}
 
@@ -88,7 +90,7 @@ public class MyUser {
 			return -1;
 		}
 		String[] tokens = MyUser.getTokens(token);
-		if(ArrayUtils.isEmpty(tokens)){
+		if (ArrayUtils.isEmpty(tokens)) {
 			return -1;
 		}
 		return Long.valueOf(tokens[0]);

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.eason.web.util.CookieUtil;
 import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.meta.Course;
@@ -81,6 +82,7 @@ public class WebTeachSysController extends AbstractBaseController {
 		HttpSession session = request.getSession();
 		session.removeAttribute("login");
 		session.removeAttribute("userId");
+		CookieUtil.removeCookie(request, CookieUtil.USER_COOKIE_STRING);
 		try {
 			response.sendRedirect("/");
 		} catch (IOException e) {
