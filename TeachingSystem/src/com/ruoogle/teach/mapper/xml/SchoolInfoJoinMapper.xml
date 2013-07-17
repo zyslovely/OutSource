@@ -38,5 +38,10 @@
 		;
 	</select>
 
-
+	<delete id="removeSchoolInfoJoinByUser" flushCache="true"
+		statementType="PREPARED">
+		delete from TB_School_Info_Join
+		WHERE infoId=#{infoId}
+		and userId=#{userId};
+		</delete>
 </mapper>

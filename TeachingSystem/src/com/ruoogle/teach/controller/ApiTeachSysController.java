@@ -187,6 +187,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 		Profile teachProfile = profileService.getProfile(userId);
+
 		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
@@ -212,6 +213,50 @@ public class ApiTeachSysController extends AbstractBaseController {
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+
+	/**
+	 * 取消加入校园信息活动Not Finished
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView removeSchoolInfo(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		long infoId = ServletRequestUtils.getLongParameter(request, "infoId",
+				-1L);
+		long userId = ServletRequestUtils.getLongParameter(request, "userId",
+				-1L);
+		long adminId = MyUser.getMyUserFromToken(request);
+
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+
+		if (userId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+
+		// boolean succ = schoolInfoService.joinSchoolInfo(userId, infoId);
+		boolean succ = schoolInfoService.removeSchoolInfo(userId, infoId,
+				adminId);
+
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;

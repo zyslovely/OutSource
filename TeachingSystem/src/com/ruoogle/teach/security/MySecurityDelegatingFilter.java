@@ -73,6 +73,7 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		logger.info("logined session=" + httpRequest.getSession().getId());
 		String uri = httpRequest.getRequestURI();
 		logger.info("try to login session="
 				+ httpRequest.getSession().getId());
@@ -182,6 +183,10 @@ public class MySecurityDelegatingFilter extends HttpServlet implements Filter {
 				if (profile != null && profile.getPassword().equals(passWord)) {
 					MyUser myUser = new MyUser();
 					myUser.setUserId(profile.getUserId());
+					
+					CookieUtil.setCookie(httpResponse,
+							CookieUtil.USER_COOKIE_STRING, String.valueOf(profile.getUserId()));
+					
 					myUser.setSessionStr(httpRequest.getSession().getId());
 					httpRequest.getSession().setMaxInactiveInterval(
 							1000 * 60 * 60 * 24);

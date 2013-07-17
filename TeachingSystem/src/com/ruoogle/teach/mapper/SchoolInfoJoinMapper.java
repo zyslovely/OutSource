@@ -17,4 +17,7 @@ public interface SchoolInfoJoinMapper {
 	public SchoolInfoJoin getSchoolInfoJoinByUser(
 			@Param(value = "infoId") long infoId,
 			@Param(value = "userId") long userId);
+
+	public int removeSchoolInfoJoinByUser(@Param(value = "userId") long userId,
+			@Param(value = "infoId") long infoId);
 }

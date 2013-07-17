@@ -2,14 +2,10 @@ package com.ruoogle.teach.api.test;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
-/**
- * 单个校园信息
- * @author zhengeason
- *
- */
-public class TestSchoolInfo {
+
+public class TestRemoveSchoolInfoJoin {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/remove/?infoId=1&userId=1&token=XPZnlwnzVXxUufgEpTBj7EOrUoU96ZQX";
+		String strURL = "http://teach.zys-wings.com/teach/api/schoolInfo/remove/?infoId=1&userId=1&token=vzMiFI7h8erLpW6ChNwNELfhLueYDwSa";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
