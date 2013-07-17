@@ -19,12 +19,8 @@ import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
-<<<<<<< HEAD
-import com.ruoogle.teach.meta.Course;
-=======
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
->>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
@@ -316,7 +312,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return modelAndView;
 	}
 
-<<<<<<< HEAD
 	public ModelAndView getFeedBackList(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -353,7 +348,15 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 
 		dataObject.put("profileList", feedBackArray.toString());
-=======
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
+	}
+
 	/**
 	 * 学期列表
 	 * 
@@ -379,7 +382,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 			}
 		}
 		dataObject.put("semesterList", semesterArray.toString());
->>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -388,9 +390,4 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return modelAndView;
 	}
-<<<<<<< HEAD
-=======
-	
-	
->>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 }

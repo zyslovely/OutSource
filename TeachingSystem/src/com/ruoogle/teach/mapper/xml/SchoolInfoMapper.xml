@@ -44,12 +44,8 @@
 		;
 	</select>
 
-<<<<<<< HEAD
 	<update id="finishSchoolInfo" flushCache="true" parameterType="Long"
 		statementType="PREPARED">
-=======
-	<update id="finishSchoolInfo" flushCache="true" statementType="PREPARED">
->>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 		UPDATE
 		TB_School_Info
 		set
@@ -57,12 +53,9 @@
 		WHERE
 		id =#{id};
 	</update>
-<<<<<<< HEAD
 
 	<delete id="deleteSchoolInfo" flushCache="true" statementType="PREPARED">
 		DELETE from TB_School_Info
 		Where id=#{id};
 	</delete>
-=======
->>>>>>> a968bb4d97742eb0264602de2ef2413d2976efe9
 </mapper>
