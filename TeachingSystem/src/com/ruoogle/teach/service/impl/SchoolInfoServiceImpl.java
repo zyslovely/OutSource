@@ -9,12 +9,16 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.eason.web.util.ListUtils;
+import com.ruoogle.teach.mapper.ClassMapper;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.mapper.SchoolInfoJoinMapper;
 import com.ruoogle.teach.mapper.SchoolInfoMapper;
+import com.ruoogle.teach.mapper.SpecialtyMapper;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
 import com.ruoogle.teach.meta.SchoolInfoJoin;
+import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
@@ -32,6 +36,11 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 
 	@Resource
 	private ProfileMapper profileMapper;
+
+	@Resource
+	private ClassMapper classMapper;
+	@Resource
+	private SpecialtyMapper specialtyMapper;
 
 	/*
 	 * (non-Javadoc)
@@ -195,5 +204,51 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		schoolInfoJoin.setPhoneNum(phoneNum);
 		schoolInfoJoin.setGraduateSch(graduateSch);
 		return schoolInfoJoinMapper.addSchoolInfoJoin(schoolInfoJoin) > 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.SchoolInfoService#getSchoolInfoJoinsByInfoId
+	 * (long, int, int)
+	 */
+	public List<SchoolInfoJoin> getSchoolInfoJoinsByInfoId(long infoId,
+			int limit, int offset) {
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		if (schoolInfo == null) {
+			return null;
+		}
+		if (schoolInfo.getType() == SchoolInfoType.school.getValue()) {
+			return schoolInfoJoinMapper.getSchoolInfoJoinList(infoId, limit,
+					offset);
+		} else {
+			List<SchoolInfoJoin> schoolInfoJoins = schoolInfoJoinMapper
+					.getSchoolInfoJoinList(infoId, limit, offset);
+			if (ListUtils.isEmptyList(schoolInfoJoins)) {
+				return null;
+			}
+			for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+				Profile profile = profileMapper.getProfile(schoolInfoJoin
+						.getUserId());
+				if (profile == null) {
+					break;
+				}
+				schoolInfoJoin.setName(profile.getName());
+				com.ruoogle.teach.meta.Class class1 = classMapper
+						.getClassById(profile.getClassId());
+				if (class1 != null) {
+					Specialty specialty = specialtyMapper
+							.getSpecialtyById(class1.getSpecialtyId());
+					if (specialty != null) {
+						schoolInfoJoin.setClassName(class1.getName());
+						schoolInfoJoin.setSpecialtyName(specialty
+								.getSpecialty());
+					}
+				}
+			}
+			return schoolInfoJoins;
+		}
+
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.SchoolInfoJoin;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -37,4 +38,7 @@ public interface SchoolInfoService {
 
 	public boolean joinSchoolInfo(long infoId, String name, String origin,
 			long phoneNum, String graduateSch);
+
+	public List<SchoolInfoJoin> getSchoolInfoJoinsByInfoId(long infoId,
+			int limit, int offset);
 }

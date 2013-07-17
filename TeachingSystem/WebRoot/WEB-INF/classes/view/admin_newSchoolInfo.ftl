@@ -14,6 +14,7 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
+   <#if infoId<0>
    <#if schoolInfos?exists>
    
    <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
@@ -32,7 +33,7 @@ body{min-width:1024px;min-height:600px}
                
                <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">
                <#if schoolInfo.infoType==1>
-               <a href="javascript:void(0);" onClick="" >人员名单</a>
+               <a href="/teach/admin/schoolInfo/list/?infoId=${schoolInfo.id!0}&type=${schoolInfo.type!0}" >人员名单</a>
                </#if>
                <a href="javascript:void(0);" onClick="" >删除</a>
                </th>
@@ -83,7 +84,44 @@ body{min-width:1024px;min-height:600px}
        </table>
    </div>
    </div>
-       
+   <#else>
+   <#if schoolInfoJoins?exists>
+   <table  cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
+       <thead style="height:60px;">
+            <tr>
+               <#if type==0>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">姓名</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">联系方式</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">初中毕业学校</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">籍贯</th>
+               <#else>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">姓名</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">联系方式</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">班级</th>
+                  <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">专业</th>
+                  
+               </#if>
+            </tr>
+       </thead>
+       <tbody  style="font-size: 16px;">
+            <#list schoolInfoJoins as schoolInfoJoin>
+            <tr style="">
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.name!""}</th>
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.phoneNum!0}</th>
+               <#if type==0>
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.graduateSch!0}</th>
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.origin!""}</th>
+               <#else>
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.className!""}</th>
+                   <th class="f3" style="color: rgb(139, 139, 139);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">${schoolInfoJoin.specialtyName!""}</th>
+               </#if>
+            </tr>
+            </#list>
+       </tbody>
+   </table> 
+   <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
+   </#if>
+   </#if>
 </body>
 </html>
 </#escape>

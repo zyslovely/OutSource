@@ -27,6 +27,7 @@ import com.ruoogle.teach.meta.CoursePercentTypeDemo;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SchoolInfo;
+import com.ruoogle.teach.meta.SchoolInfoJoin;
 import com.ruoogle.teach.meta.Semester;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.meta.Teach;
@@ -232,30 +233,53 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 	public ModelAndView showAddSchoolInfo(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("admin_newSchoolInfo");
+		long infoId = ServletRequestUtils.getLongParameter(request, "infoId",
+				-1L);
 		int limit = 10;
 		int page = ServletRequestUtils.getIntParameter(request, "page", 0);
 		if (page <= 0) {
 			page = 1;
 		}
-		int type = ServletRequestUtils.getIntParameter(request, "type", 0); // 校园信息还是学院信息
 		mv.addObject("page", page);
 		mv.addObject("limit", limit);
+		mv.addObject("infoId", infoId);
+		int type = ServletRequestUtils.getIntParameter(request, "type", 0); // 校园信息还是学院信息
+
 		mv.addObject("type", type);
-		List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(
-				limit, (page - 1) * limit, type, -1);
-		if (!ListUtils.isEmptyList(schoolInfos)) {
-			mv.addObject("schoolInfos", schoolInfos);
+		if (infoId > 0) {
+			List<SchoolInfoJoin> schoolInfoJoins = schoolInfoService
+					.getSchoolInfoJoinsByInfoId(infoId, limit, (page - 1)
+							* limit);
+			mv.addObject("schoolInfoJoins", schoolInfoJoins);
+			List<SchoolInfoJoin> totalSchoolInfos = schoolInfoService
+					.getSchoolInfoJoinsByInfoId(infoId, 0, -1 * limit);
+			int totalCount = ListUtils.isEmptyList(totalSchoolInfos) ? 0
+					: totalSchoolInfos.size();
+			if (totalCount % limit == 0) {
+				mv.addObject("totalCount", totalCount / limit);
+			} else {
+				mv.addObject("totalCount", totalCount / limit + 1);
+			}
+		} else {
+
+
+			List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(
+					limit, (page - 1) * limit, type, -1);
+			if (!ListUtils.isEmptyList(schoolInfos)) {
+				mv.addObject("schoolInfos", schoolInfos);
+			}
+
+			List<SchoolInfo> totalSchoolInfos = schoolInfoService
+					.getSchoolInfoList(0, -1, type, -1);
+			int totalCount = ListUtils.isEmptyList(totalSchoolInfos) ? 0
+					: totalSchoolInfos.size();
+			if (totalCount % limit == 0) {
+				mv.addObject("totalCount", totalCount / limit);
+			} else {
+				mv.addObject("totalCount", totalCount / limit + 1);
+			}
 		}
 
-		List<SchoolInfo> totalSchoolInfos = schoolInfoService
-				.getSchoolInfoList(0, -1, type, -1);
-		int totalCount = ListUtils.isEmptyList(totalSchoolInfos) ? 0
-				: totalSchoolInfos.size();
-		if (totalCount % limit == 0) {
-			mv.addObject("totalCount", totalCount / limit);
-		} else {
-			mv.addObject("totalCount", totalCount / limit + 1);
-		}
 		this.setUD(mv, request);
 		return mv;
 	}

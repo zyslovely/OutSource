@@ -13,6 +13,10 @@ public class SchoolInfoJoin implements Serializable {
 	private long phoneNum;
 	private long createTime;
 
+	private String className;
+
+	private String specialtyName;
+
 	public long getId() {
 		return id;
 	}
@@ -75,6 +79,22 @@ public class SchoolInfoJoin implements Serializable {
 
 	public long getPhoneNum() {
 		return phoneNum;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public String getSpecialtyName() {
+		return specialtyName;
+	}
+
+	public void setSpecialtyName(String specialtyName) {
+		this.specialtyName = specialtyName;
 	}
 
 }
