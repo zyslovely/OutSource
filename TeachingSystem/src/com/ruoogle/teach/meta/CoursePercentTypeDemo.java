@@ -27,14 +27,17 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 0;
 			}
 
+			@Override
 			public String getName() {
 				return "平时成绩";
 			}
 
+			@Override
 			public String getDesc() {
 				return "平时成绩的描述";
 			}
 
+			@Override
 			public int getObjectCount() {
 				return 0;
 			}
@@ -48,14 +51,17 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 1;
 			}
 
+			@Override
 			public String getName() {
 				return "考试成绩";
 			}
 
+			@Override
 			public String getDesc() {
 				return "考试成绩描述";
 			}
 
+			@Override
 			public int getObjectCount() {
 				return 0;
 			}
@@ -69,14 +75,17 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 2;
 			}
 
+			@Override
 			public String getName() {
 				return "多次平时成绩";
 			}
 
+			@Override
 			public String getDesc() {
 				return "多次平时成绩描述";
 			}
 
+			@Override
 			public int getObjectCount() {
 				return 8;
 			}
@@ -90,14 +99,17 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 3;
 			}
 
+			@Override
 			public String getName() {
 				return "创意成绩";
 			}
 
+			@Override
 			public String getDesc() {
 				return "创意成绩描述";
 			}
 
+			@Override
 			public int getObjectCount() {
 				return 0;
 			}
@@ -111,14 +123,17 @@ public class CoursePercentTypeDemo implements Serializable {
 				return 4;
 			}
 
+			@Override
 			public String getName() {
 				return "团队互评成绩";
 			}
 
+			@Override
 			public String getDesc() {
 				return "团队互评描述";
 			}
 
+			@Override
 			public int getObjectCount() {
 				return 0;
 			}

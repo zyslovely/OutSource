@@ -27,4 +27,13 @@ public interface SchoolInfoMapper {
 	 * @return
 	 */
 	public SchoolInfo getSchoolInfoById(@Param(value = "id") long id);
+
+	/**
+	 * 结束校园活动
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public int finishSchoolInfo(@Param(value = "id") long id,
+			@Param(value = "status") long status);
 }

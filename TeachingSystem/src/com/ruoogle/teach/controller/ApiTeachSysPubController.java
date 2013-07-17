@@ -118,6 +118,8 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 					schoolInfo.getCreateTime());
 			schoolInfoObject.put(SchoolInfo.KSchoolInfo_joined,
 					schoolInfo.getJoined());
+			schoolInfoObject.put(SchoolInfo.KSchoolInfo_status,
+					schoolInfo.getStatus());
 			dataObject.put("schoolInfo", schoolInfoObject.toString());
 		}
 
@@ -179,6 +181,8 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 						schoolInfo.getCreateTime());
 				schoolInfoObject.put(SchoolInfo.KSchoolInfo_joined,
 						schoolInfo.getJoined());
+				schoolInfoObject.put(SchoolInfo.KSchoolInfo_status,
+						schoolInfo.getStatus());
 				schoolInfoArray.add(schoolInfoObject);
 			}
 		}

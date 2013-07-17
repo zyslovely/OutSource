@@ -235,6 +235,7 @@ public class CourseServiceImpl implements CourseService {
 	 * @see com.ruoogle.teach.service.CourseService#checkIsAllScoreOut(long,
 	 * long)
 	 */
+	@Override
 	public boolean checkIsAllScoreOut(long courseId, long studentId) {
 		List<CourseScorePercent> list = courseScorePercentMapper
 				.getCourseScorePercentListByCourseId(courseId);
@@ -255,6 +256,7 @@ public class CourseServiceImpl implements CourseService {
 	 * com.ruoogle.teach.service.CourseService#checkIsAllScoreInsertFinished
 	 * (long)
 	 */
+	@Override
 	public boolean checkIsAllScoreInsertFinished(long courseId) {
 		List<CourseStudent> courseStudents = courseStudentMapper
 				.getCourseStudentsByCourseId(courseId);
@@ -1148,6 +1150,7 @@ public class CourseServiceImpl implements CourseService {
 	 * com.ruoogle.teach.service.CourseService#getCourseTotalSemesterCount(long,
 	 * long)
 	 */
+	@Override
 	public int getCourseTotalSemesterCount(long userId, long semesterId) {
 
 		List<CourseStudent> courseStudentList = courseStudentMapper

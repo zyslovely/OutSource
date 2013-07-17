@@ -9,7 +9,7 @@
 		<result property="infoType" column="infoType" />
 		<result property="sImgUrl" column="sImgUrl" />
 		<result property="bImgUrl" column="bImgUrl" />
-
+		<result property="status" column="status" />
 	</resultMap>
 
 	<insert id="addSchoolInfo" parameterType="SchoolInfo">
@@ -17,7 +17,7 @@
 		(
 		title,content,CreateTime,type,infoType,sImgUrl,bImgUrl
 		)VALUES(
-		#{title},#{content},#{CreateTime},#{type},#{infoType},#{sImgUrl},#{bImgUrl}
+		#{title},#{content},#{CreateTime},#{type},#{infoType},#{sImgUrl},#{bImgUrl},#{status}
 		)
 		<selectKey keyProperty="id" resultType="long">
 			SELECT
@@ -43,4 +43,14 @@
 		WHERE id=#{id}
 		;
 	</select>
+
+	<update id="finishSchoolInfo" flushCache="true"
+		parameterType="CourseStudentPropertySemesterScore" statementType="PREPARED">
+		UPDATE
+		TB_School_Info
+		set
+		status=#{status}
+		WHERE
+		id =#{id};
+		</update>
 </mapper>
