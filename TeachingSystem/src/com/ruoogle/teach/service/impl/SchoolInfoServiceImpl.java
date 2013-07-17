@@ -106,32 +106,6 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.ruoogle.teach.service.SchoolInfoService#joinSchoolInfo(long,
-	 * long)
-	 */
-	@Override
-	public boolean joinSchoolInfo(long userId, long infoId) {
-
-		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
-				.getSchoolInfoJoinByUser(infoId, userId);
-		if (schoolInfoJoin != null) {
-			return true;
-		}
-		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
-		// 判断是否可以加入
-		if (schoolInfo.getInfoType() == 0) {
-			return false;
-		}
-		schoolInfoJoin = new SchoolInfoJoin();
-		schoolInfoJoin.setCreateTime(new Date().getTime());
-		schoolInfoJoin.setUserId(userId);
-		schoolInfoJoin.setInfoId(infoId);
-		return schoolInfoJoinMapper.addSchoolInfoJoin(schoolInfoJoin) > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.ruoogle.teach.service.SchoolInfoService#getJoinedSchoolInfoUserList
 	 * (int, int, int)
@@ -174,6 +148,52 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 			return false;
 		}
 		int status = SchoolInfo.SchoolInfoStatus.finished.getValue();
-		return schoolInfoMapper.finishSchoolInfo(infoId,status) > 0;
+		return schoolInfoMapper.finishSchoolInfo(infoId, status) > 0;
+	}
+
+	@Override
+	public boolean joinSchoolInfo(long userId, long infoId, long phoneNum) {
+		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+				.getSchoolInfoJoinByUser(infoId, userId);
+		if (schoolInfoJoin != null) {
+			return true;
+		}
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		// 判断是否可以加入
+		if (schoolInfo.getInfoType() == 0) {
+			return false;
+		}
+		schoolInfoJoin = new SchoolInfoJoin();
+		schoolInfoJoin.setCreateTime(new Date().getTime());
+		schoolInfoJoin.setUserId(userId);
+		schoolInfoJoin.setInfoId(infoId);
+		schoolInfoJoin.setName("");
+		schoolInfoJoin.setOrigin("");
+		schoolInfoJoin.setPhoneNum(phoneNum);
+		schoolInfoJoin.setGraduateSch("");
+		return schoolInfoJoinMapper.addSchoolInfoJoin(schoolInfoJoin) > 0;
+	}
+
+	@Override
+	public boolean joinSchoolInfo(long infoId, String name, String origin,
+			long phoneNum, String graduateSch) {
+		SchoolInfoJoin schoolInfoJoin = schoolInfoJoinMapper
+				.getSchoolInfoJoinByName(infoId, name, phoneNum);
+		if (schoolInfoJoin != null) {
+			return true;
+		}
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		// 判断是否可以加入
+		if (schoolInfo.getInfoType() == 0) {
+			return false;
+		}
+		schoolInfoJoin = new SchoolInfoJoin();
+		schoolInfoJoin.setCreateTime(new Date().getTime());
+		schoolInfoJoin.setInfoId(infoId);
+		schoolInfoJoin.setName(name);
+		schoolInfoJoin.setOrigin(origin);
+		schoolInfoJoin.setPhoneNum(phoneNum);
+		schoolInfoJoin.setGraduateSch(graduateSch);
+		return schoolInfoJoinMapper.addSchoolInfoJoin(schoolInfoJoin) > 0;
 	}
 }

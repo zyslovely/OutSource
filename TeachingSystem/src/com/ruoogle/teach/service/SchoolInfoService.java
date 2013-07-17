@@ -24,8 +24,6 @@ public interface SchoolInfoService {
 	public List<SchoolInfo> getSchoolInfoList(int limit, int offset, int type,
 			long userId);
 
-	public boolean joinSchoolInfo(long userId, long infoId);
-
 	public List<Profile> getJoinedSchoolInfoUserList(int limit, int offset,
 			long infoId);
 
@@ -34,4 +32,9 @@ public interface SchoolInfoService {
 	public boolean removeSchoolInfo(long userId, long infoId, long adminId);
 
 	public boolean finishSchoolInfo(long infoId, long userId);
+
+	public boolean joinSchoolInfo(long userId, long infoId, long phoneNum);
+
+	public boolean joinSchoolInfo(long infoId, String name, String origin,
+			long phoneNum, String graduateSch);
 }
