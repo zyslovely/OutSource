@@ -402,6 +402,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return modelAndView;
 	}
 
+	/**
+	 * 添加反馈
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public ModelAndView addFeedBack(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
