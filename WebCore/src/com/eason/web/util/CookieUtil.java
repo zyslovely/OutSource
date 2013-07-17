@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 
 /**
@@ -17,6 +18,8 @@ import org.apache.log4j.Logger;
 public class CookieUtil {
 	private static final Logger logger = Logger.getLogger(CookieUtil.class);
 	public static final String PARA_LOGIN_COOKIE = "Login_PassPort";
+
+	public static final String USER_COOKIE_STRING = "User_Cookie";
 
 	private static String DEFAULT_DOMAIN = "outsource.qiqunar.com.cn";
 
@@ -31,7 +34,8 @@ public class CookieUtil {
 	 *            获取的默认值
 	 * @return
 	 */
-	public static String getCookieValue(HttpServletRequest request, String cookieName, String defaultValue) {
+	public static String getCookieValue(HttpServletRequest request,
+			String cookieName, String defaultValue) {
 		Cookie[] cookieList = request.getCookies();
 		if (cookieList == null || cookieName == null)
 			return defaultValue;
@@ -76,7 +80,8 @@ public class CookieUtil {
 	 * @param maxAge
 	 *            最大有效时间
 	 */
-	public static void setCookieMaxAge(HttpServletRequest request, HttpServletResponse response, String cookieName, int maxAge) {
+	public static void setCookieMaxAge(HttpServletRequest request,
+			HttpServletResponse response, String cookieName, int maxAge) {
 		Cookie[] cookieList = request.getCookies();
 
 		for (int i = 0; i < cookieList.length; i++) {
@@ -98,10 +103,12 @@ public class CookieUtil {
 	 * @param cookieValue
 	 *            cookie值
 	 */
-	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue) {
+	public static void setCookie(HttpServletResponse response,
+			String cookieName, String cookieValue) {
 		Cookie theCookie = null;
 		try {
-			theCookie = new Cookie(java.net.URLEncoder.encode(cookieName, "UTF-8"), cookieValue);
+			theCookie = new Cookie(java.net.URLEncoder.encode(cookieName,
+					"UTF-8"), cookieValue);
 		} catch (UnsupportedEncodingException e) {
 			logger.error("setCookie(HttpServletResponse, String, String)", e);
 		}
@@ -123,7 +130,8 @@ public class CookieUtil {
 	 * @param cookieMaxage
 	 *            最大有效时间
 	 */
-	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue, int cookieMaxage) {
+	public static void setCookie(HttpServletResponse response,
+			String cookieName, String cookieValue, int cookieMaxage) {
 		setCookie(response, cookieName, cookieValue, null, cookieMaxage);
 	}
 
@@ -141,13 +149,17 @@ public class CookieUtil {
 	 * @param cookieMaxage
 	 *            最大有效时间
 	 */
-	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue, String domain, int cookieMaxage) {
+	public static void setCookie(HttpServletResponse response,
+			String cookieName, String cookieValue, String domain,
+			int cookieMaxage) {
 		if (cookieName != null && cookieValue != null) {
 			Cookie theCookie = null;
 			try {
-				theCookie = new Cookie(java.net.URLEncoder.encode(cookieName, "UTF-8"), cookieValue);
+				theCookie = new Cookie(java.net.URLEncoder.encode(cookieName,
+						"UTF-8"), cookieValue);
 			} catch (UnsupportedEncodingException e) {
-				logger.error("setCookie(HttpServletResponse, String, String, int)", e); //$NON-NLS-1$
+				logger.error(
+						"setCookie(HttpServletResponse, String, String, int)", e); //$NON-NLS-1$
 			}
 			if (theCookie != null) {
 				theCookie.setPath("/");
@@ -165,8 +177,30 @@ public class CookieUtil {
 	public static boolean needAutoLogin(HttpServletRequest request) {
 		Cookie cookie = CookieUtil.getCookie(request, PARA_LOGIN_COOKIE);
 		if (cookie == null) {
-			String cookieValue = CookieUtil.getCookieValue(request, PARA_LOGIN_COOKIE, null);
+			String cookieValue = CookieUtil.getCookieValue(request,
+					PARA_LOGIN_COOKIE, null);
 			return StringUtils.isNotBlank(cookieValue);
+		}
+		return false;
+	}
+
+	/**
+	 * 删除cookie
+	 * 
+	 * @param request
+	 * @param name
+	 * @return
+	 */
+	public static boolean removeCookie(HttpServletRequest request, String name) {
+		Cookie[] cookies = request.getCookies();
+		if (ArrayUtils.isEmpty(cookies)) {
+			return true;
+		}
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals(name)) {
+				cookie.setMaxAge(0);
+				return true;
+			}
 		}
 		return false;
 	}
