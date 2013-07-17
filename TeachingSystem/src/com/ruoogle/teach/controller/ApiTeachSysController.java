@@ -22,6 +22,7 @@ import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
+import com.ruoogle.teach.meta.Class;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
@@ -589,6 +590,39 @@ public class ApiTeachSysController extends AbstractBaseController {
 			logger.info(specialtyArray.toString());
 		}
 		dataObject.put("specialtyList", specialtyArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView getAllClassBySpecialtyId(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		long specialtyId = ServletRequestUtils.getLongParameter(request,
+				"specialtyId", -1L);
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONObject dataObject = new JSONObject();
+		JSONArray specialtyClassArray = new JSONArray();
+		List<com.ruoogle.teach.meta.Class> classList = classService
+				.getClassListBySpecialty(specialtyId);
+		if (!ListUtils.isEmptyList(classList)) {
+			for (com.ruoogle.teach.meta.Class specialtyClass : classList) {
+				JSONObject specialtyClassObject = new JSONObject();
+				specialtyClassObject.put("name", specialtyClass.getName());
+				specialtyClassObject.put("specialtyClass",
+						specialtyClass.getSpecialty());
+				specialtyClassObject.put("shortSpecialty",
+						specialtyClass.getShortSpecialty());
+				specialtyClassArray.add(specialtyClassObject);
+			}
+			logger.info(specialtyClassArray.toString());
+		}
+		dataObject.put("specialtyClassList", specialtyClassArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,

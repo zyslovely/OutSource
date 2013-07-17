@@ -4,22 +4,17 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 /**
- * 登录
  * 
- * @author zhengeason
- * 
+ * @ClassName: TestGetAllClass
+ * @Description: TODO
+ * @author yunshang_734@163.com
+ * @date 2013-7-18 上午01:21:38
  */
-public class TestLogin {
-
+public class TestGetAllClass {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/login/?username=admin&password=admin";
-		// Get file to be posted
+		String strURL = "http://teach.zys-wings.com/teach/api/ckass/list/?specialtyId=1&token=vzMiFI7h8erVF6%2FYIqD1S87c6M%2B5j9Yq";
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
-		// post.setRequestHeader(
-		// "Authorization",
-		// "token=\"U7elprSC7LZEc2ibVuappkxmFwPMkzImN.a0RtmqkwPmt.nVltzn6daMtalk_Wp7uiHM._jH_NNPZAlDqlcNKu5XWm0aokHOCMRfNVgz.jvq5CYW86MsP7qUHHEuWlfkp\"");
-
 		try {
 			int result = httpclient.executeMethod(post);
 			System.out.println("the result of post : " + result);
