@@ -31,7 +31,8 @@ public class HttpReturn {
 				courseObject.put(CourseVO.KCourse_title, course.getCourse()
 						.getName());
 				courseObject.put(CourseVO.KCoursec_className, course
-						.getClass1().getName());
+						.getClass1().getShortSpecialty()
+						+ course.getClass1().getName());
 				courseObject.put(CourseVO.KCoursec_courseId, course.getCourse()
 						.getId());
 				courseObject.put(CourseVO.KCoursec_score, course.getScore());
