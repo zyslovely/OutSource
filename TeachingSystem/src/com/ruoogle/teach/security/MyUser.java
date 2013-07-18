@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import com.eason.web.util.CookieUtil;
 import com.eason.web.util.DesUtil;
+import com.ruoogle.teach.controller.ApiTeachSysController;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -17,7 +19,7 @@ import com.eason.web.util.DesUtil;
  * @see Class Description
  */
 public class MyUser {
-
+	private static final Logger logger = Logger.getLogger(MyUser.class);
 	private long userId;
 	private int level;
 	private String sessionStr;
@@ -93,10 +95,12 @@ public class MyUser {
 		if (token == null) {
 			return -1;
 		}
+		logger.info("getMyUserFromToken token=" + token);
 		String[] tokens = MyUser.getTokens(token);
 		if (ArrayUtils.isEmpty(tokens)) {
 			return -1;
 		}
+		logger.info("getMyUserFromToken token[0]=" + tokens[0]);
 		return Long.valueOf(tokens[0]);
 
 	}
