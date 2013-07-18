@@ -1,5 +1,6 @@
 package com.ruoogle.teach.controller;
 
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseVO;
@@ -37,6 +39,7 @@ import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
+import com.ruoogle.teach.service.InteractiveService;
 import com.ruoogle.teach.service.SchoolInfoService;
 
 /**
@@ -54,6 +57,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 	private ClassService classService;
 	@Resource
 	private SchoolInfoService schoolInfoService;
+	@Resource
+	private InteractiveService interactiveService;
 
 	/**
 	 * 课程列表
@@ -657,6 +662,17 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 
+	 * @Title: getPropertyList
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
 	public ModelAndView getPropertyList(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -678,6 +694,66 @@ public class ApiTeachSysController extends AbstractBaseController {
 			logger.info(propertyArray.toString());
 		}
 		dataObject.put("propertyList", propertyArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: showEachStudentScoreView
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView showEachStudentScoreView(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONObject dataObject = new JSONObject();
+		JSONArray coursePercentTypeGroupStudentArray = new JSONArray();
+		long fromStudentId = MyUser.getMyUserFromToken(request);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		if (courseId < 0) {
+			try {
+				response.sendRedirect("/teach/index/");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		List<CoursePercentTypeGroupStudentVO> coursePercentTypeGroupStudentVO = courseService
+				.getCoursePercentTypeGroupStudentScoresFromStudentID(
+						fromStudentId, courseId);
+
+		if (!ListUtils.isEmptyList(coursePercentTypeGroupStudentVO)) {
+			for (CoursePercentTypeGroupStudentVO coursePercentTypeGroupStudent : coursePercentTypeGroupStudentVO) {
+				JSONObject coursePercentTypeGroupStudentObject = new JSONObject();
+				coursePercentTypeGroupStudentObject.put("userId",
+						coursePercentTypeGroupStudent.getUserId());
+				coursePercentTypeGroupStudentObject.put("name",
+						coursePercentTypeGroupStudent.getName());
+				coursePercentTypeGroupStudentObject.put("score",
+						coursePercentTypeGroupStudent.getScore());
+				coursePercentTypeGroupStudentObject.put("groupId",
+						coursePercentTypeGroupStudent.getGroupId());
+				coursePercentTypeGroupStudentArray
+						.add(coursePercentTypeGroupStudentObject);
+			}
+			logger.info(coursePercentTypeGroupStudentArray.toString());
+		}
+		dataObject.put("coursePercentTypeGroupStudentVOList",
+				coursePercentTypeGroupStudentArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
