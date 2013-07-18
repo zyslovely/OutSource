@@ -599,6 +599,17 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 
+	 * @Title: getAllClassBySpecialtyId
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
 	public ModelAndView getAllClassBySpecialtyId(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -623,6 +634,36 @@ public class ApiTeachSysController extends AbstractBaseController {
 			logger.info(specialtyClassArray.toString());
 		}
 		dataObject.put("specialtyClassList", specialtyClassArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				dataObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView getPropertyList(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONObject dataObject = new JSONObject();
+		JSONArray propertyArray = new JSONArray();
+		List<CourseProperty> propertyList = courseService
+				.getAllCourseProperties();
+		if (!ListUtils.isEmptyList(propertyList)) {
+			for (CourseProperty property : propertyList) {
+				JSONObject propertyObject = new JSONObject();
+				propertyObject.put(CourseProperty.KCourseProperty_id,
+						property.getId());
+				propertyObject.put(CourseProperty.KCourseProperty_name,
+						property.getName());
+				propertyArray.add(propertyObject);
+			}
+			logger.info(propertyArray.toString());
+		}
+		dataObject.put("propertyList", propertyArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
