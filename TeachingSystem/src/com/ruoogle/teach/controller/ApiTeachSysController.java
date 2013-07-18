@@ -12,6 +12,8 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -915,40 +917,88 @@ public class ApiTeachSysController extends AbstractBaseController {
 			logger.info(returnObject.toString());
 			return mv;
 		}
-		feedbackObject.put("id", feedBack.getId());
-		feedbackObject.put("fromUserId", feedBack.getFromUserId());
-		feedbackObject.put("toUserId", feedBack.getToUserId());
-		feedbackObject.put("content", feedBack.getContent());
-		feedbackObject.put("createTime", feedBack.getCreateTime());
-		feedbackObject.put("courseId", feedBack.getCourseId());
-		feedbackObject.put("status", feedBack.getStatus());
-		feedbackObject.put("feedbackId", feedBack.getFeedbackId());
-		feedbackObject.put("fromName", feedBack.getFromName());
-		feedbackObject.put("toName", feedBack.getToName());
-		feedbackObject.put("createTimeStr", feedBack.getCreateTime());
+		feedbackObject.put(FeedBack.KFeedBack_id, feedBack.getId());
+		feedbackObject.put(FeedBack.KFeedBack_fromUserId,
+				feedBack.getFromUserId());
+		feedbackObject.put(FeedBack.KFeedBack_toUserId, feedBack.getToUserId());
+		feedbackObject.put(FeedBack.KFeedBack_content, feedBack.getContent());
+		if (feedBack.getCourse() != null) {
+			feedbackObject.put("courseName", feedBack.getCourse().getName());
+		}
+		feedbackObject.put(FeedBack.KFeedBack_status, feedBack.getStatus());
+		feedbackObject.put(FeedBack.KFeedBack_feedbackId,
+				feedBack.getFeedbackId());
+		feedbackObject.put(FeedBack.KFeedBack_fromName, feedBack.getFromName());
+		feedbackObject.put(FeedBack.KFeedBack_toName, feedBack.getToName());
+		feedbackObject.put(FeedBack.KFeedBack_createTimeStr,
+				feedBack.getCreateTime());
 		returnArray.add(feedbackObject);
 		List<FeedBack> feedBacks = feedBackService
 				.getFeedBackListByFeedBackId(feedBack.getId());
 		if (!ListUtils.isEmptyList(feedBacks)) {
 			for (FeedBack feedback : feedBacks) {
 				JSONObject feedbackObject2 = new JSONObject();
-				feedbackObject2.put("id", feedback.getId());
-				feedbackObject2.put("fromUserId", feedback.getFromUserId());
-				feedbackObject2.put("toUserId", feedback.getToUserId());
-				feedbackObject2.put("content", feedback.getContent());
-				feedbackObject2.put("createTime", feedback.getCreateTime());
-				feedbackObject2.put("courseId", feedback.getCourseId());
-				feedbackObject2.put("status", feedback.getStatus());
-				feedbackObject2.put("feedbackId", feedback.getFeedbackId());
-				feedbackObject2.put("fromName", feedback.getFromName());
-				feedbackObject2.put("toName", feedback.getToName());
-				feedbackObject2.put("createTimeStr", feedback.getCreateTime());
+				feedbackObject2.put(FeedBack.KFeedBack_id, feedback.getId());
+				feedbackObject2.put(FeedBack.KFeedBack_fromUserId,
+						feedback.getFromUserId());
+				feedbackObject2.put(FeedBack.KFeedBack_toUserId,
+						feedback.getToUserId());
+				feedbackObject2.put(FeedBack.KFeedBack_content,
+						feedback.getContent());
+				if (feedback.getCourse() != null) {
+					feedbackObject2.put("courseName", feedback.getCourse()
+							.getName());
+				}
+				feedbackObject2.put(FeedBack.KFeedBack_status,
+						feedback.getStatus());
+				feedbackObject2.put(FeedBack.KFeedBack_feedbackId,
+						feedback.getFeedbackId());
+				feedbackObject2.put(FeedBack.KFeedBack_fromName,
+						feedback.getFromName());
+				feedbackObject2.put(FeedBack.KFeedBack_toName,
+						feedback.getToName());
+				feedbackObject2.put(FeedBack.KFeedBack_createTimeStr,
+						feedback.getCreateTime());
 				returnArray.add(feedbackObject2);
 			}
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
 		returnObject.put("feedbackList", returnArray.toString());
 		mv.addObject("feedBackList", returnObject);
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView addForward(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long forwardId = ServletRequestUtils.getLongParameter(request,
+				"forwardId", -1L);
+
+		if (StringUtils.isEmpty(content)) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService
+				.addForward(forwardId, content, userId);
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return mv;
 	}
