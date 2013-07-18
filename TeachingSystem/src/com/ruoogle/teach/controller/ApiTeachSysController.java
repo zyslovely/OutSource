@@ -24,6 +24,7 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
@@ -761,5 +762,61 @@ public class ApiTeachSysController extends AbstractBaseController {
 		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return mv;
+	}
+
+	public ModelAndView addGroupScore(HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(request.getSession().getId());
+
+		long toUserId = ServletRequestUtils.getLongParameter(request,
+				"toUserId", -1L);
+		long groupId = ServletRequestUtils.getLongParameter(request, "groupId",
+				-1L);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		long score = ServletRequestUtils.getLongParameter(request, "score", 1L);
+		long fromUserId = MyUser.getMyUserFromToken(request);
+
+		ModelAndView modelAndView = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+
+		if (toUserId < 0 || courseId < 0 || score < 0 || groupId < 0
+				|| fromUserId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentList = courseService
+				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
+						groupId);
+		int both = 2, n = 0;
+		for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudentList) {
+			if (coursePercentTypeGroupStudent.getStudentId() == toUserId
+					|| coursePercentTypeGroupStudent.getStudentId() == fromUserId) {
+				n++;
+			}
+		}
+		if (n != both) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			modelAndView.addObject("returnObject", returnObject.toString());
+			return modelAndView;
+		}
+
+		boolean succ = courseService.addGroupScore(toUserId, courseId, groupId,
+				score, fromUserId);
+
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		modelAndView.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return modelAndView;
 	}
 }

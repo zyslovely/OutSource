@@ -10,7 +10,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.ServletRequestUtils;
 
-import com.eason.web.util.Base64Util;
 import com.eason.web.util.CookieUtil;
 import com.eason.web.util.DesUtil;
 

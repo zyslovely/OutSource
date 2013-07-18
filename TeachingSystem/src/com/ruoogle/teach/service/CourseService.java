@@ -333,4 +333,18 @@ public interface CourseService {
 			long courseId, long userId);
 
 	public List<CourseStudent> getCourseStudentByCourseId(long courseId);
+
+	/**
+	 * 
+	 * @Title: getCoursePercentTypeGroupStudentListByGroupId
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @param @param courseId
+	 * @param @param groupId
+	 * @param @return
+	 * @return List<CoursePercentTypeGroupStudent>
+	 * @throws
+	 */
+	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(
+			long courseId, long groupId);
 }
