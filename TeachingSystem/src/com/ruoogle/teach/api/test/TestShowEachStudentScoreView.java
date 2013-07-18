@@ -12,7 +12,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
  */
 public class TestShowEachStudentScoreView {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/eachStudent/score/?courseId=10018&token=aERxZzhLVmtKbHkzTGxlNTYlMkI2elIweEE4NVJQeHZpNA==";
+		String strURL = "http://teach.zys-wings.com/teach/api/eachStudent/score/?courseId=10018&token=aERxZzhLVmtKbHdlaGYxUXJ0dE01cWlRNzROWHNJeCUyRg==";
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
 		try {

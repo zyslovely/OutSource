@@ -5,7 +5,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TestAddGroupScore {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/Group/score/?toUserId=25&groupId=2&courseId=1&score=80&token=K4jIwMtWxQ%2FOcLVjQF6dCAn2jKI88I2T";
+		String strURL = "http://teach.zys-wings.com/teach/api/group/score/?toUserId=264&groupId=10002&courseId=10018&score=80&token=aERxZzhLVmtKbHdlaGYxUXJ0dE01cWlRNzROWHNJeCUyRg==";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
