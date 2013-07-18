@@ -15,9 +15,21 @@ public class FeedBack implements Serializable {
 	private long feedbackId;
 	private String fromName;
 	private String toName;
-	
 	private String createTimeStr;
 	private Course course;
+
+	public static final String KFeedBack_id = "id";
+	public static final String KFeedBack_fromUserId = "fromUserId";
+	public static final String KFeedBack_toUserId = "toUserId";
+	public static final String KFeedBack_content = "content";
+	public static final String KFeedBack_createTime = "createTime";
+	public static final String KFeedBack_courseId = "courseId";
+	public static final String KFeedBack_status = "status";
+	public static final String KFeedBack_feedbackId = "feedbackId";
+	public static final String KFeedBack_fromName = "fromName";
+	public static final String KFeedBack_toName = "toName";
+	public static final String KFeedBack_createTimeStr = "createTimeStr";
+	public static final String KFeedBack_course = "course";
 
 	List<FeedBack> subFeedBackList;
 	public static final int Unread = 1;

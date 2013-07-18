@@ -20,7 +20,8 @@ public interface FeedBackService {
 	 * @param fromUserId
 	 * @return
 	 */
-	public boolean addFeedBack(long toUserId, long feedbackId, String content, long courseId, long fromUserId);
+	public boolean addFeedBack(long toUserId, long feedbackId, String content,
+			long courseId, long fromUserId);
 
 	/**
 	 * 得到未读数量
@@ -40,7 +41,8 @@ public interface FeedBackService {
 	 * @param offset
 	 * @return
 	 */
-	public List<FeedBack> getFeedBackList(long userId, int limit, int offset, long courseId);
+	public List<FeedBack> getFeedBackList(long userId, int limit, int offset,
+			long courseId);
 
 	/**
 	 * 
@@ -51,7 +53,8 @@ public interface FeedBackService {
 	 * @param courseId
 	 * @return
 	 */
-	public int getFeedBackListCount(long userId, int limit, int offset, long courseId);
+	public int getFeedBackListCount(long userId, int limit, int offset,
+			long courseId);
 
 	/**
 	 * 更新已读
@@ -71,7 +74,8 @@ public interface FeedBackService {
 	 * @param offset
 	 * @return
 	 */
-	public List<FeedBack> getFeedBackListFromUserId(long userId, int limit, int offset, long toUserId);
+	public List<FeedBack> getFeedBackListFromUserId(long userId, int limit,
+			int offset, long toUserId);
 
 	/**
 	 * 
@@ -82,5 +86,30 @@ public interface FeedBackService {
 	 * @param toUserId
 	 * @return
 	 */
-	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit, int offset, long toUserId);
+	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit,
+			int offset, long toUserId);
+
+	/**
+	 * 
+	 * @Title: getFeedBack
+	 * @Description: 根据ID获取反馈
+	 * @Auther: yunshang_734@163.com
+	 * @param @param id
+	 * @param @return
+	 * @return FeedBack
+	 * @throws
+	 */
+	public FeedBack getFeedBack(long id);
+
+	/**
+	 * 
+	 * @Title: getFeedBackListByFeedBackId
+	 * @Description: 根据被反馈ID获取反馈
+	 * @Auther: yunshang_734@163.com
+	 * @param @param feedBackId
+	 * @param @return
+	 * @return List<FeedBack>
+	 * @throws
+	 */
+	public List<FeedBack> getFeedBackListByFeedBackId(long feedBackId);
 }

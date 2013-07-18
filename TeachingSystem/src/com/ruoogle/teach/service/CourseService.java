@@ -347,4 +347,9 @@ public interface CourseService {
 	 */
 	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(
 			long courseId, long groupId);
+
+	List<CoursePercentTypeGroup> getCoursePercentTypeGroupByCourseId(
+			long courseId);
+
+	public boolean checkStudentFinishedScoreGroup(long studentId, long courseId);
 }

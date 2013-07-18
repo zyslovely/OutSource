@@ -681,6 +681,7 @@ public class CourseServiceImpl implements CourseService {
 		return courseVOs;
 	}
 
+	@Override
 	public boolean checkStudentFinishedScoreGroup(long studentId, long courseId) {
 
 		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper
@@ -1424,5 +1425,12 @@ public class CourseServiceImpl implements CourseService {
 		return coursePercentTypeGroupStudentMapper
 				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
 						groupId);
+	}
+
+	@Override
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupByCourseId(
+			long courseId) {
+		return coursePercentTypeGroupMapper
+				.getCoursePercentTypeGroupByCourseId(courseId);
 	}
 }

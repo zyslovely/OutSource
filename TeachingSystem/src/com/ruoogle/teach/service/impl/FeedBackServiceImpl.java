@@ -47,18 +47,22 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 * java.lang.String, long, long)
 	 */
 	@Override
-	public boolean addFeedBack(long toUserId, long feedbackId, String content, long courseId, long fromUserId) {
+	public boolean addFeedBack(long toUserId, long feedbackId, String content,
+			long courseId, long fromUserId) {
 		if (toUserId <= 0 && courseId > 0) {
-			List<CourseStudent> courseStudents = courseStudentMapper.getCourseTeacherByCourseId(courseId);
+			List<CourseStudent> courseStudents = courseStudentMapper
+					.getCourseTeacherByCourseId(courseId);
 			if (ListUtils.isEmptyList(courseStudents)) {
 				return false;
 			}
 			for (CourseStudent courseStudent : courseStudents) {
-				this.addAFeedBack(courseStudent.getUserId(), feedbackId, content, courseId, fromUserId);
+				this.addAFeedBack(courseStudent.getUserId(), feedbackId,
+						content, courseId, fromUserId);
 			}
 			return true;
 		} else {
-			return this.addAFeedBack(toUserId, feedbackId, content, courseId, fromUserId);
+			return this.addAFeedBack(toUserId, feedbackId, content, courseId,
+					fromUserId);
 		}
 	}
 
@@ -73,7 +77,8 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 * @param fromUserId
 	 * @return
 	 */
-	private boolean addAFeedBack(long toUserId, long feedbackId, String content, long courseId, long fromUserId) {
+	private boolean addAFeedBack(long toUserId, long feedbackId,
+			String content, long courseId, long fromUserId) {
 		// TODO Auto-generated method stub
 		FeedBack feedBack = new FeedBack();
 		feedBack.setContent(content);
@@ -105,8 +110,10 @@ public class FeedBackServiceImpl implements FeedBackService {
 	}
 
 	@Override
-	public List<FeedBack> getFeedBackList(long userId, int limit, int offset, long courseId) {
-		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByUserId(userId, courseId, limit, offset);
+	public List<FeedBack> getFeedBackList(long userId, int limit, int offset,
+			long courseId) {
+		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByUserId(userId,
+				courseId, limit, offset);
 		if (ListUtils.isEmptyList(feedBacks)) {
 			return null;
 		}
@@ -127,14 +134,17 @@ public class FeedBackServiceImpl implements FeedBackService {
 		}
 
 		List<Course> courseList = courseMapper.getCourseListByIds(courseIds);
-		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList, "getId", Course.class);
+		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList,
+				"getId", Course.class);
 		for (FeedBack feedBack : feedBacks) {
-			feedBack.setCreateTimeStr(TimeUtil.getFormatTime(feedBack.getCreateTime()));
+			feedBack.setCreateTimeStr(TimeUtil.getFormatTime(feedBack
+					.getCreateTime()));
 			Course course = courseMap.get(feedBack.getCourseId());
 			if (course != null) {
 				feedBack.setCourse(course);
 			}
-			List<FeedBack> subFeedBackList = feedBackMapper.getFeedBackListWithBack(feedBack.getId(), 0, -1);
+			List<FeedBack> subFeedBackList = feedBackMapper
+					.getFeedBackListWithBack(feedBack.getId(), 0, -1);
 			if (!ListUtils.isEmptyList(subFeedBackList)) {
 				feedBack.setSubFeedBackList(subFeedBackList);
 			}
@@ -159,8 +169,10 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 * int, int)
 	 */
 	@Override
-	public List<FeedBack> getFeedBackListFromUserId(long fromUserId, int limit, int offset, long toUserId) {
-		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByFromUserId(limit, offset, fromUserId, toUserId);
+	public List<FeedBack> getFeedBackListFromUserId(long fromUserId, int limit,
+			int offset, long toUserId) {
+		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByFromUserId(
+				limit, offset, fromUserId, toUserId);
 		if (ListUtils.isEmptyList(feedBacks)) {
 			return null;
 		}
@@ -176,8 +188,10 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 * int, int, long)
 	 */
 	@Override
-	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit, int offset, long toUserId) {
-		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByCourseId(limit, offset, courseId, toUserId);
+	public List<FeedBack> getFeedBackListCourseId(long courseId, int limit,
+			int offset, long toUserId) {
+		List<FeedBack> feedBacks = feedBackMapper.getFeedBacksByCourseId(limit,
+				offset, courseId, toUserId);
 		if (ListUtils.isEmptyList(feedBacks)) {
 			return null;
 		}
@@ -192,7 +206,31 @@ public class FeedBackServiceImpl implements FeedBackService {
 	 * int, int, long)
 	 */
 	@Override
-	public int getFeedBackListCount(long userId, int limit, int offset, long courseId) {
-		return feedBackMapper.getFeedBackListCount(userId, courseId, limit, offset);
+	public int getFeedBackListCount(long userId, int limit, int offset,
+			long courseId) {
+		return feedBackMapper.getFeedBackListCount(userId, courseId, limit,
+				offset);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ruoogle.teach.service.FeedBackService#getFeedBack(long)
+	 */
+	@Override
+	public FeedBack getFeedBack(long id) {
+		return feedBackMapper.getFeedBack(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruoogle.teach.service.FeedBackService#getFeedBackListByFeedBackId
+	 * (long)
+	 */
+	@Override
+	public List<FeedBack> getFeedBackListByFeedBackId(long feedBackId) {
+		return feedBackMapper.getFeedBackListByFeedbackId(feedBackId);
 	}
 }

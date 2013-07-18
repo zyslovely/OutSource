@@ -119,4 +119,21 @@
 		id=
 		#{id};
 	</update>
+
+	<select id="getFeedBack" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE id=#{id}
+		;
+	</select>
+
+	<select id="getFeedBackListByFeedbackId" resultType="FeedBack">
+		SELECT *
+		from
+		TB_FeedBack
+		WHERE feedbackId= #{feedbackId}
+		order by createTime desc
+		;
+	</select>
 </mapper>

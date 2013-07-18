@@ -1,6 +1,5 @@
 package com.ruoogle.teach.controller;
 
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.directwebremoting.WebContext;
+import org.directwebremoting.WebContextFactory;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -24,10 +24,14 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
+import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
+import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
+import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Profile;
@@ -607,13 +611,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * 获取班级
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-=======
 	 * 
 	 * @Title: getAllClassBySpecialtyId
 	 * @Description: TODO
@@ -622,8 +619,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param @param response
 	 * @param @return
 	 * @return ModelAndView
-	 * @throws
->>>>>>> 2b84d0e198dd7616ca38374fe6ff8337e2af9231
 	 */
 	public ModelAndView getAllClassBySpecialtyId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -647,8 +642,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 						specialtyClass.getSpecialty());
 				specialtyClassObject.put("shortSpecialty",
 						specialtyClass.getShortSpecialty());
-				specialtyClassObject.put("classId",
-						specialtyClass.getId());
+				specialtyClassObject.put("classId", specialtyClass.getId());
 				specialtyClassArray.add(specialtyClassObject);
 			}
 			logger.info(specialtyClassArray.toString());
@@ -726,12 +720,12 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		if (courseId < 0) {
-			try {
-				response.sendRedirect("/teach/index/");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+
 		}
 		List<CoursePercentTypeGroupStudentVO> coursePercentTypeGroupStudentVO = courseService
 				.getCoursePercentTypeGroupStudentScoresFromStudentID(
@@ -818,5 +812,194 @@ public class ApiTeachSysController extends AbstractBaseController {
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;
+	}
+
+	/**
+	 * 
+	 * @Title: showCourseView
+	 * @Description: 课程信息页面
+	 * @Auther: yunshang_734@163.com
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView showCourseView(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		long userId = MyUser.getMyUser(request);
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		if (courseId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		Course course = courseService.getCourseById(courseId);
+		JSONArray courseArray = new JSONArray();
+		JSONObject courseObject = new JSONObject();
+		courseObject.put("id", course.getId());
+		courseObject.put("name", course.getName());
+		courseObject.put("description", course.getDescription());
+		courseArray.add(courseObject);
+
+		JSONObject isEachStudentObject = new JSONObject();
+		boolean isEachStudent = false;
+		List<CoursePercentTypeGroup> coursePercentTypeGroupList = courseService
+				.getCoursePercentTypeGroupByCourseId(course.getId());
+		if (!ListUtils.isEmptyList(coursePercentTypeGroupList)) {
+			if (!(courseService.checkStudentFinishedScoreGroup(userId,
+					course.getId()))) {
+				isEachStudent = true;
+			}
+		}
+		isEachStudentObject.put("isEachStudent", isEachStudent);
+
+		JSONArray percentTypeArray = new JSONArray();
+		JSONObject percentTypeObject = new JSONObject();
+		List<CourseScorePercent> courseScorePercents = courseService
+				.getCourseScorePercentListByCourseId(courseId);
+		List<CourseStudentScore> courseStudentScores = courseService
+				.getCourseStudentScoresByUserIdCourseId(courseId, userId);
+		for (CourseScorePercent courseScorePercent : courseScorePercents) {
+			for (CourseStudentScore courseStudentScore : courseStudentScores) {
+				if (courseScorePercent.getPercentType() == courseStudentScore
+						.getPercentType()) {
+					percentTypeObject.put("id", courseScorePercent.getId());
+					percentTypeObject.put("name", courseScorePercent.getName());
+					percentTypeObject.put("score",
+							courseStudentScore.getScore());
+					percentTypeArray.add(percentTypeObject);
+				}
+			}
+		}
+
+		JSONArray returnArray = new JSONArray();
+
+		returnArray.add(courseArray.toString());
+		returnArray.add(isEachStudentObject);
+		returnArray.add(percentTypeArray.toString());
+
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put("returnCourseView", returnArray.toString());
+		mv.addObject("returnObject", returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: getFeedBack
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午08:46:16
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView getFeedBack(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+		JSONObject feedbackObject = new JSONObject();
+		FeedBack feedBack = feedBackService.getFeedBack(id);
+		if (feedBack == null) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		feedbackObject.put(FeedBack.KFeedBack_id, feedBack.getId());
+		feedbackObject.put(FeedBack.KFeedBack_fromUserId,
+				feedBack.getFromUserId());
+		feedbackObject.put(FeedBack.KFeedBack_toUserId, feedBack.getToUserId());
+		feedbackObject.put(FeedBack.KFeedBack_content, feedBack.getContent());
+		if (feedBack.getCourse() != null) {
+			feedbackObject.put("courseName", feedBack.getCourse().getName());
+		}
+		feedbackObject.put(FeedBack.KFeedBack_status, feedBack.getStatus());
+		feedbackObject.put(FeedBack.KFeedBack_feedbackId,
+				feedBack.getFeedbackId());
+		feedbackObject.put(FeedBack.KFeedBack_fromName, feedBack.getFromName());
+		feedbackObject.put(FeedBack.KFeedBack_toName, feedBack.getToName());
+		feedbackObject.put(FeedBack.KFeedBack_createTimeStr,
+				feedBack.getCreateTime());
+		returnArray.add(feedbackObject);
+		List<FeedBack> feedBacks = feedBackService
+				.getFeedBackListByFeedBackId(feedBack.getId());
+		if (!ListUtils.isEmptyList(feedBacks)) {
+			for (FeedBack feedback : feedBacks) {
+				JSONObject feedbackObject2 = new JSONObject();
+				feedbackObject2.put(FeedBack.KFeedBack_id, feedback.getId());
+				feedbackObject2.put(FeedBack.KFeedBack_fromUserId,
+						feedback.getFromUserId());
+				feedbackObject2.put(FeedBack.KFeedBack_toUserId,
+						feedback.getToUserId());
+				feedbackObject2.put(FeedBack.KFeedBack_content,
+						feedback.getContent());
+				if (feedback.getCourse() != null) {
+					feedbackObject2.put("courseName", feedback.getCourse()
+							.getName());
+				}
+				feedbackObject2.put(FeedBack.KFeedBack_status,
+						feedback.getStatus());
+				feedbackObject2.put(FeedBack.KFeedBack_feedbackId,
+						feedback.getFeedbackId());
+				feedbackObject2.put(FeedBack.KFeedBack_fromName,
+						feedback.getFromName());
+				feedbackObject2.put(FeedBack.KFeedBack_toName,
+						feedback.getToName());
+				feedbackObject2.put(FeedBack.KFeedBack_createTimeStr,
+						feedback.getCreateTime());
+				returnArray.add(feedbackObject2);
+			}
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put("feedbackList", returnArray.toString());
+		mv.addObject("feedBackList", returnObject);
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView addForward(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long forwardId = ServletRequestUtils.getLongParameter(request,
+				"forwardId", -1L);
+
+		if (StringUtils.isEmpty(content)) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService
+				.addForward(forwardId, content, userId);
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
 	}
 }
