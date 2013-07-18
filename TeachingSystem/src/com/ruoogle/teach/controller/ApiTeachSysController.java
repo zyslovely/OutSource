@@ -887,4 +887,69 @@ public class ApiTeachSysController extends AbstractBaseController {
 		mv.addObject("returnObject", returnObject.toString());
 		return mv;
 	}
+
+	/**
+	 * 
+	 * @Title: getFeedBack
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午08:46:16
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView getFeedBack(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+		JSONObject feedbackObject = new JSONObject();
+		FeedBack feedBack = feedBackService.getFeedBack(id);
+		if (feedBack == null) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		feedbackObject.put("id", feedBack.getId());
+		feedbackObject.put("fromUserId", feedBack.getFromUserId());
+		feedbackObject.put("toUserId", feedBack.getToUserId());
+		feedbackObject.put("content", feedBack.getContent());
+		feedbackObject.put("createTime", feedBack.getCreateTime());
+		feedbackObject.put("courseId", feedBack.getCourseId());
+		feedbackObject.put("status", feedBack.getStatus());
+		feedbackObject.put("feedbackId", feedBack.getFeedbackId());
+		feedbackObject.put("fromName", feedBack.getFromName());
+		feedbackObject.put("toName", feedBack.getToName());
+		feedbackObject.put("createTimeStr", feedBack.getCreateTime());
+		returnArray.add(feedbackObject);
+		List<FeedBack> feedBacks = feedBackService
+				.getFeedBackListByFeedBackId(feedBack.getId());
+		if (!ListUtils.isEmptyList(feedBacks)) {
+			for (FeedBack feedback : feedBacks) {
+				JSONObject feedbackObject2 = new JSONObject();
+				feedbackObject2.put("id", feedback.getId());
+				feedbackObject2.put("fromUserId", feedback.getFromUserId());
+				feedbackObject2.put("toUserId", feedback.getToUserId());
+				feedbackObject2.put("content", feedback.getContent());
+				feedbackObject2.put("createTime", feedback.getCreateTime());
+				feedbackObject2.put("courseId", feedback.getCourseId());
+				feedbackObject2.put("status", feedback.getStatus());
+				feedbackObject2.put("feedbackId", feedback.getFeedbackId());
+				feedbackObject2.put("fromName", feedback.getFromName());
+				feedbackObject2.put("toName", feedback.getToName());
+				feedbackObject2.put("createTimeStr", feedback.getCreateTime());
+				returnArray.add(feedbackObject2);
+			}
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put("feedbackList", returnArray.toString());
+		mv.addObject("feedBackList", returnObject);
+		logger.info(returnObject.toString());
+		return mv;
+	}
 }

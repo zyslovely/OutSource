@@ -23,8 +23,11 @@ public interface FeedBackMapper {
 	 * @param userId
 	 * @return
 	 */
-	public List<FeedBack> getFeedBacksByUserId(@Param(value = "userId") long userId, @Param(value = "courseId") long courseId,
-			@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<FeedBack> getFeedBacksByUserId(
+			@Param(value = "userId") long userId,
+			@Param(value = "courseId") long courseId,
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 
@@ -35,8 +38,10 @@ public interface FeedBackMapper {
 	 * @param offset
 	 * @return
 	 */
-	public int getFeedBackListCount(@Param(value = "userId") long userId, @Param(value = "courseId") long courseId,
-			@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public int getFeedBackListCount(@Param(value = "userId") long userId,
+			@Param(value = "courseId") long courseId,
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 得到反馈id
@@ -72,8 +77,11 @@ public interface FeedBackMapper {
 	 * @param toUserId
 	 * @return
 	 */
-	public List<FeedBack> getFeedBacksByFromUserId(@Param(value = "limit") int limit, @Param(value = "offset") int offset,
-			@Param(value = "fromUserId") long fromUserId, @Param(value = "toUserId") long toUserId);
+	public List<FeedBack> getFeedBacksByFromUserId(
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset,
+			@Param(value = "fromUserId") long fromUserId,
+			@Param(value = "toUserId") long toUserId);
 
 	/**
 	 * 
@@ -84,8 +92,11 @@ public interface FeedBackMapper {
 	 * @param toUserId
 	 * @return
 	 */
-	public List<FeedBack> getFeedBacksByCourseId(@Param(value = "limit") int limit, @Param(value = "offset") int offset,
-			@Param(value = "courseId") long courseId, @Param(value = "toUserId") long toUserId);
+	public List<FeedBack> getFeedBacksByCourseId(
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset,
+			@Param(value = "courseId") long courseId,
+			@Param(value = "toUserId") long toUserId);
 
 	/**
 	 * 获取
@@ -94,5 +105,32 @@ public interface FeedBackMapper {
 	 * @param id
 	 * @return
 	 */
-	public List<FeedBack> getFeedBackListWithBack(@Param(value = "id") long id, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<FeedBack> getFeedBackListWithBack(@Param(value = "id") long id,
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
+
+	/**
+	 * 
+	 * @Title: getFeedBack
+	 * @Description: 获取单个反馈
+	 * @Auther: yunshang_734@163.com
+	 * @param @param id
+	 * @param @return
+	 * @return FeedBack
+	 * @throws
+	 */
+	public FeedBack getFeedBack(@Param(value = "id") long id);
+
+	/**
+	 * 
+	 * @Title: getFeedBackList
+	 * @Description: 获取FeedbackId所有反馈
+	 * @Auther: yunshang_734@163.com
+	 * @param @param id
+	 * @param @return
+	 * @return List<FeedBack>
+	 * @throws
+	 */
+	public List<FeedBack> getFeedBackListByFeedbackId(
+			@Param(value = "feedbackId") long feedbackId);
 }
