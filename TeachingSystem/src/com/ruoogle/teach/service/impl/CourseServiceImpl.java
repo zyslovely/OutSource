@@ -520,7 +520,7 @@ public class CourseServiceImpl implements CourseService {
 					CoursePercentType.EachStudent.getValue(), avgScore, 0);
 
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -1416,5 +1416,12 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<CourseStudent> getCourseStudentByCourseId(long courseId) {
 		return courseStudentMapper.getCourseStudentsByCourseId(courseId);
+	}
+
+	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(
+			long courseId, long groupId) {
+		return coursePercentTypeGroupStudentMapper
+				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
+						groupId);
 	}
 }

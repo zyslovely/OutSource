@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 
 public interface CoursePercentTypeGroupStudentMapper {
-	public int addCoursePercentTypeGroupStudent(CoursePercentTypeGroupStudent coursePercentTypeGroupStudent);
+	public int addCoursePercentTypeGroupStudent(
+			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent);
 
 	/**
 	 * 获取学生对应小组
@@ -17,10 +18,9 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public CoursePercentTypeGroupStudent getCoursePercentTypeGroupStudentByStudentId(@Param(value = "studentId") long studentId,
+	public CoursePercentTypeGroupStudent getCoursePercentTypeGroupStudentByStudentId(
+			@Param(value = "studentId") long studentId,
 			@Param(value = "courseId") long courseId);
-
-	
 
 	/**
 	 * 通过课程获取所有分组
@@ -29,7 +29,8 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentByCourseId(@Param(value = "courseId") long courseId);
+	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentByCourseId(
+			@Param(value = "courseId") long courseId);
 
 	/**
 	 * 得到
@@ -39,7 +40,9 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param groupId
 	 * @return
 	 */
-	public int getCoursePercentTypeGroupStudentCountByIds(@Param(value = "courseId") long courseId, @Param(value = "groupId") long groupId);
+	public int getCoursePercentTypeGroupStudentCountByIds(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "groupId") long groupId);
 
 	/**
 	 * 获取列表
@@ -49,7 +52,8 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param groupId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(@Param(value = "courseId") long courseId,
+	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "groupId") long groupId);
 
 	/**
@@ -59,7 +63,8 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param coursePercentTypeGroupStudent
 	 * @return
 	 */
-	public int updateCoursePercentTypeGroupStudent(CoursePercentTypeGroupStudent coursePercentTypeGroupStudent);
+	public int updateCoursePercentTypeGroupStudent(
+			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent);
 
 	/**
 	 * 删除课程分组
@@ -68,5 +73,6 @@ public interface CoursePercentTypeGroupStudentMapper {
 	 * @param groupId
 	 * @return
 	 */
-	public int deleteCoursePercentTypeGroupStudent(@Param(value = "groupId") long groupId);
+	public int deleteCoursePercentTypeGroupStudent(
+			@Param(value = "groupId") long groupId);
 }
