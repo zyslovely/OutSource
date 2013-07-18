@@ -583,6 +583,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 			for (Specialty specialty : specialtyList) {
 				JSONObject specialtyObject = new JSONObject();
 				specialtyObject.put("specialty", specialty.getSpecialty());
+				specialtyObject.put("specialtyId", specialty.getId());
 				specialtyObject.put("shortSpecialty",
 						specialty.getShortSpecialty());
 				specialtyArray.add(specialtyObject);
@@ -599,6 +600,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 获取班级
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public ModelAndView getAllClassBySpecialtyId(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -613,11 +621,16 @@ public class ApiTeachSysController extends AbstractBaseController {
 		if (!ListUtils.isEmptyList(classList)) {
 			for (com.ruoogle.teach.meta.Class specialtyClass : classList) {
 				JSONObject specialtyClassObject = new JSONObject();
-				specialtyClassObject.put("name", specialtyClass.getName());
+				specialtyClassObject.put(
+						"className",
+						specialtyClass.getShortSpecialty()
+								+ specialtyClass.getName());
 				specialtyClassObject.put("specialtyClass",
 						specialtyClass.getSpecialty());
 				specialtyClassObject.put("shortSpecialty",
 						specialtyClass.getShortSpecialty());
+				specialtyClassObject.put("classId",
+						specialtyClass.getId());
 				specialtyClassArray.add(specialtyClassObject);
 			}
 			logger.info(specialtyClassArray.toString());
