@@ -74,6 +74,4 @@
 		WHERE
 		groupId=#{groupId};
 	</delete>
-
-
 </mapper>
