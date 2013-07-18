@@ -12,8 +12,6 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -758,6 +756,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 
+	 * @Title: addGroupScore
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:22:15
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
 	public ModelAndView addGroupScore(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -969,6 +979,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 
+	 * @Title: addForward
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:22:03
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("return");
@@ -990,6 +1012,104 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		boolean succ = interactiveService
 				.addForward(forwardId, content, userId);
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: addInteractive
+	 * @Description: 添加评论
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:27:07
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView addInteractive(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		int status = ServletRequestUtils
+				.getIntParameter(request, "courseId", 0);
+		String photoUrl = ServletRequestUtils.getStringParameter(request,
+				"photoUrl", "");
+		long forwardId = ServletRequestUtils.getLongParameter(request,
+				"forwardId", -1L);
+
+		if (StringUtils.isEmpty(content) || StringUtils.isEmpty(photoUrl)
+				|| userId < 0 || courseId < 0 || status < 0 || forwardId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService.addInteractive(userId, content,
+				courseId, status, photoUrl, forwardId);
+		;
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: addInteractiveBack
+	 * @Description: 回复评论
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:28:53
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView addInteractiveBack(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+
+		if (StringUtils.isEmpty(content) || userId < 0 || id < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService.addForwardBack(id, content, userId);
 		if (succ) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.SUCCESS);
