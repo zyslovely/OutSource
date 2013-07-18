@@ -3,18 +3,9 @@ package com.ruoogle.teach.api.test;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
-/**
- * 
- * @ClassName: TestGetAllClass
- * @Description: TODO
- * @author yunshang_734@163.com
- * @date 2013-7-18 上午01:21:38
- */
-public class TestGetAllClass {
+public class TestGetPropertyList {
 	public static void main(String[] args) {
-		
-		String strURL = "http://teach.zys-wings.com/teach/api/class/list/?specialtyId=1&token=vzMiFI7h8eqZFW0HriUdwzztTYVkMXM0";
-
+		String strURL = "http://teach.zys-wings.com/teach/api/property/list/?token=vzMiFI7h8ep7vAoOjxz8kP6XhJn1H3y4";
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
 		try {

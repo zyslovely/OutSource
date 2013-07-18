@@ -8,9 +8,9 @@ public class CourseProperty implements Serializable {
 	private String name;
 
 	
-	public static final String KCourseProperty_name = "property_Name";
-	public static final String KCourseProperty_id = "property_Id";
-	public static final String KCourseProperty_Score = "property_score";
+	public static final String KCourseProperty_name = "name";
+	public static final String KCourseProperty_id = "id";
+	public static final String KCourseProperty_Score = "score";
 	
 	public long getId() {
 		return id;
