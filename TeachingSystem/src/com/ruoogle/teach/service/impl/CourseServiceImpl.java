@@ -1418,6 +1418,7 @@ public class CourseServiceImpl implements CourseService {
 		return courseStudentMapper.getCourseStudentsByCourseId(courseId);
 	}
 
+	@Override
 	public List<CoursePercentTypeGroupStudent> getCoursePercentTypeGroupStudentListByGroupId(
 			long courseId, long groupId) {
 		return coursePercentTypeGroupStudentMapper

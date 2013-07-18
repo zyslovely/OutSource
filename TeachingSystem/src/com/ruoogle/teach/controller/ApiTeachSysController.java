@@ -24,7 +24,6 @@ import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
-import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseProperty;
@@ -590,6 +589,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 			for (Specialty specialty : specialtyList) {
 				JSONObject specialtyObject = new JSONObject();
 				specialtyObject.put("specialty", specialty.getSpecialty());
+				specialtyObject.put("specialtyId", specialty.getId());
 				specialtyObject.put("shortSpecialty",
 						specialty.getShortSpecialty());
 				specialtyArray.add(specialtyObject);
@@ -607,6 +607,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * 获取班级
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+=======
 	 * 
 	 * @Title: getAllClassBySpecialtyId
 	 * @Description: TODO
@@ -616,6 +623,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param @return
 	 * @return ModelAndView
 	 * @throws
+>>>>>>> 2b84d0e198dd7616ca38374fe6ff8337e2af9231
 	 */
 	public ModelAndView getAllClassBySpecialtyId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -631,11 +639,16 @@ public class ApiTeachSysController extends AbstractBaseController {
 		if (!ListUtils.isEmptyList(classList)) {
 			for (com.ruoogle.teach.meta.Class specialtyClass : classList) {
 				JSONObject specialtyClassObject = new JSONObject();
-				specialtyClassObject.put("name", specialtyClass.getName());
+				specialtyClassObject.put(
+						"className",
+						specialtyClass.getShortSpecialty()
+								+ specialtyClass.getName());
 				specialtyClassObject.put("specialtyClass",
 						specialtyClass.getSpecialty());
 				specialtyClassObject.put("shortSpecialty",
 						specialtyClass.getShortSpecialty());
+				specialtyClassObject.put("classId",
+						specialtyClass.getId());
 				specialtyClassArray.add(specialtyClassObject);
 			}
 			logger.info(specialtyClassArray.toString());
