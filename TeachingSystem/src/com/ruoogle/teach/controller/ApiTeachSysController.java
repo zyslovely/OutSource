@@ -891,7 +891,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-	 * 
+	 * 获取单个反馈的详细信息列表
 	 * @Title: getFeedBack
 	 * @Description: TODO
 	 * @Auther: yunshang_734@163.com
@@ -969,6 +969,12 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 互动转发
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("return");
