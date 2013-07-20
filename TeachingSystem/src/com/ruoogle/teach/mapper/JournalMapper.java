@@ -16,8 +16,9 @@ public interface JournalMapper {
 	 * @param userId
 	 * @return
 	 */
-	public List<Journal> getJournalsByUserIdCourseId(@Param(value = "userId") long userId, @Param(value = "courseId") long courseId,
+	public List<Journal> getJournalsByUserIdCourseId(
+			@Param(value = "userId") long userId,
+			@Param(value = "courseId") long courseId,
 			@Param(value = "type") long type);
-	
-	
+
 }

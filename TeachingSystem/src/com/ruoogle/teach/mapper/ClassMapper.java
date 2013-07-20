@@ -18,7 +18,8 @@ public interface ClassMapper {
 	 * @param specialtyId
 	 * @return
 	 */
-	public List<Class> getClassListBySpecialty(@Param(value = "specialtyId") long specialtyId);
+	public List<Class> getClassListBySpecialty(
+			@Param(value = "specialtyId") long specialtyId);
 
 	public List<Class> getAllClass();
 
@@ -30,7 +31,8 @@ public interface ClassMapper {
 	 * @param count
 	 * @return
 	 */
-	public int updateClassStudentCount(@Param(value = "classId") long classId, @Param(value = "count") int count);
+	public int updateClassStudentCount(@Param(value = "classId") long classId,
+			@Param(value = "count") int count);
 
 	/**
 	 * 删除
@@ -39,7 +41,8 @@ public interface ClassMapper {
 	 * @param specialtyId
 	 * @return
 	 */
-	public int deleteClassBySpecialty(@Param(value = "specialtyId") long specialtyId);
+	public int deleteClassBySpecialty(
+			@Param(value = "specialtyId") long specialtyId);
 
 	/**
 	 * 删除

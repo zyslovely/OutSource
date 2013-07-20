@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller("webUploadController")
 public class WebUploadController extends AbstractBaseController {
-	
-	private static final Logger logger = Logger.getLogger(WebUploadController.class);
+
+	private static final Logger logger = Logger
+			.getLogger(WebUploadController.class);
 }

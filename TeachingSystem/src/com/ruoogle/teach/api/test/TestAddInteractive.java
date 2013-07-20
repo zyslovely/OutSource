@@ -5,7 +5,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TestAddInteractive {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/interactive/?content=hallo&courseId=1&status=1&photoUrl=wjaiopuan&forwardId=206&token=K4jIwMtWxQ%2FOcLVjQF6dCAn2jKI88I2T";
+		String strURL = "http://teach.zys-wings.com/teach/api/interactive/?content=hallo&courseId=1&status=1&photoUrl=wjaiopuan&forwardId=206&token=aERxZzhLVmtKbHo5cDVCNHlDT1VNeUNGOW0yOGdueGo=";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

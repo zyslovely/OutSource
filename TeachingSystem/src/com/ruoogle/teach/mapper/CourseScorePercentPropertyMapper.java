@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CourseScorePercentProperty;
 
 public interface CourseScorePercentPropertyMapper {
-	public int addCourseScorePercentProperty(CourseScorePercentProperty courseScorePercentProperty);
+	public int addCourseScorePercentProperty(
+			CourseScorePercentProperty courseScorePercentProperty);
 
 	/**
 	 * 根据课程
@@ -16,5 +17,6 @@ public interface CourseScorePercentPropertyMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseScorePercentProperty> getCourseScorePercentPropertyByCourseId(@Param(value = "courseId") long courseId);
+	public List<CourseScorePercentProperty> getCourseScorePercentPropertyByCourseId(
+			@Param(value = "courseId") long courseId);
 }

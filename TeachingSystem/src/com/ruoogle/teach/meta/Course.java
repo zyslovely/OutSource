@@ -11,8 +11,16 @@ public class Course implements Serializable {
 	private long teacherId;
 	private int status;
 	private String description;
-
 	private String teacherName;
+
+	public static final String KCOURSE_ID = "id";
+	public static final String KCOURSE_NAME = "name";
+	public static final String KCOURSE_SEMESTER = "semester";
+	public static final String KCOURSE_CLASSID = "classId";
+	public static final String KCOURSE_TEACHERID = "teacherId";
+	public static final String KCOURSE_STATUS = "status";
+	public static final String KCOURSE_DESCRIPTION = "description";
+	public static final String KCOURSE_TEACHERNAME = "teacherName";
 
 	public static final int VALID = 0;
 

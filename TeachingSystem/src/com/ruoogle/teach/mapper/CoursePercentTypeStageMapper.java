@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CoursePercentTypeStage;
 
 public interface CoursePercentTypeStageMapper {
-	public int addCoursePercentTypeStage(CoursePercentTypeStage coursePercentTypeStage);
+	public int addCoursePercentTypeStage(
+			CoursePercentTypeStage coursePercentTypeStage);
 
 	/**
 	 * 更新课程状态
@@ -16,7 +17,8 @@ public interface CoursePercentTypeStageMapper {
 	 * @param coursePercentTypeStage
 	 * @return
 	 */
-	public int updateCoursePercentTypeStage(CoursePercentTypeStage coursePercentTypeStage);
+	public int updateCoursePercentTypeStage(
+			CoursePercentTypeStage coursePercentTypeStage);
 
 	/**
 	 * 获取
@@ -25,8 +27,11 @@ public interface CoursePercentTypeStageMapper {
 	 * @param id
 	 * @return
 	 */
-	public CoursePercentTypeStage getCoursePercentTypeStage(@Param(value = "courseId") long courseId, @Param(value = "studentId") long studentId,
-			@Param(value = "stageIndex") long stageIndex, @Param(value = "percentType") long percentType);
+	public CoursePercentTypeStage getCoursePercentTypeStage(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "studentId") long studentId,
+			@Param(value = "stageIndex") long stageIndex,
+			@Param(value = "percentType") long percentType);
 
 	/**
 	 * 得到该学生的分数
@@ -36,7 +41,8 @@ public interface CoursePercentTypeStageMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByStudentId(@Param(value = "courseId") long courseId,
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByStudentId(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "studentId") long studentId);
 
 	/**
@@ -47,6 +53,7 @@ public interface CoursePercentTypeStageMapper {
 	 * @param stage
 	 * @return
 	 */
-	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseIdStage(@Param(value = "courseId") long courseId,
+	public List<CoursePercentTypeStage> getCoursePercentTypeStageListByCourseIdStage(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "stage") int stage);
 }

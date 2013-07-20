@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CourseStudentTotalScore;
 
 public interface CourseStudentTotalScoreMapper {
-	public int addCourseStudentTotalScore(CourseStudentTotalScore courseStudentTotalScore);
+	public int addCourseStudentTotalScore(
+			CourseStudentTotalScore courseStudentTotalScore);
 
 	/**
 	 * 获取课程学生成绩列表
@@ -15,7 +16,8 @@ public interface CourseStudentTotalScoreMapper {
 	 * @auther zyslovely@gmail.com
 	 * @return
 	 */
-	public List<CourseStudentTotalScore> getCourseStudentTotalScores(@Param(value = "courseId") long courseId);
+	public List<CourseStudentTotalScore> getCourseStudentTotalScores(
+			@Param(value = "courseId") long courseId);
 
 	/**
 	 * 得到某个学生某门课的总成绩
@@ -25,7 +27,8 @@ public interface CourseStudentTotalScoreMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public CourseStudentTotalScore getCourseStudentTotalScoreByStudentId(@Param(value = "courseId") long courseId,
+	public CourseStudentTotalScore getCourseStudentTotalScoreByStudentId(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "studentId") long studentId);
 
 	/**
@@ -36,6 +39,7 @@ public interface CourseStudentTotalScoreMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public int updateCourseStudentTotalScore(@Param(value = "id") long id, @Param(value = "score") double score);
+	public int updateCourseStudentTotalScore(@Param(value = "id") long id,
+			@Param(value = "score") double score);
 
 }

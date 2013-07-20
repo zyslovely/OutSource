@@ -21,7 +21,8 @@ public interface ProfileService {
 	 * @param level
 	 * @return
 	 */
-	public boolean addProfile(String name, String userName, String passWord, int level);
+	public boolean addProfile(String name, String userName, String passWord,
+			int level);
 
 	/**
 	 * 改密码
@@ -66,7 +67,8 @@ public interface ProfileService {
 
 	public List<Profile> getProfileListWithMySelfAndCompany(long userId);
 
-	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId);
+	public List<Profile> getProfileListByClassId(int level, int limit,
+			int offset, long classId);
 
 	public List<ProfileProperty> getProfileProperties(long userId);
 }

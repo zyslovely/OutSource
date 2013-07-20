@@ -26,7 +26,6 @@ public interface CourseMapper {
 	 * @return
 	 */
 	public int finishedCourse(@Param(value = "courseId") long courseId);
-	
 
 	/**
 	 * 根据id获取列表

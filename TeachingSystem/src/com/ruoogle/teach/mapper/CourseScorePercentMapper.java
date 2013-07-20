@@ -17,7 +17,9 @@ public interface CourseScorePercentMapper {
 	 * @param percentType
 	 * @return
 	 */
-	public CourseScorePercent getCourseScorePercentByTeacher(@Param(value = "teacherId") long teacherId, @Param(value = "courseId") long courseId,
+	public CourseScorePercent getCourseScorePercentByTeacher(
+			@Param(value = "teacherId") long teacherId,
+			@Param(value = "courseId") long courseId,
 			@Param(value = "percentType") long percentType);
 
 	/**
@@ -27,7 +29,8 @@ public interface CourseScorePercentMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CourseScorePercent> getCourseScorePercentListByCourseId(@Param(value = "courseId") long courseId);
+	public List<CourseScorePercent> getCourseScorePercentListByCourseId(
+			@Param(value = "courseId") long courseId);
 
 	/**
 	 * 
@@ -36,6 +39,7 @@ public interface CourseScorePercentMapper {
 	 * @param percentType
 	 * @return
 	 */
-	public CourseScorePercent getCourseScorePercentBypercentType(@Param(value = "courseId") long courseId,
+	public CourseScorePercent getCourseScorePercentBypercentType(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "percentType") long percentType);
 }

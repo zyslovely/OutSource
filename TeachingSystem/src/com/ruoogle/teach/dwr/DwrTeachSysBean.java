@@ -44,22 +44,26 @@ public class DwrTeachSysBean {
 	 * @param courseId
 	 * @return
 	 */
-	public boolean addFeedBack(long toUserId, long feedbackId, String content, long courseId) {
+	public boolean addFeedBack(long toUserId, long feedbackId, String content,
+			long courseId) {
 		WebContext ctx = WebContextFactory.get();
 		Long fromUserId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return feedBackService.addFeedBack(toUserId, feedbackId, content, courseId, fromUserId);
+		return feedBackService.addFeedBack(toUserId, feedbackId, content,
+				courseId, fromUserId);
 	}
 
 	/**
 	 * 添加互动内容
 	 */
-	public boolean addInteractive(String content, long courseId, int status, String photoUrl, long forwardId) {
+	public boolean addInteractive(String content, long courseId, int status,
+			String photoUrl, long forwardId) {
 		WebContext ctx = WebContextFactory.get();
 		Long userId = MyUser.getMyUser(ctx.getHttpServletRequest());
 		if (StringUtils.isEmpty(content)) {
 			return false;
 		}
-		return interactiveService.addInteractive(userId, content, courseId, status, photoUrl, forwardId);
+		return interactiveService.addInteractive(userId, content, courseId,
+				status, photoUrl, forwardId);
 	}
 
 	/**
@@ -106,7 +110,8 @@ public class DwrTeachSysBean {
 	 * @return
 	 */
 	public boolean changePass(String newPassword1, String newPassword2) {
-		if (StringUtils.isEmpty(newPassword2) || StringUtils.isEmpty(newPassword1)) {
+		if (StringUtils.isEmpty(newPassword2)
+				|| StringUtils.isEmpty(newPassword1)) {
 			return false;
 		}
 		if (!newPassword1.equals(newPassword2)) {

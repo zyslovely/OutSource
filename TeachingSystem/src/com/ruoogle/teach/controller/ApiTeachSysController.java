@@ -32,6 +32,7 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
+import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
@@ -1119,6 +1120,69 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
 		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: showInteractive
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-20上午11:59:59
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView showInteractive(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		int limit = ServletRequestUtils.getIntParameter(request, "limit", 10);
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
+
+		List<Interactive> interactiveList = interactiveService
+				.getInteractiveByUserId(userId, limit, offset);
+		if (ListUtils.isEmptyList(interactiveList)) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		for (Interactive interactive : interactiveList) {
+			JSONObject interactiveObject = new JSONObject();
+			interactiveObject.put(Interactive.KINTERACTIVE_ID,
+					interactive.getId());
+			interactiveObject.put(Interactive.KINTERACTIVE_USERID,
+					interactive.getUserId());
+			interactiveObject.put(Interactive.KINTERACTIVE_CONTENT,
+					interactive.getContent());
+			interactiveObject.put(Interactive.KINTERACTIVE_COURSEID,
+					interactive.getCourseId());
+			interactiveObject.put(Interactive.KINGTERACTIVE_COURSENAME,
+					interactive.getCourseName());
+			interactiveObject.put(Interactive.KINTERACTIVE_FORWARDID,
+					interactive.getForwardId());
+			interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
+					interactive.getPhotoUrl());
+			interactiveObject.put(Interactive.KINGTERACTIVE_CREATETIME,
+					interactive.getCreateTime());
+			interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
+					interactive.getStatus());
+			interactiveObject.put(Interactive.KINGTERACTIVE_ORIID,
+					interactive.getOriid());
+			returnArray.add(interactiveObject);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put("interactiveList", returnArray.toString());
+		mv.addObject("interactiveList", returnObject);
 		logger.info(returnObject.toString());
 		return mv;
 	}

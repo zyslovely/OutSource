@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CourseStudentPropertyScore;
 
 public interface CourseStudentPropertyScoreMapper {
-	public int addCourseStudentPropertyScore(CourseStudentPropertyScore courseStudentPropertyScore);
+	public int addCourseStudentPropertyScore(
+			CourseStudentPropertyScore courseStudentPropertyScore);
 
 	/**
 	 * 获取
@@ -18,8 +19,10 @@ public interface CourseStudentPropertyScoreMapper {
 	 * @param propertyId
 	 * @return
 	 */
-	public CourseStudentPropertyScore getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(@Param("studentId") long studentId,
-			@Param("courseId") long courseId, @Param("propertyId") long propertyId);
+	public CourseStudentPropertyScore getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(
+			@Param("studentId") long studentId,
+			@Param("courseId") long courseId,
+			@Param("propertyId") long propertyId);
 
 	/**
 	 * 更新
@@ -29,7 +32,8 @@ public interface CourseStudentPropertyScoreMapper {
 	 * @param score
 	 * @return
 	 */
-	public int updateCourseStudentPropertyScoreById(@Param("id") long id, @Param("score") double score);
+	public int updateCourseStudentPropertyScoreById(@Param("id") long id,
+			@Param("score") double score);
 
 	/**
 	 * 获取该学生该学期分数列表
@@ -39,8 +43,8 @@ public interface CourseStudentPropertyScoreMapper {
 	 * @param semester
 	 * @return
 	 */
-	public List<CourseStudentPropertyScore> getCourseStudentPropertyScoreBySemesterId(@Param("studentId") long studentId,
+	public List<CourseStudentPropertyScore> getCourseStudentPropertyScoreBySemesterId(
+			@Param("studentId") long studentId,
 			@Param("semesterId") long semesterId);
-
 
 }

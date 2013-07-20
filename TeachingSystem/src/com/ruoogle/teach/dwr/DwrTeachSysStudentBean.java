@@ -19,7 +19,8 @@ import com.ruoogle.teach.service.ProfileService;
 @Service("dwrTeachSysStudentBean")
 public class DwrTeachSysStudentBean {
 
-	private static final Logger logger = Logger.getLogger(DwrTeachSysStudentBean.class);
+	private static final Logger logger = Logger
+			.getLogger(DwrTeachSysStudentBean.class);
 	@Resource
 	private CourseService courseService;
 	@Resource
@@ -35,10 +36,12 @@ public class DwrTeachSysStudentBean {
 	 * @param score
 	 * @return
 	 */
-	public boolean addGroupScore(long toStudentId, long courseId, long groupId, double score) {
+	public boolean addGroupScore(long toStudentId, long courseId, long groupId,
+			double score) {
 		WebContext ctx = WebContextFactory.get();
 		Long fromStudentId = MyUser.getMyUser(ctx.getHttpServletRequest());
-		return courseService.addGroupScore(toStudentId, courseId, groupId, score, fromStudentId);
+		return courseService.addGroupScore(toStudentId, courseId, groupId,
+				score, fromStudentId);
 	}
 
 }

@@ -7,11 +7,10 @@ public class CourseProperty implements Serializable {
 	private long id;
 	private String name;
 
-	
 	public static final String KCourseProperty_name = "name";
 	public static final String KCourseProperty_id = "id";
 	public static final String KCourseProperty_Score = "score";
-	
+
 	public long getId() {
 		return id;
 	}
