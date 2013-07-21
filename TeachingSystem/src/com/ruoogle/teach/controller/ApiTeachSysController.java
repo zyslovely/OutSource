@@ -1,14 +1,25 @@
 package com.ruoogle.teach.controller;
 
+import java.io.File;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -34,12 +45,12 @@ import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
-import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Specialty;
-import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -1184,6 +1195,68 @@ public class ApiTeachSysController extends AbstractBaseController {
 		returnObject.put("interactiveList", returnArray.toString());
 		mv.addObject("interactiveList", returnObject);
 		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView authUpload(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		RequestContext requestContext = new ServletRequestContext(request);
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
+		if (type != 1) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		if (request.getMethod().toLowerCase().equals("post")) {
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setSizeMax(2000000);
+			List items = new ArrayList();
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e1) {
+				logger.error("文件上传发生错误" + e1.getMessage());
+			}
+			Iterator it = items.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = (FileItem) it.next();
+				if (fileItem.isFormField()) {
+					logger.error("");
+				} else {
+					if (fileItem.getName() != null && fileItem.getSize() != 0) {
+
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy\\MM\\dd\\");
+						java.util.Date date = new java.util.Date();
+						String str = sdf.format(date);
+						Random random = new Random();
+
+						String path = "D:\\static\\img\\" + str;
+						fileItem.setFieldName(str
+								+ String.valueOf(random.nextInt(99999)));
+
+						File file = new File(path);
+						if (file.isFile()) {
+							file.delete();
+						}
+
+						fileItem.write(file);
+
+						returnObject.put("imageUrl", path);
+						returnObject.put("name", fileItem.getFieldName());
+						mv.addObject("returnObject", returnObject.toString());
+						return mv;
+
+					} else {
+						logger.error("文件没有选择 或 文件内容为空");
+					}
+				}
+			}
+		}
 		return mv;
 	}
 }
