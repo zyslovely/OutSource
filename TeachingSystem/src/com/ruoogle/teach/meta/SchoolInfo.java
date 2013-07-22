@@ -67,11 +67,8 @@ public class SchoolInfo implements Serializable {
 			}
 		},
 		/**
-<<<<<<< HEAD
-		 * 结束 
-=======
-		 * 已结束
->>>>>>> 803e3a49a1fc7c27bc2ac846c427bf37e154784d
+		 * <<<<<<< HEAD 结束 ======= 已结束 >>>>>>>
+		 * 803e3a49a1fc7c27bc2ac846c427bf37e154784d
 		 */
 		finished {
 			@Override

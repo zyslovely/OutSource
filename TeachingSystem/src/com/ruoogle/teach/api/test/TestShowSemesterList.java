@@ -5,7 +5,6 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TestShowSemesterList {
 
-	
 	public static void main(String[] args) {
 		String strURL = "http://teach.zys-wings.com/teach/api/semester/list/?token=XPZnlwnzVXx4wiJj8SyBlBWZ22o1kCpR";
 		// Get file to be posted

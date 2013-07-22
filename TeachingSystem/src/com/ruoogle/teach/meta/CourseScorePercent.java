@@ -40,7 +40,8 @@ public class CourseScorePercent implements Serializable {
 	}
 
 	public void setPercentType(long percentType) {
-		CoursePercentType type = CoursePercentType.genCoursePercentType((int) percentType);
+		CoursePercentType type = CoursePercentType
+				.genCoursePercentType((int) percentType);
 		if (type != null) {
 			this.name = type.getName();
 		}

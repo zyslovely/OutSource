@@ -29,7 +29,8 @@ public class HttpServletUtil {
 	 * @param encoding
 	 * @return
 	 */
-	public static String parseRequestAsString(HttpServletRequest request, String encoding) {
+	public static String parseRequestAsString(HttpServletRequest request,
+			String encoding) {
 		InputStream in = null;
 		BufferedInputStream bufInput = null;
 		ByteArrayOutputStream out = null;

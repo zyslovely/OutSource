@@ -1,19 +1,28 @@
 package com.ruoogle.teach.controller;
 
+import java.io.File;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.directwebremoting.WebContext;
-import org.directwebremoting.WebContextFactory;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -34,13 +43,14 @@ import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
+import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
-import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.Specialty;
-import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MyUser;
 import com.ruoogle.teach.service.ClassService;
 import com.ruoogle.teach.service.CourseService;
@@ -758,6 +768,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return mv;
 	}
 
+	/**
+	 * 
+	 * @Title: addGroupScore
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:22:15
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
 	public ModelAndView addGroupScore(HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(request.getSession().getId());
@@ -970,10 +992,23 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * 互动转发
 	 * @param request
 	 * @param response
 	 * @return
+=======
+	 * 
+	 * @Title: addForward
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:22:03
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+>>>>>>> 7b3e321de2c9f41abdcc394d69a642fadad93eb5
 	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1006,6 +1041,229 @@ public class ApiTeachSysController extends AbstractBaseController {
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
 		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: addInteractive
+	 * @Description: 添加评论
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:27:07
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView addInteractive(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		int status = ServletRequestUtils
+				.getIntParameter(request, "courseId", 0);
+		String photoUrl = ServletRequestUtils.getStringParameter(request,
+				"photoUrl", "");
+		long forwardId = ServletRequestUtils.getLongParameter(request,
+				"forwardId", -1L);
+
+		if (StringUtils.isEmpty(content) || StringUtils.isEmpty(photoUrl)
+				|| userId < 0 || courseId < 0 || status < 0 || forwardId < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService.addInteractive(userId, content,
+				courseId, status, photoUrl, forwardId);
+		;
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: addInteractiveBack
+	 * @Description: 回复评论
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-18下午11:28:53
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView addInteractiveBack(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		String content = ServletRequestUtils.getStringParameter(request,
+				"content", "");
+		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+
+		if (StringUtils.isEmpty(content) || userId < 0 || id < 0) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		boolean succ = interactiveService.addForwardBack(id, content, userId);
+		if (succ) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+		} else {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 
+	 * @Title: showInteractive
+	 * @Description: TODO
+	 * @Auther: yunshang_734@163.com
+	 * @2013-7-20上午11:59:59
+	 * @param @param request
+	 * @param @param response
+	 * @param @return
+	 * @return ModelAndView
+	 * @throws
+	 */
+	public ModelAndView showInteractive(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		int limit = ServletRequestUtils.getIntParameter(request, "limit", 10);
+		int offset = ServletRequestUtils.getIntParameter(request, "offset", 0);
+
+		List<Interactive> interactiveList = interactiveService
+				.getInteractiveByUserId(userId, limit, offset);
+		if (ListUtils.isEmptyList(interactiveList)) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		for (Interactive interactive : interactiveList) {
+			JSONObject interactiveObject = new JSONObject();
+			interactiveObject.put(Interactive.KINTERACTIVE_ID,
+					interactive.getId());
+			interactiveObject.put(Interactive.KINTERACTIVE_USERID,
+					interactive.getUserId());
+			interactiveObject.put(Interactive.KINTERACTIVE_CONTENT,
+					interactive.getContent());
+			interactiveObject.put(Interactive.KINTERACTIVE_COURSEID,
+					interactive.getCourseId());
+			interactiveObject.put(Interactive.KINGTERACTIVE_COURSENAME,
+					interactive.getCourseName());
+			interactiveObject.put(Interactive.KINTERACTIVE_FORWARDID,
+					interactive.getForwardId());
+			interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
+					interactive.getPhotoUrl());
+			interactiveObject.put(Interactive.KINGTERACTIVE_CREATETIME,
+					interactive.getCreateTime());
+			interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
+					interactive.getStatus());
+			interactiveObject.put(Interactive.KINGTERACTIVE_ORIID,
+					interactive.getOriid());
+			returnArray.add(interactiveObject);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put("interactiveList", returnArray.toString());
+		mv.addObject("interactiveList", returnObject);
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	public ModelAndView authUpload(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		RequestContext requestContext = new ServletRequestContext(request);
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
+		if (type != 1) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		if (request.getMethod().toLowerCase().equals("post")) {
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setSizeMax(2000000);
+			List items = new ArrayList();
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e1) {
+				logger.error("文件上传发生错误" + e1.getMessage());
+			}
+			Iterator it = items.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = (FileItem) it.next();
+				if (fileItem.isFormField()) {
+					logger.error("");
+				} else {
+					if (fileItem.getName() != null && fileItem.getSize() != 0) {
+
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy\\MM\\dd\\");
+						java.util.Date date = new java.util.Date();
+						String str = sdf.format(date);
+						Random random = new Random();
+
+						String path = "D:\\static\\img\\" + str;
+						fileItem.setFieldName(str
+								+ String.valueOf(random.nextInt(99999)));
+
+						File file = new File(path);
+						if (file.isFile()) {
+							file.delete();
+						}
+
+						fileItem.write(file);
+
+						returnObject.put("imageUrl", path);
+						returnObject.put("name", fileItem.getFieldName());
+						mv.addObject("returnObject", returnObject.toString());
+						return mv;
+
+					} else {
+						logger.error("文件没有选择 或 文件内容为空");
+					}
+				}
+			}
+		}
 		return mv;
 	}
 }

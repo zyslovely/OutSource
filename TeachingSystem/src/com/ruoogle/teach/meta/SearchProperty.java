@@ -9,15 +9,19 @@ public class SearchProperty {
 
 	private long propertyId;
 	private double value;
+
 	public long getPropertyId() {
 		return propertyId;
 	}
+
 	public void setPropertyId(long propertyId) {
 		this.propertyId = propertyId;
 	}
+
 	public double getValue() {
 		return value;
 	}
+
 	public void setValue(double value) {
 		this.value = value;
 	}

@@ -44,7 +44,8 @@ public class ProfileServiceImpl implements ProfileService {
 	 * java.lang.String, java.lang.String, int)
 	 */
 	@Override
-	public boolean addProfile(String name, String userName, String passWord, int level) {
+	public boolean addProfile(String name, String userName, String passWord,
+			int level) {
 		Profile profile = new Profile();
 		profile.setCreateTime(new Date().getTime());
 		profile.setUserName(userName);
@@ -111,13 +112,16 @@ public class ProfileServiceImpl implements ProfileService {
 	 * int, int, long)
 	 */
 	@Override
-	public List<Profile> getProfileListByClassId(int level, int limit, int offset, long classId) {
+	public List<Profile> getProfileListByClassId(int level, int limit,
+			int offset, long classId) {
 		com.ruoogle.teach.meta.Class class1 = classMapper.getClassById(classId);
-		Specialty specialty = specialtyMapper.getSpecialtyById(class1.getSpecialtyId());
+		Specialty specialty = specialtyMapper.getSpecialtyById(class1
+				.getSpecialtyId());
 		if (class1 == null || specialty == null) {
 			return null;
 		}
-		List<Profile> profileList = profileMapper.getProfileByClassId(classId, level, limit, offset);
+		List<Profile> profileList = profileMapper.getProfileByClassId(classId,
+				level, limit, offset);
 		if (ListUtils.isEmptyList(profileList)) {
 			return null;
 		}
@@ -154,7 +158,8 @@ public class ProfileServiceImpl implements ProfileService {
 	public List<Profile> getProfileListWithMySelfAndCompany(long userId) {
 
 		Profile profile = profileMapper.getProfile(userId);
-		List<Profile> companyProfiles = profileMapper.getProfileListByLevel(ProfileLevel.CompanyLeader.getValue(), 0, -1);
+		List<Profile> companyProfiles = profileMapper.getProfileListByLevel(
+				ProfileLevel.CompanyLeader.getValue(), 0, -1);
 		List<Profile> profiles = new ArrayList<Profile>();
 		if (profile != null) {
 			profiles.add(profile);

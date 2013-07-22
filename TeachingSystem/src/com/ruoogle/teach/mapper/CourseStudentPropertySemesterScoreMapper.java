@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 
 public interface CourseStudentPropertySemesterScoreMapper {
-	public int addCourseStudentPropertySemesterScore(CourseStudentPropertySemesterScore courseStudentPropertySemesterScore);
+	public int addCourseStudentPropertySemesterScore(
+			CourseStudentPropertySemesterScore courseStudentPropertySemesterScore);
 
 	/**
 	 * 获取列表
@@ -18,7 +19,8 @@ public interface CourseStudentPropertySemesterScoreMapper {
 	 * @return
 	 */
 	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoreByStudentIdSemester(
-			@Param(value = "semesterId") long semesterId, @Param(value = "studentId") long studentId);
+			@Param(value = "semesterId") long semesterId,
+			@Param(value = "studentId") long studentId);
 
 	/**
 	 * 获取学生学期数
@@ -27,7 +29,8 @@ public interface CourseStudentPropertySemesterScoreMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public int getCourseStudentPropertySemesterCount(@Param(value = "studentId") long studentId);
+	public int getCourseStudentPropertySemesterCount(
+			@Param(value = "studentId") long studentId);
 
 	/**
 	 * 获取学生的所有
@@ -36,7 +39,8 @@ public interface CourseStudentPropertySemesterScoreMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoreByStudentId(@Param(value = "studentId") long studentId);
+	public List<CourseStudentPropertySemesterScore> getCourseStudentPropertySemesterScoreByStudentId(
+			@Param(value = "studentId") long studentId);
 
 	/**
 	 * 更新
@@ -45,7 +49,8 @@ public interface CourseStudentPropertySemesterScoreMapper {
 	 * @param courseStudentPropertySemesterScore
 	 * @return
 	 */
-	public int updateCourseStudentPropertySemesterScore(CourseStudentPropertySemesterScore courseStudentPropertySemesterScore);
+	public int updateCourseStudentPropertySemesterScore(
+			CourseStudentPropertySemesterScore courseStudentPropertySemesterScore);
 
 	/**
 	 * 删除
@@ -55,5 +60,7 @@ public interface CourseStudentPropertySemesterScoreMapper {
 	 * @param semesterId
 	 * @return
 	 */
-	public int deleteCourseStudentPropertySemesterScore(@Param("studentId") long studentId, @Param("semesterId") long semesterId);
+	public int deleteCourseStudentPropertySemesterScore(
+			@Param("studentId") long studentId,
+			@Param("semesterId") long semesterId);
 }

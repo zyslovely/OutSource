@@ -24,8 +24,10 @@ public interface CourseStudentScoreMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public CourseStudentScore getCourseStudentScoreByStudentId(@Param(value = "studentId") long studentId,
-			@Param(value = "percentType") long percentType, @Param(value = "courseId") long courseId);
+	public CourseStudentScore getCourseStudentScoreByStudentId(
+			@Param(value = "studentId") long studentId,
+			@Param(value = "percentType") long percentType,
+			@Param(value = "courseId") long courseId);
 
 	/**
 	 * 得到这个学生的课程得分列表
@@ -35,7 +37,8 @@ public interface CourseStudentScoreMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public List<CourseStudentScore> getCourseStudentScoresByCourseIdStudentId(@Param(value = "courseId") long courseId,
+	public List<CourseStudentScore> getCourseStudentScoresByCourseIdStudentId(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "studentId") long studentId);
 
 	/**
@@ -53,6 +56,7 @@ public interface CourseStudentScoreMapper {
 	 * @auther zyslovely@gmail.com
 	 * @return
 	 */
-	public List<CourseStudentScore> getCourseStudentScoreListByCourseIdPercentType(@Param(value = "courseId") long courseId,
+	public List<CourseStudentScore> getCourseStudentScoreListByCourseIdPercentType(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "percentType") long percentType);
 }

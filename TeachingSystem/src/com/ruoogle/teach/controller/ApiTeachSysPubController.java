@@ -195,5 +195,4 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		return modelAndView;
 	}
 
-	
 }

@@ -23,7 +23,8 @@ public class CourseGroupStudentVO {
 		return coursePercentTypeGroupStudent;
 	}
 
-	public void setCoursePercentTypeGroupStudent(CoursePercentTypeGroupStudent coursePercentTypeGroupStudent) {
+	public void setCoursePercentTypeGroupStudent(
+			CoursePercentTypeGroupStudent coursePercentTypeGroupStudent) {
 		this.coursePercentTypeGroupStudent = coursePercentTypeGroupStudent;
 	}
 

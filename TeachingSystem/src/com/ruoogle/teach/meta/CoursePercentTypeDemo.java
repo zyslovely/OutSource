@@ -196,7 +196,8 @@ public class CoursePercentTypeDemo implements Serializable {
 		this.percents = percents;
 	}
 
-	public static String getCoursePercentTypeList(List<Integer> coursePercentTypeId, List<Double> percents) {
+	public static String getCoursePercentTypeList(
+			List<Integer> coursePercentTypeId, List<Double> percents) {
 		JSONArray jsonArray = new JSONArray();
 		int index = 0;
 		for (int typeId : coursePercentTypeId) {
@@ -225,7 +226,8 @@ public class CoursePercentTypeDemo implements Serializable {
 		for (Object object : jsonArray.toArray()) {
 			JSONObject object2 = (JSONObject) object;
 			int typeId = object2.getInt("typeId");
-			CoursePercentType coursePercentType = CoursePercentType.genCoursePercentType(typeId);
+			CoursePercentType coursePercentType = CoursePercentType
+					.genCoursePercentType(typeId);
 
 			coursePercentTypes.add(coursePercentType);
 			this.percents.add(object2.getDouble("percent") * 100);

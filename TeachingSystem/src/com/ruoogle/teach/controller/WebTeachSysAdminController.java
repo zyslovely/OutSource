@@ -262,7 +262,6 @@ public class WebTeachSysAdminController extends AbstractBaseController {
 			}
 		} else {
 
-
 			List<SchoolInfo> schoolInfos = schoolInfoService.getSchoolInfoList(
 					limit, (page - 1) * limit, type, -1);
 			if (!ListUtils.isEmptyList(schoolInfos)) {

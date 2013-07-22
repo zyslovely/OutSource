@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 
 public interface CoursePercentTypeGroupMapper {
-	public int addCoursePercentTypeGroup(CoursePercentTypeGroup coursePercentTypeGroup);
+	public int addCoursePercentTypeGroup(
+			CoursePercentTypeGroup coursePercentTypeGroup);
 
 	/**
 	 * 获取
@@ -16,7 +17,8 @@ public interface CoursePercentTypeGroupMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public CoursePercentTypeGroup getCoursePercentTypeGroup(@Param(value = "id") long id);
+	public CoursePercentTypeGroup getCoursePercentTypeGroup(
+			@Param(value = "id") long id);
 
 	/**
 	 * 
@@ -24,7 +26,8 @@ public interface CoursePercentTypeGroupMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupByCourseId(@Param(value = "courseId") long courseId);
+	public List<CoursePercentTypeGroup> getCoursePercentTypeGroupByCourseId(
+			@Param(value = "courseId") long courseId);
 
 	/**
 	 * 删除
@@ -42,5 +45,6 @@ public interface CoursePercentTypeGroupMapper {
 	 * @param courseId
 	 * @return
 	 */
-	public int getCoursePercentTypeGroupCountById(@Param(value = "courseId") long courseId);
+	public int getCoursePercentTypeGroupCountById(
+			@Param(value = "courseId") long courseId);
 }

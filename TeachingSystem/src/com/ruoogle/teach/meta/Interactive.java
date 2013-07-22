@@ -13,17 +13,26 @@ public class Interactive implements Serializable {
 	private String photoUrl;
 	private long CreateTime;
 	private int status;
-
 	private long oriid;
-
 	private long showUserId;
 	private String name;
-
 	private String forwardFromStr;
-
 	private String courseName;
-
 	private List<InteractiveBack> subInteractiveBackList;
+
+	public static final String KINTERACTIVE_ID = "id";
+	public static final String KINTERACTIVE_USERID = "userId";
+	public static final String KINTERACTIVE_CONTENT = "content";
+	public static final String KINTERACTIVE_COURSEID = "courseId";
+	public static final String KINTERACTIVE_FORWARDID = "forwardId";
+	public static final String KINTERACTIVE_PHOTOURL = "photoUrl";
+	public static final String KINGTERACTIVE_CREATETIME = "createTime";
+	public static final String KINGTERACTIVE_STATUS = "status";
+	public static final String KINGTERACTIVE_ORIID = "oriid";
+	public static final String KINGTERACTIVE_SHOWUSERID = "showUserId";
+	public static final String KINGTERACTIVE_NAME = "name";
+	public static final String KINGTERACTIVE_FORWARDFROMSTR = "forwardFromStr";
+	public static final String KINGTERACTIVE_COURSENAME = "courseName";
 
 	public String getName() {
 		return name;
@@ -125,7 +134,8 @@ public class Interactive implements Serializable {
 		return subInteractiveBackList;
 	}
 
-	public void setSubInteractiveBackList(List<InteractiveBack> subInteractiveBackList) {
+	public void setSubInteractiveBackList(
+			List<InteractiveBack> subInteractiveBackList) {
 		this.subInteractiveBackList = subInteractiveBackList;
 	}
 

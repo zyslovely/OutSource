@@ -28,7 +28,9 @@ public interface ProfileMapper {
 	 * @param offset
 	 * @return
 	 */
-	public List<Profile> getProfileListByLevel(@Param(value = "level") int level, @Param(value = "limit") int limit,
+	public List<Profile> getProfileListByLevel(
+			@Param(value = "level") int level,
+			@Param(value = "limit") int limit,
 			@Param(value = "offset") int offset);
 
 	/**
@@ -45,7 +47,8 @@ public interface ProfileMapper {
 	 * @param userName
 	 * @return
 	 */
-	public Profile getProfileByUserName(@Param(value = "userName") String userName);
+	public Profile getProfileByUserName(
+			@Param(value = "userName") String userName);
 
 	/**
 	 * 
@@ -53,8 +56,11 @@ public interface ProfileMapper {
 	 * @param classId
 	 * @return
 	 */
-	public List<Profile> getProfileByClassId(@Param(value = "classId") long classId, @Param(value = "level") int level,
-			@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<Profile> getProfileByClassId(
+			@Param(value = "classId") long classId,
+			@Param(value = "level") int level,
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 得到最大的
@@ -73,7 +79,8 @@ public interface ProfileMapper {
 	 * @param password
 	 * @return
 	 */
-	public int updateProfilePassword(@Param(value = "userId") long userId, @Param(value = "password") String password);
+	public int updateProfilePassword(@Param(value = "userId") long userId,
+			@Param(value = "password") String password);
 
 	/**
 	 * 更新学生状态
@@ -83,7 +90,8 @@ public interface ProfileMapper {
 	 * @param status
 	 * @return
 	 */
-	public int updateProfileStatus(@Param(value = "userId") long userId, @Param(value = "status") int status);
+	public int updateProfileStatus(@Param(value = "userId") long userId,
+			@Param(value = "status") int status);
 
 	/**
 	 * 获取profile列表
@@ -92,7 +100,8 @@ public interface ProfileMapper {
 	 * @param userIds
 	 * @return
 	 */
-	public List<Profile> getProfileListByIds(@Param(value = "userIds") List<Long> userIds);
+	public List<Profile> getProfileListByIds(
+			@Param(value = "userIds") List<Long> userIds);
 
 	/**
 	 * 
@@ -101,7 +110,9 @@ public interface ProfileMapper {
 	 * @param offset
 	 * @return
 	 */
-	public List<Profile> getProfileListWithTeacher(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
+	public List<Profile> getProfileListWithTeacher(
+			@Param(value = "limit") int limit,
+			@Param(value = "offset") int offset);
 
 	/**
 	 * 删除用户信息通过classid

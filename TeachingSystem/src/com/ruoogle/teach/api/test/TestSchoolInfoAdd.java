@@ -2,10 +2,12 @@ package com.ruoogle.teach.api.test;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+
 /**
  * 加入校园活动
+ * 
  * @author zhengeason
- *
+ * 
  */
 public class TestSchoolInfoAdd {
 	public static void main(String[] args) {

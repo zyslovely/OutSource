@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore;
 
 public interface CoursePercentTypeGroupStudentScoreMapper {
-	public int addCoursePercentTypeGroupStudentScore(CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore);
+	public int addCoursePercentTypeGroupStudentScore(
+			CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore);
 
 	/**
 	 * 获取对应数据
@@ -19,8 +20,11 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 	 * @param toStudentId
 	 * @return
 	 */
-	public CoursePercentTypeGroupStudentScore getCoursePercentTypeGroupStudentScore(@Param(value = "courseId") long courseId,
-			@Param(value = "groupId") long groupId, @Param(value = "fromStudentId") long fromStudentId, @Param(value = "toStudentId") long toStudentId);
+	public CoursePercentTypeGroupStudentScore getCoursePercentTypeGroupStudentScore(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "groupId") long groupId,
+			@Param(value = "fromStudentId") long fromStudentId,
+			@Param(value = "toStudentId") long toStudentId);
 
 	/**
 	 * 获取
@@ -31,8 +35,10 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 	 * @param toStudentId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByToStudent(@Param(value = "courseId") long courseId,
-			@Param(value = "groupId") long groupId, @Param(value = "toStudentId") long toStudentId);
+	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByToStudent(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "groupId") long groupId,
+			@Param(value = "toStudentId") long toStudentId);
 
 	/**
 	 * 
@@ -41,7 +47,8 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 	 * @param groupId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByCourseGroup(@Param(value = "courseId") long courseId,
+	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByCourseGroup(
+			@Param(value = "courseId") long courseId,
 			@Param(value = "groupId") long groupId);
 
 	/**
@@ -52,8 +59,10 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 	 * @param fromStudentId
 	 * @return
 	 */
-	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByCourseGroupFrom(@Param(value = "courseId") long courseId,
-			@Param(value = "groupId") long groupId, @Param(value = "fromStudentId") long fromStudentId);
+	public List<CoursePercentTypeGroupStudentScore> getCoursePercentTypeGroupStudentScoreByCourseGroupFrom(
+			@Param(value = "courseId") long courseId,
+			@Param(value = "groupId") long groupId,
+			@Param(value = "fromStudentId") long fromStudentId);
 
 	/**
 	 * 更新
@@ -62,5 +71,6 @@ public interface CoursePercentTypeGroupStudentScoreMapper {
 	 * @param coursePercentTypeGroupStudentScore
 	 * @return
 	 */
-	public int updateCoursePercentTypeGroupStudentScore(CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore);
+	public int updateCoursePercentTypeGroupStudentScore(
+			CoursePercentTypeGroupStudentScore coursePercentTypeGroupStudentScore);
 }

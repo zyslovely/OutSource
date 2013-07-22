@@ -15,7 +15,8 @@ public interface SemesterStudentMapper {
 	 * @param studentId
 	 * @return
 	 */
-	public SemesterStudent getSemesterStudentByStudentSemester(@Param(value = "semesterId") long semesterId,
+	public SemesterStudent getSemesterStudentByStudentSemester(
+			@Param(value = "semesterId") long semesterId,
 			@Param(value = "studentId") long studentId);
 
 	/**
@@ -25,5 +26,6 @@ public interface SemesterStudentMapper {
 	 * @param id
 	 * @return
 	 */
-	public int updateSemesterStudentStatus(@Param(value = "id") long id, @Param(value = "status") int status);
+	public int updateSemesterStudentStatus(@Param(value = "id") long id,
+			@Param(value = "status") int status);
 }

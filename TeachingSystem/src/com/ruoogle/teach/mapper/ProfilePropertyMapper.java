@@ -9,5 +9,6 @@ import com.ruoogle.teach.meta.ProfileProperty;
 public interface ProfilePropertyMapper {
 	public int addProfileProperty(ProfileProperty profileProperty);
 
-	public List<ProfileProperty> getProfileProperty(@Param(value = "userId") long userId);
+	public List<ProfileProperty> getProfileProperty(
+			@Param(value = "userId") long userId);
 }
