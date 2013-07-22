@@ -861,15 +861,15 @@ public class ApiTeachSysController extends AbstractBaseController {
 			logger.info(returnObject.toString());
 			return mv;
 		}
+		JSONObject totalObject = new JSONObject();
 		Course course = courseService.getCourseById(courseId);
-		JSONArray courseArray = new JSONArray();
+
 		JSONObject courseObject = new JSONObject();
 		courseObject.put("id", course.getId());
 		courseObject.put("name", course.getName());
 		courseObject.put("description", course.getDescription());
-		courseArray.add(courseObject);
+		totalObject.put("course", courseObject);
 
-		JSONObject isEachStudentObject = new JSONObject();
 		boolean isEachStudent = false;
 		List<CoursePercentTypeGroup> coursePercentTypeGroupList = courseService
 				.getCoursePercentTypeGroupByCourseId(course.getId());
@@ -879,7 +879,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				isEachStudent = true;
 			}
 		}
-		isEachStudentObject.put("isEachStudent", isEachStudent);
+		totalObject.put("isEachStudent", isEachStudent);
 
 		JSONArray percentTypeArray = new JSONArray();
 		JSONObject percentTypeObject = new JSONObject();
@@ -899,21 +899,16 @@ public class ApiTeachSysController extends AbstractBaseController {
 				}
 			}
 		}
-
-		JSONArray returnArray = new JSONArray();
-
-		returnArray.add(courseArray.toString());
-		returnArray.add(isEachStudentObject);
-		returnArray.add(percentTypeArray.toString());
-
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
-		returnObject.put("returnCourseView", returnArray.toString());
+		totalObject.put("percentTypeArray", percentTypeArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				totalObject.toString());
 		mv.addObject("returnObject", returnObject.toString());
 		return mv;
 	}
 
 	/**
 	 * 获取单个反馈的详细信息列表
+	 * 
 	 * @Title: getFeedBack
 	 * @Description: TODO
 	 * @Auther: yunshang_734@163.com
@@ -992,12 +987,11 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * 互动转发
+	 * <<<<<<< HEAD 互动转发
+	 * 
 	 * @param request
 	 * @param response
-	 * @return
-=======
+	 * @return =======
 	 * 
 	 * @Title: addForward
 	 * @Description: TODO
@@ -1007,8 +1001,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param @param response
 	 * @param @return
 	 * @return ModelAndView
-	 * @throws
->>>>>>> 7b3e321de2c9f41abdcc394d69a642fadad93eb5
+	 * @throws >>>>>>> 7b3e321de2c9f41abdcc394d69a642fadad93eb5
 	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) {
