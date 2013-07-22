@@ -13,9 +13,9 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 public class TestAuthUpload {
 	public static void main(String[] args) {
 		try {
-			String strURL = "http://teach.zys-wings.com/teach/api/authUpload/?type=1&token=dnpNaUZJN2g4ZXJMNExlajVPQ2pQaCUyRjdzQ1RPdGtyRA==";
+			String strURL = "http://teach.zys-wings.com/teach/api/authUpload/?type=1&token=dmklMkJtbHd5b0VIUlNMdEZ1Yzk3N3RtOEhRd0lPdnoycQ==";
 
-			File f = new File("E:\\1.png");
+			File f = new File("/Users/zhengeason/Desktop/1.jpg");
 			PostMethod filePost = new PostMethod(strURL);
 			Part[] parts = { new FilePart("filename", f) };
 			filePost.setRequestEntity(new MultipartRequestEntity(parts,

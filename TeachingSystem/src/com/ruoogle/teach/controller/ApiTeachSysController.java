@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eason.web.util.DoubleUtil;
+import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
@@ -831,6 +833,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 					ReturnCodeConstant.FAILED);
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;
@@ -851,7 +854,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		long userId = MyUser.getMyUser(request);
+		long userId = MyUser.getMyUserFromToken(request);
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		if (courseId < 0) {
@@ -882,7 +885,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 		totalObject.put("isEachStudent", isEachStudent);
 
 		JSONArray percentTypeArray = new JSONArray();
-		JSONObject percentTypeObject = new JSONObject();
 		List<CourseScorePercent> courseScorePercents = courseService
 				.getCourseScorePercentListByCourseId(courseId);
 		List<CourseStudentScore> courseStudentScores = courseService
@@ -891,6 +893,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 			for (CourseStudentScore courseStudentScore : courseStudentScores) {
 				if (courseScorePercent.getPercentType() == courseStudentScore
 						.getPercentType()) {
+					JSONObject percentTypeObject = new JSONObject();
 					percentTypeObject.put("id", courseScorePercent.getId());
 					percentTypeObject.put("name", courseScorePercent.getName());
 					percentTypeObject.put("score",
@@ -902,6 +905,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 		totalObject.put("percentTypeArray", percentTypeArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				totalObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		mv.addObject("returnObject", returnObject.toString());
 		return mv;
 	}
@@ -980,6 +985,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 			}
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		returnObject.put("feedbackList", returnArray.toString());
 		mv.addObject("feedBackList", returnObject);
 		logger.info(returnObject.toString());
@@ -987,21 +994,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-	 * <<<<<<< HEAD 互动转发
-	 * 
+	 * 活动 
 	 * @param request
 	 * @param response
-	 * @return =======
-	 * 
-	 * @Title: addForward
-	 * @Description: TODO
-	 * @Auther: yunshang_734@163.com
-	 * @2013-7-18下午11:22:03
-	 * @param @param request
-	 * @param @param response
-	 * @param @return
-	 * @return ModelAndView
-	 * @throws >>>>>>> 7b3e321de2c9f41abdcc394d69a642fadad93eb5
+	 * @return
 	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -1192,25 +1188,27 @@ public class ApiTeachSysController extends AbstractBaseController {
 			returnArray.add(interactiveObject);
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		returnObject.put("interactiveList", returnArray.toString());
 		mv.addObject("interactiveList", returnObject);
 		logger.info(returnObject.toString());
 		return mv;
 	}
 
+	/**
+	 * 上传图片
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	public ModelAndView authUpload(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		RequestContext requestContext = new ServletRequestContext(request);
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		int type = ServletRequestUtils.getIntParameter(request, "type", -1);
-		if (type != 1) {
-			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-					ReturnCodeConstant.FAILED);
-			mv.addObject("returnObject", returnObject.toString());
-			logger.info(returnObject.toString());
-			return mv;
-		}
 		if (request.getMethod().toLowerCase().equals("post")) {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
@@ -1228,27 +1226,39 @@ public class ApiTeachSysController extends AbstractBaseController {
 					logger.error("");
 				} else {
 					if (fileItem.getName() != null && fileItem.getSize() != 0) {
-
+						JSONObject object = new JSONObject();
 						SimpleDateFormat sdf = new SimpleDateFormat(
-								"yyyy\\MM\\dd\\");
+								"yyyy/MM/dd/");
 						java.util.Date date = new java.util.Date();
 						String str = sdf.format(date);
-						Random random = new Random();
+						Random random = new Random(1000);
 
-						String path = "D:\\static\\img\\" + str;
-						fileItem.setFieldName(str
-								+ String.valueOf(random.nextInt(99999)));
+						String path = "/home/ubuntu/static/interactive/img/" + str;
+						String url = "/static/interactive/img/" + str;
+						FileUtil.CreateDir(path);
+						String name = new Date().getTime() + "_"
+								+ random.nextInt() + ".jpg";
+						String fileName = path + name;
+						url = url + name;
+						fileItem.setFieldName(fileName);
 
-						File file = new File(path);
+						File file = new File(fileName);
 						if (file.isFile()) {
 							file.delete();
 						}
 
 						fileItem.write(file);
 
-						returnObject.put("imageUrl", path);
-						returnObject.put("name", fileItem.getFieldName());
+						object.put("imageUrl", url);
+
+						returnObject.put(
+								BasicObjectConstant.kReturnObject_Data,
+								object.toString());
+						returnObject.put(
+								BasicObjectConstant.kReturnObject_Code,
+								ReturnCodeConstant.SUCCESS);
 						mv.addObject("returnObject", returnObject.toString());
+
 						return mv;
 
 					} else {
