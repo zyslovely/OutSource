@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class TestGetFeedBackList {
 	public static void main(String[] args) {
 
-		String strURL = "http://teach.zys-wings.com/teach/api/feedback/?userId=1&limit=10&offset=0&token=aERxZzhLVmtKbHo5cDVCNHlDT1VNeUNGOW0yOGdueGo=";
+		String strURL = "http://teach.zys-wings.com/teach/api/feedback/?limit=10&offset=0&token=dmklMkJtbHd5b0VIUU43MXpVOEREaW8zbjh3NThVbmYyWQ==";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

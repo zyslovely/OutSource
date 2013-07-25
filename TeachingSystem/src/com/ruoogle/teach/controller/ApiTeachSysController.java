@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
+import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
@@ -953,7 +954,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		feedbackObject.put(FeedBack.KFeedBack_fromName, feedBack.getFromName());
 		feedbackObject.put(FeedBack.KFeedBack_toName, feedBack.getToName());
 		feedbackObject.put(FeedBack.KFeedBack_createTimeStr,
-				feedBack.getCreateTime());
+				TimeUtil.getFormatTime(feedBack.getCreateTime()));
 		returnArray.add(feedbackObject);
 		List<FeedBack> feedBacks = feedBackService
 				.getFeedBackListByFeedBackId(feedBack.getId());
@@ -980,7 +981,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedbackObject2.put(FeedBack.KFeedBack_toName,
 						feedback.getToName());
 				feedbackObject2.put(FeedBack.KFeedBack_createTimeStr,
-						feedback.getCreateTime());
+						TimeUtil.getFormatTime(feedback.getCreateTime()));
 				returnArray.add(feedbackObject2);
 			}
 		}
