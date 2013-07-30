@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class TestShowInteractive {
 	public static void main(String[] args) {
 
-		String strURL = "http://teach.zys-wings.com/teach/api/interactive/show/?limit=10&offset=0&token=dnpNaUZJN2g4ZW91VUNpd2gxOXBuQldKVW9TUFhqMEs=";
+		String strURL = "http://teach.zys-wings.com/teach/api/interactive/show/?limit=10&offset=0&token=dnpNaUZJN2g4ZXA5ViUyQlZDdXowS3pzcnhXOFR2RXdaYw==";
 
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
