@@ -834,7 +834,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 					ReturnCodeConstant.FAILED);
 		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
-		
+
 		modelAndView.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return modelAndView;
@@ -931,7 +931,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		JSONObject returnObject = new JSONObject();
 		JSONArray returnArray = new JSONArray();
 		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
-		JSONObject object=new JSONObject();
+		JSONObject object = new JSONObject();
 		JSONObject feedbackObject = new JSONObject();
 		FeedBack feedBack = feedBackService.getFeedBack(id);
 		if (feedBack == null) {
@@ -987,15 +987,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 			}
 		}
 		object.put("feedbackList", returnArray.toString());
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, object.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				object.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return mv;
 	}
 
 	/**
-	 * 活动 
+	 * 活动
+	 * 
 	 * @param request
 	 * @param response
 	 * @return
@@ -1234,7 +1237,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 						String str = sdf.format(date);
 						Random random = new Random(1000);
 
-						String path = "/home/ubuntu/static/interactive/img/" + str;
+						String path = "/home/ubuntu/static/interactive/img/"
+								+ str;
 						String url = "/static/interactive/img/" + str;
 						FileUtil.CreateDir(path);
 						String name = new Date().getTime() + "_"
