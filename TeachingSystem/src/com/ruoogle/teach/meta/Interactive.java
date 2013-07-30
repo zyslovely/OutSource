@@ -33,6 +33,7 @@ public class Interactive implements Serializable {
 	public static final String KINGTERACTIVE_NAME = "name";
 	public static final String KINGTERACTIVE_FORWARDFROMSTR = "forwardFromStr";
 	public static final String KINGTERACTIVE_COURSENAME = "courseName";
+	public static final String KINGTERACTIVE_BACK = "interactiveBack";
 
 	public String getName() {
 		return name;

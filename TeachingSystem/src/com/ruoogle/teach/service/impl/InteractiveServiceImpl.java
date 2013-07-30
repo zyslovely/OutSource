@@ -351,4 +351,63 @@ public class InteractiveServiceImpl implements InteractiveService {
 		return interactiveMapper.getInteractiveByCourseIdUserId(courseId,
 				userId);
 	}
+
+	@Override
+	public Interactive getInteractive(long id) {
+
+		Interactive ainteractive = interactiveMapper.getInteractive(id);
+		List<Interactive> interactives = new ArrayList<Interactive>();
+		if (ainteractive == null) {
+			return null;
+		}
+		interactives.add(ainteractive);
+		if (ListUtils.isEmptyList(interactives)) {
+			return null;
+		}
+		List<Long> ids = new ArrayList<Long>();
+		List<Long> courseIds = new ArrayList<Long>();
+		for (Interactive interactive : interactives) {
+			ids.add(interactive.getUserId());
+			courseIds.add(interactive.getCourseId());
+		}
+		List<Profile> profiles = profileMapper.getProfileListByIds(ids);
+		Map<Long, Profile> profileMap = HashMapMaker.listToMap(profiles,
+				"getUserId", Profile.class);
+		List<Course> courseList = courseMapper.getCourseListByIds(courseIds);
+		Map<Long, Course> courseMap = HashMapMaker.listToMap(courseList,
+				"getId", Course.class);
+		for (Interactive interactive : interactives) {
+			Profile profile = profileMap.get(interactive.getUserId());
+			if (profile != null) {
+				interactive.setName(profile.getName());
+			}
+			if (interactive.getCourseId() != 0) {
+				Course course = courseMap.get(interactive.getCourseId());
+				if (course != null) {
+					interactive.setCourseName(course.getName());
+				}
+			}
+			if (interactive.getForwardId() > 0) {
+				Interactive interactive2 = interactiveMapper
+						.getInteractive(interactive.getForwardId());
+				if (interactive2 != null) {
+					Profile profile2 = profileMapper.getProfile(interactive2
+							.getUserId());
+					interactive.setForwardFromStr("转发自:" + profile2.getName());
+				}
+			}
+			long backId;
+			if (interactive.getOriid() == 0) {
+				backId = interactive.getId();
+			} else {
+				backId = interactive.getOriid();
+			}
+			List<InteractiveBack> interactiveBackList = interactiveBackMapper
+					.getInteractiveBack(backId);
+			if (!ListUtils.isEmptyList(interactiveBackList)) {
+				interactive.setSubInteractiveBackList(interactiveBackList);
+			}
+		}
+		return interactives.get(0);
+	}
 }

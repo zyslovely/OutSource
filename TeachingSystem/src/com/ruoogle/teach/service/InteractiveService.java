@@ -28,6 +28,8 @@ public interface InteractiveService {
 
 	public int getInteractiveCountByUserId(long userId);
 
+	public Interactive getInteractive(long id);
+
 	public boolean addForward(long id, String content, long userId);
 
 	public boolean addForwardBack(long id, String content, long userId);

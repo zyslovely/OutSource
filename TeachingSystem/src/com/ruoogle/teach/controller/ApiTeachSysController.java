@@ -47,6 +47,7 @@ import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
+import com.ruoogle.teach.meta.InteractiveBack;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SchoolInfo;
@@ -1053,22 +1054,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		JSONArray returnArray = new JSONArray();
 
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
-		int status = ServletRequestUtils
-				.getIntParameter(request, "courseId", 0);
+		int status = ServletRequestUtils.getIntParameter(request, "status", 0);
 		String photoUrl = ServletRequestUtils.getStringParameter(request,
 				"photoUrl", "");
-		long forwardId = ServletRequestUtils.getLongParameter(request,
-				"forwardId", -1L);
 
 		if (StringUtils.isEmpty(content) || StringUtils.isEmpty(photoUrl)
-				|| userId < 0 || courseId < 0 || status < 0 || forwardId < 0) {
+				|| userId < 0 || courseId < 0 || status < 0) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			mv.addObject("returnObject", returnObject.toString());
@@ -1076,7 +1073,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 			return mv;
 		}
 		boolean succ = interactiveService.addInteractive(userId, content,
-				courseId, status, photoUrl, forwardId);
+				courseId, status, photoUrl, 0);
 		;
 		if (succ) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -1107,7 +1104,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		JSONArray returnArray = new JSONArray();
 
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
@@ -1179,23 +1175,82 @@ public class ApiTeachSysController extends AbstractBaseController {
 					interactive.getCourseId());
 			interactiveObject.put(Interactive.KINGTERACTIVE_COURSENAME,
 					interactive.getCourseName());
-			interactiveObject.put(Interactive.KINTERACTIVE_FORWARDID,
-					interactive.getForwardId());
 			interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
 					interactive.getPhotoUrl());
 			interactiveObject.put(Interactive.KINGTERACTIVE_CREATETIME,
 					interactive.getCreateTime());
 			interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
 					interactive.getStatus());
-			interactiveObject.put(Interactive.KINGTERACTIVE_ORIID,
-					interactive.getOriid());
 			returnArray.add(interactiveObject);
 		}
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				returnArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
-		returnObject.put("interactiveList", returnArray.toString());
-		mv.addObject("interactiveList", returnObject);
+		mv.addObject("returnObject", returnObject);
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 单个互动
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showSingleInteractive(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+
+		Interactive interactive = interactiveService.getInteractive(id);
+		if (interactive == null) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.FAILED);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		JSONObject interactiveObject = new JSONObject();
+		interactiveObject.put(Interactive.KINTERACTIVE_ID, interactive.getId());
+		interactiveObject.put(Interactive.KINTERACTIVE_USERID,
+				interactive.getUserId());
+		interactiveObject.put(Interactive.KINTERACTIVE_CONTENT,
+				interactive.getContent());
+		interactiveObject.put(Interactive.KINTERACTIVE_COURSEID,
+				interactive.getCourseId());
+		interactiveObject.put(Interactive.KINGTERACTIVE_COURSENAME,
+				interactive.getCourseName());
+		interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
+				interactive.getPhotoUrl());
+		interactiveObject.put(Interactive.KINGTERACTIVE_CREATETIME,
+				interactive.getCreateTime());
+		interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
+				interactive.getStatus());
+		if (!ListUtils.isEmptyList(interactive.getSubInteractiveBackList())) {
+
+			JSONArray array = new JSONArray();
+			for (InteractiveBack interactiveBack : interactive
+					.getSubInteractiveBackList()) {
+				JSONObject object = new JSONObject();
+				object.put("content", interactiveBack.getContent());
+				object.put("name", interactiveBack.getName());
+				object.put("userId", interactiveBack.getUserId());
+				array.add(object);
+			}
+			interactiveObject.put(Interactive.KINGTERACTIVE_BACK,
+					array.toString());
+		}
+
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				interactiveObject.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+
+		mv.addObject("returnObject", returnObject);
 		logger.info(returnObject.toString());
 		return mv;
 	}
