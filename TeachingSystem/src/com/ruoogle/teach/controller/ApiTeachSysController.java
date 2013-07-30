@@ -931,6 +931,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		JSONObject returnObject = new JSONObject();
 		JSONArray returnArray = new JSONArray();
 		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
+		JSONObject object=new JSONObject();
 		JSONObject feedbackObject = new JSONObject();
 		FeedBack feedBack = feedBackService.getFeedBack(id);
 		if (feedBack == null) {
@@ -985,11 +986,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 				returnArray.add(feedbackObject2);
 			}
 		}
-		returnObject.put(BasicObjectConstant.kReturnObject_Data, "");
+		object.put("feedbackList", returnArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Data, object.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
-		returnObject.put("feedbackList", returnArray.toString());
-		mv.addObject("feedBackList", returnObject);
 		logger.info(returnObject.toString());
 		return mv;
 	}
