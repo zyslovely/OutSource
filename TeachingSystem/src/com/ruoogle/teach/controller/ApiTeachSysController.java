@@ -1250,7 +1250,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
 
-		mv.addObject("returnObject", returnObject);
+		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return mv;
 	}
