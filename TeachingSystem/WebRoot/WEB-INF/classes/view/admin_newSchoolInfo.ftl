@@ -79,6 +79,18 @@ body{min-width:1024px;min-height:600px}
                       </select>
                    </th>
                 </tr>
+                <tr>
+                   <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">封面图片</p></th>
+                   <th style="">
+                      <form style="margin-top:17px" onsubmit="return saveImage2();" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/admin/web/authUpload/" id="uploadFrame_2">
+                         <input type="file" class="t file l " size="37" name="file" value="浏览">
+                         <input type="submit" value="上传图片">
+                      </form>
+                      <div style="margin-top:20px;">
+                         <img id="image_2" src="/img/webIndex/pic2.png" style="height: 200px; width: 300px;display:none;">
+                      </div>
+                   </th>
+                </tr>
                
             </tbody>
        </table>

@@ -32,7 +32,7 @@ body{min-width:1024px;min-height:600px}
                  <input type="submit" value="上传图片">
              </form>
              <div style="margin-top:20px;">
-                 <img id="image_2" src="/img/webIndex/pic2.png" style="height: 200px; width: 300px;">
+                 <img id="image_2" src="" style="height: 200px; width: 300px;">
              </div>
           </li>
        </ul>

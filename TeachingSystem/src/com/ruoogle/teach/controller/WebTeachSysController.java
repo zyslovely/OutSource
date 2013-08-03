@@ -1,15 +1,29 @@
 package com.ruoogle.teach.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.RequestContext;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -18,7 +32,11 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.eason.web.util.DoubleUtil;
+import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
+import com.eason.web.util.ThumbnailUtil;
+import com.ruoogle.teach.constant.BasicObjectConstant;
+import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -686,6 +704,96 @@ public class WebTeachSysController extends AbstractBaseController {
 			mv.addObject("coursePropertyList", coursePropertieList);
 		}
 		this.setUD(mv, request);
+		return mv;
+	}
+
+	/**
+	 * 上传
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView authWebUpload(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		RequestContext requestContext = new ServletRequestContext(request);
+		ModelAndView mv = new ModelAndView("upload");
+		if (FileUploadBase.isMultipartContent(requestContext)
+				&& request.getMethod().toLowerCase().equals("post")) {
+
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setSizeMax(2000000);
+			List items = new ArrayList();
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e1) {
+				logger.error("文件上传发生错误" + e1.getMessage());
+			}
+			Iterator it = items.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = (FileItem) it.next();
+				if (fileItem.isFormField()) {
+					logger.error("");
+				} else {
+					if (fileItem.getName() != null && fileItem.getSize() != 0) {
+
+						JSONObject object = new JSONObject();
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy/MM/dd/");
+						java.util.Date date = new java.util.Date();
+						String str = sdf.format(date);
+						Random random = new Random(1000);
+
+						// /Users/zhengeason/Downloads
+						// /home/ubuntu
+						String path = "/Users/zhengeason/Downloads/static/schoolInfo/img/big/"
+								+ str;
+						String url = "/static/schoolInfo/img/big/" + str;
+						FileUtil.CreateDir(path);
+
+						String name = new Date().getTime() + "_"
+								+ random.nextInt() + ".jpg";
+						String fileName = path + name;
+						url = url + name;
+
+						fileItem.setFieldName(fileName);
+						File file = new File(fileName);
+						if (file.isFile()) {
+							file.delete();
+						}
+
+						fileItem.write(file);
+						object.put("imageUrl", url);
+
+						path = "/Users/zhengeason/Downloads/static/schoolInfo/img/small/"
+								+ str;
+						url = "/static/schoolInfo/img/small/" + str;
+						FileUtil.CreateDir(path);
+						String smallName = new Date().getTime() + "_"
+								+ random.nextInt() + ".jpg";
+						String smallFileName = path + smallName;
+						url = url + smallName;
+
+						fileItem.setFieldName(smallFileName);
+						File smallFile = new File(smallFileName);
+						if (smallFile.isFile()) {
+							smallFile.delete();
+						}
+
+						ThumbnailUtil.generateThumb(file, smallFile, 160, 160,
+								0.8);
+			
+						object.put("smallImageUrl", url);
+						mv.addObject("imageUrl", object.toString());
+
+					} else {
+						logger.error("文件没有选择 或 文件内容为空");
+					}
+				}
+			}
+		}
 		return mv;
 	}
 }

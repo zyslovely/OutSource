@@ -6,7 +6,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class TestAddForward {
 	public static void main(String[] args) {
 
-		String strURL = "http://teach.zys-wings.com/teach/api/forward/add/?content=hallo&forwardId=26&token=Mm5ONlJiMFRTQWJnRE5UZGxCNWZWaEdkJTJGJTJCd0tTdkQx";
+		String strURL = "http://teach.zys-wings.com/teach/api/forward/add/?content=hallo&forwardId=230&token=dnpNaUZJN2g4ZXFsUDNpaWFBTGtuMGhtMmxwYVczWmY=";
 
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

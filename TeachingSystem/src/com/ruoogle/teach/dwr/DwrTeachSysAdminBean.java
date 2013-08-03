@@ -196,6 +196,17 @@ public class DwrTeachSysAdminBean {
 		return schoolInfoService.finishSchoolInfo(infoId, userId);
 	}
 
+	/**
+	 * 添加校园信息
+	 * 
+	 * @param title
+	 * @param content
+	 * @param bImgUrl
+	 * @param sImgUrl
+	 * @param type
+	 * @param infoType
+	 * @return
+	 */
 	public boolean addSchoolInfo(String title, String content, String bImgUrl,
 			String sImgUrl, int type, int infoType) {
 		WebContext ctx = WebContextFactory.get();

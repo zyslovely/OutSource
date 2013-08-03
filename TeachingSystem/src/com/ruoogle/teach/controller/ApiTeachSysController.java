@@ -383,8 +383,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
 				feedBackObject.put("fromName", feedBack.getFromName());
 				feedBackObject.put("toName", feedBack.getToName());
-				feedBackObject
-						.put("createTimeStr", feedBack.getCreateTimeStr());
+				
 				feedBackArray.add(feedBackObject);
 			}
 		}
@@ -956,7 +955,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		feedbackObject.put(FeedBack.KFeedBack_fromName, feedBack.getFromName());
 		feedbackObject.put(FeedBack.KFeedBack_toName, feedBack.getToName());
 		feedbackObject.put(FeedBack.KFeedBack_createTimeStr,
-				TimeUtil.getFormatTime(feedBack.getCreateTime()));
+				feedBack.getCreateTime());
 		returnArray.add(feedbackObject);
 		List<FeedBack> feedBacks = feedBackService
 				.getFeedBackListByFeedBackId(feedBack.getId());
@@ -983,7 +982,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedbackObject2.put(FeedBack.KFeedBack_toName,
 						feedback.getToName());
 				feedbackObject2.put(FeedBack.KFeedBack_createTimeStr,
-						TimeUtil.getFormatTime(feedback.getCreateTime()));
+						feedback.getCreateTime());
 				returnArray.add(feedbackObject2);
 			}
 		}

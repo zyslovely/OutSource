@@ -7,7 +7,7 @@ public class TestGetOneInteractive {
 
 	public static void main(String[] args) {
 
-		String strURL = "http://teach.zys-wings.com/teach/api/one/interactive/?id=230&token=dnpNaUZJN2g4ZW92ZDBheWtZMHZzNmdEZDRiQmdRVWI=";
+		String strURL = "http://teach.zys-wings.com/teach/api/one/interactive/?id=230&token=dnpNaUZJN2g4ZXFsUDNpaWFBTGtuMGhtMmxwYVczWmY=";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

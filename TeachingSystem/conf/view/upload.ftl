@@ -1,1 +1,2 @@
 ${imageUrl!""}
+${smallImageUrl!""}

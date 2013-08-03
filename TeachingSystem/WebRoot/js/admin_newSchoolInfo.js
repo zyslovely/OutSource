@@ -1,6 +1,8 @@
 var _isEdit=false;
 var _type=0;
 var _infoType=0;
+var _bigPhotoUrl="";
+var _smallPhotoUrl = "";
 function schoolInfoTypeChange(obj,val){
 	
 	location.href="/teach/admin/schoolInfo/list/?type="+val;
@@ -64,4 +66,17 @@ function newschoolInfoInfoTypeChange(obj,val){
 	_infoType=val;
 };
 
+function saveImage2(){
+	
+$("#uploadFrame_2").ajaxSubmit(function(message) {
+if(message!=''){
+	var jsObject = eval('('+message+')'); 
+	$("#image_2").attr("src",jsObject.imageUrl);
+	_bigPhotoUrl = jsObject.imageUrl;
+	_smallPhotoUrl = jsObject.smallImageUrl;
+	$("#image_2").show();
+}
+});
+return false;
+};
 
