@@ -1433,4 +1433,12 @@ public class CourseServiceImpl implements CourseService {
 		return coursePercentTypeGroupMapper
 				.getCoursePercentTypeGroupByCourseId(courseId);
 	}
+
+	@Override
+	public CourseStudentTotalScore showCourseStudentTotalScore(long userId,
+			long courseId) {
+		// TODO Auto-generated method stub
+		return courseStudentTotalScoreMapper
+				.getCourseStudentTotalScoreByStudentId(courseId, userId);
+	}
 }

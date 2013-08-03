@@ -16,6 +16,7 @@ import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
 import com.ruoogle.teach.meta.CourseStudentScoreVO;
+import com.ruoogle.teach.meta.CourseStudentTotalScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.SearchProfile;
@@ -352,4 +353,7 @@ public interface CourseService {
 			long courseId);
 
 	public boolean checkStudentFinishedScoreGroup(long studentId, long courseId);
+
+	public CourseStudentTotalScore showCourseStudentTotalScore(long userId,
+			long courseId);
 }

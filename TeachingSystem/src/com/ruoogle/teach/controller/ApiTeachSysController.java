@@ -44,6 +44,7 @@ import com.ruoogle.teach.meta.CourseProperty;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudentPropertySemesterScore;
 import com.ruoogle.teach.meta.CourseStudentScore;
+import com.ruoogle.teach.meta.CourseStudentTotalScore;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
@@ -383,7 +384,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
 				feedBackObject.put("fromName", feedBack.getFromName());
 				feedBackObject.put("toName", feedBack.getToName());
-				
+
 				feedBackArray.add(feedBackObject);
 			}
 		}
@@ -883,6 +884,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 				isEachStudent = true;
 			}
 		}
+		CourseStudentTotalScore courseStudentTotalScore = courseService.showCourseStudentTotalScore(userId, courseId);
+		if(courseStudentTotalScore == null){
+			totalObject.put("totalScore", -1);
+		}else{
+			totalObject.put("totalScore", courseStudentTotalScore.getScore());
+		}
+		
 		totalObject.put("isEachStudent", isEachStudent);
 
 		JSONArray percentTypeArray = new JSONArray();
