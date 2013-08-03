@@ -750,7 +750,8 @@ public class WebTeachSysController extends AbstractBaseController {
 						// /home/ubuntu
 						String path = "/home/ubuntu/static/schoolInfo/img/big/"
 								+ str;
-						String url = "/static/schoolInfo/img/big/" + str;
+						String url = ApiTeachSysController.HOST
+								+ "/static/schoolInfo/img/big/" + str;
 						FileUtil.CreateDir(path);
 
 						String name = new Date().getTime() + "_"
@@ -769,7 +770,8 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						path = "/home/ubuntu/static/schoolInfo/img/small/"
 								+ str;
-						url = "/static/schoolInfo/img/small/" + str;
+						url = ApiTeachSysController.HOST
+								+ "/static/schoolInfo/img/small/" + str;
 						FileUtil.CreateDir(path);
 						String smallName = new Date().getTime() + "_"
 								+ random.nextLong() + ".jpg";

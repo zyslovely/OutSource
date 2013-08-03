@@ -80,6 +80,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 	@Resource
 	private InteractiveService interactiveService;
 
+	public static final String HOST = "http://teach.zys-wings.com";
+
 	/**
 	 * 课程列表
 	 * 
@@ -884,13 +886,14 @@ public class ApiTeachSysController extends AbstractBaseController {
 				isEachStudent = true;
 			}
 		}
-		CourseStudentTotalScore courseStudentTotalScore = courseService.showCourseStudentTotalScore(userId, courseId);
-		if(courseStudentTotalScore == null){
+		CourseStudentTotalScore courseStudentTotalScore = courseService
+				.showCourseStudentTotalScore(userId, courseId);
+		if (courseStudentTotalScore == null) {
 			totalObject.put("totalScore", -1);
-		}else{
+		} else {
 			totalObject.put("totalScore", courseStudentTotalScore.getScore());
 		}
-		
+
 		totalObject.put("isEachStudent", isEachStudent);
 
 		JSONArray percentTypeArray = new JSONArray();
@@ -1301,7 +1304,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 
 						String path = "/home/ubuntu/static/interactive/img/"
 								+ str;
-						String url = "/static/interactive/img/" + str;
+						String url = HOST + "/static/interactive/img/" + str;
 						FileUtil.CreateDir(path);
 						String name = new Date().getTime() + "_"
 								+ random.nextInt() + ".jpg";
