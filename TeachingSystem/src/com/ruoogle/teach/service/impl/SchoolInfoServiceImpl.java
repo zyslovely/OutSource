@@ -265,6 +265,7 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		SchoolInfo schoolInfo = new SchoolInfo();
 		schoolInfo.setContent(content);
 		schoolInfo.setTitle(title);
+		schoolInfo.setCreateTime(new Date().getTime());
 		schoolInfo.setType(type);
 		schoolInfo.setInfoType(infoType);
 		schoolInfo.setbImgUrl(bImgUrl);

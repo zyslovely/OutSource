@@ -15,7 +15,7 @@
 	<insert id="addSchoolInfo" parameterType="SchoolInfo">
 		INSERT INTO TB_School_Info
 		(
-		title,content,CreateTime,type,infoType,sImgUrl,bImgUrl
+		title,content,CreateTime,type,infoType,sImgUrl,bImgUrl,status
 		)VALUES(
 		#{title},#{content},#{CreateTime},#{type},#{infoType},#{sImgUrl},#{bImgUrl},#{status}
 		)

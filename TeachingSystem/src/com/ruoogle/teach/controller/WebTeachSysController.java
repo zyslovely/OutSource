@@ -748,13 +748,13 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						// /Users/zhengeason/Downloads
 						// /home/ubuntu
-						String path = "/Users/zhengeason/Downloads/static/schoolInfo/img/big/"
+						String path = "/home/ubuntu/static/schoolInfo/img/big/"
 								+ str;
 						String url = "/static/schoolInfo/img/big/" + str;
 						FileUtil.CreateDir(path);
 
 						String name = new Date().getTime() + "_"
-								+ random.nextInt() + ".jpg";
+								+ random.nextLong() + ".jpg";
 						String fileName = path + name;
 						url = url + name;
 
@@ -767,12 +767,12 @@ public class WebTeachSysController extends AbstractBaseController {
 						fileItem.write(file);
 						object.put("imageUrl", url);
 
-						path = "/Users/zhengeason/Downloads/static/schoolInfo/img/small/"
+						path = "/home/ubuntu/static/schoolInfo/img/small/"
 								+ str;
 						url = "/static/schoolInfo/img/small/" + str;
 						FileUtil.CreateDir(path);
 						String smallName = new Date().getTime() + "_"
-								+ random.nextInt() + ".jpg";
+								+ random.nextLong() + ".jpg";
 						String smallFileName = path + smallName;
 						url = url + smallName;
 
@@ -784,7 +784,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						ThumbnailUtil.generateThumb(file, smallFile, 160, 160,
 								0.8);
-			
+
 						object.put("smallImageUrl", url);
 						mv.addObject("imageUrl", object.toString());
 

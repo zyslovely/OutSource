@@ -35,7 +35,7 @@ body{min-width:1024px;min-height:600px}
                <#if schoolInfo.infoType==1>
                <a href="/teach/admin/schoolInfo/list/?infoId=${schoolInfo.id!0}&type=${schoolInfo.type!0}" >人员名单</a>
                </#if>
-               <a href="javascript:void(0);" onClick="" >删除</a>
+               <a href="javascript:void(0);" onClick="deleteSchoolInfo(${schoolInfo.id!0});" >删除</a>
                </th>
           
             </tr>
@@ -44,7 +44,7 @@ body{min-width:1024px;min-height:600px}
    </table> 
    <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
    </#if>
-   <div id="create_newSchoolInfo" style="width: 1024px; margin: auto;display:none;">
+   <div id="create_newSchoolInfo" style="width: 1024px; margin: auto;display:none;min-height:700px">
        <table style="margin: auto;">
             <tbody>
                 <tr>
@@ -64,7 +64,7 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">信息类型</p></th>
                    <th style="">
-                      <select id="newschoolInfo_type_select">
+                      <select id="newschoolInfo_type_select" style=" ">
                           <option value="0" selected="selected">学校信息</option>
                           <option value="1" >学院信息</option>
                       </select>  
@@ -73,7 +73,7 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">活动类型</p></th>
                    <th style="">
-                      <select id="newschoolInfo_infoType_select">
+                      <select id="newschoolInfo_infoType_select" style="">
                           <option value="0" selected="selected">不可参加</option>
                           <option value="1" >可参加</option>
                       </select>
@@ -86,8 +86,8 @@ body{min-width:1024px;min-height:600px}
                          <input type="file" class="t file l " size="37" name="file" value="浏览">
                          <input type="submit" value="上传图片">
                       </form>
-                      <div style="margin-top:20px;">
-                         <img id="image_2" src="/img/webIndex/pic2.png" style="height: 200px; width: 300px;display:none;">
+                      <div style="margin-top:20px;max-height:160px;">
+                         <img id="image_2" src="/img/webIndex/pic2.png" style="max-height:160px;display:none;">
                       </div>
                    </th>
                 </tr>
