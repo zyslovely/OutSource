@@ -289,8 +289,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 				JSONObject courseObject = new JSONObject();
 				courseObject.put(Profile.KProfile_Name, profile.getName());
 				courseObject.put(Profile.KProfile_userId, profile.getUserId());
-				courseObject.put(Profile.KProfile_className, profile.getClassName());
-				courseObject.put(Profile.KProfile_specialtyName, profile.getSpecialtyName());
+				courseObject.put(Profile.KProfile_className,
+						profile.getClassName());
+				courseObject.put(Profile.KProfile_specialtyName,
+						profile.getSpecialtyName());
 				courseArray.add(courseObject);
 			}
 		}
@@ -1181,6 +1183,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 					interactive.getId());
 			interactiveObject.put(Interactive.KINTERACTIVE_USERID,
 					interactive.getUserId());
+			interactiveObject.put(interactive.KINGTERACTIVE_NAME,
+					interactive.getName());
 			interactiveObject.put(Interactive.KINTERACTIVE_CONTENT,
 					interactive.getContent());
 			interactiveObject.put(Interactive.KINTERACTIVE_COURSEID,
@@ -1266,9 +1270,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return mv;
 	}
-	
-	
-	
 
 	/**
 	 * 上传图片
