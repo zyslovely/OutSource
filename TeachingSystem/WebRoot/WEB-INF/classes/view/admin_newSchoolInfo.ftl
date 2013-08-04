@@ -42,7 +42,7 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
-   <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
+   <div style="margin-top: 10px;"><div class="jpage_schoolInfo"></div></div>
    </#if>
    <div id="create_newSchoolInfo" style="width: 1024px; margin: auto;display:none;min-height:700px">
        <table style="margin: auto;">
@@ -131,7 +131,7 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
-   <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
+   <div style="margin-top: 10px;"><div class="jpage_schoolInfo"></div></div>
    </#if>
    </#if>
 </body>
@@ -140,7 +140,7 @@ body{min-width:1024px;min-height:600px}
 		
 <#include "js.ftl">
 <script type="text/javascript">
-$("#jpage_schoolInfo").paginate({
+$(".jpage_schoolInfo").paginate({
 				count 		: ${totalCount!0},
 				start 		: ${page!0},
 				display     : ${limit!0},
