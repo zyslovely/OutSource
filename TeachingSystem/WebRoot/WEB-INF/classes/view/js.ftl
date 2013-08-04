@@ -161,6 +161,7 @@
 			 $('#newschoolInfo_infoType_select').jgdDropdown({callback: function(obj, val) { newschoolInfoInfoTypeChange(obj,val) }});
 			
            </script>
+           <script type="text/javascript" src="/jPaginate/jquery.paginate.js" charset="utf-8"></script>
    	       <script type="text/javascript" src="/js/admin_newSchoolInfo.js" charset="utf-8"></script>
    	       
     	<#break>

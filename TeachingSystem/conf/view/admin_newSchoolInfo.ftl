@@ -14,9 +14,8 @@ body{min-width:1024px;min-height:600px}
    <#include "topNav.ftl"/>
    <#include "subNav.ftl"/>
    <div style="width: 1024px; margin: auto;">
-   <#if infoId<0>
+   <#if infoId<0 >
    <#if schoolInfos?exists>
-   
    <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
        <thead style="height:60px;">
             <tr>
@@ -42,7 +41,8 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
-   <div style="margin-top: 10px;"><div class="jpage_schoolInfo"></div></div>
+   <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
+
    </#if>
    <div id="create_newSchoolInfo" style="width: 1024px; margin: auto;display:none;min-height:700px">
        <table style="margin: auto;">
@@ -95,10 +95,10 @@ body{min-width:1024px;min-height:600px}
             </tbody>
        </table>
    </div>
-   </div>
    <#else>
    <#if schoolInfoJoins?exists>
-   <table  cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
+   <div>
+   <table cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
        <thead style="height:60px;">
             <tr>
                <#if type==0>
@@ -131,7 +131,8 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
-   <div style="margin-top: 10px;"><div class="jpage_schoolInfo"></div></div>
+   </div>
+   <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
    </#if>
    </#if>
 </body>
@@ -140,7 +141,7 @@ body{min-width:1024px;min-height:600px}
 		
 <#include "js.ftl">
 <script type="text/javascript">
-$(".jpage_schoolInfo").paginate({
+$("#jpage_schoolInfo").paginate({
 				count 		: ${totalCount!0},
 				start 		: ${page!0},
 				display     : ${limit!0},

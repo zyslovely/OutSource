@@ -35,8 +35,6 @@ import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
 import com.eason.web.util.ThumbnailUtil;
-import com.ruoogle.teach.constant.BasicObjectConstant;
-import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
@@ -748,7 +746,8 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						// /Users/zhengeason/Downloads
 						// /home/ubuntu
-						String path = "/home/ubuntu/static/schoolInfo/img/big/"
+						String prefix = "/Users/zhengeason/Downloads";
+						String path = prefix + "/static/schoolInfo/img/big/"
 								+ str;
 						String url = ApiTeachSysController.HOST
 								+ "/static/schoolInfo/img/big/" + str;
@@ -768,7 +767,7 @@ public class WebTeachSysController extends AbstractBaseController {
 						fileItem.write(file);
 						object.put("imageUrl", url);
 
-						path = "/home/ubuntu/static/schoolInfo/img/small/"
+						path = prefix+ "/static/schoolInfo/img/small/"
 								+ str;
 						url = ApiTeachSysController.HOST
 								+ "/static/schoolInfo/img/small/" + str;

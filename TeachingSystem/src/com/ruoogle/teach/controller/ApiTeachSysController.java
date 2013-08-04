@@ -32,7 +32,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
-import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
@@ -812,19 +811,19 @@ public class ApiTeachSysController extends AbstractBaseController {
 		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentList = courseService
 				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
 						groupId);
-		int both = 2, n = 0;
-		for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudentList) {
-			if (coursePercentTypeGroupStudent.getStudentId() == toUserId
-					|| coursePercentTypeGroupStudent.getStudentId() == fromUserId) {
-				n++;
-			}
-		}
-		if (n != both) {
-			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-					ReturnCodeConstant.FAILED);
-			modelAndView.addObject("returnObject", returnObject.toString());
-			return modelAndView;
-		}
+//		int both = 2, n = 0;
+//		for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudentList) {
+//			if (coursePercentTypeGroupStudent.getStudentId() == toUserId
+//					|| coursePercentTypeGroupStudent.getStudentId() == fromUserId) {
+//				n++;
+//			}
+//		}
+//		if (n != both) {
+//			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+//					ReturnCodeConstant.FAILED);
+//			modelAndView.addObject("returnObject", returnObject.toString());
+//			return modelAndView;
+//		}
 
 		boolean succ = courseService.addGroupScore(toUserId, courseId, groupId,
 				score, fromUserId);
