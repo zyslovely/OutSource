@@ -289,6 +289,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 				JSONObject courseObject = new JSONObject();
 				courseObject.put(Profile.KProfile_Name, profile.getName());
 				courseObject.put(Profile.KProfile_userId, profile.getUserId());
+				courseObject.put(Profile.KProfile_className, profile.getClassName());
+				courseObject.put(Profile.KProfile_specialtyName, profile.getSpecialtyName());
 				courseArray.add(courseObject);
 			}
 		}
@@ -811,19 +813,20 @@ public class ApiTeachSysController extends AbstractBaseController {
 		List<CoursePercentTypeGroupStudent> coursePercentTypeGroupStudentList = courseService
 				.getCoursePercentTypeGroupStudentListByGroupId(courseId,
 						groupId);
-//		int both = 2, n = 0;
-//		for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent : coursePercentTypeGroupStudentList) {
-//			if (coursePercentTypeGroupStudent.getStudentId() == toUserId
-//					|| coursePercentTypeGroupStudent.getStudentId() == fromUserId) {
-//				n++;
-//			}
-//		}
-//		if (n != both) {
-//			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-//					ReturnCodeConstant.FAILED);
-//			modelAndView.addObject("returnObject", returnObject.toString());
-//			return modelAndView;
-//		}
+		// int both = 2, n = 0;
+		// for (CoursePercentTypeGroupStudent coursePercentTypeGroupStudent :
+		// coursePercentTypeGroupStudentList) {
+		// if (coursePercentTypeGroupStudent.getStudentId() == toUserId
+		// || coursePercentTypeGroupStudent.getStudentId() == fromUserId) {
+		// n++;
+		// }
+		// }
+		// if (n != both) {
+		// returnObject.put(BasicObjectConstant.kReturnObject_Code,
+		// ReturnCodeConstant.FAILED);
+		// modelAndView.addObject("returnObject", returnObject.toString());
+		// return modelAndView;
+		// }
 
 		boolean succ = courseService.addGroupScore(toUserId, courseId, groupId,
 				score, fromUserId);
@@ -1167,7 +1170,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				.getInteractiveByUserId(userId, limit, offset);
 		if (ListUtils.isEmptyList(interactiveList)) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-					ReturnCodeConstant.FAILED);
+					ReturnCodeConstant.SUCCESS);
 			mv.addObject("returnObject", returnObject.toString());
 			logger.info(returnObject.toString());
 			return mv;
@@ -1263,6 +1266,9 @@ public class ApiTeachSysController extends AbstractBaseController {
 		logger.info(returnObject.toString());
 		return mv;
 	}
+	
+	
+	
 
 	/**
 	 * 上传图片

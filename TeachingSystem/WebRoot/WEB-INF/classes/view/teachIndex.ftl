@@ -39,7 +39,7 @@ canvas {border:1px solid #4c4c4c;}
            </ul>
        </div>
    </#if>   
-   <#if level
+   
    <table style="width: 600px;">
         <thead>
              <tr style="height: 40px; font-size: 20px;">

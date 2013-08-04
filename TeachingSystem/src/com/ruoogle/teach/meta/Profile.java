@@ -33,6 +33,8 @@ public class Profile implements Serializable {
 	public static final String KProfile_token = "token";
 	public static final String KProfile_level = "level";
 	public static final String KProfile_userId = "userId";
+	public static final String KProfile_className = "className";
+	public static final String KProfile_specialtyName = "specialtyName";
 
 	public enum ProfileLevel {
 		/**

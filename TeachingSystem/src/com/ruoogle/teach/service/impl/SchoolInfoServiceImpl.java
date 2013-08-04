@@ -132,7 +132,24 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
 			userIds.add(schoolInfoJoin.getUserId());
 		}
-		return profileMapper.getProfileListByIds(userIds);
+		List<Profile> profileList = profileMapper.getProfileListByIds(userIds);
+		;
+		if (ListUtils.isEmptyList(profileList)) {
+			return null;
+		}
+		for (Profile profile : profileList) {
+			com.ruoogle.teach.meta.Class class1 = classMapper
+					.getClassById(profile.getClassId());
+			if (class1 != null) {
+				profile.setClassName(class1.getName());
+				Specialty specialty = specialtyMapper.getSpecialtyById(class1
+						.getSpecialtyId());
+				if (specialty != null) {
+					profile.setSpecialtyName(specialty.getSpecialty());
+				}
+			}
+		}
+		return profileList;
 	}
 
 	@Override
