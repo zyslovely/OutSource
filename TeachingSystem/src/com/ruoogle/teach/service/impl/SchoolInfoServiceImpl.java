@@ -130,6 +130,9 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 			return null;
 		}
 		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		if (schoolInfo == null) {
+			return null;
+		}
 		// 如果是学校的
 		List<Profile> profileList = new ArrayList<Profile>(
 				schoolInfoJoins.size());
@@ -151,26 +154,28 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 			if (ListUtils.isEmptyList(profileList)) {
 				return null;
 			}
-
 			for (Profile profile : profileList) {
-				com.ruoogle.teach.meta.Class class1 = classMapper
-						.getClassById(profile.getClassId());
-				if (class1 != null) {
-					profile.setClassName(class1.getName());
-					Specialty specialty = specialtyMapper
-							.getSpecialtyById(class1.getSpecialtyId());
-					if (specialty != null) {
-						profile.setSpecialtyName(specialty.getSpecialty());
-					}
-				}
 				for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+
 					if (schoolInfoJoin.getUserId() == profile.getUserId()) {
+						com.ruoogle.teach.meta.Class class1 = classMapper
+								.getClassById(profile.getClassId());
+						if (class1 != null) {
+							profile.setClassName(class1.getName());
+							Specialty specialty = specialtyMapper
+									.getSpecialtyById(class1.getSpecialtyId());
+							if (specialty != null) {
+								profile.setSpecialtyName(specialty
+										.getSpecialty());
+							}
+						}
+
 						profile.setName(schoolInfoJoin.getName());
 						profile.setPhoneNum(schoolInfoJoin.getPhoneNum());
+						break;
 					}
 				}
 			}
-
 		}
 		return profileList;
 
