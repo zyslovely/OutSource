@@ -20,6 +20,7 @@ import com.ruoogle.teach.meta.SchoolInfo.SchoolInfoType;
 import com.ruoogle.teach.meta.SchoolInfoJoin;
 import com.ruoogle.teach.meta.Specialty;
 import com.ruoogle.teach.service.SchoolInfoService;
+import com.sun.xml.internal.xsom.impl.scd.Iterators.Map;
 
 /**
  * @author zhengyisheng E-mail:zhengyisheng@gmail.com
@@ -128,28 +129,51 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 		if (ListUtils.isEmptyList(schoolInfoJoins)) {
 			return null;
 		}
-		List<Long> userIds = new ArrayList<Long>();
-		for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
-			userIds.add(schoolInfoJoin.getUserId());
-		}
-		List<Profile> profileList = profileMapper.getProfileListByIds(userIds);
-		;
-		if (ListUtils.isEmptyList(profileList)) {
-			return null;
-		}
-		for (Profile profile : profileList) {
-			com.ruoogle.teach.meta.Class class1 = classMapper
-					.getClassById(profile.getClassId());
-			if (class1 != null) {
-				profile.setClassName(class1.getName());
-				Specialty specialty = specialtyMapper.getSpecialtyById(class1
-						.getSpecialtyId());
-				if (specialty != null) {
-					profile.setSpecialtyName(specialty.getSpecialty());
+		SchoolInfo schoolInfo = schoolInfoMapper.getSchoolInfoById(infoId);
+		// 如果是学校的
+		List<Profile> profileList = new ArrayList<Profile>(
+				schoolInfoJoins.size());
+		if (schoolInfo.getType() == SchoolInfoType.school.getValue()) {
+			for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+				Profile profile = new Profile();
+				profile.setName(schoolInfoJoin.getName());
+				profile.setGraduateSch(schoolInfoJoin.getGraduateSch());
+				profile.setPhoneNum(schoolInfoJoin.getPhoneNum());
+				profile.setOrigin(schoolInfoJoin.getOrigin());
+				profileList.add(profile);
+			}
+		} else {
+			List<Long> userIds = new ArrayList<Long>();
+			for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+				userIds.add(schoolInfoJoin.getUserId());
+			}
+			profileList = profileMapper.getProfileListByIds(userIds);
+			if (ListUtils.isEmptyList(profileList)) {
+				return null;
+			}
+
+			for (Profile profile : profileList) {
+				com.ruoogle.teach.meta.Class class1 = classMapper
+						.getClassById(profile.getClassId());
+				if (class1 != null) {
+					profile.setClassName(class1.getName());
+					Specialty specialty = specialtyMapper
+							.getSpecialtyById(class1.getSpecialtyId());
+					if (specialty != null) {
+						profile.setSpecialtyName(specialty.getSpecialty());
+					}
+				}
+				for (SchoolInfoJoin schoolInfoJoin : schoolInfoJoins) {
+					if (schoolInfoJoin.getUserId() == profile.getUserId()) {
+						profile.setName(schoolInfoJoin.getName());
+						profile.setPhoneNum(schoolInfoJoin.getPhoneNum());
+					}
 				}
 			}
+
 		}
 		return profileList;
+
 	}
 
 	@Override

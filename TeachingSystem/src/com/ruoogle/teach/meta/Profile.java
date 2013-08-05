@@ -35,6 +35,13 @@ public class Profile implements Serializable {
 	public static final String KProfile_userId = "userId";
 	public static final String KProfile_className = "className";
 	public static final String KProfile_specialtyName = "specialtyName";
+	public static final String KProfile_origin = "origin";
+	public static final String KProfile_graduateSch = "graduateSch";
+	public static final String KProfile_phoneNum = "phoneNum";
+
+	private String origin;
+	private String graduateSch;
+	private long phoneNum;
 
 	public enum ProfileLevel {
 		/**
@@ -170,6 +177,30 @@ public class Profile implements Serializable {
 
 	public void setNumber(long number) {
 		this.number = number;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public String getGraduateSch() {
+		return graduateSch;
+	}
+
+	public void setGraduateSch(String graduateSch) {
+		this.graduateSch = graduateSch;
+	}
+
+	public long getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(long phoneNum) {
+		this.phoneNum = phoneNum;
 	}
 
 }
