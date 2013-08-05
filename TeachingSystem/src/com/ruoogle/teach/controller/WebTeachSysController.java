@@ -746,7 +746,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						// /Users/zhengeason/Downloads
 						// /home/ubuntu
-						String prefix = "/Users/zhengeason/Downloads";
+						String prefix = "/home/ubuntu";
 						String path = prefix + "/static/schoolInfo/img/big/"
 								+ str;
 						String url = ApiTeachSysController.HOST
