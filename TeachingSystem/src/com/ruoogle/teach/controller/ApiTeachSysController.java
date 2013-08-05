@@ -286,14 +286,16 @@ public class ApiTeachSysController extends AbstractBaseController {
 		JSONArray courseArray = new JSONArray();
 		if (!ListUtils.isEmptyList(profileList)) {
 			for (Profile profile : profileList) {
-				JSONObject courseObject = new JSONObject();
-				courseObject.put(Profile.KProfile_Name, profile.getName());
-				courseObject.put(Profile.KProfile_userId, profile.getUserId());
-				courseObject.put(Profile.KProfile_className,
+				JSONObject profileObject = new JSONObject();
+				profileObject.put(Profile.KProfile_Name, profile.getName());
+				profileObject.put(Profile.KProfile_className,
 						profile.getClassName());
-				courseObject.put(Profile.KProfile_specialtyName,
+				profileObject.put(Profile.KProfile_specialtyName,
 						profile.getSpecialtyName());
-				courseArray.add(courseObject);
+				profileObject.put(Profile.KProfile_graduateSch, profile.getGraduateSch());
+				profileObject.put(Profile.KProfile_origin, profile.getOrigin());
+				profileObject.put(Profile.KProfile_phoneNum, profile.getPhoneNum());
+				courseArray.add(profileObject);
 			}
 		}
 		dataObject.put("profileList", courseArray.toString());
