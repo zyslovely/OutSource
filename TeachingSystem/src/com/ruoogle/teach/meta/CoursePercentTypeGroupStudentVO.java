@@ -10,7 +10,7 @@ public class CoursePercentTypeGroupStudentVO {
 	private long userId;
 	private String name;
 	private long groupId;
-	private double score = -1;
+	private double score = 18;
 
 	public long getUserId() {
 		return userId;

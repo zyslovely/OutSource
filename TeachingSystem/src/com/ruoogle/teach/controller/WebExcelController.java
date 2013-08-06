@@ -2,6 +2,7 @@ package com.ruoogle.teach.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.eason.web.util.ListUtils;
 import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentScore;
@@ -34,7 +36,6 @@ import com.ruoogle.teach.meta.CourseStudentScoreVO;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.Profile;
-import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.security.MySecurityDelegatingFilter;
 import com.ruoogle.teach.security.MyUser;
@@ -522,8 +523,12 @@ public class WebExcelController extends AbstractBaseController {
 								.getScoreList()) {
 							if (courseScorePercent.getPercentType() == courseStudentScore
 									.getPercentType()) {
-								template.createCell(String
-										.valueOf(courseStudentScore.getScore()));
+
+								BigDecimal b = new BigDecimal(
+										courseStudentScore.getScore());
+								double f1 = b.setScale(2,
+										BigDecimal.ROUND_HALF_UP).doubleValue();
+								template.createCell(String.valueOf(f1));
 								succ = true;
 							}
 						}

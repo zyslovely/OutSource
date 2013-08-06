@@ -116,7 +116,7 @@
 
     	<#case "EachStudentScore">
     	  
-   	       <script type="text/javascript" src="/js/EachStudentScore.js" charset="utf-8"></script>
+   	       <script type="text/javascript" src="/js/eachStudentScore.js" charset="utf-8"></script>
     	<#break>
     	
     	<#case "feedback">
