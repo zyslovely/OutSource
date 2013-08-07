@@ -3,22 +3,13 @@ package com.ruoogle.teach.api.test;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
-/**
- * 登录
- * 
- * @author zhengeason
- * 
- */
-public class TestLogin {
+public class TestUserCourseLIst {
 
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/login/?username=szmt13010&password=13010";
+		String strURL = "http://teach.zys-wings.com/teach/api/user/course/list/?token=dmklMkJtbHd5b0VIUVVXamFZcXFxbm9SR3czaGp0WlR6Rw==";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
-		// post.setRequestHeader(
-		// "Authorization",
-		// "token=\"U7elprSC7LZEc2ibVuappkxmFwPMkzImN.a0RtmqkwPmt.nVltzn6daMtalk_Wp7uiHM._jH_NNPZAlDqlcNKu5XWm0aokHOCMRfNVgz.jvq5CYW86MsP7qUHHEuWlfkp\"");
 
 		try {
 			int result = httpclient.executeMethod(post);

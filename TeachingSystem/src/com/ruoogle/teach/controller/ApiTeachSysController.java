@@ -292,9 +292,11 @@ public class ApiTeachSysController extends AbstractBaseController {
 						profile.getClassName());
 				profileObject.put(Profile.KProfile_specialtyName,
 						profile.getSpecialtyName());
-				profileObject.put(Profile.KProfile_graduateSch, profile.getGraduateSch());
+				profileObject.put(Profile.KProfile_graduateSch,
+						profile.getGraduateSch());
 				profileObject.put(Profile.KProfile_origin, profile.getOrigin());
-				profileObject.put(Profile.KProfile_phoneNum, profile.getPhoneNum());
+				profileObject.put(Profile.KProfile_phoneNum,
+						profile.getPhoneNum());
 				courseArray.add(profileObject);
 			}
 		}
@@ -1211,6 +1213,46 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
+	 * 用户课程列表
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView showUserCourse(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		List<Course> courseList = courseService.getTheCourseListByUserId(
+				userId, 0, -1);
+
+		if (ListUtils.isEmptyList(courseList)) {
+			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+					ReturnCodeConstant.SUCCESS);
+			mv.addObject("returnObject", returnObject.toString());
+			logger.info(returnObject.toString());
+			return mv;
+		}
+		for (Course course : courseList) {
+			JSONObject courseObject = new JSONObject();
+			courseObject.put(Course.KCOURSE_NAME, course.getName());
+			courseObject.put(Course.KCOURSE_ID, course.getId());
+			returnArray.add(courseObject);
+		}
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				returnArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
 	 * 单个互动
 	 * 
 	 * @param request
@@ -1347,4 +1389,5 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		return mv;
 	}
+
 }
