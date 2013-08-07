@@ -1,5 +1,6 @@
 package com.ruoogle.teach.service.impl;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -354,10 +355,15 @@ public class CourseServiceImpl implements CourseService {
 				.getCourseStudentScoresByCourseIdStudentId(courseId, studentId);
 		Course course = courseMapper.getCourseById(courseId);
 		double score = 0;
+		int count = 0;
 		for (CourseStudentScore courseStudentScore : courseStudentScores) {
-			score += courseStudentScore.getPercent() / 100
-					* courseStudentScore.getScore();
+			count++;
+			score += courseStudentScore.getScore();
 		}
+		score = score / count;
+		BigDecimal b = new BigDecimal(score);
+		score = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+		
 		CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper
 				.getCourseStudentTotalScoreByStudentId(courseId, studentId);
 		if (courseStudentTotalScore != null) {
