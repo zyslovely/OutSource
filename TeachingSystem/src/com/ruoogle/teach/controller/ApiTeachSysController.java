@@ -463,6 +463,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				"courseId", -1L);
 		long fromUserId = MyUser.getMyUserFromToken(request);
 
+		logger.info("addfeedback  " + content);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 
