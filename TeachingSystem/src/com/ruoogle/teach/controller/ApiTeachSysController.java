@@ -979,29 +979,30 @@ public class ApiTeachSysController extends AbstractBaseController {
 		List<FeedBack> feedBacks = feedBackService
 				.getFeedBackListByFeedBackId(feedBack.getId());
 		if (!ListUtils.isEmptyList(feedBacks)) {
-			for (FeedBack feedback : feedBacks) {
+			for (int i = feedBacks.size() - 1; i >= 0; i--) {
+				FeedBack feedBack2 = feedBacks.get(i);
 				JSONObject feedbackObject2 = new JSONObject();
-				feedbackObject2.put(FeedBack.KFeedBack_id, feedback.getId());
+				feedbackObject2.put(FeedBack.KFeedBack_id, feedBack2.getId());
 				feedbackObject2.put(FeedBack.KFeedBack_fromUserId,
-						feedback.getFromUserId());
+						feedBack2.getFromUserId());
 				feedbackObject2.put(FeedBack.KFeedBack_toUserId,
-						feedback.getToUserId());
+						feedBack2.getToUserId());
 				feedbackObject2.put(FeedBack.KFeedBack_content,
-						feedback.getContent());
-				if (feedback.getCourse() != null) {
-					feedbackObject2.put("courseName", feedback.getCourse()
+						feedBack2.getContent());
+				if (feedBack2.getCourse() != null) {
+					feedbackObject2.put("courseName", feedBack2.getCourse()
 							.getName());
 				}
 				feedbackObject2.put(FeedBack.KFeedBack_status,
-						feedback.getStatus());
+						feedBack2.getStatus());
 				feedbackObject2.put(FeedBack.KFeedBack_feedbackId,
-						feedback.getFeedbackId());
+						feedBack2.getFeedbackId());
 				feedbackObject2.put(FeedBack.KFeedBack_fromName,
-						feedback.getFromName());
+						feedBack2.getFromName());
 				feedbackObject2.put(FeedBack.KFeedBack_toName,
-						feedback.getToName());
+						feedBack2.getToName());
 				feedbackObject2.put(FeedBack.KFeedBack_createTime,
-						feedback.getCreateTime());
+						feedBack2.getCreateTime());
 				returnArray.add(feedbackObject2);
 			}
 		}

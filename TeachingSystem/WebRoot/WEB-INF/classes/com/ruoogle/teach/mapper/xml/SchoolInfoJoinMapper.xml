@@ -38,7 +38,7 @@
 		SELECT *
 		from
 		TB_School_Info_Join
-		WHERE infoId=#{infoId} and userId=#{userId}
+		WHERE infoId=#{infoId} and userId=#{userId} limit 1
 		;
 	</select>
 
