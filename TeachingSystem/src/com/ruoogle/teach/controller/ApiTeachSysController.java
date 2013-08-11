@@ -886,13 +886,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 		courseObject.put("description", course.getDescription());
 		totalObject.put("course", courseObject);
 
-		boolean isEachStudent = false;
+		int isEachStudent = 0;
 		List<CoursePercentTypeGroup> coursePercentTypeGroupList = courseService
 				.getCoursePercentTypeGroupByCourseId(course.getId());
 		if (!ListUtils.isEmptyList(coursePercentTypeGroupList)) {
 			if (!(courseService.checkStudentFinishedScoreGroup(userId,
 					course.getId()))) {
-				isEachStudent = true;
+				isEachStudent = 1;
 			}
 		}
 		CourseStudentTotalScore courseStudentTotalScore = courseService

@@ -68,7 +68,7 @@ public class Profile implements Serializable {
 		CompanyLeader {
 			@Override
 			public int getValue() {
-				return 2;
+				return 4;
 			}
 		},
 		/**

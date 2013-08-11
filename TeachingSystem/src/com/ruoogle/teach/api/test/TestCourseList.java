@@ -5,7 +5,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TestCourseList {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/course/list/?semesterId=10005&limit=10&offset=0&token=dmklMkJtbHd5b0VIUTIzS0s1QkdlQ0klMkJNM0lTRUdtU2pE";
+		String strURL = "http://teach.zys-wings.com/teach/api/course/list/?semesterId=10008&limit=10&offset=0&token=ajRicDBlbmlHR1g1VEFteG1JejVpck5sWGRsaXlIZkc=";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

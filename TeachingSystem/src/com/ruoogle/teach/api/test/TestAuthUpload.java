@@ -13,7 +13,7 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 public class TestAuthUpload {
 	public static void main(String[] args) {
 		try {
-			String strURL = "http://teach.zys-wings.com/teach/api/authUpload/?type=1&token=dmklMkJtbHd5b0VIUlNMdEZ1Yzk3N3RtOEhRd0lPdnoycQ==";
+			String strURL = "http://teach.zys-wings.com/teach/api/authUpload/?token=dmklMkJtbHd5b0VIVG83ZzlCV3V3N0RFcXdwV0J0NmhOZA==&type=1";
 
 			File f = new File("/Users/zhengeason/Desktop/1.jpg");
 			PostMethod filePost = new PostMethod(strURL);
