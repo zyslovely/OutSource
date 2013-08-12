@@ -10,7 +10,7 @@ import org.apache.commons.httpclient.params.HttpMethodParams;
 public class TestAddFeedBack {
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		String tagString = URLEncoder.encode("哈哈哈", "utf-8");
+		String tagString = URLEncoder.encode("哈哈哈");
 		System.err.println(tagString);
 		String strURL = "http://teach.zys-wings.com/teach/api/feedback/add/?toUserId=15&feedbackId=86&content="
 				+ tagString
@@ -20,7 +20,7 @@ public class TestAddFeedBack {
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
-		post.addParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "utf-8");
+		post.addRequestHeader("Content-Type", "text/html;charset=UTF-8");
 
 		try {
 			int result = httpclient.executeMethod(post);

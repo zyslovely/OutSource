@@ -276,7 +276,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 
 		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()
 				&& teachProfile.getLevel() != ProfileLevel.Teacher.getValue()
-				&& teachProfile.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
+				&& teachProfile.getLevel() != ProfileLevel.CompanyLeader
+						.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			modelAndView.addObject("returnObject", returnObject.toString());
@@ -462,9 +463,9 @@ public class ApiTeachSysController extends AbstractBaseController {
 				"toUserId", -1L);
 		long feedbackId = ServletRequestUtils.getLongParameter(request,
 				"feedbackId", -1L);
-		String content = ServletRequestUtils.getStringParameter(request,
-				"content", "");
-		//content = URLDecoder.decode(content, "utf-8");
+		String content = request.getParameter("content");
+		content=new String(content.getBytes("iso-8859-1"),"utf-8");
+
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		long fromUserId = MyUser.getMyUserFromToken(request);
