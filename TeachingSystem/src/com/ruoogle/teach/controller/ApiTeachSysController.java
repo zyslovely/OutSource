@@ -275,8 +275,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 		Profile teachProfile = profileService.getProfile(userId);
 
 		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()
-				|| teachProfile.getLevel() != ProfileLevel.Teacher.getValue()
-				|| teachProfile.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
+				&& teachProfile.getLevel() != ProfileLevel.Teacher.getValue()
+				&& teachProfile.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			modelAndView.addObject("returnObject", returnObject.toString());
