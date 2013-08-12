@@ -3,7 +3,6 @@ package com.ruoogle.teach.controller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.RoundingMode;
-import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1030,16 +1029,18 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	public ModelAndView addForward(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		JSONArray returnArray = new JSONArray();
+
 
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
+		content=new String(content.getBytes("iso-8859-1"),"utf-8");
 		long forwardId = ServletRequestUtils.getLongParameter(request,
 				"forwardId", -1L);
 
@@ -1066,6 +1067,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 * @Title: addInteractive
 	 * @Description: 添加评论
@@ -1078,13 +1080,14 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @throws
 	 */
 	public ModelAndView addInteractive(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
+		content=new String(content.getBytes("iso-8859-1"),"utf-8");
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		int status = ServletRequestUtils.getIntParameter(request, "status", 0);
@@ -1116,6 +1119,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
+	 * @throws UnsupportedEncodingException 
 	 * 
 	 * @Title: addInteractiveBack
 	 * @Description: 回复评论
@@ -1128,13 +1132,14 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @throws
 	 */
 	public ModelAndView addInteractiveBack(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
+		content=new String(content.getBytes("iso-8859-1"),"utf-8");
 		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
 
 		if (StringUtils.isEmpty(content) || userId < 0 || id < 0) {
