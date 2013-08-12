@@ -1,6 +1,7 @@
 package com.ruoogle.teach.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -448,9 +449,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException
 	 */
 	public ModelAndView addFeedBack(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		logger.info(request.getSession().getId());
 
 		long toUserId = ServletRequestUtils.getLongParameter(request,
@@ -459,6 +461,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 				"feedbackId", -1L);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
+		content = new String(content.getBytes("iso-8859-1"), "UTF-8").trim()
+				.toLowerCase();
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		long fromUserId = MyUser.getMyUserFromToken(request);
