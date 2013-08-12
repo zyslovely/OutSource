@@ -3,6 +3,7 @@ package com.ruoogle.teach.controller;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.RoundingMode;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -273,7 +274,9 @@ public class ApiTeachSysController extends AbstractBaseController {
 		JSONObject returnObject = new JSONObject();
 		Profile teachProfile = profileService.getProfile(userId);
 
-		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()) {
+		if (teachProfile.getLevel() != ProfileLevel.Admin.getValue()
+				|| teachProfile.getLevel() != ProfileLevel.Teacher.getValue()
+				|| teachProfile.getLevel() != ProfileLevel.CompanyLeader.getValue()) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			modelAndView.addObject("returnObject", returnObject.toString());
@@ -461,8 +464,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				"feedbackId", -1L);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
-		content = new String(content.getBytes("iso-8859-1"), "UTF-8").trim()
-				.toLowerCase();
+		//content = URLDecoder.decode(content, "utf-8");
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		long fromUserId = MyUser.getMyUserFromToken(request);
