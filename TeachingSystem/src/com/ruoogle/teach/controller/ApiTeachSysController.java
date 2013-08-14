@@ -2,6 +2,7 @@ package com.ruoogle.teach.controller;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -772,8 +773,12 @@ public class ApiTeachSysController extends AbstractBaseController {
 						coursePercentTypeGroupStudent.getUserId());
 				coursePercentTypeGroupStudentObject.put("name",
 						coursePercentTypeGroupStudent.getName());
-				coursePercentTypeGroupStudentObject.put("score",
+				BigDecimal b = new BigDecimal(
 						coursePercentTypeGroupStudent.getScore());
+				double f1 = b.setScale(2,
+						BigDecimal.ROUND_HALF_UP).doubleValue();
+				coursePercentTypeGroupStudentObject.put("score",
+						f1);
 				coursePercentTypeGroupStudentObject.put("groupId",
 						coursePercentTypeGroupStudent.getGroupId());
 				coursePercentTypeGroupStudentArray
