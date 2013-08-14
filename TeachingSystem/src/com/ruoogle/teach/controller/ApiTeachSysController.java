@@ -198,7 +198,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	public ModelAndView joinSchoolInfo(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -233,13 +233,14 @@ public class ApiTeachSysController extends AbstractBaseController {
 				.getValue()) {
 			String name = ServletRequestUtils.getStringParameter(request,
 					"name", "");
-			name=new String(name.getBytes("iso-8859-1"),"utf-8");
+			name = new String(name.getBytes("iso-8859-1"), "utf-8");
 			String origin = ServletRequestUtils.getStringParameter(request,
 					"origin", "");
-			origin=new String(origin.getBytes("iso-8859-1"),"utf-8");
+			origin = new String(origin.getBytes("iso-8859-1"), "utf-8");
 			String graduateSch = ServletRequestUtils.getStringParameter(
 					request, "graduateSch", "");
-			graduateSch=new String(graduateSch.getBytes("iso-8859-1"),"utf-8");
+			graduateSch = new String(graduateSch.getBytes("iso-8859-1"),
+					"utf-8");
 			succ = schoolInfoService.joinSchoolInfo(infoId, name, origin,
 					phoneNum, graduateSch);
 		} else {
@@ -468,7 +469,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long feedbackId = ServletRequestUtils.getLongParameter(request,
 				"feedbackId", -1L);
 		String content = request.getParameter("content");
-		content=new String(content.getBytes("iso-8859-1"),"utf-8");
+		content = new String(content.getBytes("iso-8859-1"), "utf-8");
 
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
@@ -586,8 +587,11 @@ public class ApiTeachSysController extends AbstractBaseController {
 							searchProfileObject.put(
 									"courseStudentPropertySemesterScoreList",
 									cSPSSArray.toString());
-							searchProfileObject.put("totalScore",
+							BigDecimal b = new BigDecimal(
 									searchProfile.getTotalScore());
+							double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP)
+									.doubleValue();
+							searchProfileObject.put("totalScore", f1);
 							searchProfileArray.add(searchProfileObject);
 						}
 					}
@@ -775,10 +779,9 @@ public class ApiTeachSysController extends AbstractBaseController {
 						coursePercentTypeGroupStudent.getName());
 				BigDecimal b = new BigDecimal(
 						coursePercentTypeGroupStudent.getScore());
-				double f1 = b.setScale(2,
-						BigDecimal.ROUND_HALF_UP).doubleValue();
-				coursePercentTypeGroupStudentObject.put("score",
-						f1);
+				double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP)
+						.doubleValue();
+				coursePercentTypeGroupStudentObject.put("score", f1);
 				coursePercentTypeGroupStudentObject.put("groupId",
 						coursePercentTypeGroupStudent.getGroupId());
 				coursePercentTypeGroupStudentArray
@@ -1038,18 +1041,17 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	public ModelAndView addForward(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		ModelAndView mv = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
 
-
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
-		content=new String(content.getBytes("iso-8859-1"),"utf-8");
+		content = new String(content.getBytes("iso-8859-1"), "utf-8");
 		long forwardId = ServletRequestUtils.getLongParameter(request,
 				"forwardId", -1L);
 
@@ -1076,7 +1078,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 * 
 	 * @Title: addInteractive
 	 * @Description: 添加评论
@@ -1096,7 +1098,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
-		content=new String(content.getBytes("iso-8859-1"),"utf-8");
+		content = new String(content.getBytes("iso-8859-1"), "utf-8");
 		long courseId = ServletRequestUtils.getLongParameter(request,
 				"courseId", -1L);
 		int status = ServletRequestUtils.getIntParameter(request, "status", 0);
@@ -1128,7 +1130,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	}
 
 	/**
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 * 
 	 * @Title: addInteractiveBack
 	 * @Description: 回复评论
@@ -1148,7 +1150,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		String content = ServletRequestUtils.getStringParameter(request,
 				"content", "");
-		content=new String(content.getBytes("iso-8859-1"),"utf-8");
+		content = new String(content.getBytes("iso-8859-1"), "utf-8");
 		long id = ServletRequestUtils.getLongParameter(request, "id", -1L);
 
 		if (StringUtils.isEmpty(content) || userId < 0 || id < 0) {
