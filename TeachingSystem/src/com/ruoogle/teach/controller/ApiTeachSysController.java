@@ -197,9 +197,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	public ModelAndView joinSchoolInfo(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws UnsupportedEncodingException {
 		logger.info(request.getSession().getId());
 
 		long infoId = ServletRequestUtils.getLongParameter(request, "infoId",
@@ -231,10 +232,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 				.getValue()) {
 			String name = ServletRequestUtils.getStringParameter(request,
 					"name", "");
+			name=new String(name.getBytes("iso-8859-1"),"utf-8");
 			String origin = ServletRequestUtils.getStringParameter(request,
 					"origin", "");
+			origin=new String(origin.getBytes("iso-8859-1"),"utf-8");
 			String graduateSch = ServletRequestUtils.getStringParameter(
 					request, "graduateSch", "");
+			graduateSch=new String(graduateSch.getBytes("iso-8859-1"),"utf-8");
 			succ = schoolInfoService.joinSchoolInfo(infoId, name, origin,
 					phoneNum, graduateSch);
 		} else {
