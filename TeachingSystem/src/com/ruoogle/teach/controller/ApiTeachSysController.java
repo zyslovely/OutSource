@@ -935,8 +935,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 					JSONObject percentTypeObject = new JSONObject();
 					percentTypeObject.put("id", courseScorePercent.getId());
 					percentTypeObject.put("name", courseScorePercent.getName());
-					percentTypeObject.put("score",
-							courseStudentScore.getScore());
+					BigDecimal b = new BigDecimal(courseStudentScore.getScore());
+					double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP)
+							.doubleValue();
+					percentTypeObject.put("score", f1);
 					percentTypeArray.add(percentTypeObject);
 				}
 			}
