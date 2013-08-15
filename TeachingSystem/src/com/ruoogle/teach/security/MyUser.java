@@ -93,7 +93,7 @@ public class MyUser {
 	public static long getMyUserFromToken(HttpServletRequest request) {
 		String token = ServletRequestUtils.getStringParameter(request, "token",
 				null);
-		if (token == null) {
+		if (StringUtils.isEmpty(token)) {
 			return -1;
 		}
 		logger.info("getMyUserFromToken token=" + token);
