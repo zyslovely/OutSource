@@ -99,12 +99,12 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-		if (userId < 0) {
-			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-					ReturnCodeConstant.FAILED);
-			modelAndView.addObject("returnObject", returnObject.toString());
-			return modelAndView;
-		}
+//		if (userId < 0) {
+//			returnObject.put(BasicObjectConstant.kReturnObject_Code,
+//					ReturnCodeConstant.FAILED);
+//			modelAndView.addObject("returnObject", returnObject.toString());
+//			return modelAndView;
+//		}
 		SchoolInfo schoolInfo = schoolInfoService.getSchoolInfo(infoId, userId);
 		if (schoolInfo.getStatus() != SchoolInfo.SchoolInfoStatus.ongoing
 				.getValue()) {
