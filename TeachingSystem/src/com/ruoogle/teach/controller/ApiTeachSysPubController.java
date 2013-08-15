@@ -99,12 +99,12 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 		long userId = MyUser.getMyUserFromToken(request);
 		ModelAndView modelAndView = new ModelAndView("return");
 		JSONObject returnObject = new JSONObject();
-//		if (userId < 0) {
-//			returnObject.put(BasicObjectConstant.kReturnObject_Code,
-//					ReturnCodeConstant.FAILED);
-//			modelAndView.addObject("returnObject", returnObject.toString());
-//			return modelAndView;
-//		}
+		// if (userId < 0) {
+		// returnObject.put(BasicObjectConstant.kReturnObject_Code,
+		// ReturnCodeConstant.FAILED);
+		// modelAndView.addObject("returnObject", returnObject.toString());
+		// return modelAndView;
+		// }
 		SchoolInfo schoolInfo = schoolInfoService.getSchoolInfo(infoId, userId);
 		if (schoolInfo.getStatus() != SchoolInfo.SchoolInfoStatus.ongoing
 				.getValue()) {
@@ -124,6 +124,7 @@ public class ApiTeachSysPubController extends AbstractBaseController {
 			String name = ServletRequestUtils.getStringParameter(request,
 					"name", "");
 			name = new String(name.getBytes("iso-8859-1"), "utf-8");
+			logger.info("测试一下name = " + name);
 			String origin = ServletRequestUtils.getStringParameter(request,
 					"origin", "");
 			origin = new String(origin.getBytes("iso-8859-1"), "utf-8");
