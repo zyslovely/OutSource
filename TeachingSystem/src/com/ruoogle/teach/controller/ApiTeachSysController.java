@@ -192,8 +192,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 		return modelAndView;
 	}
 
-	
-
 	/**
 	 * 显示参加活动的学生信息(老师)
 	 * 
@@ -502,9 +500,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 								for (CourseStudentPropertySemesterScore courseStudentPropertySemesterScore : searchProfile
 										.getCourseStudentPropertySemesterScoreList()) {
 									JSONObject cSPSSObject = new JSONObject();
-									cSPSSObject.put("score",
+									BigDecimal b = new BigDecimal(
 											courseStudentPropertySemesterScore
 													.getScore());
+									double f1 = b.setScale(2,
+											BigDecimal.ROUND_HALF_UP)
+											.doubleValue();
+									cSPSSObject.put("score", f1);
 									List<CourseProperty> courseProperties = courseService
 											.getAllCourseProperties();
 									for (CourseProperty courseProperty : courseProperties) {
