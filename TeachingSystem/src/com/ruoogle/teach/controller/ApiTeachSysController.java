@@ -521,6 +521,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 									cSPSSArray.add(cSPSSObject);
 								}
 							}
+
 							searchProfileObject.put(
 									"courseStudentPropertySemesterScoreList",
 									cSPSSArray.toString());
@@ -850,13 +851,6 @@ public class ApiTeachSysController extends AbstractBaseController {
 				isEachStudent = 1;
 			}
 		}
-		CourseStudentTotalScore courseStudentTotalScore = courseService
-				.showCourseStudentTotalScore(userId, courseId);
-		if (courseStudentTotalScore == null) {
-			totalObject.put("totalScore", -1);
-		} else {
-			totalObject.put("totalScore", courseStudentTotalScore.getScore());
-		}
 
 		totalObject.put("isEachStudent", isEachStudent);
 
@@ -879,6 +873,20 @@ public class ApiTeachSysController extends AbstractBaseController {
 					percentTypeArray.add(percentTypeObject);
 				}
 			}
+		}
+		CourseStudentTotalScore courseStudentTotalScore = courseService
+				.showCourseStudentTotalScore(userId, courseId);
+		if (courseStudentTotalScore == null) {
+			totalObject.put("totalScore", -1);
+		} else {
+			JSONObject percentTypeObject = new JSONObject();
+			percentTypeObject.put("id", 0);
+			percentTypeObject.put("name", "总分“");
+			BigDecimal b = new BigDecimal(courseStudentTotalScore.getScore());
+			double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+			percentTypeObject.put("score", f1);
+			percentTypeArray.add(percentTypeObject);
+			totalObject.put("totalScore", courseStudentTotalScore.getScore());
 		}
 		totalObject.put("percentTypeArray", percentTypeArray.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
