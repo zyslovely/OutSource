@@ -1261,8 +1261,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 				interactive.getCourseId());
 		interactiveObject.put(Interactive.KINGTERACTIVE_COURSENAME,
 				interactive.getCourseName());
-		interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
-				interactive.getPhotoUrl());
+		if (StringUtils.isEmpty(interactive.getPhotoUrl())) {
+			interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL, null);
+		} else {
+			interactiveObject.put(Interactive.KINTERACTIVE_PHOTOURL,
+					interactive.getPhotoUrl());
+		}
+
 		interactiveObject.put(Interactive.KINGTERACTIVE_CREATETIME,
 				interactive.getCreateTime());
 		interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
