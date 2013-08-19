@@ -52,7 +52,6 @@ import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.InteractiveBack;
 import com.ruoogle.teach.meta.Profile;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
-import com.ruoogle.teach.meta.SchoolInfo;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
@@ -860,19 +859,26 @@ public class ApiTeachSysController extends AbstractBaseController {
 		List<CourseStudentScore> courseStudentScores = courseService
 				.getCourseStudentScoresByUserIdCourseId(courseId, userId);
 		for (CourseScorePercent courseScorePercent : courseScorePercents) {
+			boolean hasScore = false;
+			JSONObject percentTypeObject = new JSONObject();
+			percentTypeObject.put("id", courseScorePercent.getId());
+			percentTypeObject.put("name", courseScorePercent.getName());
 			for (CourseStudentScore courseStudentScore : courseStudentScores) {
 				if (courseScorePercent.getPercentType() == courseStudentScore
 						.getPercentType()) {
-					JSONObject percentTypeObject = new JSONObject();
-					percentTypeObject.put("id", courseScorePercent.getId());
-					percentTypeObject.put("name", courseScorePercent.getName());
 					BigDecimal b = new BigDecimal(courseStudentScore.getScore());
 					double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP)
 							.doubleValue();
 					percentTypeObject.put("score", f1);
-					percentTypeArray.add(percentTypeObject);
+					hasScore = true;
+					break;
 				}
 			}
+			if (!hasScore)
+			{
+				percentTypeObject.put("score", -1);
+			}
+			percentTypeArray.add(percentTypeObject);
 		}
 		CourseStudentTotalScore courseStudentTotalScore = courseService
 				.showCourseStudentTotalScore(userId, courseId);
