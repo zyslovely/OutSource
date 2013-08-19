@@ -874,8 +874,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 					break;
 				}
 			}
-			if (!hasScore)
-			{
+			if (!hasScore) {
 				percentTypeObject.put("score", -1);
 			}
 			percentTypeArray.add(percentTypeObject);
@@ -1268,6 +1267,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 				interactive.getCreateTime());
 		interactiveObject.put(Interactive.KINGTERACTIVE_STATUS,
 				interactive.getStatus());
+		interactiveObject.put(interactive.KINGTERACTIVE_NAME,
+				interactive.getName());
 		if (!ListUtils.isEmptyList(interactive.getSubInteractiveBackList())) {
 
 			JSONArray array = new JSONArray();
