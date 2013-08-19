@@ -333,8 +333,15 @@ public class ApiTeachSysController extends AbstractBaseController {
 				}
 				feedBackObject.put("status", feedBack.getStatus());
 				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
-				feedBackObject.put("fromName", feedBack.getFromName());
-				feedBackObject.put("toName", feedBack.getToName());
+
+				Profile profile = profileService.getProfile(userId);
+				if (profile.getUserName().equals(feedBack.getFromName())){
+					feedBackObject.put("fromName", feedBack.getToName());
+					feedBackObject.put("toName", feedBack.getToName());
+				}else{
+					feedBackObject.put("fromName", feedBack.getFromName());
+					feedBackObject.put("toName", feedBack.getFromName());
+				}
 
 				feedBackArray.add(feedBackObject);
 			}
