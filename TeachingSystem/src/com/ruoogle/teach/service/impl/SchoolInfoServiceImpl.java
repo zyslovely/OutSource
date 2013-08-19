@@ -169,8 +169,6 @@ public class SchoolInfoServiceImpl implements SchoolInfoService {
 										.getSpecialty());
 							}
 						}
-
-						profile.setName(schoolInfoJoin.getName());
 						profile.setPhoneNum(schoolInfoJoin.getPhoneNum());
 						break;
 					}

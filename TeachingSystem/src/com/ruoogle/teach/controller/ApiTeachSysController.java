@@ -887,7 +887,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		} else {
 			JSONObject percentTypeObject = new JSONObject();
 			percentTypeObject.put("id", 0);
-			percentTypeObject.put("name", "总分“");
+			percentTypeObject.put("name", "总分");
 			BigDecimal b = new BigDecimal(courseStudentTotalScore.getScore());
 			double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 			percentTypeObject.put("score", f1);
@@ -1059,7 +1059,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 				"photoUrl", "");
 
 		if (StringUtils.isEmpty(content) || StringUtils.isEmpty(photoUrl)
-				|| userId < 0 || courseId < 0 || status < 0) {
+				|| userId < 0 || status < 0) {
 			returnObject.put(BasicObjectConstant.kReturnObject_Code,
 					ReturnCodeConstant.FAILED);
 			mv.addObject("returnObject", returnObject.toString());
