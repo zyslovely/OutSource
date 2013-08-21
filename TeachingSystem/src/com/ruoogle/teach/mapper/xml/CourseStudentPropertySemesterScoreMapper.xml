@@ -45,7 +45,7 @@
 		from
 		TB_Course_Student_Property_SemesterScore
 		WHERE
-		studentId=#{studentId} groupby semesterId;
+		studentId=#{studentId} group by semesterId;
 	</select>
 
 	<update id="updateCourseStudentPropertySemesterScore"

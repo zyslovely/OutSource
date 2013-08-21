@@ -55,7 +55,7 @@ body{min-width:1024px;min-height:600px}
                 </tr>
             </tbody>
        </table>
-       <#if courseStudentPropertySemesterScores?exists>
+       <#if profileProperties?exists>
        <div><canvas width="400px" height="300px" style="border:0px" id="semesterAll"></canvas></div>
        </#if>   
    </div>
@@ -81,7 +81,7 @@ window.onload = function() {
 	var params = {
 		aCap: [
 		<#list coursePropertyList as property>
-		<#list courseStudentPropertySemesterScores as propertyScore>
+		<#list profileProperties as propertyScore>
 		    <#if propertyScore.propertyId == property.id>
 		    <#if property_index != 0>,</#if>
 		    "${property.name!""}"

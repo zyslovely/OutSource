@@ -51,6 +51,7 @@ import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.InteractiveBack;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
@@ -141,6 +142,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		HttpReturn.returnShowCourseList(courseList,
 				courseStudentPropertySemesterScores, coursePropertieList,
 				dataObject);
+		dataObject.put("studentStatus", profile.getStatus());
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -335,10 +337,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 				feedBackObject.put("feedbackId", feedBack.getFeedbackId());
 
 				Profile profile = profileService.getProfile(userId);
-				if (profile.getUserName().equals(feedBack.getFromName())){
+				if (profile.getUserName().equals(feedBack.getFromName())) {
 					feedBackObject.put("fromName", feedBack.getToName());
 					feedBackObject.put("toName", feedBack.getToName());
-				}else{
+				} else {
 					feedBackObject.put("fromName", feedBack.getFromName());
 					feedBackObject.put("toName", feedBack.getFromName());
 				}
@@ -1301,6 +1303,66 @@ public class ApiTeachSysController extends AbstractBaseController {
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
 				ReturnCodeConstant.SUCCESS);
 
+		mv.addObject("returnObject", returnObject.toString());
+		logger.info(returnObject.toString());
+		return mv;
+	}
+
+	/**
+	 * 学业雷达图
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView studyRadis(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+
+		ModelAndView mv = new ModelAndView("return");
+		JSONObject returnObject = new JSONObject();
+		JSONArray returnArray = new JSONArray();
+
+		long userId = MyUser.getMyUserFromToken(request);
+		Profile profile = profileService.getProfile(userId);
+		if (profile.getStatus() == 1) {
+			List<ProfileProperty> profileProperties = profileService
+					.getProfileProperties(userId);
+			double maxScore = 0;
+			for (ProfileProperty profileProperty : profileProperties) {
+				if (profileProperty.getScore() > maxScore) {
+					maxScore = profileProperty.getScore();
+				}
+			}
+			for (ProfileProperty profileProperty : profileProperties) {
+				double endScore = profileProperty.getScore() / maxScore * 10;
+				profileProperty.setScore(DoubleUtil.round(endScore, 2,
+						RoundingMode.HALF_UP.ordinal()));
+			}
+			List<CourseProperty> coursePropertieList = courseService
+					.getAllCourseProperties();
+			for (CourseProperty course : coursePropertieList) {
+				for (ProfileProperty profileProperty : profileProperties) {
+					if (profileProperty.getPropertyId() == course.getId()) {
+						JSONObject scoreObject = new JSONObject();
+						scoreObject.put(CourseProperty.KCourseProperty_name,
+								course.getName());
+						scoreObject.put(CourseProperty.KCourseProperty_id,
+								course.getId());
+						scoreObject.put(CourseProperty.KCourseProperty_Score,
+								profileProperty.getScore());
+						returnArray.add(scoreObject);
+						break;
+					}
+
+				}
+
+			}
+		}
+
+		returnObject.put(BasicObjectConstant.kReturnObject_Data,
+				returnArray.toString());
+		returnObject.put(BasicObjectConstant.kReturnObject_Code,
+				ReturnCodeConstant.SUCCESS);
 		mv.addObject("returnObject", returnObject.toString());
 		logger.info(returnObject.toString());
 		return mv;
