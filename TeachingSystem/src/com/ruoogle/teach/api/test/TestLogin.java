@@ -12,7 +12,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class TestLogin {
 
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/login/?username=szmt080&password=080";
+		String strURL = "http://teach.zys-wings.com/teach/api/login/?username=teacher&password=teacher";
 		// Get file to be posted
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);

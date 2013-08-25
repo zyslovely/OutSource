@@ -910,7 +910,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		totalObject.put("percentTypeArray", percentTypeArray.toString());
 		
-		File file = new File("home/ubuntu/static/schedule/img/"+userId+"/"+ScheduleName);
+		File file = new File("/home/ubuntu/static/schedule/img/"+userId+"/"+ScheduleName);
 		if (file.isFile()) {
 			totalObject.put("hasSchedule", 1);
 		}else{
