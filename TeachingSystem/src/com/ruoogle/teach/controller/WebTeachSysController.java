@@ -832,8 +832,7 @@ public class WebTeachSysController extends AbstractBaseController {
 
 						JSONObject object = new JSONObject();
 
-						String prefix = "/home/ubuntu";
-						String path = prefix + "/static/schedule/img/" + userId
+						String path = "/home/ubuntu/static/schedule/img/" + userId
 								+ "/";
 						String url = ApiTeachSysController.HOST
 								+ "/static/schoolInfo/img/" + userId;

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,8 +53,8 @@ import com.ruoogle.teach.meta.FeedBack;
 import com.ruoogle.teach.meta.Interactive;
 import com.ruoogle.teach.meta.InteractiveBack;
 import com.ruoogle.teach.meta.Profile;
-import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.Profile.ProfileLevel;
+import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
 import com.ruoogle.teach.meta.Semester;
@@ -82,6 +84,10 @@ public class ApiTeachSysController extends AbstractBaseController {
 	private InteractiveService interactiveService;
 
 	public static final String HOST = "http://teach.zys-wings.com";
+	
+	
+	
+	public static final String ScheduleName   =  "schedule.jpg";
 
 	/**
 	 * 课程列表
@@ -903,6 +909,14 @@ public class ApiTeachSysController extends AbstractBaseController {
 			totalObject.put("totalScore", courseStudentTotalScore.getScore());
 		}
 		totalObject.put("percentTypeArray", percentTypeArray.toString());
+		
+		File file = new File("home/ubuntu/static/schedule/img/"+userId+"/"+ScheduleName);
+		if (file.isFile()) {
+			totalObject.put("hasSchedule", 1);
+		}else{
+			totalObject.put("hasSchedule", 0);
+		}
+		
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				totalObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
