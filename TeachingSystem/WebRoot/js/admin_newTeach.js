@@ -50,3 +50,5 @@ $(".admin_newTeach_delete").click(
 function teachTypeChoice(obj, val) {
 	_teachType = val;
 }
+
+

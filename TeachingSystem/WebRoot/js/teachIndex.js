@@ -11,6 +11,19 @@ function semestersChange(obj,val){
 	
 };
 
+function newfileChange(opt){
+	
+    _val=$(opt).val();
+    if(_val==''){
+    	return;
+    }
+   
+    $("#fileUpdate_form").ajaxSubmit(function(message) {
+    	location.href=location.href;
+    });
+    return false;
+};
+
 
 $(".teachIndex_delete").click(function(){
 	 _courseId=$(this).attr("data_id");

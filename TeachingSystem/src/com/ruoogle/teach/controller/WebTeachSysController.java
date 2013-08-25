@@ -767,8 +767,7 @@ public class WebTeachSysController extends AbstractBaseController {
 						fileItem.write(file);
 						object.put("imageUrl", url);
 
-						path = prefix+ "/static/schoolInfo/img/small/"
-								+ str;
+						path = prefix + "/static/schoolInfo/img/small/" + str;
 						url = ApiTeachSysController.HOST
 								+ "/static/schoolInfo/img/small/" + str;
 						FileUtil.CreateDir(path);
@@ -787,6 +786,71 @@ public class WebTeachSysController extends AbstractBaseController {
 								0.8);
 
 						object.put("smallImageUrl", url);
+						mv.addObject("imageUrl", object.toString());
+
+					} else {
+						logger.error("文件没有选择 或 文件内容为空");
+					}
+				}
+			}
+		}
+		return mv;
+	}
+
+	/**
+	 * 上传
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public ModelAndView scheduleUpload(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		RequestContext requestContext = new ServletRequestContext(request);
+		Long userId = MyUser.getMyUser(request);
+		ModelAndView mv = new ModelAndView("upload");
+		if (FileUploadBase.isMultipartContent(requestContext)
+				&& request.getMethod().toLowerCase().equals("post")) {
+
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			upload.setSizeMax(2000000);
+			List items = new ArrayList();
+			try {
+				items = upload.parseRequest(request);
+			} catch (FileUploadException e1) {
+				logger.error("文件上传发生错误" + e1.getMessage());
+			}
+			Iterator it = items.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = (FileItem) it.next();
+				if (fileItem.isFormField()) {
+					logger.error("");
+				} else {
+					if (fileItem.getName() != null && fileItem.getSize() != 0) {
+
+						JSONObject object = new JSONObject();
+
+						String prefix = "/home/ubuntu";
+						String path = prefix + "/static/schedule/img/" + userId
+								+ "/";
+						String url = ApiTeachSysController.HOST
+								+ "/static/schoolInfo/img/" + userId;
+						FileUtil.CreateDir(path);
+
+						String name = "schedule.jpg";
+						String fileName = path + name;
+						url = url + name;
+
+						fileItem.setFieldName(fileName);
+						File file = new File(fileName);
+						if (file.isFile()) {
+							file.delete();
+						}
+
+						fileItem.write(file);
+						object.put("imageUrl", url);
 						mv.addObject("imageUrl", object.toString());
 
 					} else {

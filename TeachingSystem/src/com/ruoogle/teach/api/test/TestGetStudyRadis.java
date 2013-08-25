@@ -5,7 +5,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 
 public class TestGetStudyRadis {
 	public static void main(String[] args) {
-		String strURL = "http://teach.zys-wings.com/teach/api/user/study/radis/?token=eDlKTDljWEtUNWptVHcwJTJGemJYZ2JxNkI3JTJCRnR0V0xl";
+		String strURL = "http://teach.zys-wings.com/teach/api/user/study/radis/?token=cFByVkQlMkI3b2RXcHRVMnpvU3J3ODMxZVphUjRYUk1Pcw==";
 		HttpClient httpclient = new HttpClient();
 		PostMethod post = new PostMethod(strURL);
 		try {

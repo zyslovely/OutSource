@@ -76,6 +76,12 @@
  
      <#elseif pageName="teachIndex">
       <div style="float: right;  margin-top: 36px;">
+          <form style="float: left;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/user/schedule/" >
+             <div class="w-filebtn" style="width: 145px;cursor: pointer;">
+                 <input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
+                 <a class="w-btn" id="" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">上传课程表</a>
+             </div>
+         </form>
            <p style="float: left; font-size: 16px; line-height: 37px; margin-right: 15px;">选择学期:</p>
            <div style="float:left;">
            <#if semesters?exists>
