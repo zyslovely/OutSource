@@ -16,7 +16,7 @@ body{min-width:1024px;min-height:600px}
    <div style="width: 1024px; margin: auto;">
    <#if infoId<0 >
    <#if schoolInfos?exists>
-   <table id="create_newCourseType_list" cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
+   <table id="create_newCourseType_list" cellspacing="0" style="margin-top: 20px; font-size: 20px; width: 1024px;">
        <thead style="height:60px;">
             <tr>
                <th class="f2" style="color: rgb(94, 94, 94);width:190px;border-bottom: 1px solid rgb(224, 224, 224);">标题</th>
@@ -41,8 +41,9 @@ body{min-width:1024px;min-height:600px}
             </#list>
        </tbody>
    </table> 
+   <#if totalCount gt limit>
    <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
-
+   </#if>
    </#if>
    <div id="create_newSchoolInfo" style="width: 1024px; margin: auto;display:none;min-height:700px">
        <table style="margin: auto;">
@@ -58,7 +59,7 @@ body{min-width:1024px;min-height:600px}
                 <tr>
                    <th style="width: 100px; float: right; font-size: 16px;"><p style="line-height: 53px;">内容</p></th>
                    <th style="">
-                      <textarea id="newSchoolInfo_content" rows="3" cols="80" style="font-size: 20px; resize: none; overflow-y: auto; word-wrap: break-word; border-width: 1px; height: 200px; width: 350px; overflow-x: hidden;"></textarea>
+                      <textarea id="newSchoolInfo_content" rows="3" cols="80" style="font-size: 20px; resize: none; overflow-y: auto; word-wrap: break-word; border-width: 1px; height: 300px; width: 500px; overflow-x: hidden;"></textarea>
                    </th>
                 </tr>
                 <tr>
@@ -98,7 +99,7 @@ body{min-width:1024px;min-height:600px}
    <#else>
    <#if schoolInfoJoins?exists>
    <div>
-   <table cellspacing="0" style="float: left; margin-top: 20px; font-size: 20px; width: 1024px;">
+   <table cellspacing="0" style=" margin-top: 20px; font-size: 20px; width: 1024px;">
        <thead style="height:60px;">
             <tr>
                <#if type==0>
@@ -132,7 +133,9 @@ body{min-width:1024px;min-height:600px}
        </tbody>
    </table> 
    </div>
+   <#if totalCount gt limit>
    <div style="margin-top: 10px;"><div id="jpage_schoolInfo"></div></div>
+   </#if>
    </#if>
    </#if>
 </body>

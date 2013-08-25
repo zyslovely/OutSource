@@ -102,7 +102,7 @@
 		
 		$.fn.applystyle(o,$this,a_css,hover_css,_first,_ul,_ulwrapdiv,_divwrapright);
 		//calculate width of the ones displayed:
-		var outsidewidth = outsidewidth_tmp - _first.parent().width() -3;
+		var outsidewidth = outsidewidth_tmp - _first.parent().width() -3 ;
 		if(ver == 'ie7'){
 			_ulwrapdiv.css('width',outsidewidth+72+'px');
 			_divwrapright.css('left',outsidewidth_tmp+6+72+'px');
@@ -244,6 +244,6 @@
 						}
 						insidewidth += this.offsetWidth;
 					})
-					_ul.css('width',insidewidth+'px');
+					_ul.css('width',insidewidth+'px'+1);
 	}
 })(jQuery);
