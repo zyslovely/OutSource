@@ -149,6 +149,13 @@ public class ApiTeachSysController extends AbstractBaseController {
 				courseStudentPropertySemesterScores, coursePropertieList,
 				dataObject);
 		dataObject.put("studentStatus", profile.getStatus());
+		
+		File file = new File("/home/ubuntu/static/schedule/img/"+userId+"/"+ScheduleName);
+		if (file.isFile()) {
+			dataObject.put("hasSchedule", 1);
+		}else{
+			dataObject.put("hasSchedule", 0);
+		}
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				dataObject.toString());
 		returnObject.put(BasicObjectConstant.kReturnObject_Code,
@@ -910,12 +917,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 		}
 		totalObject.put("percentTypeArray", percentTypeArray.toString());
 		
-		File file = new File("/home/ubuntu/static/schedule/img/"+userId+"/"+ScheduleName);
-		if (file.isFile()) {
-			totalObject.put("hasSchedule", 1);
-		}else{
-			totalObject.put("hasSchedule", 0);
-		}
+		
 		
 		returnObject.put(BasicObjectConstant.kReturnObject_Data,
 				totalObject.toString());
