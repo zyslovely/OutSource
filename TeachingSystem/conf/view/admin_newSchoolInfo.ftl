@@ -67,7 +67,7 @@ body{min-width:1024px;min-height:600px}
                    <th style="">
                       <select id="newschoolInfo_type_select" style=" ">
                           <option value="0" selected="selected">学校信息</option>
-                          <option value="1" >学院信息</option>
+                          <option value="1" >专业信息</option>
                       </select>  
                    </th>
                 </tr>

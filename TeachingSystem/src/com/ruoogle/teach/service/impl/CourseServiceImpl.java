@@ -301,8 +301,10 @@ public class CourseServiceImpl implements CourseService {
 
 		List<CourseProperty> courseProperties = coursePropertyMapper
 				.getAllCourseProperties();
+		
 		for (CourseProperty courseProperty : courseProperties) {
-			double score = 0;
+			double totalScore = 0;
+			double totalPercent = 0;
 			for (CourseScorePercentProperty courseScorePercentProperty : courseScorePercentProperties) {
 				if (courseScorePercentProperty.getPropertyId() != courseProperty
 						.getId()) {
@@ -313,10 +315,15 @@ public class CourseServiceImpl implements CourseService {
 				if (courseStudentScore == null) {
 					continue;
 				}
-
-				score += courseStudentScore.getScore() / 100
-						* courseStudentScore.getPercent() / 100;
+				totalScore += courseStudentScore.getScore();
+				totalPercent += courseStudentScore.getPercent();
 			}
+			double score = 0;
+			if (totalPercent != 0)
+			{
+				score = totalScore/totalPercent;
+			}
+
 
 			CourseStudentPropertyScore courseStudentPropertyScore = courseStudentPropertyScoreMapper
 					.getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(
