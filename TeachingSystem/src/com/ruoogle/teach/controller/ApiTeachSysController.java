@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.eason.web.util.DoubleUtil;
 import com.eason.web.util.FileUtil;
 import com.eason.web.util.ListUtils;
+import com.eason.web.util.ThumbnailUtil;
 import com.ruoogle.teach.constant.BasicObjectConstant;
 import com.ruoogle.teach.constant.ReturnCodeConstant;
 import com.ruoogle.teach.meta.Class;
@@ -1438,6 +1439,8 @@ public class ApiTeachSysController extends AbstractBaseController {
 
 						fileItem.write(file);
 
+						ThumbnailUtil.generateThumb(file, file, 800, 800,
+								0.8);
 						object.put("imageUrl", url);
 
 						returnObject.put(
