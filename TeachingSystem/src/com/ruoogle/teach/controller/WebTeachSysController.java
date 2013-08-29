@@ -765,6 +765,8 @@ public class WebTeachSysController extends AbstractBaseController {
 						}
 
 						fileItem.write(file);
+						ThumbnailUtil.generateThumb(file, file, 1200, 1200,
+								0.8);
 						object.put("imageUrl", url);
 
 						path = prefix + "/static/schoolInfo/img/small/" + str;
