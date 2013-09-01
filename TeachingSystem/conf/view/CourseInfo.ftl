@@ -75,6 +75,15 @@ body{min-width:1024px;min-height:600px}
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 246px;">${courseScorePercent.percent!0}%</th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);width: 246px;"><#if courseScorePercent.percentType!=4>${courseScorePercent.teacherName!""}<#else>互评小组</#if></th>
                         <th style="border-bottom: 1px solid rgb(224, 224, 224);color: rgb(139, 139, 139);">
+                           <#if (courseScorePercent.teacherId == visitUserId||visitUserId==course.teacherId)&&courseScorePercent.percentType==4>
+                           <a href="/teach/teacher/download/eachstudent/?courseId=${courseScorePercent.courseId!0}">下载打分模板</a>
+                           <form style="float: left;" id="fileUpdate_form" class="t" size="37" enctype="multipart/form-data" method="post" target="uploadFrame" action="/teach/teacher/upload/eachstudent/?courseId=${courseScorePercent.courseId!0}" >
+                            	<div class="w-filebtn" style="width: 145px;cursor: pointer;">
+                 					<input type="file" name="file" id="file" value=""  class="file-field" onChange="newfileChange(this);return;"/>
+                	            	<a class="w-btn" style="background: url('/img/courseInfo/button_bg.png') no-repeat scroll 0px 0px transparent; display: block; text-align: center; color: white; height: 45px; line-height: 46px; margin-left: 3px;" href="javascript:void(0);;">上传分组成绩</a>
+       				            </div>
+     					   </form>
+                           </#if>
                            <#if (courseScorePercent.teacherId == visitUserId||visitUserId==course.teacherId)&&courseScorePercent.percentType!=4&&course.status=0>
                            
                            <a class="w-btn" style="display: block; text-align: center; color: white; margin:10px auto 0; background: url('/img/courseInfo/button_bg_small.png') no-repeat scroll 0px 0px transparent; height: 45px; width: 135px; line-height: 33px; " href="/teach/score/?percentTypeId=${courseScorePercent.percentType!0}&courseId=${courseScorePercent.courseId!0}">打分</a>

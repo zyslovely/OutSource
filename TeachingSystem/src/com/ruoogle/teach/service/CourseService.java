@@ -221,6 +221,9 @@ public interface CourseService {
 	public List<CoursePercentTypeGroupStudentVO> getCoursePercentTypeGroupStudentScoresFromStudentID(
 			long fromStudentId, long courseId);
 
+	public CoursePercentTypeGroupStudent getCoursePercentTypeGroupStudent(long courseId,
+			long fromUserId);
+
 	public CourseStudent getCourseStudent(long courseId, long studentId);
 
 	/**

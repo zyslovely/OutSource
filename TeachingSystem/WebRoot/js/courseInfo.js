@@ -40,3 +40,16 @@ function backClick(_courseId){
 
 
 };
+
+
+function newfileChange(opt){
+	
+    _val=$(opt).val();
+    if(_val==''){
+    	return;
+    }
+    $("#fileUpdate_form").ajaxSubmit(function(message) {
+    	location.href=location.href;
+    });
+    return false;
+};

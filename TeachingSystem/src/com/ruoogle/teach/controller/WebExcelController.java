@@ -29,6 +29,8 @@ import com.eason.web.util.TimeUtil;
 import com.ruoogle.teach.mapper.ProfileMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CourseScorePercent;
 import com.ruoogle.teach.meta.CourseStudent;
 import com.ruoogle.teach.meta.CourseStudentScore;
@@ -695,6 +697,155 @@ public class WebExcelController extends AbstractBaseController {
 						template.createCell(TimeUtil.getFormatTime(interactive
 								.getCreateTime()));
 					}
+				}
+			}
+		}
+		response.reset();
+		response.setContentType("application/x-download;charset=GBK");
+		response.setHeader("Content-Disposition",
+				"attachment;filename=interactive.xls");
+		try {
+			template.getWorkbook().write(response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 上传互评
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView uploadEachOther(HttpServletRequest request,
+			HttpServletResponse response) {
+		response.setContentType("text/html;charset=utf-8");
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+		try {
+			Iterator<FileItem> it = this.getUPFiles(request);
+			while (it.hasNext()) {
+				FileItem item = it.next();
+				if (item != null && !item.isFormField() && item.getSize() > 0) {
+					InputStream inputStream = item.getInputStream();
+					HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+					HSSFSheet sheet = workbook.getSheetAt(0);
+					int totalRow = sheet.getLastRowNum();
+					long fromUserId = 0;
+					for (int i = 0; i <= totalRow; i++) {
+						HSSFRow row = sheet.getRow(i);
+						HSSFCell cell1 = row.getCell(0);
+						HSSFCell cell2 = row.getCell(1);
+						HSSFCell cell3 = row.getCell(2);
+						if (cell1 != null) {
+							cell1.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell2 != null) {
+							cell2.setCellType(Cell.CELL_TYPE_STRING);
+						}
+						if (cell1.getRichStringCellValue().getString().trim()
+								.isEmpty()
+								|| cell2.getRichStringCellValue().getString()
+										.trim().isEmpty()) {
+							break;
+						}
+						if (cell2.getRichStringCellValue().toString()
+								.contains("的学生互评")) {
+							fromUserId = Long.valueOf(cell1
+									.getRichStringCellValue().toString());
+						} else {
+
+							CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = courseService
+									.getCoursePercentTypeGroupStudent(courseId,
+											fromUserId);
+							long toUserId = Long.valueOf(cell1
+									.getRichStringCellValue().toString());
+							double score = Double.valueOf(cell3
+									.getNumericCellValue());
+
+							courseService.addGroupScore(toUserId, courseId,
+									coursePercentTypeGroupStudent.getGroupId(),
+									score, fromUserId);
+						}
+
+					}
+				}
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileUploadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * 下载学生互评
+	 * 
+	 * @auther zyslovely@gmail.com
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public ModelAndView downLoadEachOther(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		long courseId = ServletRequestUtils.getLongParameter(request,
+				"courseId", -1L);
+
+		if (courseId < 0) {
+			logger.error("没有课程id");
+			return null;
+		}
+		long userId = MyUser.getMyUser(request);
+		MyUser myUser = MySecurityDelegatingFilter.userMap.get(userId);
+		if (myUser == null) {
+			logger.error("没有MyUser");
+			return null;
+		}
+		ExcelTemplate template = ExcelTemplate
+				.newInstance("excelTemp/excel.xls");
+		template.createRow(0);
+
+		Course course = courseService.getCourseById(courseId);
+		if (course == null) {
+			logger.error("没有这门课");
+			return null;
+		}
+		List<CourseStudent> courseStudents = courseService
+				.getCourseStudentByCourseId(courseId);
+		int index = 0;
+		if (!ListUtils.isEmptyList(courseStudents)) {
+			for (CourseStudent courseStudent : courseStudents) {
+				template.createRow(index++);
+				Profile profile = profileService.getProfile(courseStudent
+						.getUserId());
+				template.createCell(String.valueOf(profile.getUserId()));
+				template.createCell("来自" + profile.getName() + "的学生互评");
+				List<CoursePercentTypeGroupStudentVO> coursePercentTypeGroupStudentVOList = courseService
+						.getCoursePercentTypeGroupStudentScoresFromStudentID(
+								courseStudent.getUserId(), courseId);
+				if (!ListUtils.isEmptyList(coursePercentTypeGroupStudentVOList)) {
+					for (CoursePercentTypeGroupStudentVO coursePercentTypeGroupStudentVO2 : coursePercentTypeGroupStudentVOList) {
+						template.createRow(index++);
+						template.createCell(String
+								.valueOf(coursePercentTypeGroupStudentVO2
+										.getUserId()));
+						template.createCell(coursePercentTypeGroupStudentVO2
+								.getName());
+						template.createCell(String
+								.valueOf(coursePercentTypeGroupStudentVO2
+										.getScore()));
+					}
+
 				}
 			}
 		}

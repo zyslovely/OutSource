@@ -39,8 +39,10 @@ import com.ruoogle.teach.mapper.TeachMapper;
 import com.ruoogle.teach.meta.Course;
 import com.ruoogle.teach.meta.CourseGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeDemo;
+import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
 import com.ruoogle.teach.meta.CoursePercentTypeGroup;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent;
+import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentScore;
 import com.ruoogle.teach.meta.CoursePercentTypeGroupStudentVO;
 import com.ruoogle.teach.meta.CoursePercentTypeStage;
@@ -56,12 +58,10 @@ import com.ruoogle.teach.meta.CourseStudentTotalScore;
 import com.ruoogle.teach.meta.CourseStudentVO;
 import com.ruoogle.teach.meta.CourseVO;
 import com.ruoogle.teach.meta.Profile;
+import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.ProfileProperty;
 import com.ruoogle.teach.meta.SearchProfile;
 import com.ruoogle.teach.meta.SearchProperty;
-import com.ruoogle.teach.meta.CoursePercentTypeDemo.CoursePercentType;
-import com.ruoogle.teach.meta.CoursePercentTypeGroupStudent.GroupLevel;
-import com.ruoogle.teach.meta.Profile.ProfileLevel;
 import com.ruoogle.teach.meta.Teach;
 import com.ruoogle.teach.service.CourseService;
 
@@ -301,7 +301,7 @@ public class CourseServiceImpl implements CourseService {
 
 		List<CourseProperty> courseProperties = coursePropertyMapper
 				.getAllCourseProperties();
-		
+
 		for (CourseProperty courseProperty : courseProperties) {
 			double totalScore = 0;
 			double totalPercent = 0;
@@ -319,11 +319,9 @@ public class CourseServiceImpl implements CourseService {
 				totalPercent += courseStudentScore.getPercent();
 			}
 			double score = 0;
-			if (totalPercent != 0)
-			{
-				score = totalScore/totalPercent;
+			if (totalPercent != 0) {
+				score = totalScore / totalPercent;
 			}
-
 
 			CourseStudentPropertyScore courseStudentPropertyScore = courseStudentPropertyScoreMapper
 					.getCourseStudentPropertyScoreByStudentIdPropertyIdCourseId(
@@ -370,7 +368,7 @@ public class CourseServiceImpl implements CourseService {
 		score = score / count;
 		BigDecimal b = new BigDecimal(score);
 		score = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-		
+
 		CourseStudentTotalScore courseStudentTotalScore = courseStudentTotalScoreMapper
 				.getCourseStudentTotalScoreByStudentId(courseId, studentId);
 		if (courseStudentTotalScore != null) {
@@ -1453,5 +1451,15 @@ public class CourseServiceImpl implements CourseService {
 		// TODO Auto-generated method stub
 		return courseStudentTotalScoreMapper
 				.getCourseStudentTotalScoreByStudentId(courseId, userId);
+	}
+
+	@Override
+	public CoursePercentTypeGroupStudent getCoursePercentTypeGroupStudent(long courseId,
+			long fromUserId) {
+		CoursePercentTypeGroupStudent coursePercentTypeGroupStudent = coursePercentTypeGroupStudentMapper
+				.getCoursePercentTypeGroupStudentByStudentId(fromUserId,
+						courseId);
+		return coursePercentTypeGroupStudent;
+	
 	}
 }
