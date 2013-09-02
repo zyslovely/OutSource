@@ -84,7 +84,7 @@ public class ApiTeachSysController extends AbstractBaseController {
 	@Resource
 	private InteractiveService interactiveService;
 
-	public static final String HOST = "http://teach.zys-wings.com";
+	public static final String HOST = "http://117.141.115.90:8009";
 	
 	
 	
