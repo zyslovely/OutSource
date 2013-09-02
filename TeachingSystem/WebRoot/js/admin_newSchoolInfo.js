@@ -48,7 +48,7 @@ $("#newSchoolInfo_Create").click(
 					return;
 				}
 
-				dwr.engine._execute(_cfg_host + "/dwr/", 'TeachSysAdminBean',
+				dwr.engine._execute(_cfg_host + "/dwr", 'TeachSysAdminBean',
 						'addSchoolInfo', _title, _desc, _bigPhotoUrl,
 						_smallPhotoUrl, _type, _infoType, function(flag) {
 
