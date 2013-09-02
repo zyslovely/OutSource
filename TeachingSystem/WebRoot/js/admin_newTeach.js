@@ -17,7 +17,7 @@ $("#newTeach_Submit").click(
 			if (_name == "") {
 				alert("课程名称不能为空");
 			}
-			dwr.engine._execute(_cfg_host + "/dwr/", 'TeachSysAdminBean',
+			dwr.engine._execute(_cfg_host + "/dwr", 'TeachSysAdminBean',
 					'addNewTeach', _name, _teachType, function(flag) {
 						if (flag) {
 							jAlert("添加成功", "恭喜", function() {

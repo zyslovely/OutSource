@@ -1,3 +1,5 @@
+alter table TB_School_Info add column `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态,0进行中,1已结束'
+
 VirtualHost *:80>
     ServerName teach.zys-wings.com
     DocumentRoot /home/ubuntu/server/tomcat6_1/webapps/TeachSys/
