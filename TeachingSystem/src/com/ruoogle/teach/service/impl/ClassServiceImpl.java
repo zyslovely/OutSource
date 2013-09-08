@@ -269,6 +269,19 @@ public class ClassServiceImpl implements ClassService {
 	 */
 	@Override
 	public boolean deleteProfile(long userId) {
+		Profile profile = profileMapper.getProfile(userId);
+		if (profile == null) {
+			return false;
+		}
+		if (profile.getLevel() == ProfileLevel.Student.getValue()) {
+			com.ruoogle.teach.meta.Class class1 = classMapper
+					.getClassById(profile.getClassId());
+			if (class1 != null) {
+				classMapper.updateClassStudentCount(profile.getClassId(),
+						class1.getStudentCount() - 1);
+			}
+		}
+
 		return profileMapper.deleteProfileByUserId(userId) > 0;
 	}
 

@@ -276,7 +276,7 @@ public class InteractiveServiceImpl implements InteractiveService {
 		Profile profile = profileMapper.getProfile(interactive.getUserId());
 		String name = "";
 		if (profile != null) {
-			name = "@" + profile.getUserName();
+			name = "@" + profile.getName();
 		}
 		content = content + "//" + name + ":" + interactive.getContent();
 		return this.addInteractive(userId, content, interactive.getCourseId(),

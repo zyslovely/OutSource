@@ -79,7 +79,7 @@ body{min-width:1024px;min-height:600px}
                       <select id="newTeacher_level"> 
                            <option value="-1"></option>
                            <option value="1">普通教师</option>
-                           <option value="2">企业教师</option>
+                           <option value="4">企业教师</option>
                       </select>
                       </div>
                    </th>
